@@ -36,8 +36,49 @@ final class malCure {
 	function init() {
 		$this->dir = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		// add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_filter( 'site_status_tests', array( $this, 'myplugin_add_caching_test' ) );
+	}
 
+	function myplugin_add_caching_test( $tests ) {
+		$tests['direct']['caching_plugin'] = array(
+			'label' => __( 'My Caching Test' ),
+			'test'  => array( $this, 'myplugin_caching_test' ),
+		);
+		return $tests;
+	}
+
+	function myplugin_caching_test() {
+		$result = array(
+			'label'       => __( 'Caching is enabled' ),
+			'status'      => 'good',
+			'badge'       => array(
+				'label' => __( 'Performance' ),
+				'color' => 'orange',
+			),
+			'description' => sprintf(
+				'<p>%s</p>',
+				__( 'Caching can help load your site more quickly for visitors.' )
+			),
+			'actions'     => '',
+			'test'        => 'caching_plugin',
+		);
+
+		if ( 0 ) {
+			$result['status']      = 'recommended';
+			$result['label']       = __( 'Caching is not enabled' );
+			$result['description'] = sprintf(
+				'<p>%s</p>',
+				__( 'Caching is not currently enabled on your site. Caching can help load your site more quickly for visitors.' )
+			);
+			$result['actions']    .= sprintf(
+				'<p><a href="%s">%s</a></p>',
+				esc_url( admin_url( 'admin.php?page=cachingplugin&action=enable-caching' ) ),
+				__( 'Enable Caching' )
+			);
+		}
+
+		return $result;
 	}
 
 	function admin_menu() {
