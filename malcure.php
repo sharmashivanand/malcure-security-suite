@@ -37,14 +37,22 @@ final class malCure {
 		$this->dir = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
 		// add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_filter( 'site_status_tests', array( $this, 'admin_user_test' ) );
+		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
 	}
 
-	function admin_user_test( $tests ) {
+	function malcure_security_tests( $tests ) {
+
+		// Test if admin user exists
 		$tests['direct']['admin_test'] = array(
 			'label' => __( 'Admin user test' ),
 			'test'  => array( $this, 'admin_user_test_callback' ),
 		);
+
+		$tests['direct']['wp_config_test'] = array(
+			'label' => __( 'Permissions of wp-config.php' ),
+			'test'  => array( $this, 'wp_config_test_callback' ),
+		);
+
 		return $tests;
 	}
 
@@ -53,13 +61,10 @@ final class malCure {
 			'label'       => __( 'No access for admin user account' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'Security' ),
+				'label' => __( 'malCure Security Suite' ),
 				'color' => 'blue',
 			),
-			'description' => sprintf(
-				'<p>%s</p>',
-				__( 'Admin user doesn\'t exist.' )
-			),
+			'description' => sprintf( '<p>%s</p>', __( 'Admin user doesn\'t exist.' ) ),
 			'actions'     => '',
 			'test'        => 'admin_test',
 		);
@@ -68,40 +73,44 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Admin user exists' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf(
-				'<p>%s</p>',
-				__( 'A user named admin exists on your site. Many attacks target this user ID.' )
-			);
-			$result['actions']       .= sprintf(
-				'<p><a href="%s">%s</a></p>',
-				esc_url( admin_url( 'users.php' ) ),
-				__( 'Remove Admin User' )
-			);
+			$result['description']    = sprintf( '<p>%s</p>', __( 'A user named admin exists on your site. Many attacks target this user ID.' ) );
+			$result['actions']       .= sprintf( '<p><a href="%s">%s</a></p>', esc_url( admin_url( 'users.php' ) ), __( 'Remove Admin User' ) );
 		}
 
 		return $result;
 	}
 
-	function admin_menu() {
-		add_options_page( 'malCure Security', 'malCure', 'manage_options', 'malcure', array( $this, 'page' ) );
-	}
+	function wp_config_test_callback() {
 
-	function page() {
-		?>
-		<div class="wrap">
-		<h1>malCure Security</h1>
-		<h2>SSL Support</h2>
-		<p><strong>SSL:</strong> <?php echo $this->get_ssl_status(); ?></p>
-		<h2>File-System Permissions</h2>
-		<?php
-		$this->show_file_permissions();
-		?>
-		<h2>Hidden Files & Folders</h2>
-		<?php
-		$this->get_hidden();
-		?>
-		</div>
-		<?php
+		$config_path = '';
+		if ( file_exists( ABSPATH . 'wp-config.php' ) ) {
+			$config_path = ABSPATH . 'wp-config.php'; // The config file resides in ABSPATH
+		} elseif ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) && ! @file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+			$config_path = dirname( ABSPATH ) . '/wp-config.php'; // The config file resides one level above ABSPATH but is not part of another installation
+		}
+
+		$result = array(
+			'label'       => __( 'Permissions for wp-config.php' ),
+			'status'      => 'good',
+			'badge'       => array(
+				'label' => __( 'malCure Security Suite' ),
+				'color' => 'blue',
+			),
+			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-config.php are set to 0444' ) ),
+			'actions'     => '',
+			'test'        => 'wp_config_test',
+		);
+
+		if ( $config_path && $this->get_permissions( $config_path ) != '0444' ) {
+			echo 'failed';
+			$result['status']         = 'recommended';
+			$result['label']          = __( 'Insecure permissions on wp-config.php' );
+			$result['badge']['color'] = 'orange';
+			$result['description']    = sprintf( '<p>%s</p>', __( 'Unauthorised users may modify wp-config.php to infect the website.' ) );
+			$result['actions']       .= sprintf( '<p>%s %s</p>', __( 'Adjust permissions on wp-config.php here:' ), esc_url( $config_path ) );
+		}
+
+		return $result;
 	}
 
 	function get_hidden() {
@@ -191,27 +200,9 @@ final class malCure {
 		return "$scheme$user$pass$host$port$path$query$fragment";
 	}
 
-	function show_file_permissions() {
-		$perms = $this->get_file_permissions();
-		if ( is_array( $perms ) ) {
-			echo '<table class="malcure_file_permissions">';
-			echo '<tr><th>Path</th><th>Permissions</th></tr>';
-			foreach ( $perms as $label => $perm ) {
-				echo '<tr><td>' . $label . '</td><td>' . $perm . '</td></tr>';
-			}
-			echo '</table>';
-		}
-	}
 
-	function get_file_permissions() {
-		$paths = $this->get_critical_paths();
-
-		$perms = array();
-
-		foreach ( $paths as $label => $path ) {
-			$perms[ $label ] = substr( sprintf( '%o', fileperms( $path ) ), -4 );
-		}
-		return $perms;
+	function get_permissions( $path ) {
+		return substr( sprintf( '%o', fileperms( $path ) ), -4 );
 	}
 
 	function get_critical_paths() {
@@ -244,25 +235,6 @@ final class malCure {
 		}
 
 		return $paths;
-
-	}
-
-	function get_config_path() {
-
-		$config_path = '';
-		if ( file_exists( ABSPATH . 'wp-config.php' ) ) {
-
-			/** The config file resides in ABSPATH */
-			$config_path = ABSPATH . 'wp-config.php';
-
-		} elseif ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) && ! @file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
-
-			/** The config file resides one level above ABSPATH but is not part of another installation */
-			$config_path = dirname( ABSPATH ) . '/wp-config.php';
-
-		}
-
-		return $config_path;
 
 	}
 
