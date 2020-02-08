@@ -36,7 +36,6 @@ final class malCure {
 	function init() {
 		$this->dir = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
-		// add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
 	}
 
@@ -83,13 +82,19 @@ final class malCure {
 			'test'  => array( $this, 'themes_perm_test_callback' ),
 		);
 
-		// /wp-includes/
-		// /wp-content/themes/
-		// /wp-content/plugins/
+		$tests['direct']['uploads_perm_test'] = array(
+			'label' => __( 'Permissions of uploads directory' ),
+			'test'  => array( $this, 'uploads_perm_test_callback' ),
+		);
 
 		return $tests;
 	}
 
+	/**
+	 * Check if a user with slug "admin" exists
+	 *
+	 * @return array
+	 */
 	function admin_user_test_callback() {
 		$result = array(
 			'label'       => __( 'No access for admin user account' ),
@@ -115,7 +120,7 @@ final class malCure {
 	}
 
 	/**
-	 * File permission test callback for WordPress installation directory
+	 * File permission test callback for WordPress installation directory permissions
 	 *
 	 * @return array
 	 */
@@ -129,7 +134,7 @@ final class malCure {
 				'label' => __( 'malCure Security Suite' ),
 				'color' => 'blue',
 			),
-			'description' => sprintf( '<p>%s</p>', __( 'Permissions for WordPress installation directory are set to -755' ) ),
+			'description' => sprintf( '<p>%s</p>', __( 'Permissions for WordPress installation directory are set to 755' ) ),
 			'actions'     => '',
 			'test'        => 'abspath_perm_test',
 		);
@@ -140,15 +145,7 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Set permissions on the WordPress installation directory to 755' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s %s <a href="https://wordpress.org/support/article/hardening-wordpress/#file-permissions" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify WordPress installation directory to infect the website. Current permissions are' ), $abs_path_perms );
-			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Your WordPress installation directory is located at:' ), esc_url( ABSPATH ) );
-		}
-
-		if ( preg_match( '/777$/', $abs_path_perms ) ) {
-			$result['status']         = 'critical';
-			$result['label']          = __( 'Set permissions on the WordPress installation directory to 0755' );
-			$result['badge']['color'] = 'red';
-			$result['description']    = sprintf( '<p>%s %s <a href="https://wordpress.org/support/article/hardening-wordpress/#file-permissions" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify WordPress installation directory to infect the website. Current permissions are' ), $abs_path_perms );
+			$result['description']    = sprintf( '<p>%s %s <a href="https://wordpress.org/support/article/hardening-wordpress/#file-permissions" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify WordPress installation directory to infect the website. Current permissions are' ), $this->get_permissions( $abs_path ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Your WordPress installation directory is located at:' ), esc_url( ABSPATH ) );
 		}
 
@@ -156,7 +153,7 @@ final class malCure {
 	}
 
 	/**
-	 * File permission test callback for wp-config.php file
+	 * File permission test callback for wp-config.php file permissions
 	 *
 	 * @return array
 	 */
@@ -192,7 +189,7 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Insecure permissions on wp-config.php' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify wp-config.php to infect the website. Current permissions are' ), $config_path_perms, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify wp-config.php to infect the website. Current permissions are' ), $this->get_permissions( $config_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-config.php is:' ), esc_url( $config_path ) );
 		}
 
@@ -200,7 +197,7 @@ final class malCure {
 	}
 
 	/**
-	 * File permission test callback for root .htaccess file
+	 * File permission test callback for root .htaccess file permissions
 	 *
 	 * @return array
 	 */
@@ -228,7 +225,7 @@ final class malCure {
 				$result['status']         = 'recommended';
 				$result['label']          = __( 'Insecure permissions on .htaccess' );
 				$result['badge']['color'] = 'orange';
-				$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $root_htaccess_path_perms, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+				$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $this->get_permissions( $root_htaccess_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 				$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
 			}
 		}
@@ -237,7 +234,7 @@ final class malCure {
 	}
 
 	/**
-	 * File permission test callback for wp-admin directory
+	 * File permission test callback for wp-admin directory permissions
 	 *
 	 * @return array
 	 */
@@ -263,15 +260,15 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Insecure permissions on wp-admin directory' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $root_htaccess_path_perms, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
-			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $this->get_permissions( $core_admin_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $core_admin_path ) );
 		}
 
 		return $result;
 	}
 
 	/**
-	 * File permission test callback for wp-content directory
+	 * File permission test callback for wp-content directory permissions
 	 *
 	 * @return array
 	 */
@@ -295,15 +292,15 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Insecure permissions on wp-admin directory' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $root_htaccess_path_perms, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
-			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $this->get_permissions( $core_content_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to wp-content is:' ), esc_url( $core_content_path ) );
 		}
 
 		return $result;
 	}
 
 	/**
-	 * File permission test callback for wp-content directory
+	 * File permission test callback for wp-includes directory permissions
 	 *
 	 * @return array
 	 */
@@ -329,15 +326,15 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Insecure permissions on wp-admin directory' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $root_htaccess_path_perms, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
-			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $this->get_permissions( $core_inc_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $core_inc_path ) );
 		}
 
 		return $result;
 	}
 
 	/**
-	 * File permission test callback for wp-content directory
+	 * File permission test callback for themes directory permissions
 	 *
 	 * @return array
 	 */
@@ -361,7 +358,7 @@ final class malCure {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Insecure permissions on themes directory' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $theme_root_path, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $this->get_permissions( $theme_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $theme_root_path ) );
 		}
 
@@ -369,7 +366,7 @@ final class malCure {
 	}
 
 	/**
-	 * File permission test callback for wp-content directory
+	 * File permission test callback for plugins directory permissions
 	 *
 	 * @return array
 	 */
@@ -391,18 +388,53 @@ final class malCure {
 
 		if ( ! (
 			 ! $this->group_can_write( $plugin_root_path ) &&
-			 ! $this->world_can_write( $plugin_root_path ) 
+			 ! $this->world_can_write( $plugin_root_path )
 			 ) ) {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Insecure permissions on plugins directory' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $plugin_root_path, esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify .htaccess to infect the website. Current permissions are' ), $this->get_permissions( $plugin_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $plugin_root_path ) );
 		}
 
 		return $result;
 	}
 
+	/**
+	 * File permission test callback for uploads directory permissions
+	 *
+	 * @return array
+	 */
+	function uploads_perm_test_callback() {
+
+		$wp_upload_dir = wp_upload_dir();
+		$wp_upload_dir = $wp_upload_dir['basedir'];
+
+		$result = array(
+			'label'       => __( 'Permissions for uploads directory' ),
+			'status'      => 'good',
+			'badge'       => array(
+				'label' => __( 'malCure Security Suite' ),
+				'color' => 'blue',
+			),
+			'description' => sprintf( '<p>%s</p>', __( 'Permissions on uploads directory are set to 755' ) ),
+			'actions'     => '',
+			'test'        => 'uploads_perm_test',
+		);
+
+		if ( ! (
+			 ! $this->group_can_write( $wp_upload_dir ) &&
+			 ! $this->world_can_write( $wp_upload_dir )
+			 ) ) {
+			$result['status']         = 'recommended';
+			$result['label']          = __( 'Insecure permissions on uploads directory' );
+			$result['badge']['color'] = 'orange';
+			$result['description']    = sprintf( '<p>%s <code>%s</code>.</p>', __( 'Unauthorised users may modify uplooads directory to infect the website. Current permissions are' ), $thisi->get_permissions($wp_upload_dir) );
+			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $wp_upload_dir ) );
+		}
+
+		return $result;
+	}
 
 	/**
 	 * Given a path, checks if user_can_[permission]
@@ -422,7 +454,7 @@ final class malCure {
 		$user_perms = substr( $perms, -3, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 0, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -443,7 +475,7 @@ final class malCure {
 		$user_perms = substr( $perms, -3, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 1, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -464,7 +496,7 @@ final class malCure {
 		$user_perms = substr( $perms, -3, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 2, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -485,7 +517,7 @@ final class malCure {
 		$user_perms = substr( $perms, -2, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 0, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -506,7 +538,7 @@ final class malCure {
 		$user_perms = substr( $perms, -2, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 1, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -527,7 +559,7 @@ final class malCure {
 		$user_perms = substr( $perms, -2, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 2, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -548,7 +580,7 @@ final class malCure {
 		$user_perms = substr( $perms, -1, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 0, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -569,7 +601,7 @@ final class malCure {
 		$user_perms = substr( $perms, -1, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 1, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
 	/**
@@ -590,129 +622,36 @@ final class malCure {
 		$user_perms = substr( $perms, -1, 1 );
 		$user_perms = decbin( $user_perms );
 		$user_perms = substr( $user_perms, 2, 1 );
-		return int_val( $user_perms );
+		return intval( $user_perms );
 	}
 
-	function get_hidden() {
-		$files = $this->get_all_files();
-		$files = array_filter(
-			$files,
-			function( $p ) {
-				return ( preg_match( '/^\.+/', basename( $p ) ) );
-			}
-		);
-		$this->llog( $files );
-	}
-
-	function get_all_files( $path = false ) {
-		if ( ! $path ) {
-			$path = ABSPATH;
-			if ( empty( $path ) ) {
-				return array();
-			}
-			$path = untrailingslashit( $path );
-		}
-
-		$children = @scandir( $path );
-		if ( is_array( $children ) ) {
-			$children = array_diff( $children, array( '..', '.' ) );
-			$dirs     = array();
-			$files    = array();
-			foreach ( $children  as $child ) {
-				$target = untrailingslashit( $path ) . DIRECTORY_SEPARATOR . $child;
-				if ( is_dir( $target ) ) {
-					$elements = $this->get_all_files( $target );
-					if ( $elements ) { // check for read/write errors
-						foreach ( $elements as $element ) {
-							$files[] = $element;
-						}
-					}
-				}
-				if ( is_file( $target ) ) {
-					$files[] = $target;
-				}
-			}
-			return $files;
-		}
-
-	}
-
-	function get_ssl_status() {
-		$status   = '';
-		$wp_url   = get_bloginfo( 'wpurl' );
-		$site_url = get_bloginfo( 'url' );
-		if ( preg_match( '/^https/', $wp_url ) && preg_match( '/^https/', $site_url ) ) {
-			$status = 'Site is using SSL.';
-		} else {
-			$status = 'Parts of site are using SSL.';
-		}
-		if ( ! $this->test_ssl_redirect( $wp_url ) ) {
-			$status .= ' non-SSL version of WordPress address is not redirected to SSL.';
-		}
-		if ( ! $this->test_ssl_redirect( $site_url ) ) {
-			$status .= ' non-SSL version of Site address is not redirected to SSL.';
-		}
-		return $status;
-	}
-
-	function test_ssl_redirect( $url ) {
-
-		$nonssl_url = $this->get_nonssl_url( $url );
-
-		$redir_nonssl_url = wp_remote_request( $nonssl_url, array( 'redirection' => 0 ) );
-
-		if ( ! is_wp_error( $redir_nonssl_url ) && preg_match( '/^https\:\/\//', wp_remote_retrieve_header( $redir_nonssl_url, 'location' ) ) ) { // $headers
-			return true;
-		}
-	}
-
-	function get_nonssl_url( $url ) {
-		$parsed_url = parse_url( $url );
-		$scheme     = 'http://';
-		$host       = isset( $parsed_url['host'] ) ? $parsed_url['host'] : '';
-		$port       = isset( $parsed_url['port'] ) ? ':' . $parsed_url['port'] : '';
-		$user       = isset( $parsed_url['user'] ) ? $parsed_url['user'] : '';
-		$pass       = isset( $parsed_url['pass'] ) ? ':' . $parsed_url['pass'] : '';
-		$pass       = ( $user || $pass ) ? "$pass@" : '';
-		$path       = isset( $parsed_url['path'] ) ? $parsed_url['path'] : '';
-		$query      = isset( $parsed_url['query'] ) ? '?' . $parsed_url['query'] : '';
-		$fragment   = isset( $parsed_url['fragment'] ) ? '#' . $parsed_url['fragment'] : '';
-		return "$scheme$user$pass$host$port$path$query$fragment";
-	}
-
-
+	/**
+	 * Get file permissions in octal notation
+	 *
+	 * @param [type] $path
+	 * @return string permissions
+	 */
 	function get_permissions( $path ) {
 		return substr( sprintf( '%o', fileperms( $path ) ), -4 );
 	}
 
-	function get_critical_paths() {
-
-		$paths = array();
-
-		$paths[ str_replace( ABSPATH, '', $core_admin_path )  ] = $core_admin_path;
-
-		$core_content_path                                        = WP_CONTENT_DIR;
-		$paths[ str_replace( ABSPATH, '', $core_content_path )  ] = $core_content_path;
-
-		$wp_upload_dir                                       = wp_upload_dir();
-		$wp_upload_dir                                       = $wp_upload_dir['basedir'];
-		$paths[ str_replace( ABSPATH, '', $wp_upload_dir ) ] = $wp_upload_dir;
-
-		$core_config_path = $this->get_config_path();
-		if ( $core_config_path ) {
-			$paths[ str_replace( ABSPATH, '', $core_config_path ) ] = $core_config_path;
-		}
-
-		return $paths;
-
-	}
-
+	/**
+	 * Return the absolute path of root .htaccess if it exists
+	 *
+	 * @return string path
+	 */
 	function get_htaccess_path() {
 		if ( file_exists( ABSPATH . '.htaccess' ) ) {
 			return ABSPATH . '.htaccess';
 		}
 	}
 
+	/**
+	 * Debug function used for testing
+	 *
+	 * @param [type] $str
+	 * @return void
+	 */
 	function llog( $str ) {
 		echo '<pre>' . print_r( $str, 1 ) . '</pre>';
 	}
