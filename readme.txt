@@ -20,6 +20,7 @@ malCurity Security Suite shows you security issues on your WordPress installatio
 = 0.1 =
 * Submitted for review.
 
+
 == Changelog ==
 
 = 0.1 =
