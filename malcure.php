@@ -230,8 +230,6 @@ final class malCure_security_suite {
 		return $result;
 	}
 
-
-
 	/**
 	 * File permission test callback for wp-content directory permissions
 	 *
@@ -275,7 +273,7 @@ final class malCure_security_suite {
 	 */
 	function themes_perm_test_callback() {
 
-		$theme_root_path = get_theme_root();
+		$theme_root_path = trailingslashit( get_stylesheet_directory() ) . 'style.css' ;
 
 		$result = array(
 			'label'       => __( 'Permissions for themes directory' ),
@@ -284,21 +282,21 @@ final class malCure_security_suite {
 				'label' => __( 'malCure Security Suite' ),
 				'color' => 'blue',
 			),
-			'description' => sprintf( '<p>%s</p>', __( 'Permissions on themes directory are set to 775' ) ),
+			'description' => sprintf( '<p>%s</p>', __( 'Permissions on themes files are set to 664' ) ),
 			'actions'     => '',
 			'test'        => 'themes_perm_test',
 		);
 
 		if ( ! (
-			$this->user_can_read( $theme_root_path ) && $this->user_can_write( $theme_root_path ) && $this->user_can_execute( $theme_root_path ) && // 7
-			$this->group_can_read( $theme_root_path ) && $this->group_can_write( $theme_root_path ) && $this->group_can_execute( $theme_root_path ) && // 7
-			$this->other_can_read( $theme_root_path ) && ! $this->other_can_write( $theme_root_path ) && $this->other_can_execute( $theme_root_path )   // 5
+			$this->user_can_read( $theme_root_path ) && $this->user_can_write( $theme_root_path ) && ! $this->user_can_execute( $theme_root_path ) && // 6
+			$this->group_can_read( $theme_root_path ) && $this->group_can_write( $theme_root_path ) && ! $this->group_can_execute( $theme_root_path ) && // 6
+			$this->other_can_read( $theme_root_path ) && ! $this->other_can_write( $theme_root_path ) && ! $this->other_can_execute( $theme_root_path )   // 4
 		 ) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on themes directory' );
+			$result['label']          = __( 'Insecure permissions on themes files' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'If you want to use the built-in theme editor, all files need to be writable by the web server process (775). If you do not want to use the built-in theme editor, all files can be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $theme_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
-			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your themes directory is:' ), esc_url( $theme_root_path ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'If you want to use the built-in theme editor, all files need to be writable by the web server process (664). If you do not want to use the built-in theme editor, all files can be writable only by your user account (644). Current permissions are' ), $this->get_permissions( $theme_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Your current theme files are inside:' ), esc_url( get_stylesheet_directory() ) );
 		}
 
 		return $result;
@@ -311,30 +309,30 @@ final class malCure_security_suite {
 	 */
 	function plugins_perm_test_callback() {
 
-		$plugin_root_path = WP_PLUGIN_DIR;
+		$plugin_root_path = __FILE__;
 
 		$result = array(
-			'label'       => __( 'Permissions for plugins directory' ),
+			'label'       => __( 'Permissions for plugin files' ),
 			'status'      => 'good',
 			'badge'       => array(
 				'label' => __( 'malCure Security Suite' ),
 				'color' => 'blue',
 			),
-			'description' => sprintf( '<p>%s</p>', __( 'Permissions on plugins directory are set to 755' ) ),
+			'description' => sprintf( '<p>%s</p>', __( 'Permissions on plugin files are set to 644' ) ),
 			'actions'     => '',
 			'test'        => 'themes_perm_test',
 		);
 
 		if ( ! (
-			$this->user_can_read( $plugin_root_path ) && $this->user_can_write( $plugin_root_path ) && $this->user_can_execute( $plugin_root_path ) && // 7
-			$this->group_can_read( $plugin_root_path ) && ! $this->group_can_write( $plugin_root_path ) && $this->group_can_execute( $plugin_root_path ) && // 5
-			$this->other_can_read( $plugin_root_path ) && ! $this->other_can_write( $plugin_root_path ) && $this->other_can_execute( $plugin_root_path )    // 5
+			$this->user_can_read( $plugin_root_path ) && $this->user_can_write( $plugin_root_path ) && ! $this->user_can_execute( $plugin_root_path ) && // 6
+			$this->group_can_read( $plugin_root_path ) && ! $this->group_can_write( $plugin_root_path ) && ! $this->group_can_execute( $plugin_root_path ) && // 4
+			$this->other_can_read( $plugin_root_path ) && ! $this->other_can_write( $plugin_root_path ) && ! $this->other_can_execute( $plugin_root_path )    // 4
 			 ) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on plugins directory' );
+			$result['label']          = __( 'Insecure permissions on plugin files' );
 			$result['badge']['color'] = 'orange';
-			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'All files should be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $plugin_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
-			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your plugins directory is:' ), esc_url( $plugin_root_path ) );
+			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Plugin files should be writable only by your user account (644). Current permissions are' ), $this->get_permissions( $plugin_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
+			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Plugins files are stored inside:' ), esc_url( $plugin_root_path ) );
 		}
 
 		return $result;
@@ -414,7 +412,7 @@ final class malCure_security_suite {
 				$result['status']         = 'recommended';
 				$result['label']          = __( 'Insecure permissions on .htaccess' );
 				$result['badge']['color'] = 'orange';
-				$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( '644 is normally required and recommended for .htaccess files. Current permissions are' ), $this->get_permissions( $root_htaccess_path ), esc_url( 'https://wordpress.org/support/article/changing-file-permissions/#htaccess-permissions' ) );
+				$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( '664 is normally required and recommended for .htaccess files. Current permissions are' ), $this->get_permissions( $root_htaccess_path ), esc_url( 'https://wordpress.org/support/article/changing-file-permissions/#htaccess-permissions' ) );
 				$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
 			}
 		}
