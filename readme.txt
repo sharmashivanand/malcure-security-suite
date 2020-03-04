@@ -34,7 +34,7 @@ Upload the plugin to your blog. Activate it. Create a support thread in case of 
 == Frequently Asked Questions ==
 
 = Does malCure Security Suite protect my website? =
-No. malCure Security Suite is intended to help you harden and secure your WordPress install. You'll need to review and implement security best-practices with the help of plugin's output.
+malCure Security Suite is intended to help you harden and secure your WordPress install. You'll need to review and implement security best-practices with the help of plugin's output.
 
 
 == Screenshots ==

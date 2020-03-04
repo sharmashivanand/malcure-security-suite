@@ -19,6 +19,10 @@
  * Plugin URI:  https://malcure.com/
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 final class malCure_security_suite {
 
 	static function get_instance() {
@@ -185,7 +189,7 @@ final class malCure_security_suite {
 			$this->other_can_read( $core_admin_path ) && ! $this->other_can_write( $core_admin_path ) && $this->other_can_execute( $core_admin_path )       // 5
 			) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on wp-admin directory' );
+			$result['label']          = __( 'Review permissions on wp-admin directory' );
 			$result['badge']['color'] = 'orange';
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'All files should be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $core_admin_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-admin is:' ), esc_url( $core_admin_path ) );
@@ -221,7 +225,7 @@ final class malCure_security_suite {
 			$this->other_can_read( $core_inc_path ) && ! $this->other_can_write( $core_inc_path ) && $this->other_can_execute( $core_inc_path )     // 5
 		) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on wp-includes directory' );
+			$result['label']          = __( 'Review permissions on wp-includes directory' );
 			$result['badge']['color'] = 'orange';
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'All files should be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $core_inc_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-includes is:' ), esc_url( $core_inc_path ) );
@@ -257,7 +261,7 @@ final class malCure_security_suite {
 			$this->other_can_read( $core_content_path ) && ! $this->other_can_write( $core_content_path ) && $this->other_can_execute( $core_content_path )     // 5
 			 ) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on wp-content directory' );
+			$result['label']          = __( 'Review permissions on wp-content directory' );
 			$result['badge']['color'] = 'orange';
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'User-supplied content: intended to be writable by your user account and the web server process (775). Current permissions are' ), $this->get_permissions( $core_content_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to wp-content is:' ), esc_url( $core_content_path ) );
@@ -293,7 +297,7 @@ final class malCure_security_suite {
 			$this->other_can_read( $theme_root_path ) && ! $this->other_can_write( $theme_root_path ) && ! $this->other_can_execute( $theme_root_path )   // 4
 		 ) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on themes files' );
+			$result['label']          = __( 'Review permissions on themes files' );
 			$result['badge']['color'] = 'orange';
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'If you want to use the built-in theme editor, all files need to be writable by the web server process (664). If you do not want to use the built-in theme editor, all files can be writable only by your user account (644). Current permissions are' ), $this->get_permissions( $theme_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Your current theme files are inside:' ), esc_url( get_stylesheet_directory() ) );
@@ -320,7 +324,7 @@ final class malCure_security_suite {
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on plugin files are set to 644' ) ),
 			'actions'     => '',
-			'test'        => 'themes_perm_test',
+			'test'        => 'plugins_perm_test',
 		);
 
 		if ( ! (
@@ -329,7 +333,7 @@ final class malCure_security_suite {
 			$this->other_can_read( $plugin_root_path ) && ! $this->other_can_write( $plugin_root_path ) && ! $this->other_can_execute( $plugin_root_path )    // 4
 			 ) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on plugin files' );
+			$result['label']          = __( 'Review permissions on plugin files' );
 			$result['badge']['color'] = 'orange';
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Plugin files should be writable only by your user account (644). Current permissions are' ), $this->get_permissions( $plugin_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Plugins files are stored inside:' ), esc_url( $plugin_root_path ) );
@@ -373,7 +377,7 @@ final class malCure_security_suite {
 			! $this->other_can_read( $config_path ) && ! $this->other_can_write( $config_path ) && ! $this->other_can_execute( $config_path )       // 0
 		) ) {
 			$result['status']         = 'recommended';
-			$result['label']          = __( 'Insecure permissions on wp-config.php' );
+			$result['label']          = __( 'Review permissions on wp-config.php' );
 			$result['badge']['color'] = 'orange';
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify wp-config.php to infect the website. 440 permissions are recommended. Current permissions are' ), $this->get_permissions( $config_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#securing-wp-config-php' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-config.php is:' ), esc_url( $config_path ) );
@@ -410,7 +414,7 @@ final class malCure_security_suite {
 			$this->other_can_read( $root_htaccess_path ) && ! $this->other_can_write( $root_htaccess_path ) && ! $this->other_can_execute( $root_htaccess_path )      // 4
 			) ) {
 				$result['status']         = 'recommended';
-				$result['label']          = __( 'Insecure permissions on .htaccess' );
+				$result['label']          = __( 'Review permissions on .htaccess' );
 				$result['badge']['color'] = 'orange';
 				$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( '664 is normally required and recommended for .htaccess files. Current permissions are' ), $this->get_permissions( $root_htaccess_path ), esc_url( 'https://wordpress.org/support/article/changing-file-permissions/#htaccess-permissions' ) );
 				$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
