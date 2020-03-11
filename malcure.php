@@ -9,7 +9,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: malCure Security Suite
- * Description: malCurity Security Suite shows you security issues on your WordPress installation.
+ * Description: malCure Security Suite shows you security issues on your WordPress installation.
  * Version:     0.1
  * Author:      malCure
  * Author URI:  https://malcure.com
@@ -24,6 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class malCure_security_suite {
+
+	public $dir;
+	public $url;
 
 	static function get_instance() {
 		static $instance = null;
@@ -41,6 +44,68 @@ final class malCure_security_suite {
 		$this->dir = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
+
+		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
+
+		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_styles' ) );
+
+	}
+
+	function settings_menu(){
+		add_menu_page(
+			'malCure Security',	// page_title
+			'malCure Security',	// menu_title
+			'manage_options',	// capability
+			'mss',	// menu_slug
+			array( $this, 'settings_page' ), // function
+			$this->url . 'assets/icon.svg', // icon_url 
+			79
+		);
+		add_submenu_page(
+			'mss',	// parent_slug
+			'malCure Security', // page_title
+			'malCure Security', // menu_title
+			'manage_options', // capability
+			'mss',
+			array( $this, 'settings_page' )
+		);
+
+	}
+
+	function settings_page(){
+		?>
+		<div class="wrap">
+		<h1>malCure Security Suite</h1>
+			<div class="container">
+			<table id="mss_main_utils">
+			<tr><td><input class="button-primary" value="Shuffle Salts" id="mss_shuffle_salts" type="submit" /></td><td><p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p></td></tr>
+			</table>
+			</div>
+		</div>
+		<?php
+	}
+
+	function admin_inline_style(){
+		?>
+		<style type="text/css">
+		#toplevel_page_mss .wp-menu-image img {
+			width: 32px;
+			height: auto;
+			opacity: 1;
+			padding: 0 0 0 0;
+			/*padding: 6px 0 0 0;*/
+		}
+		</style>
+		<?php
+	}
+
+	function plugin_styles( $hook ){
+		
+		
+		if ( preg_match( '/_mss$/', $hook ) ) {
+			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
+		}
 	}
 
 	function malcure_security_tests( $tests ) {

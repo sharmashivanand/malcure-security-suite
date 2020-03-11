@@ -1,0 +1,13 @@
+.toplevel_page_mss {
+    .container {
+        background: white;
+
+        .button-primary {
+            border-radius: 0 !important;
+        }
+        
+        #mss_main_utils td {
+            padding: .6em 1em;
+        }
+    }
+}
