@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: malCure Security Suite
  * Description: malCure Security Suite shows you security issues on your WordPress installation.
- * Version:     0.1
+ * Version:     0.2
  * Author:      malCure
  * Author URI:  https://malcure.com
  * Text Domain: malcure
@@ -48,48 +48,19 @@ final class malCure_security_suite {
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
 
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
 
+		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
+
+		add_action( 'wp_ajax_mss_shuffle_salts', array( $this, 'mss_shuffle_salts' ) );
+		add_action( 'wp_ajax_nopriv_mss_shuffle_salts', '__return_false' );
 	}
 
-	function settings_menu(){
-		add_menu_page(
-			'malCure Security',	// page_title
-			'malCure Security',	// menu_title
-			'manage_options',	// capability
-			'mss',	// menu_slug
-			array( $this, 'settings_page' ), // function
-			$this->url . 'assets/icon.svg', // icon_url 
-			79
-		);
-		add_submenu_page(
-			'mss',	// parent_slug
-			'malCure Security', // page_title
-			'malCure Security', // menu_title
-			'manage_options', // capability
-			'mss',
-			array( $this, 'settings_page' )
-		);
 
-	}
-
-	function settings_page(){
-		?>
-		<div class="wrap">
-		<h1>malCure Security Suite</h1>
-			<div class="container">
-			<table id="mss_main_utils">
-			<tr><td><input class="button-primary" value="Shuffle Salts" id="mss_shuffle_salts" type="submit" /></td><td><p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p></td></tr>
-			</table>
-			</div>
-		</div>
-		<?php
-	}
-
-	function admin_inline_style(){
+	function admin_inline_style() {
 		?>
 		<style type="text/css">
-		#toplevel_page_mss .wp-menu-image img {
+		#toplevel_page__mss .wp-menu-image img {
 			width: 32px;
 			height: auto;
 			opacity: 1;
@@ -100,12 +71,223 @@ final class malCure_security_suite {
 		<?php
 	}
 
-	function plugin_styles( $hook ){
-		
-		
+	function plugin_res( $hook ) {
 		if ( preg_match( '/_mss$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
+			wp_enqueue_script( 'jquery' );
 		}
+	}
+
+	function footer_scripts() {
+		$screen = get_current_screen();
+		if ( preg_match( '/_mss$/', $screen->id ) ) {
+			?>
+		<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('#mss_shuffle_salts').click(function(e){
+				e.preventDefault();
+				mss_shuffle_salts = {
+					mss_shuffle_salts_nonce: '<?php echo wp_create_nonce( 'mss_shuffle_salts' ); ?>',
+						action: "mss_shuffle_salts",
+						cachebust: Math.floor((new Date()).getTime() / 1000),
+					};
+				$.ajax({
+					url: ajaxurl,
+					method: 'POST',
+					data: mss_shuffle_salts,
+					complete: function(jqXHR, textStatus) {
+						console.log('complete');
+						console.log('jqXHR');
+						console.log(jqXHR);
+						console.log('textStatus');
+						console.log(textStatus);
+					},
+					success: function(data,textStatus,jqXHR) {
+						console.log('success');
+						console.dir('data');
+						console.dir(data);
+						console.dir('textStatus');
+						console.dir(textStatus);
+						console.dir('jqXHR');
+						console.dir(jqXHR);
+						if ((typeof data) != 'object') {
+							console.log('invalid data');
+							data = JSON.parse(data);
+						}
+						if (data.hasOwnProperty('success') && data.success) {
+							//location.reload(true);
+							$('#mss_shuffle_salts_status').html('<p class="mss_success">'+data.data+'</p>');
+							console.log('WordPress successfully executed the requested action.');
+						} else {
+							$('#mss_shuffle_salts_status').html('<p class="mss_error">'+data.data+'</p>');
+							console.log('WordPress failed to execute the requested action.');
+						}
+					}, // success
+					error: function(jqXHR,textStatus,errorThrown) {
+						console.log('error');
+						console.dir('jqXHR');
+						console.dir(jqXHR);
+						console.dir('textStatus');
+						console.dir(textStatus);
+						console.dir('errorThrown');
+						console.dir(errorThrown);
+						if(errorThrown.length) {
+							$('#mss_shuffle_salts_status').html('<p class="mss_error">'+ errorThrown + '</p>');
+						}
+						else {
+							$('#mss_shuffle_salts_status').html('<p class="mss_error">Failed to execute the requested action.</p>');
+						}
+					}
+				}); // ajax post
+				return false;
+			});
+			//$('.mss_action').each(function(){
+			//	console.log($( this ).attr( "id" ));
+			//	this.click()
+			//});
+			//console.log('ready');
+		});
+		</script>
+			<?php
+		}
+	}
+
+	function god(){
+		return current_user_can( 'activate_plugins' );
+	}
+
+	function settings_menu() {
+		add_menu_page(
+			'malCure Security', // page_title
+			'malCure Security', // menu_title
+			$this->god(),   // capability
+			'_mss',  // menu_slug
+			array( $this, 'settings_page' ), // function
+			$this->url . 'assets/icon.svg', // icon_url
+			79
+		);
+		
+		add_submenu_page(
+			'_mss',  // parent_slug
+			'malCure Security Utilities', // page_title
+			'Utilities', // menu_title
+			$this->god(), // capability
+			'utils_mss',
+			array( $this, 'utils_page' )
+		);
+
+	}
+
+	function settings_page() {
+		?>
+		<div class="wrap">
+		<h1>malCure Security Suite</h1>
+			<div class="container">
+			<p>Nothing here yet!</p>
+			</div>
+		</div>
+		<?php
+	}
+
+	function utils_page() {
+		?>
+		<div class="wrap">
+		<h1>malCure Security Suite Utilities</h1>
+			<div class="container">
+			<table id="mss_utils">
+			<tr><td><input class="button-primary mss_action" value="Shuffle Salts" id="mss_shuffle_salts" type="submit" /></td><td><p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p><div id="mss_shuffle_salts_status" class="mss_status"></div></td></tr>
+			</table>
+			</div>
+		</div>
+		<?php
+	}
+
+
+	function mss_shuffle_salts() {
+
+		WP_Filesystem();
+		global $wp_filesystem;
+		// $config_path = $this->get_config_path();
+		// wp_send_json_error(  is_writable($config_path)   );
+		// $config_path = $this->get_config_path();
+		// $w = $wp_filesystem->is_writable( $config_path );
+		// wp_send_json('config_path:' . $config_path . '~~is_writable:' .$w);
+		$config_path = $this->get_config_path();
+		if ( ! $config_path ) {
+			wp_send_json_error( 'Failed to get location of config.php' );
+		}
+		$is_writable = $wp_filesystem->is_writable( $config_path );
+		if ( ! $is_writable ) {
+			wp_send_json_error( 'config.php is not writable.' );
+		}
+
+		$config = $wp_filesystem->get_contents( $config_path );
+
+		$defines = array(
+			'AUTH_KEY',
+			'SECURE_AUTH_KEY',
+			'LOGGED_IN_KEY',
+			'NONCE_KEY',
+			'AUTH_SALT',
+			'SECURE_AUTH_SALT',
+			'LOGGED_IN_SALT',
+			'NONCE_SALT',
+		);
+
+		foreach ( $defines as $define ) {
+			if ( empty( $salts ) ) {
+				$salts = $this->generate_salt();
+			}
+
+			$salt = array_pop( $salts );
+
+			if ( empty( $salt ) ) {
+				$salt = wp_generate_password( 64, true, true );
+			}
+
+			$salt   = str_replace( '$', '\\$', $salt );
+			$regex  = "/(define\s*\(\s*(['\"])$define\\2\s*,\s*)(['\"]).+?\\3(\s*\)\s*;)/";
+			$config = preg_replace( $regex, "\${1}'$salt'\${4}", $config );
+		}
+
+		if ( $wp_filesystem->put_contents( $config_path, $config ) ) {
+			wp_send_json_success( 'Successfully updated config.php.' );
+		} else {
+			wp_send_json_error( 'Failed to write to config.php.' );
+		}
+
+		wp_send_json_error( 'Failed to get config.php location or it is not writable.' );
+	}
+
+	function generate_salt() {
+		try {
+			$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_ []{}<>~`+=,.;:/?|';
+			$max   = strlen( $chars ) - 1;
+			for ( $i = 0; $i < 8; $i++ ) {
+				$key = '';
+				for ( $j = 0; $j < 64; $j++ ) {
+					$key .= substr( $chars, random_int( 0, $max ), 1 );
+				}
+				$secret_keys[] = $key;
+			}
+		} catch ( Exception $ex ) {
+			$secret_keys = wp_remote_get( 'https://api.wordpress.org/secret-key/1.1/salt/' );
+
+			if ( is_wp_error( $secret_keys ) ) {
+				$secret_keys = array();
+				for ( $i = 0; $i < 8; $i++ ) {
+					$secret_keys[] = wp_generate_password( 64, true, true );
+				}
+			} else {
+				$secret_keys = explode( "\n", wp_remote_retrieve_body( $secret_keys ) );
+				foreach ( $secret_keys as $k => $v ) {
+					$secret_keys[ $k ] = substr( $v, 28, 64 );
+				}
+			}
+		}
+
+			return $secret_keys;
+
 	}
 
 	function malcure_security_tests( $tests ) {
@@ -198,9 +380,9 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function abspath_perm_test_callback() {
-		$abs_path = ABSPATH;
-		$abs_path_perms = $this->get_permissions($abs_path);
-		$result = array(
+		$abs_path       = ABSPATH;
+		$abs_path_perms = $this->get_permissions( $abs_path );
+		$result         = array(
 			'label'       => __( 'Permissions for WordPress installation directory' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -342,7 +524,7 @@ final class malCure_security_suite {
 	 */
 	function themes_perm_test_callback() {
 
-		$theme_root_path = trailingslashit( get_stylesheet_directory() ) . 'style.css' ;
+		$theme_root_path = trailingslashit( get_stylesheet_directory() ) . 'style.css';
 
 		$result = array(
 			'label'       => __( 'Permissions for themes directory' ),
@@ -407,6 +589,17 @@ final class malCure_security_suite {
 		return $result;
 	}
 
+	function get_config_path() {
+		WP_Filesystem();
+		global $wp_filesystem;
+		$config_path = '';
+		if ( $wp_filesystem->exists( ABSPATH . 'wp-config.php' ) && $wp_filesystem->is_file( ABSPATH . 'wp-config.php' ) ) {
+			return ABSPATH . 'wp-config.php'; // The config file resides in ABSPATH
+		} elseif ( $wp_filesystem->exists( dirname( ABSPATH ) . '/wp-config.php' ) && $wp_filesystem->is_file( dirname( ABSPATH ) . '/wp-config.php' ) && ! $wp_filesystem->exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
+			return dirname( ABSPATH ) . '/wp-config.php'; // The config file resides one level above ABSPATH but is not part of another installation
+		}
+	}
+
 	/**
 	 * File permission test callback for wp-config.php file permissions
 	 *
@@ -414,12 +607,7 @@ final class malCure_security_suite {
 	 */
 	function wp_config_perm_test_callback() {
 
-		$config_path = '';
-		if ( file_exists( ABSPATH . 'wp-config.php' ) ) {
-			$config_path = ABSPATH . 'wp-config.php'; // The config file resides in ABSPATH
-		} elseif ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) && ! @file_exists( dirname( ABSPATH ) . '/wp-settings.php' ) ) {
-			$config_path = dirname( ABSPATH ) . '/wp-config.php'; // The config file resides one level above ABSPATH but is not part of another installation
-		}
+		$config_path = $this->get_config_path();
 
 		$result = array(
 			'label'       => __( 'Permissions for wp-config.php' ),
@@ -533,12 +721,12 @@ final class malCure_security_suite {
 	 * @return bool
 	 */
 	function user_can_read( $path ) {
-		
+
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
-		
+
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
 		}

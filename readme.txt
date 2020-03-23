@@ -4,24 +4,29 @@ Tags: security, anti-malware, hardening
 Requires at least: 3.7.4
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 0.1
+Stable tag: 0.2
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-malCurity Security Suite shows you security issues on your WordPress installation.
+malCurity Security Suite helps you lock down and secure your WordPress site.
 
 == Description ==
 
-malCurity Security Suite shows you security issues on your WordPress installation and helps you harden your WordPress install.
-
+malCurity Security Suite helps you lock down and secure your WordPress site.
 
 == Upgrade Notice ==
+
+= 0.2 =
+* Feature: Shuffle WordPress salts.
 
 = 0.1 =
 * Submitted for review.
 
 
 == Changelog ==
+
+= 0.2 =
+* Feature: Shuffle WordPress salts.
 
 = 0.1 =
 * Submitted for review.
