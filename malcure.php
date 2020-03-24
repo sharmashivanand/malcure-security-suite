@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'MSS_GOD' ) ) {
-	define('MSS_GOD', 'activate_plugins');
+	define( 'MSS_GOD', 'activate_plugins' );
 }
 
 final class malCure_security_suite {
@@ -64,8 +64,6 @@ final class malCure_security_suite {
 
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 
-		
-
 	}
 
 	function admin_inline_style() {
@@ -89,10 +87,6 @@ final class malCure_security_suite {
 		}
 	}
 
-	function god() {
-		return current_user_can( 'activate_plugins' );
-	}
-
 	function settings_menu() {
 		add_menu_page(
 			'malCure Security', // page_title
@@ -105,7 +99,6 @@ final class malCure_security_suite {
 		);
 
 		do_action( 'mss_settings_menu' );
-		
 
 	}
 
@@ -114,12 +107,12 @@ final class malCure_security_suite {
 		<div class="wrap">
 		<h1>malCure Security Suite</h1>
 			<div class="container">
-			<p>Nothing here yet!</p>
+			<h2>Disclaimer &amp; Warning!</h2>
+			<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required.</strong></p>
 			</div>
 		</div>
 		<?php
 	}
-
 
 	function footer_scripts() {
 		$screen = get_current_screen();
@@ -127,7 +120,6 @@ final class malCure_security_suite {
 			do_action( 'mss_admin_scripts' );
 		}
 	}
-
 
 	function malcure_security_tests( $tests ) {
 

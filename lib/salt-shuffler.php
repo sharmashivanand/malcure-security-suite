@@ -46,7 +46,6 @@ class malCure_Salt_Shuffler {
 		<?php
     }
 
-
 	function js() {
 		?>
 		<script type="text/javascript">
