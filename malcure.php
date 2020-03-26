@@ -26,6 +26,9 @@ if ( ! defined( 'MSS_GOD' ) ) {
 	define( 'MSS_GOD', 'activate_plugins' );
 }
 
+define( 'MSS_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'MSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+
 final class malCure_security_suite {
 
 	public $dir;
@@ -81,6 +84,7 @@ final class malCure_security_suite {
 	}
 
 	function plugin_res( $hook ) {
+		// $this->llog( $hook );
 		if ( preg_match( '/_mss$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
 			wp_enqueue_script( 'jquery' );
@@ -108,7 +112,7 @@ final class malCure_security_suite {
 		<h1>malCure Security Suite</h1>
 			<div class="container">
 			<h2>Disclaimer &amp; Warning!</h2>
-			<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required.</strong></p>
+			<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Use at your own risk!</strong></p>
 			</div>
 		</div>
 		<?php

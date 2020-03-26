@@ -17,8 +17,8 @@ class malCure_Integrity {
 	function init() {
 		add_action( 'mss_settings_menu', array( $this, 'submenu_page' ) );
 		// add_action( 'mss_admin_scripts', array( $this, 'js' ) );
-		add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
-		add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
+		// add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
+		// add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
 		add_action( 'upgrader_process_complete', array( $this, 'delete_checksums' ), 9999, 2 );
 
 	}
@@ -48,36 +48,51 @@ class malCure_Integrity {
 		<h1>malCure WordPress Integrity Checker</h1>
 			<div class="container">
 			<?php
-				// 'failed_checksums'
-				// 'extra_files'
-				// 'missing_files
-
 			$results = $this->verify_checksums();
-			// var_dump( $results );
 			if ( ! empty( $results ) ) {
-				if ( ! empty( $results['failed_checksums'] ) ) {
-					echo '<h2>The following files failed checksum verification:</h2>';
-					echo '<ul>';
-					foreach ( $results['failed_checksums'] as $failed ) {
-						echo '<li>' . $failed . '</li>';
-					}
-					echo '</ul>';
-				}
-				if ( ! empty( $results['extra_files'] ) ) {
-					echo '<h2>The following files do not have a checksum:</h2>';
-					echo '<ul>';
-					foreach ( $results['extra_files'] as $extra ) {
-						echo '<li>' . $extra . '</li>';
-					}
-					echo '</ul>';
-				}
+				// $this->llog($results);
+				?>
+				<h3 id="mss_integrity_menu">Results</h3>
+				<ol>
+					<li><strong><a href="#mss_integrity_missing">Missing Files</strong></a></li>
+					<li><strong><a href="#mss_integrity_failed">Checksum Failures</strong></a></li>
+					<li><strong><a href="#mss_integrity_extra">Non-Critical Files</strong></a></li>
+				</ol>
+				<?php
+				echo '<p class="mss_warning"><strong>If you find any discrepancy in the below, please note that currently theme checksums are not supported. WordPress bundles the default theme checksums which may not pass verification after default themes are updated.</strong></p>';
 				if ( ! empty( $results['missing_files'] ) ) {
-					echo '<h2>The following files are missing:</h2>';
+					echo '<h2 id="mss_integrity_missing">The following files are not present:</h2>';
+					echo '<p class="mss_warning"><strong>This could indicate a broken WordPress install or broken plugin.</strong></p>';
 					echo '<ul>';
 					foreach ( $results['missing_files'] as $missing ) {
 						echo '<li>' . $missing . '</li>';
 					}
-					echo '</ul>';
+					echo '</ul><p><strong><a href="#mss_integrity_menu">Back To Results Menu</a></strong></p>';
+
+				} else {
+					echo '<h2 id="mss_integrity_missing">All core WordPress files are present.</h2>';
+				}
+				if ( ! empty( $results['failed_checksums'] ) ) {
+					echo '<h2 id="mss_integrity_failed">The following files failed checksum verification:</h2>';
+					echo '<p class="mss_warning"><strong>If you find any discrepancy in the below, please note that currently theme checksums are not supported. WordPress bundles the default theme checksums which may not pass verification after default themes are updated.</strong></p>';
+					echo '<ul>';
+					foreach ( $results['failed_checksums'] as $failed ) {
+						echo '<li>' . $failed . '</li>';
+					}
+					echo '</ul><p><strong><a href="#mss_integrity_menu">Back To Results Menu</a></strong></p>';
+				} else {
+					echo '<h2 id="mss_integrity_failed">All files passed checksum verification.</h2>';
+				}
+				if ( ! empty( $results['extra_files'] ) ) {
+					echo '<h2 id="mss_integrity_extra">The following files do not have a checksum:</h2>';
+					echo '<p class="mss_warning">These files are not strictly required. Please review if you need them.</p>';
+					echo '<ul>';
+					foreach ( $results['extra_files'] as $extra ) {
+						echo '<li>' . $extra . '</li>';
+					}
+					echo '</ul><p><strong><a href="#mss_integrity_menu">Back To Results Menu</a></strong></p>';
+				} else {
+					echo '<h2 id="mss_integrity_extra">No unwanted files are present.</h2>';
 				}
 			} else {
 				echo '<h2>All WordPress integrity checks pass!</h2>';
@@ -181,7 +196,7 @@ class malCure_Integrity {
 		$plugin_checksums = array();
 		foreach ( $all_plugins as $key => $value ) {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				$plugin_file  = trailingslashit( dirname( $this->dir ) ) . $key;
+				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
 				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
 				$checksum     = wp_safe_remote_get( $checksum_url );
@@ -211,6 +226,7 @@ class malCure_Integrity {
 	}
 
 	function verify_integrity() {
+
 		// should return missing, extra and mismatches
 		wp_send_json_success( $this->verify_checksums() );
 		wp_send_json_success( $this->get_checksums() );
@@ -223,10 +239,15 @@ class malCure_Integrity {
 	 * @return void
 	 */
 	function verify_checksums() {
-		$local_files  = $this->get_all_files();
-		$checksums    = $this->get_checksums();
-		$install_path = get_home_path();
-		$failed_files = array(
+
+		$wp_upload_dir = wp_upload_dir();
+		$wp_upload_dir = $wp_upload_dir['basedir'];
+		$mimes         = wp_get_mime_types();
+		$mimes         = array_keys( $mimes );
+		$local_files   = $this->get_all_files();
+		$checksums     = $this->get_checksums();
+		$install_path  = get_home_path();
+		$failed_files  = array(
 			'failed_checksums' => array(),
 			'extra_files'      => array(),
 			'missing_files'    => array(),
@@ -245,7 +266,17 @@ class malCure_Integrity {
 					}
 				}
 			} else { // we don't have checksum for this file.
-				$failed_files['extra_files'][] = $local_file;
+				if ( strpos( $local_file, $wp_upload_dir ) !== false ) { // This file is a part of uploads directory (then only push if it has unwanted extension)
+					$allowed = false;
+					foreach ( $mimes as $mime ) {
+						if ( preg_match( '/\.(' . $mime . ')$/s', $local_file ) ) { // This file-type is not allowed in uploads.
+							$allowed = true;
+						}
+					}
+					if ( ! $allowed ) { // not an allowed file
+						$failed_files['extra_files'][ $local_file ] = $local_file; // insert into unique key to avoid duplicate insertion due to multiple matches
+					}
+				}
 			}
 		}
 
