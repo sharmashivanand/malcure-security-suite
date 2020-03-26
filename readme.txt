@@ -28,6 +28,7 @@ malCurity Security Suite helps you lock down and secure your WordPress site.
 
 = 0.2 =
 * Feature: Shuffle WordPress salts.
+* Feature: WordPress Integrity Check.
 
 = 0.1 =
 * Submitted for review.
