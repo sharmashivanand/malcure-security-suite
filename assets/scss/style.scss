@@ -1,47 +1,140 @@
 .button-primary {
-    border-radius: 0 !important;
+	border-radius: 0 !important;
 }
 
-.container {
-    background: white;
-    padding: 1.618em 3.236em;
+.ccontainer {
+	background: white;
+	padding: 1.618em 3.236em;
 
-    margin-bottom: 3.236em;
+	margin-bottom: 3.236em;
 
-    #mss_utils td {
-        padding: .6em 1em;
-        vertical-align: baseline;
-    }
+	#mss_utils td {
+		padding: .6em 1em;
+		vertical-align: baseline;
+	}
 
-    ul {
-        list-style-type: square;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-        padding-inline-start: 40px;
-    }
+	ul {
+		list-style-type: square;
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+		margin-inline-start: 0px;
+		margin-inline-end: 0px;
+		padding-inline-start: 40px;
+	}
+}
+
+.mss_branding {
+	margin: 1em 0;
+	max-width: 25%;
 }
 
 .mss_error {
-    border: 1px solid #ccd0d4;
-    border-left: 4px solid #dc3232;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-    display: table;
-    padding: 0.618em 1em;
+	border: 1px solid #ccd0d4;
+	border-left: 4px solid #dc3232;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+	display: table;
+	padding: 0.618em 1em;
 }
 
 .mss_warning {
-    border: 1px solid #ccd0d4;
-    border-left: 4px solid #ffb900;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-    display: table;
-    padding: 0.618em 1em;
+	border: 1px solid #ccd0d4;
+	border-left: 4px solid #ffb900;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+	display: table;
+	padding: 0.618em 1em;
 }
+
 .mss_success {
-    border: 1px solid #ccd0d4;
-    border-left: 4px solid #080;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
-    display: table;
-    padding: 0.618em 1em;
+	border: 1px solid #ccd0d4;
+	border-left: 4px solid #080;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+	display: table;
+	padding: 0.618em 1em;
+}
+
+/* System Status Table */
+
+#mss_system_status {
+
+	font-family: Roboto,
+	Arial,
+	-apple-system,
+	BlinkMacSystemFont,
+	"Segoe UI",
+	Oxygen-Sans,
+	Ubuntu,
+	Cantarell,
+	"Helvetica Neue",
+	sans-serif th {
+		text-align: left;
+		white-space: nowrap;
+		vertical-align: top;
+	}
+
+	th {
+		text-align: left;
+	}
+
+	.wpmr_bricks {
+		display: inline-block;
+		padding: 4px 6px 3px;
+		margin: 2px 0px 4px 2px;
+		background: hsl(0, 0%, 80%);
+		color: hsl(0, 0%, 53%);
+		border-radius: 3px;
+		color: black;
+	}
+
+	#hidden_files,
+	.dir_container,
+	.wpmr_bricks {
+		font-family: "Roboto Mono", monospace;
+		font-size: 11px;
+	}
+
+	.user_details {
+		margin-bottom: 1em;
+		padding-bottom: 1em;
+		border-bottom: 1px solid #eee;
+	}
+
+	.user_details:last-child {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+
+	.user_details_session {
+		margin-bottom: .5em;
+		padding-bottom: .5em;
+		border-bottom: 1px solid #f7f7f7;
+	}
+
+	.user_details_session:last-child {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+
+	.dir_count {
+		text-align: right;
+	}
+}
+
+/* Integrity Page Styles */
+
+#integrity_sb1_ad {
+	background: hsl(216, 37%, 16%) radial-gradient(ellipse closest-side at center, hsl(216, 37%, 20%), hsla(0, 0%, 0%, 0));
+	padding-bottom: 1em;
+
+	:link,
+	:visited {
+		display: block;
+		padding: 1em;
+		border-bottom: 1px solid hsla(0, 0%, 0%, 0);
+		font-weight: bold;
+		color: hsl(0, 0%, 100%);
+		border-image-source: linear-gradient(90deg, hsla(0, 0%, 0%, 0), hsla(216, 66%, 33%, 0.8), hsla(0, 0%, 0%, 0));
+		border-image-source: linear-gradient(90deg, hsla(0, 0%, 0%, 0), hsl(350, 75%, 50%) 50%, hsla(0, 0%, 0%, 0));
+		border-image-slice: 1;
+		text-decoration: none;
+	}
 }

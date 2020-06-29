@@ -31,13 +31,18 @@ class malCure_Salt_Shuffler {
 			'salt_shuffler_mss',
 			array( $this, 'salt_shuffler_mss_page' )
 		);
-    }
+	}
+	
+	function render_branding() {
+		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
+	}
 
 	function salt_shuffler_mss_page() {
 		?>
 		<div class="wrap">
 		<h1>malCure Salts Shuffler</h1>
 			<div class="container">
+			<?php echo '<div id="mss_salt_shuffler_branding" class="mss_branding" >' . $this->render_branding() . '</div>'; ?>
 			<table id="mss_utils">
 				<tr><td><input class="button-primary mss_action" value="Shuffle Salts" id="mss_shuffle_salts" type="submit" /></td><td><p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p><div id="mss_shuffle_salts_status" class="mss_status"></div></td></tr>
 			</table>

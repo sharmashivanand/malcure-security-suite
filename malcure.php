@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: malCure Security Suite
  * Description: malCurity Security Suite helps you lock down and secure your WordPress site.
- * Version:     0.2
+ * Version:     0.3
  * Author:      malCure
  * Author URI:  https://malcure.com
  * Text Domain: malcure
@@ -73,11 +73,11 @@ final class malCure_security_suite {
 		?>
 		<style type="text/css">
 		#toplevel_page__mss .wp-menu-image img {
-			width: 32px;
+			width: 24px;
 			height: auto;
 			opacity: 1;
-			padding: 0 0 0 0;
-			/*padding: 6px 0 0 0;*/
+			/*padding: 0 0 0 0;*/
+			padding: 6px 0 0 0;
 		}
 		</style>
 		<?php
@@ -98,7 +98,7 @@ final class malCure_security_suite {
 			MSS_GOD,   // capability
 			'_mss',  // menu_slug
 			array( $this, 'settings_page' ), // function
-			$this->url . 'assets/icon.svg', // icon_url
+			$this->url . 'assets/icon-dark-trans.svg', // icon_url
 			79
 		);
 
@@ -111,11 +111,269 @@ final class malCure_security_suite {
 		<div class="wrap">
 		<h1>malCure Security Suite</h1>
 			<div class="container">
-			<h2>Disclaimer &amp; Warning!</h2>
-			<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Use at your own risk!</strong></p>
+			<?php echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>'; ?>
+				<h2>Notice</h2>
+				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
+			</div>
+			<div class="container">
+				<h2>System Status</h2>
+				<?php $this->mss_system_status(); ?>
 			</div>
 		</div>
 		<?php
+	}
+
+	function render_branding() {
+		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
+	}
+
+	function mss_system_status() {
+		global $wpdb;
+		
+
+		?>
+		<table id="mss_system_status">
+		<tr>
+			<th>Website URL</th>
+			<td><?php echo get_bloginfo( 'url' ); ?></td>
+		</tr>
+		<tr>
+			<th>WP URL</th>
+			<td><?php echo get_bloginfo( 'wpurl' ); ?></td>
+		</tr>
+		<tr>
+			<th>WP Installation DIR</th>
+			<td><?php echo ABSPATH; ?></td>
+		</tr>
+		<tr>
+			<th>WP Version</th>
+			<td><?php echo get_bloginfo( 'version' ); ?></td>
+		</tr>
+		<tr>
+			<th>WP Language</th>
+			<td><?php echo get_bloginfo( 'language' ); ?></td>
+		</tr>
+		<tr>
+			<th>WP Multisite:</th>
+			<td><?php echo is_multisite() ? 'Yes' : 'No'; ?></td>
+		</tr>
+		<tr>
+			<th>Active Theme</th>
+			<td><?php echo get_bloginfo( 'stylesheet_directory' ); ?></td>
+		</tr>
+		<tr>
+			<th>Parent Theme</th>
+			<td><?php echo get_bloginfo( 'template_directory' ); ?></td>
+		</tr>
+		<tr>
+			<th>User Roles</th>
+			<td>
+			<?php
+			global $wp_roles;
+			foreach ( $wp_roles->roles as $role => $capabilities ) {
+				echo '<span class="wpmr_bricks">' . $role . '</span>';}
+			?>
+			</td>
+		</tr>
+		<tr>
+			<th>Must-Use Plugins</th>
+			<td>
+			<?php
+			$mu = get_mu_plugins();
+			foreach ( $mu as $key => $value ) {
+				echo '<span class="wpmr_bricks">' . $key . '</span>';}
+			?>
+			</td>
+		</tr>
+		<tr>
+			<th>Drop-ins</th>
+			<td>
+			<?php
+			$dropins = get_dropins();
+			foreach ( $dropins as $key => $value ) {
+				echo '<span class="wpmr_bricks">' . $key . '</span>';}
+			?>
+			</td>
+		</tr>
+		
+		<tr>
+			<th>PHP:</th>
+			<td><?php echo phpversion(); ?></td>
+		</tr>
+		<tr>
+			<th>Web-Server:</th>
+			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
+		</tr>
+		<tr>
+			<th>Server:</th>
+			<td><?php echo php_uname(); ?></td>
+		</tr>
+		<tr>
+			<th>Server Address:</th>
+			<td><?php echo $_SERVER['SERVER_ADDR']; ?></td>
+		</tr>
+		<tr>
+			<th>Server Port:</th>
+			<td><?php echo $_SERVER['SERVER_PORT']; ?></td>
+		</tr>
+		<tr>
+		<?php $allfilescount = $this->scan_dir( get_home_path() ); ?>
+			<th>Total Files (new function)</th>
+			<td>
+			
+			</td>
+		</tr>
+		
+		<tr><th>File Count (Recursive):</th><td>
+		<?php
+		$dirs = glob( trailingslashit( get_home_path() ) . '*', GLOB_ONLYDIR );
+		$dirs = array_merge( glob( trailingslashit( get_home_path() ) . 'wp-content/*', GLOB_ONLYDIR ), $dirs );
+
+		if ( $dirs ) {
+			asort( $dirs );
+			echo '<table>';
+			echo '<tr><th>Directory</th><th></th></tr>';
+
+			foreach ( $dirs as $dir ) {
+				echo '<tr><td class="dir_container">' . str_replace( get_home_path(), '', $dir ) . '</td><td class="dir_count">' . $this->scan_dir( $dir )['total_files'] . '</td></tr>';
+			}
+			echo '</table>';
+		}
+		?>
+		</td></tr>
+		<tr><th>Hidden Files &amp; Folders</th><td id="hidden_files">
+		
+		<?php
+
+		$hidden  = array_filter(
+			$this->scan_dir( get_home_path() )['files'],
+			function( $v ) {
+				return ( empty( explode( '.', basename( $v ) )[0] ) || empty( explode( '.', basename( dirname( $v ) ) )[0] ) ) ? true : false;
+			}
+		);
+		$hidden  = array_values( $hidden );
+		$newlist = array();
+		foreach ( $hidden as $k => $v ) {
+			$parts = explode( '.', basename( dirname( $v ) ) );
+			if ( empty( $parts [0] ) ) {
+				$newlist[ dirname( $v ) ] = '<strong>[*DIR] ' . dirname( $v ) . '</strong>';
+			}
+
+			$newlist[ $v ] = '[FILE] ' . $v;
+		}
+		echo implode( '<br />', $newlist );
+
+		?>
+		</td></tr>
+		<?php $this->malcure_user_sessions(); ?>
+		
+		</table>
+
+		<?php
+		
+	}
+
+	function scan_dir( $path ) {
+		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
+		$nbfiles = 0;
+		$files = array();
+		foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
+			$nbfiles++;
+			$files[] = $filename;
+		}
+		return array(
+			'total_files' => $nbfiles,
+			'files'       => $files,
+		);
+	}
+
+	function destroy_sessions() {
+		check_ajax_referer( 'malcure_destroy_sessions', 'malcure_destroy_sessions_nonce' );
+		$users = $this->get_users_loggedin();
+		$id    = $_REQUEST['user']['id'];
+		foreach ( $users as $user ) {
+			if ( $user->ID != $id ) {
+				$sessions = WP_Session_Tokens::get_instance( $user->ID );
+				$sessions->destroy_all();
+			}
+		}
+		wp_send_json_success();
+	}
+
+	function get_users_loggedin() {
+		return get_users(
+			array(
+				'meta_key'     => 'session_tokens',
+				'meta_compare' => 'EXISTS',
+			)
+		);
+	}
+
+	function malcure_user_sessions() {
+		?>
+		<tr><th>Logged-In Users:</th><td>
+			<?php
+			submit_button( 'Logout All Users', 'primary', 'malcure_destroy_sessions' );
+			$users = $this->get_users_loggedin();
+			foreach ( $users as $user ) {
+				echo '<table class="user_details" id="user_details_"' . $user->ID . '>';
+				echo '<tr><th class="user_details_id">User ID</th><td>' . $user->ID . '</td></tr>';
+				echo '<tr><th class="user_details_roles">User Roles</th><td>' . implode( ',', $user->roles ) . '</td></tr>';
+				echo '<tr><th class="user_details_user_login">User Login</th><td>' . $user->user_login . '</td></tr>';
+				echo '<tr><th class="user_details_user_email">User Email</th><td>' . $user->user_email . '</td></tr>';
+				echo '<tr><th class="user_details_display_name">Display Name</th><td>' . $user->display_name . '</td></tr>';
+				echo '<tr><th class="user_details_user_registered">Date Registered</th><td>' . $user->user_registered . '</td></tr>';
+				$s_details = '';
+				$s_details = get_user_meta( $user->ID, 'session_tokens', true );
+				echo '<tr><th  class="user_details_session_ip">Sessions</th><td>';
+				foreach ( $s_details as $s_detail ) {
+					echo '<table class="user_details_session">';
+					echo '<tr><th  class="user_details_session_ip">IP Address</th><td>' . $s_detail['ip'] . '</td></tr>';
+					echo '<tr><th  class="user_details_session_ua">User-Agent</th><td>' . $s_detail['ua'] . '</td></tr>';
+					echo '<tr><th  class="user_details_session_login">Login Date</th><td>' . date( 'Y M d', $s_detail['login'] ) . '</td></tr>';
+					echo '<tr><th  class="user_details_session_expiration">Login Expiration Date</th><td>' . date( 'Y M d', $s_detail['expiration'] ) . '</td></tr>';
+					echo '</table>';
+				}
+				echo '</td></tr>';
+				echo '</table>';
+			}
+			?>
+			</td></tr>
+			<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$("#malcure_destroy_sessions").click(function(){
+					malcure_destroy_sessions = {
+						malcure_destroy_sessions_nonce: '<?php echo wp_create_nonce( 'malcure_destroy_sessions' ); ?>',
+						action: "malcure_destroy_sessions",
+						cachebust: Date.now(),
+						user: {
+							id: <?php echo get_current_user_id(); ?>
+						}
+					};
+					$("#malcure_destroy_sessions").fadeTo("slow",.1,);
+					$.ajax({
+						url: ajaxurl,
+						method: 'POST',
+						data: malcure_destroy_sessions,
+						complete: function(jqXHR, textStatus) {},
+						success: function(response) {
+							if ((typeof response) != 'object') {
+								response = JSON.parse( response );
+							}
+							if (response.hasOwnProperty('success')) {
+								$("#malcure_destroy_sessions").fadeTo("slow",1,);
+								if(confirm('All users have been logged out (except you). Reload the page now?')) {
+									location.reload();
+								}
+							} else {
+								alert('Failed to logout other users.');
+							}
+						}
+					});
+				})
+			});
+			</script>
+			<?php
 	}
 
 	function footer_scripts() {
