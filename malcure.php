@@ -154,7 +154,7 @@ final class malCure_security_suite {
 			<td><?php echo get_bloginfo( 'language' ); ?></td>
 		</tr>
 		<tr>
-			<th>WP Multisite:</th>
+			<th>WP Multisite</th>
 			<td><?php echo is_multisite() ? 'Yes' : 'No'; ?></td>
 		</tr>
 		<tr>
@@ -197,34 +197,34 @@ final class malCure_security_suite {
 		</tr>
 		
 		<tr>
-			<th>PHP:</th>
+			<th>PHP</th>
 			<td><?php echo phpversion(); ?></td>
 		</tr>
 		<tr>
-			<th>Web-Server:</th>
+			<th>Web-Server</th>
 			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
 		</tr>
 		<tr>
-			<th>Server:</th>
+			<th>Server</th>
 			<td><?php echo php_uname(); ?></td>
 		</tr>
 		<tr>
-			<th>Server Address:</th>
+			<th>Server Address</th>
 			<td><?php echo $_SERVER['SERVER_ADDR']; ?></td>
 		</tr>
 		<tr>
-			<th>Server Port:</th>
+			<th>Server Port</th>
 			<td><?php echo $_SERVER['SERVER_PORT']; ?></td>
 		</tr>
 		<tr>
 		<?php $allfilescount = $this->scan_dir( get_home_path() ); ?>
-			<th>Total Files (new function)</th>
+			<th>Total Files</th>
 			<td>
-			
+			<?php echo $allfilescount['total_files']; ?>
 			</td>
 		</tr>
 		
-		<tr><th>File Count (Recursive):</th><td>
+		<tr><th>File Count (Recursive)</th><td>
 		<?php
 		$dirs = glob( trailingslashit( get_home_path() ) . '*', GLOB_ONLYDIR );
 		$dirs = array_merge( glob( trailingslashit( get_home_path() ) . 'wp-content/*', GLOB_ONLYDIR ), $dirs );
@@ -241,10 +241,9 @@ final class malCure_security_suite {
 		}
 		?>
 		</td></tr>
-		<tr><th>Hidden Files &amp; Folders</th><td id="hidden_files">
-		
+		<tr><th>Hidden Files &amp; Folders</th>
+		<td id="hidden_files">
 		<?php
-
 		$hidden  = array_filter(
 			$this->scan_dir( get_home_path() )['files'],
 			function( $v ) {
@@ -262,7 +261,6 @@ final class malCure_security_suite {
 			$newlist[ $v ] = '[FILE] ' . $v;
 		}
 		echo implode( '<br />', $newlist );
-
 		?>
 		</td></tr>
 		<?php $this->malcure_user_sessions(); ?>
@@ -311,7 +309,7 @@ final class malCure_security_suite {
 
 	function malcure_user_sessions() {
 		?>
-		<tr><th>Logged-In Users:</th><td>
+		<tr><th>Logged-In Users</th><td>
 			<?php
 			submit_button( 'Logout All Users', 'primary', 'malcure_destroy_sessions' );
 			$users = $this->get_users_loggedin();

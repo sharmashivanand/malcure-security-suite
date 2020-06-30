@@ -73,6 +73,7 @@
 
 	th {
 		text-align: left;
+		vertical-align: top;
 	}
 
 	.wpmr_bricks {
@@ -127,6 +128,7 @@
 
 	:link,
 	:visited {
+		font-weight: normal;
 		display: block;
 		padding: 1em;
 		border-bottom: 1px solid hsla(0, 0%, 0%, 0);
