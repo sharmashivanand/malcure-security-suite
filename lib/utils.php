@@ -83,3 +83,54 @@ class malCure_Scanner {
 	}
 
 }
+
+class malCure_Utils {
+
+	function __construct() {
+
+	}
+
+	static function get_files( $path = false ) {
+
+		if(! $path ) {
+			$path = ABSPATH;
+		}
+
+		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
+		$nbfiles  = 0;
+		$files    = array();
+		foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
+			$nbfiles++;
+			$files[] = $filename;
+		}
+		return array(
+			'total_files' => $nbfiles,
+			'files'       => $files,
+		);
+	}
+
+	function get_setting( $setting ) {
+		$settings = get_option( 'MSS' );
+		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
+	}
+
+	function update_setting( $setting, $value ) {
+		$settings = get_option( 'MSS' );
+		if ( ! $settings ) {
+			$settings = array();
+		}
+		$settings[ $setting ] = $value;
+		
+		return update_option( 'MSS', $settings );
+	}
+
+	function delete_setting( $setting ) {
+		$settings = get_option( 'MSS' );
+		if ( ! $settings ) {
+			$settings = array();
+		}
+		unset( $settings[ $setting ] );
+		update_option( 'MSS', $settings );
+	}
+
+}

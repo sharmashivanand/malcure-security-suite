@@ -50,13 +50,11 @@ final class malCure_security_suite {
 		$this->dir = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
 
-		if ( ! class_exists( 'malCure_Salt_Shuffler' ) ) {
-			include_once $this->dir . 'lib/salt-shuffler.php';
-		}
+		include_once $this->dir . 'lib/utils.php';
 
-		if ( ! class_exists( 'malCure_Integrity' ) ) {
-			include_once $this->dir . 'lib/integrity.php';
-		}
+		include_once $this->dir . 'classes/integrity.php';
+		include_once $this->dir . 'classes/malware_scanner.php';
+		include_once $this->dir . 'classes/salt-shuffler.php';
 
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
 
@@ -129,7 +127,6 @@ final class malCure_security_suite {
 
 	function mss_system_status() {
 		global $wpdb;
-		
 
 		?>
 		<table id="mss_system_status">
@@ -217,7 +214,7 @@ final class malCure_security_suite {
 			<td><?php echo $_SERVER['SERVER_PORT']; ?></td>
 		</tr>
 		<tr>
-		<?php $allfilescount = $this->scan_dir( get_home_path() ); ?>
+		<?php $allfilescount = malCure_Utils::get_files( get_home_path() ); ?>
 			<th>Total Files</th>
 			<td>
 			<?php echo $allfilescount['total_files']; ?>
@@ -235,7 +232,7 @@ final class malCure_security_suite {
 			echo '<tr><th>Directory</th><th></th></tr>';
 
 			foreach ( $dirs as $dir ) {
-				echo '<tr><td class="dir_container">' . str_replace( get_home_path(), '', $dir ) . '</td><td class="dir_count">' . $this->scan_dir( $dir )['total_files'] . '</td></tr>';
+				echo '<tr><td class="dir_container">' . str_replace( get_home_path(), '', $dir ) . '</td><td class="dir_count">' . malCure_Utils::get_files( $dir )['total_files'] . '</td></tr>';
 			}
 			echo '</table>';
 		}
@@ -245,7 +242,7 @@ final class malCure_security_suite {
 		<td id="hidden_files">
 		<?php
 		$hidden  = array_filter(
-			$this->scan_dir( get_home_path() )['files'],
+			malCure_Utils::get_files( get_home_path() )['files'],
 			function( $v ) {
 				return ( empty( explode( '.', basename( $v ) )[0] ) || empty( explode( '.', basename( dirname( $v ) ) )[0] ) ) ? true : false;
 			}
@@ -268,22 +265,10 @@ final class malCure_security_suite {
 		</table>
 
 		<?php
-		
+
 	}
 
-	function scan_dir( $path ) {
-		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
-		$nbfiles = 0;
-		$files = array();
-		foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
-			$nbfiles++;
-			$files[] = $filename;
-		}
-		return array(
-			'total_files' => $nbfiles,
-			'files'       => $files,
-		);
-	}
+
 
 	function destroy_sessions() {
 		check_ajax_referer( 'malcure_destroy_sessions', 'malcure_destroy_sessions_nonce' );
