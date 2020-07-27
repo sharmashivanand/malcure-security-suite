@@ -13,7 +13,7 @@
  * Version:     0.3
  * Author:      malCure
  * Author URI:  https://malcure.com
- * Text Domain: malcure
+ * Text Domain: malcure-security-suite
  * License:     MIT
  * License URI: https://opensource.org/licenses/MIT
  * Plugin URI:  https://malcure.com/
@@ -143,7 +143,7 @@ final class malCure_security_suite {
 			<div class="container">
 			<?php
 			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-			var_dump( malCure_Utils::fetch_definitions() );
+			
 			if ( ! malCure_Utils::is_registered() ) {
 				$current_user = wp_get_current_user();
 				?>
@@ -213,7 +213,7 @@ final class malCure_security_suite {
 				<?php $this->mss_system_status(); ?>
 				<?php
 			}
-
+			//var_dump( malCure_Utils::fetch_definitions() );
 			?>
 				
 			</div> <!-- / .container -->

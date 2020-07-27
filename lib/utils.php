@@ -101,6 +101,7 @@ class malCure_Utils {
 	}
 
 	static function get_plugin_data() {
+		
 		return get_plugin_data( MSS_FILE, false, false );
 	}
 
