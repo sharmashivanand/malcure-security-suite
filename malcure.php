@@ -27,7 +27,9 @@ if ( ! defined( 'MSS_GOD' ) ) {
 }
 
 define( 'MSS_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'MSS_FILE', __FILE__ );
 define( 'MSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'MSS_API_EP', 'https://wp-malware-removal.com/' );
 
 final class malCure_security_suite {
 
@@ -51,10 +53,11 @@ final class malCure_security_suite {
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
 
 		include_once $this->dir . 'lib/utils.php';
-
-		include_once $this->dir . 'classes/integrity.php';
-		include_once $this->dir . 'classes/malware_scanner.php';
-		include_once $this->dir . 'classes/salt-shuffler.php';
+		if ( malCure_Utils::is_registered() ) {
+			include_once $this->dir . 'classes/integrity.php';
+			include_once $this->dir . 'classes/malware_scanner.php';
+			include_once $this->dir . 'classes/salt-shuffler.php';
+		}
 
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
 
@@ -65,6 +68,35 @@ final class malCure_security_suite {
 
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 
+		add_action( 'wp_ajax_mss_api_register', array( $this, 'mss_api_register_handler' ) );
+		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
+
+	}
+
+	function mss_api_register_handler() {
+		check_ajax_referer( 'mss_api_register', 'mss_api_register_nonce' );
+
+		$user = $_REQUEST['user'];
+
+		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
+		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
+
+		if ( empty( $user['fn'] ) ) {
+			wp_send_json_error( 'Invalid firstname.' );
+		}
+		if ( empty( $user['fn'] ) ) {
+			wp_send_json_error( 'Invalid lastname.' );
+		}
+		if ( ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
+			wp_send_json_error( 'Invalid email.' );
+		}
+
+		$registration = malCure_Utils::do_mss_api_register( $user );
+		if ( is_wp_error( $registration ) ) {
+			wp_send_json_error( $registration->get_error_message() );
+		}
+		wp_send_json_success( $registration );
+		wp_send_json_success( malCure_Utils::encode( malCure_Utils::get_plugin_data() ) );
 	}
 
 	function admin_inline_style() {
@@ -109,15 +141,83 @@ final class malCure_security_suite {
 		<div class="wrap">
 		<h1>malCure Security Suite</h1>
 			<div class="container">
-			<?php echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>'; ?>
+			<?php
+			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
+			var_dump( malCure_Utils::fetch_definitions() );
+			if ( ! malCure_Utils::is_registered() ) {
+				$current_user = wp_get_current_user();
+				?>
+				<h3>You have successfully installed malCure Security Suite</h3>
+				<p>Submit the following information to download free anti-virus definitions and malCure rules.</p>
+				<p><label><strong>First Name:</strong><br />
+				<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
+				<p><label><strong>Last Name:</strong><br />
+				<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
+				<p><label><strong>Email:</strong><br />
+				<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
+				<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
+				<a href="#" class="button-primary" id="mss_api_register_btn" role="button">Next&nbsp;&rarr;</a>
+				<script type="text/javascript">
+				jQuery(document).ready(function($){
+					$("#mss_api_register_btn").click(function(){
+						mss_api_register = {
+							mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
+							action: "mss_api_register",
+							user: {
+								fn: $('#mss_user_fname').val(),
+								ln: $('#mss_user_lname').val(),
+								email: $('#mss_user_email').val(),
+							}
+							//cachebust: Date.now(), // 
+						};
+						//$("#mss_scan").fadeTo("slow",.1,);
+						$.ajax({
+							url: ajaxurl,
+							method: 'POST',
+							data: mss_api_register,
+							success: function(response_data, textStatus, jqXHR) {
+								console.dir(response_data);
+								if ((typeof response_data) != 'object') { // is the server not sending us JSON?
+									//response = JSON.parse( response );
+								}
+								if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
+									location.reload();
+								} else { // perhaps this is just JSON without a success object
+									alert('Failed to register with API. Error: ' + response_data.data );
+								}
+							},
+							error: function( jqXHR, textStatus, errorThrown){
+								// console.dir('error Data Begins');
+								// console.dir(jqXHR);
+								// console.dir(textStatus);
+								// console.dir(errorThrown);
+								// console.dir('error Data Ends');
+							},
+							complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
+								// console.dir('complete Data Begins');
+								// console.dir(jqXHR_data);
+								// console.dir(textStatus);
+								// console.dir('complete Data Ends');
+								// // a good JSON response may have status: 200, statusText: "success", responseJSON (object)
+							},
+						});
+					});
+				});
+				</script>
+				<?php
+			} else {
+				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
-			</div>
-			<div class="container">
 				<h2>System Status</h2>
 				<?php $this->mss_system_status(); ?>
-			</div>
-		</div>
+				<?php
+			}
+
+			?>
+				
+			</div> <!-- / .container -->
+		</div> <!-- / .wrap -->
 		<?php
 	}
 
