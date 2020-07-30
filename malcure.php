@@ -206,6 +206,8 @@ final class malCure_security_suite {
 				</script>
 				<?php
 			} else {
+				//var_dump( malCure_Utils::update_definitions() );
+				malCure_Utils::llog( malCure_Utils::get_malware_db_definitions() );
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
@@ -213,7 +215,7 @@ final class malCure_security_suite {
 				<?php $this->mss_system_status(); ?>
 				<?php
 			}
-			//var_dump( malCure_Utils::fetch_definitions() );
+			
 			?>
 				
 			</div> <!-- / .container -->
@@ -367,8 +369,6 @@ final class malCure_security_suite {
 		<?php
 
 	}
-
-
 
 	function destroy_sessions() {
 		check_ajax_referer( 'malcure_destroy_sessions', 'malcure_destroy_sessions_nonce' );
@@ -1101,15 +1101,7 @@ final class malCure_security_suite {
 		}
 	}
 
-	/**
-	 * Debug function used for testing
-	 *
-	 * @param [type] $str
-	 * @return void
-	 */
-	function llog( $str ) {
-		echo '<pre>' . print_r( $str, 1 ) . '</pre>';
-	}
+	
 
 }
 

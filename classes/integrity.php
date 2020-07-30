@@ -170,10 +170,6 @@ class malCure_Integrity {
 		delete_transient( 'malcure_checksums' );
 	}
 
-	function llog( $str ) {
-		echo '<pre>' . print_r( $str, 1 ) . '</pre>';
-	}
-
 	function js() {
 		?>
 		<script type="text/javascript">

@@ -63,14 +63,6 @@ class malCure_Scanner {
 
 	}
 
-	function llog( $str, $return = false ) {
-		if ( $return ) {
-			return '<pre>' . print_r( $str, 1 ) . '</pre>';
-		} else {
-			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
-		}
-	}
-
 	function uencode( $data ) {
 		return urlencode( base64_encode( json_encode( $data ) ) );
 	}
@@ -88,6 +80,20 @@ class malCure_Utils {
 		// malCure_Utils::opt_name = 'MSS';
 	}
 
+	/**
+	 * Debug function used for testing
+	 *
+	 * @param [type] $str
+	 * @return void
+	 */
+	static function llog( $str, $return = false ) {
+		if ( $return ) {
+			return '<pre>' . print_r( $str, 1 ) . '</pre>';
+		} else {
+			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
+		}
+	}
+
 	static function is_registered() {
 		return self::get_setting( 'api-credentials' );
 	}
@@ -101,7 +107,7 @@ class malCure_Utils {
 	}
 
 	static function get_plugin_data() {
-		
+
 		return get_plugin_data( MSS_FILE, false, false );
 	}
 
@@ -192,13 +198,64 @@ class malCure_Utils {
 
 	}
 
+	static function check_definition_updates() {
+
+	}
+
+
+	/**
+	 * Gets the definitions from the database including version
+	 *
+	 * @return void
+	 */
+	static function get_definitions() {
+		return self::get_setting('definitions');
+	}
+
+	static function get_definition_version() {
+		return self::get_setting('definitions')['v'];
+	}
+
+	/**
+	 * Gets definitions excluding version
+	 *
+	 * @return void
+	 */
+	static function get_malware_definitions() {
+		return self::get_definitions()['definitions'];
+	}
+
+	/** Gets malware definitions for files only */
+	static function get_malware_file_definitions() {
+		return  self::get_malware_definitions()['files'];
+		// return $definitions['files'];
+	}
+
+	/**
+	 * Gets malware definitions for database only
+	 *
+	 * @return void
+	 */
+	static function get_malware_db_definitions() {
+		return self::get_malware_definitions()['db'];
+		//return $definitions['db'];
+	}
+
+	static function get_malware_content_definitions() {
+
+	}
+
+	static function get_firewall_definitions() {
+
+	}
+
 	/**
 	 * Fetch definitions from the api endpoint
 	 *
-	 * @return array definitions
+	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
-		//$creds = self::$creds;
+		// $creds = self::$creds;
 
 		$args          = array(
 			'cachebust'   => time(),
@@ -216,10 +273,46 @@ class malCure_Utils {
 			$state['lic'] = $lic;
 		}
 		$args['state'] = self::encode( $state );
-		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+		// return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
 
-		return wp_remote_get( MSS_API_EP, $creds );
+		$url = trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+
+		$response    = wp_safe_remote_request( $url );
+		$headers     = wp_remote_retrieve_headers( $response );
+		$status_code = wp_remote_retrieve_response_code( $response );
+		if ( 200 != $status_code ) {
+			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while fetching Update.' );
+		}
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		$body        = wp_remote_retrieve_body( $response );
+		$definitions = json_decode( $body, true );
+		if ( is_null( $definitions ) ) {
+			return new WP_Error( 'broke', 'Unparsable response in definitions.' );
+		}
+		if ( $definitions['success'] != true ) {
+			return new WP_Error( 'broke', sanitize_text_field( $definitions['data'] ) );
+		}
+		if ( ! empty( $definitions['success'] ) && $definitions['success'] == true ) {
+			$definitions = $definitions['data'];
+			return $definitions;
+		}
 	}
+
+	static function update_definitions() {
+		$definitions = self::fetch_definitions();
+
+		if ( is_wp_error( $definitions ) ) {
+			return $definitions;
+		} else {
+			self::update_setting( 'definitions', $definitions );
+			$time = date( 'U' );
+			self::update_setting( 'definitions_update_time', $time );
+			return true;
+		}
+	}
+
 
 	static function get_setting( $setting ) {
 		$settings = get_option( self::$opt_name );
