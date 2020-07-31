@@ -207,7 +207,11 @@ final class malCure_security_suite {
 				<?php
 			} else {
 				//var_dump( malCure_Utils::update_definitions() );
-				malCure_Utils::llog( malCure_Utils::get_malware_db_definitions() );
+				//malCure_Utils::llog( malCure_Utils::check_definition_updates() );
+				//malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
+				$mss_scanner = malCure_Malware_Scanner::get_instance();
+				//$mss_scanner->get_checksums();
+				$mss_scanner->mss_scan_handler();
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>

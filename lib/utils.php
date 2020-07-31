@@ -198,22 +198,17 @@ class malCure_Utils {
 
 	}
 
-	static function check_definition_updates() {
-
-	}
-
-
 	/**
 	 * Gets the definitions from the database including version
 	 *
 	 * @return void
 	 */
 	static function get_definitions() {
-		return self::get_setting('definitions');
+		return self::get_setting( 'definitions' );
 	}
 
 	static function get_definition_version() {
-		return self::get_setting('definitions')['v'];
+		return self::get_setting( 'definitions' )['v'];
 	}
 
 	/**
@@ -227,7 +222,7 @@ class malCure_Utils {
 
 	/** Gets malware definitions for files only */
 	static function get_malware_file_definitions() {
-		return  self::get_malware_definitions()['files'];
+		return self::get_malware_definitions()['files'];
 		// return $definitions['files'];
 	}
 
@@ -238,7 +233,7 @@ class malCure_Utils {
 	 */
 	static function get_malware_db_definitions() {
 		return self::get_malware_definitions()['db'];
-		//return $definitions['db'];
+		// return $definitions['db'];
 	}
 
 	static function get_malware_content_definitions() {
@@ -249,17 +244,10 @@ class malCure_Utils {
 
 	}
 
-	/**
-	 * Fetch definitions from the api endpoint
-	 *
-	 * @return array definitions or wp error
-	 */
-	static function fetch_definitions() {
-		// $creds = self::$creds;
-
+	static function get_api_url( $action ) {
 		$args          = array(
 			'cachebust'   => time(),
-			'wpmr_action' => 'update-definitions',
+			'wpmr_action' => $action,
 		);
 		$compatibility = self::get_plugin_data();
 		$state         = self::get_setting( 'api-credentials' );
@@ -275,9 +263,173 @@ class malCure_Utils {
 		$args['state'] = self::encode( $state );
 		// return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
 
-		$url = trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+	}
 
-		$response    = wp_safe_remote_request( $url );
+	/**
+	 * Meant to be run daily or on-demand. Checks for definition update from API server.
+	 *
+	 * @return void
+	 */
+	static function check_definition_updates() {
+		$response    = wp_safe_remote_request( self::get_api_url('check-definitions') );
+		$headers     = wp_remote_retrieve_headers( $response );
+		$status_code = wp_remote_retrieve_response_code( $response );
+		if ( 200 != $status_code ) {
+			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while checking definition updates.' );
+		}
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		$body    = wp_remote_retrieve_body( $response );
+		$version = json_decode( $body, true );
+		if ( is_null( $version ) ) {
+			return new WP_Error( 'broke', 'Unparsable response during definition update-check.' );
+		}
+		if ( $version['success'] != true ) {
+			return new WP_Error( 'broke', sanitize_text_field( $version['data'] ) );
+		}
+		if ( ! empty( $version['success'] ) && $version['success'] == true ) {
+			$version = $version['data'];
+			$time    = date( 'U' );
+			self::update_setting( 'update-version', $version );
+			return $version;
+		}
+	}
+
+	static function definition_updates_available() {
+		$current = self::get_definition_version();
+		$new     = self::get_setting( 'update-version' );
+		return $new;
+		if ( empty( $new ) ) {
+			$new = self::check_definition_updates();
+			if ( is_wp_error( $new ) ) {
+				return $new;
+			}
+		}
+		if ( $current != $new ) {
+			return array(
+				'new'     => $new,
+				'current' => $current,
+			);
+		}
+	}
+
+	static function get_checksums() {
+		// $checksums = $cached ? get_transient( 'WPMR_checksums' ) : false;
+		$checksums = self::get_setting( 'checksums' );
+		if ( ! $checksums ) {
+			global $wp_version;
+			$checksums = get_core_checksums( $wp_version, get_locale() );
+			if ( ! $checksums ) { // get_core_checksums failed
+				$checksums = array();
+			}
+			$plugin_checksums = self::get_plugin_checksums();
+			if ( $plugin_checksums ) {
+				$checksums = array_merge( $checksums, $plugin_checksums );
+			}
+			if ( $checksums ) {
+				self::update_setting( 'checksums', $checksums );
+				return apply_filters( 'mss_checksums', $checksums );
+			}
+			return apply_filters( 'mss_checksums', array() );
+		} else {
+			return apply_filters( 'mss_checksums', $checksums );
+		}
+	}
+
+	static function get_plugin_checksums() {
+		$missing          = array();
+		$all_plugins      = get_plugins();
+		$install_path     = get_home_path();
+		$plugin_checksums = array();
+		foreach ( $all_plugins as $key => $value ) {
+			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
+				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
+				$plugin_file  = str_replace( $install_path, '', $plugin_file );
+				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
+				$checksum     = wp_safe_remote_get( $checksum_url );
+				if ( is_wp_error( $checksum ) ) {
+					continue;
+				}
+
+				if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
+					if ( '404' == wp_remote_retrieve_response_code( $checksum ) ) {
+						$missing[ $key ] = array( 'Version' => $value['Version'] );
+					}
+					continue;
+				}
+				$checksum = wp_remote_retrieve_body( $checksum );
+				$checksum = json_decode( $checksum, true );
+				if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
+					$checksum = $checksum['files'];
+					foreach ( $checksum as $file => $checksums ) {
+						$plugin_checksums[ trailingslashit( dirname( $plugin_file ) ) . $file ] = $checksums['md5'];
+					}
+				}
+			} else {
+			}
+		}
+		$extras = self::get_pro_checksums( $missing );
+		if ( $extras ) {
+			$plugin_checksums = array_merge( $plugin_checksums, $extras );
+		}
+		return $plugin_checksums;
+	}
+
+	static function get_pro_checksums( $missing ) {
+		if ( empty( $missing ) ) {
+			return;
+		}
+		if ( ! self::is_registered() ) {
+			return;
+		}
+		$state            = self::get_setting( 'user' );
+		$state            = self::encode( $state );
+		$all_plugins      = $missing;
+		$install_path     = get_home_path();
+		$plugin_checksums = array();
+		foreach ( $all_plugins as $key => $value ) {
+			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
+				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
+				$plugin_file  = str_replace( $install_path, '', $plugin_file );
+				$checksum_url = self::get_api_url('wpmr_checksum') ;
+				$checksum_url = add_query_arg( array(
+					'slug' => dirname( $key ),
+					'version' => $value['Version'],
+					'type' => 'plugin',
+				), 'http://example.com' );
+
+				$checksum = wp_safe_remote_get( $checksum_url );
+				if ( is_wp_error( $checksum ) ) {
+					continue;
+				}
+				if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
+					continue;
+				}
+				$checksum = wp_remote_retrieve_body( $checksum );
+				$checksum = json_decode( $checksum, true );
+				if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
+					$checksum = $checksum['files'];
+					foreach ( $checksum as $file => $checksums ) {
+						$plugin_checksums[ trailingslashit( dirname( $plugin_file ) ) . $file ] = $checksums['md5'];
+					}
+				}
+			} else {
+			}
+		}
+		return $plugin_checksums;
+	}
+
+	/**
+	 * Fetch definitions from the api endpoint
+	 *
+	 * @return array definitions or wp error
+	 */
+	static function fetch_definitions() {
+		// $creds = self::$creds;
+
+		$response    = wp_safe_remote_request( self::get_api_url('update-definitions') );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
