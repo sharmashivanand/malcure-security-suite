@@ -143,7 +143,7 @@ final class malCure_security_suite {
 			<div class="container">
 			<?php
 			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-			
+
 			if ( ! malCure_Utils::is_registered() ) {
 				$current_user = wp_get_current_user();
 				?>
@@ -206,12 +206,25 @@ final class malCure_security_suite {
 				</script>
 				<?php
 			} else {
-				//var_dump( malCure_Utils::update_definitions() );
-				//malCure_Utils::llog( malCure_Utils::check_definition_updates() );
-				//malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
+				// var_dump( malCure_Utils::update_definitions() );
+				// malCure_Utils::llog( malCure_Utils::check_definition_updates() );
+				// malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
 				$mss_scanner = malCure_Malware_Scanner::get_instance();
-				//$mss_scanner->get_checksums();
+				// $mss_scanner->get_checksums();
+
+				// $start_time = microtime( true );
+				// malCure_Utils::delete_setting( 'malware-signatures-clone');
+				// $sigs = malCure_Utils::get_setting( 'malware-signatures' );
+				// $res  = malCure_Utils::update_setting( 'malware-signatures-clone', $sigs );
+				// $end_time       = microtime( true );
+				// $execution_time = ( $end_time - $start_time );
+				// echo 'Took ' . ($execution_time)  . 'ms or ' . human_time_diff( $start_time, $end_time );
+				// var_dump( $res );
+
 				$mss_scanner->mss_scan_handler();
+
+				// var_dump(  $mss_scanner->in_core_dir('/_extvol_data/html/dev/plugindev/wp-content/index.php') );
+				//malCure_Utils::llog( $mss_scanner->get_files() );
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
@@ -219,7 +232,7 @@ final class malCure_security_suite {
 				<?php $this->mss_system_status(); ?>
 				<?php
 			}
-			
+
 			?>
 				
 			</div> <!-- / .container -->
@@ -1105,7 +1118,7 @@ final class malCure_security_suite {
 		}
 	}
 
-	
+
 
 }
 

@@ -9,6 +9,9 @@ class malCure_Scanner {
 	 */
 	function __construct( $arrCreds = false ) {
 		$this->set_api( $arrCreds ); // do we need this?
+		$this->filemaxsize = 10800000;
+
+		add_filter( 'mc_is_valid_file', array( $this, 'check_valid_file' ), 10, 2 );
 	}
 
 	/**
@@ -26,33 +29,113 @@ class malCure_Scanner {
 	}
 
 	function get_definitions() {
-		$definitions = malCure_Utils::get_setting( 'malware-signatures' );
-		if ( ! $definitions ) {
-
+		$definitions = malCure_Utils::get_malware_definitions();
+		if ( $definitions ) {
+			return $definitions;
 		}
 	}
 
-	function get_files( $path ) {
-		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
-
-		$nbfiles = 0;
-		foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
-
-			$nbfiles++;
-			$files[] = $filename;
-		}
-		return array(
-			'total_files' => $nbfiles,
-			'files'       => $files,
-		);
+	function get_files( $path = false ) {
+		return malCure_Utils::get_files();
 	}
 
 	function scan_files( $arrFiles ) {
+		$start_time = microtime( true );
+		$checksums = $this->get_checksums();
+		$files     = malCure_Utils::get_files();
+
+		if ( ! empty( $files['files'] ) ) {
+			$files = $files['files'];
+		} else {
+			throw new Exception( 'Scanner could not generate a list of files.' );
+		}
+
+		$mc_scan_tracker = time();
+		malCure_Utils::update_setting( 'mc_scan_tracker', $mc_scan_tracker );
+
+		foreach ( $files as $file ) {
+
+			set_time_limit( 1 );
+			// malCure_Utils::llog( $file );
+
+			if ( array_key_exists( $file, $checksums ) ) {  // we have a checksum
+				if ( $checksums[ $file ] !== md5_file( $file ) ) {
+					$this->scan_processor( $file, 'file' );
+				}
+			} else { // we don't have a checksum
+				$this->scan_processor( $file, 'file' );
+			}
+			// $this->flog( ini_get( 'max_execution_time' ) );
+		}
+
+		malCure_Utils::delete_setting( 'mc_scan_tracker' );
+
+		$end_time       = microtime( true );
+		$execution_time = ( $end_time - $start_time );
+		$this->flog( 'Execution Time: ' . human_time_diff( $start_time, $end_time ) );
+		// wp_send_json( $_REQUEST );
+		// wp_send_json_error( $_REQUEST );
+		wp_send_json_success(
+			array(
+				'checksums' => $checksums,
+				'files'     => $files,
+			)
+		);
+	}
+
+	/**
+	 * Returns status of a scanned file
+	 *
+	 * @param [type] $file
+	 * @return array
+	 *  (
+	 *      'severity' => clean || unknown || mismatch || suspicious || infected    // This can be used to identify the severity of the infection
+	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
+	 */
+	function scan_file( $file ) {
+
+		if ( $this->is_valid_file( $file ) ) {
+			$status = array(
+				'severity' => '',
+				'label'    => '',
+			);
+
+			if ( $this->in_core_dir( $file ) ) { // since we are scanning this file
+
+			}
+			$definitions = self::get_definitions();
+
+		}
+	}
+
+	/**
+	 * Checks if a file is inside WP core directories ( inside wp-admin or wp-includes)
+	 *
+	 * @param [type] $file
+	 * @return true if file is inside one of core directories false otherwise
+	 */
+	function in_core_dir( $file ) {
+
+		if ( strpos( $file, get_home_path() . 'wp-admin/' ) === false && strpos( $file, get_home_path() . 'wp-includes/' ) === false ) { // if the file is inside wp-admin
+			return false;
+		}
+		return true;
+	}
+
+	function is_valid_file( $file ) {
+
+		return apply_filters( 'mc_is_valid_file', false, $file );
 
 	}
 
-	function scan_file( $file ) {
-
+	function check_valid_file( $valid, $file ) {
+		if ( file_exists( $file ) &&
+			is_file( $file ) &&
+			filesize( $file ) <= $this->filemaxsize
+			) {
+			return true;
+		}
+		return false;
 	}
 
 	function scan_contents( $arrContents ) {
@@ -124,6 +207,9 @@ class malCure_Utils {
 			$nbfiles++;
 			$files[] = $filename;
 		}
+
+		sort( $files );
+
 		return array(
 			'total_files' => $nbfiles,
 			'files'       => $files,
@@ -272,7 +358,7 @@ class malCure_Utils {
 	 * @return void
 	 */
 	static function check_definition_updates() {
-		$response    = wp_safe_remote_request( self::get_api_url('check-definitions') );
+		$response    = wp_safe_remote_request( self::get_api_url( 'check-definitions' ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
@@ -393,12 +479,15 @@ class malCure_Utils {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
 				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
-				$checksum_url = self::get_api_url('wpmr_checksum') ;
-				$checksum_url = add_query_arg( array(
-					'slug' => dirname( $key ),
-					'version' => $value['Version'],
-					'type' => 'plugin',
-				), 'http://example.com' );
+				$checksum_url = self::get_api_url( 'wpmr_checksum' );
+				$checksum_url = add_query_arg(
+					array(
+						'slug'    => dirname( $key ),
+						'version' => $value['Version'],
+						'type'    => 'plugin',
+					),
+					'http://example.com'
+				);
 
 				$checksum = wp_safe_remote_get( $checksum_url );
 				if ( is_wp_error( $checksum ) ) {
@@ -429,7 +518,7 @@ class malCure_Utils {
 	static function fetch_definitions() {
 		// $creds = self::$creds;
 
-		$response    = wp_safe_remote_request( self::get_api_url('update-definitions') );
+		$response    = wp_safe_remote_request( self::get_api_url( 'update-definitions' ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
