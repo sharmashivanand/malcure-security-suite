@@ -1,5 +1,6 @@
 <?php
 
+// Extensible class that handles malware scan processing
 class malCure_Scanner {
 
 	/**
@@ -39,10 +40,10 @@ class malCure_Scanner {
 		return malCure_Utils::get_files();
 	}
 
-	function scan_files( $arrFiles ) {
+	function scan_files( $arrFiles = array() ) {
 		$start_time = microtime( true );
-		$checksums = $this->get_checksums();
-		$files     = malCure_Utils::get_files();
+		$checksums  = $this->get_checksums();
+		$files      = malCure_Utils::get_files();
 
 		if ( ! empty( $files['files'] ) ) {
 			$files = $files['files'];
@@ -54,10 +55,8 @@ class malCure_Scanner {
 		malCure_Utils::update_setting( 'mc_scan_tracker', $mc_scan_tracker );
 
 		foreach ( $files as $file ) {
-
 			set_time_limit( 1 );
 			// malCure_Utils::llog( $file );
-
 			if ( array_key_exists( $file, $checksums ) ) {  // we have a checksum
 				if ( $checksums[ $file ] !== md5_file( $file ) ) {
 					$this->scan_processor( $file, 'file' );
@@ -67,9 +66,7 @@ class malCure_Scanner {
 			}
 			// $this->flog( ini_get( 'max_execution_time' ) );
 		}
-
 		malCure_Utils::delete_setting( 'mc_scan_tracker' );
-
 		$end_time       = microtime( true );
 		$execution_time = ( $end_time - $start_time );
 		$this->flog( 'Execution Time: ' . human_time_diff( $start_time, $end_time ) );
@@ -81,6 +78,58 @@ class malCure_Scanner {
 				'files'     => $files,
 			)
 		);
+	}
+
+	function scan_processor( $data, $type ) {
+
+		$start_time = microtime( true );
+		$args       = array(
+			'blocking' => true,
+			'timeout'  => 1,
+			'body'     => array(
+				'action'          => 'mss_malware_scan',
+				'data'            => $data,
+				'type'            => $type,
+				'mc_scan_tracker' => malCure_Utils::get_setting( 'mc_scan_tracker' ),
+			),
+		);
+		// malCure_Utils::llog( $args );
+		$response = wp_remote_post(
+			admin_url( 'admin-ajax.php' ),
+			$args
+		);
+
+		// ----------
+
+		$status_code = wp_remote_retrieve_response_code( $response );
+		if ( 200 != $status_code ) {
+			// return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while checking definition updates.' );
+			malCure_Utils::llog( 'Status Code Error: ' . $status_code );
+		}
+		if ( is_wp_error( $response ) ) {
+			// return $response;
+			malCure_Utils::llog( $response->get_error_message() );
+		}
+		$body = wp_remote_retrieve_body( $response );
+
+		$scan_result = json_decode( $body, true );
+		if ( is_null( $scan_result ) ) {
+			malCure_Utils::llog( 'Unparsable scan result.' );
+			// return new WP_Error( 'broke', 'Unparsable scan result.' );
+		}
+
+		if ( $scan_result['success'] != true ) {
+			malCure_Utils::llog( sanitize_text_field( $scan_result['data'] ) );
+			// return new WP_Error( 'broke', sanitize_text_field( $scan_result['data'] ) );
+		}
+		if ( ! empty( $scan_result['success'] ) && $scan_result['success'] == true ) {
+			$scan_result = $scan_result['data'];
+			// $time    = date( 'U' );
+			// self::update_setting( 'update-version', $scan_result );
+			// malCure_Utils::llog( $scan_result );
+		}
+		$end_time = microtime( true );
+		$this->flog( 'Execution Time: of file ' . $data . "\n" . ( $end_time - $start_time ) );
 	}
 
 	/**
@@ -128,10 +177,14 @@ class malCure_Scanner {
 
 	}
 
+	/**
+	 * Check if file is a valid file
+	 * DO NOT CHECK is_readable here; if ! is_readable then we want to log as error somewhere else.
+	 */
 	function check_valid_file( $valid, $file ) {
-		if ( file_exists( $file ) &&
-			is_file( $file ) &&
-			filesize( $file ) <= $this->filemaxsize
+		if ( file_exists( $file ) && // Check if file or dir exists
+			is_file( $file ) && // Check if is actually a file
+			filesize( $file ) <= $this->filemaxsize // Check if file-size qualifies
 			) {
 			return true;
 		}
@@ -151,11 +204,14 @@ class malCure_Scanner {
 	}
 
 	function udecode( $data ) {
-		return urldecode( base64_decode( urldecode( $data ) ) );
+		return json_decode( base64_decode( urldecode( $data ) ), 1 );
 	}
 
 }
 
+/**
+ * Common utility functions
+ */
 class malCure_Utils {
 	static $opt_name = 'MSS';
 
@@ -177,6 +233,23 @@ class malCure_Utils {
 		}
 	}
 
+	/**
+	 * Log error
+	 *
+	 * @param [type]  $err | Whatever error message
+	 * @param [type]  $description: Where did this occur, how, when
+	 * @param boolean $return
+	 * @return void
+	 */
+	static function elog( $how_when_where, $msg, $return = false ) {
+		self::append_err( $how_when_where, $msg );
+		if ( $return ) {
+			return '<pre>' . print_r( $str, 1 ) . '</pre>';
+		} else {
+			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
+		}
+	}
+
 	static function is_registered() {
 		return self::get_setting( 'api-credentials' );
 	}
@@ -190,28 +263,30 @@ class malCure_Utils {
 	}
 
 	static function get_plugin_data() {
-
+		if ( ! function_exists( 'get_plugin_data' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
 		return get_plugin_data( MSS_FILE, false, false );
 	}
 
+	/**
+	 * Returns all files at the specified path
+	 *
+	 * @param boolean $path
+	 * @return array, file-paths and file-count
+	 */
 	static function get_files( $path = false ) {
-
 		if ( ! $path ) {
 			$path = ABSPATH;
 		}
-
 		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
-		$nbfiles  = 0;
 		$files    = array();
 		foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
-			$nbfiles++;
 			$files[] = $filename;
 		}
-
 		sort( $files );
-
 		return array(
-			'total_files' => $nbfiles,
+			'total_files' => count( $files ),
 			'files'       => $files,
 		);
 	}
@@ -222,15 +297,13 @@ class malCure_Utils {
 	 * @return mixed data or wp_error
 	 */
 	static function do_mss_api_register( $user ) {
-
 		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
 		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
 		if ( empty( $user['fn'] ) || empty( $user['ln'] ) || ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
 			return;
 		}
-
 		global $wp_version;
-		$data = self::encode(
+		$data     = self::encode(
 			array(
 				'user' => $user,
 				'diag' => array(
@@ -243,8 +316,7 @@ class malCure_Utils {
 				),
 			)
 		);
-
-		$url = add_query_arg(
+		$url      = add_query_arg(
 			'wpmr_action',
 			'wpmr_register',
 			add_query_arg(
@@ -253,14 +325,12 @@ class malCure_Utils {
 				add_query_arg( 'reg_details', $data, MSS_API_EP )
 			)
 		);
-
 		$response = wp_safe_remote_request(
 			$url,
 			array(
 				'blocking' => true,
 			)
 		);
-
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}
@@ -279,9 +349,7 @@ class malCure_Utils {
 		} else {
 			return new WP_Error( 'broke', 'API server didn\'t register. Please try again later.' );
 		}
-
 		return new WP_Error( 'broke', 'Uncaught error in ' . __FUNCTION__ . '.' );
-
 	}
 
 	/**
@@ -298,7 +366,7 @@ class malCure_Utils {
 	}
 
 	/**
-	 * Gets definitions excluding version
+	 * Gets all definitions excluding version
 	 *
 	 * @return void
 	 */
@@ -306,7 +374,9 @@ class malCure_Utils {
 		return self::get_definitions()['definitions'];
 	}
 
-	/** Gets malware definitions for files only */
+	/**
+	 * Gets malware definitions for files only
+	 */
 	static function get_malware_file_definitions() {
 		return self::get_malware_definitions()['files'];
 		// return $definitions['files'];
@@ -319,18 +389,37 @@ class malCure_Utils {
 	 */
 	static function get_malware_db_definitions() {
 		return self::get_malware_definitions()['db'];
-		// return $definitions['db'];
 	}
 
+	/**
+	 * For future, match malware in user content like post content, urls etc.?
+	 *
+	 * @return array
+	 */
 	static function get_malware_content_definitions() {
 
 	}
 
+	/**
+	 * Get firewall rules
+	 *
+	 * @return array
+	 */
 	static function get_firewall_definitions() {
 
 	}
 
+	/**
+	 * Returns full URL to API Endpoint for the requested action
+	 */
 	static function get_api_url( $action ) {
+		return self::build_api_url( $action );
+	}
+
+	/**
+	 * Builds full URL to API Endpoint for the requested action
+	 */
+	static function build_api_url( $action ) {
 		$args          = array(
 			'cachebust'   => time(),
 			'wpmr_action' => $action,
@@ -348,8 +437,31 @@ class malCure_Utils {
 		}
 		$args['state'] = self::encode( $state );
 		// return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
-
 		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+	}
+
+	/**
+	 * Check for definition updates
+	 *
+	 * @return array of new and current defition versions | WP_Error
+	 */
+	static function definition_updates_available() {
+		$current = self::get_definition_version();
+		$new     = self::get_setting( 'update-version' );
+		return $new;
+		if ( empty( $new ) ) {
+			$new = self::check_definition_updates();
+			if ( is_wp_error( $new ) ) {
+				return $new;
+			}
+		}
+		if ( $current != $new ) {
+			return array(
+				'new'     => $new,
+				'current' => $current,
+			);
+		}
+		return false;
 	}
 
 	/**
@@ -383,24 +495,11 @@ class malCure_Utils {
 		}
 	}
 
-	static function definition_updates_available() {
-		$current = self::get_definition_version();
-		$new     = self::get_setting( 'update-version' );
-		return $new;
-		if ( empty( $new ) ) {
-			$new = self::check_definition_updates();
-			if ( is_wp_error( $new ) ) {
-				return $new;
-			}
-		}
-		if ( $current != $new ) {
-			return array(
-				'new'     => $new,
-				'current' => $current,
-			);
-		}
-	}
-
+	/**
+	 * Gets WordPress Core and plugin checksums
+	 *
+	 * @return array
+	 */
 	static function get_checksums() {
 		// $checksums = $cached ? get_transient( 'WPMR_checksums' ) : false;
 		$checksums = self::get_setting( 'checksums' );
@@ -408,7 +507,10 @@ class malCure_Utils {
 			global $wp_version;
 			$checksums = get_core_checksums( $wp_version, get_locale() );
 			if ( ! $checksums ) { // get_core_checksums failed
-				$checksums = array();
+				$checksums = get_core_checksums( $wp_version, 'en_US' ); // try en_US locale
+				if ( ! $checksums ) {
+					$checksums = array(); // fallback to empty array
+				}
 			}
 			$plugin_checksums = self::get_plugin_checksums();
 			if ( $plugin_checksums ) {
@@ -463,6 +565,9 @@ class malCure_Utils {
 		return $plugin_checksums;
 	}
 
+	/**
+	 * Gets checksums of premium versions from API server
+	 */
 	static function get_pro_checksums( $missing ) {
 		if ( empty( $missing ) ) {
 			return;
@@ -511,13 +616,28 @@ class malCure_Utils {
 	}
 
 	/**
+	 * Update definitions from API server
+	 */
+	static function update_definitions() {
+		$definitions = self::fetch_definitions();
+
+		if ( is_wp_error( $definitions ) ) {
+			return $definitions;
+		} else {
+			self::update_setting( 'definitions', $definitions );
+			$time = date( 'U' );
+			self::update_setting( 'definitions_update_time', $time );
+			return true;
+		}
+	}
+
+	/**
 	 * Fetch definitions from the api endpoint
 	 *
 	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
 		// $creds = self::$creds;
-
 		$response    = wp_safe_remote_request( self::get_api_url( 'update-definitions' ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
@@ -541,20 +661,6 @@ class malCure_Utils {
 		}
 	}
 
-	static function update_definitions() {
-		$definitions = self::fetch_definitions();
-
-		if ( is_wp_error( $definitions ) ) {
-			return $definitions;
-		} else {
-			self::update_setting( 'definitions', $definitions );
-			$time = date( 'U' );
-			self::update_setting( 'definitions_update_time', $time );
-			return true;
-		}
-	}
-
-
 	static function get_setting( $setting ) {
 		$settings = get_option( self::$opt_name );
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
@@ -566,7 +672,6 @@ class malCure_Utils {
 			$settings = array();
 		}
 		$settings[ $setting ] = $value;
-
 		return update_option( self::$opt_name, $settings );
 	}
 
@@ -577,6 +682,19 @@ class malCure_Utils {
 		}
 		unset( $settings[ $setting ] );
 		update_option( self::$opt_name, $settings );
+	}
+
+	static function append_err( $how_when_where, $msg = '' ) {
+		$errors = self::get_setting( 'errors' );
+		if ( ! $errors ) {
+			$errors = array();
+		}
+		$errors[ time() ] = array(
+			'how' => $how_when_where,
+			'msg' => $msg,
+		);
+		asort( $errors );
+		return update_setting( 'errors', $errors );
 	}
 
 }
