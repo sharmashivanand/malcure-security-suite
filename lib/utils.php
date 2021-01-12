@@ -40,97 +40,7 @@ class malCure_Scanner {
 		return malCure_Utils::get_files();
 	}
 
-	function scan_files( $arrFiles = array() ) {
-		$start_time = microtime( true );
-		$checksums  = $this->get_checksums();
-		$files      = malCure_Utils::get_files();
-
-		if ( ! empty( $files['files'] ) ) {
-			$files = $files['files'];
-		} else {
-			throw new Exception( 'Scanner could not generate a list of files.' );
-		}
-
-		$mc_scan_tracker = time();
-		malCure_Utils::update_setting( 'mc_scan_tracker', $mc_scan_tracker );
-
-		foreach ( $files as $file ) {
-			set_time_limit( 1 );
-			// malCure_Utils::llog( $file );
-			if ( array_key_exists( $file, $checksums ) ) {  // we have a checksum
-				if ( $checksums[ $file ] !== md5_file( $file ) ) {
-					$this->scan_processor( $file, 'file' );
-				}
-			} else { // we don't have a checksum
-				$this->scan_processor( $file, 'file' );
-			}
-			// $this->flog( ini_get( 'max_execution_time' ) );
-		}
-		malCure_Utils::delete_setting( 'mc_scan_tracker' );
-		$end_time       = microtime( true );
-		$execution_time = ( $end_time - $start_time );
-		$this->flog( 'Execution Time: ' . human_time_diff( $start_time, $end_time ) );
-		// wp_send_json( $_REQUEST );
-		// wp_send_json_error( $_REQUEST );
-		wp_send_json_success(
-			array(
-				'checksums' => $checksums,
-				'files'     => $files,
-			)
-		);
-	}
-
-	function scan_processor( $data, $type ) {
-
-		$start_time = microtime( true );
-		$args       = array(
-			'blocking' => true,
-			'timeout'  => 1,
-			'body'     => array(
-				'action'          => 'mss_malware_scan',
-				'data'            => $data,
-				'type'            => $type,
-				'mc_scan_tracker' => malCure_Utils::get_setting( 'mc_scan_tracker' ),
-			),
-		);
-		// malCure_Utils::llog( $args );
-		$response = wp_remote_post(
-			admin_url( 'admin-ajax.php' ),
-			$args
-		);
-
-		// ----------
-
-		$status_code = wp_remote_retrieve_response_code( $response );
-		if ( 200 != $status_code ) {
-			// return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while checking definition updates.' );
-			malCure_Utils::llog( 'Status Code Error: ' . $status_code );
-		}
-		if ( is_wp_error( $response ) ) {
-			// return $response;
-			malCure_Utils::llog( $response->get_error_message() );
-		}
-		$body = wp_remote_retrieve_body( $response );
-
-		$scan_result = json_decode( $body, true );
-		if ( is_null( $scan_result ) ) {
-			malCure_Utils::llog( 'Unparsable scan result.' );
-			// return new WP_Error( 'broke', 'Unparsable scan result.' );
-		}
-
-		if ( $scan_result['success'] != true ) {
-			malCure_Utils::llog( sanitize_text_field( $scan_result['data'] ) );
-			// return new WP_Error( 'broke', sanitize_text_field( $scan_result['data'] ) );
-		}
-		if ( ! empty( $scan_result['success'] ) && $scan_result['success'] == true ) {
-			$scan_result = $scan_result['data'];
-			// $time    = date( 'U' );
-			// self::update_setting( 'update-version', $scan_result );
-			// malCure_Utils::llog( $scan_result );
-		}
-		$end_time = microtime( true );
-		$this->flog( 'Execution Time: of file ' . $data . "\n" . ( $end_time - $start_time ) );
-	}
+	
 
 	/**
 	 * Returns status of a scanned file
@@ -225,7 +135,10 @@ class malCure_Utils {
 	 * @param [type] $str
 	 * @return void
 	 */
-	static function llog( $str, $return = false ) {
+	static function llog( $str, $log = false, $return = false ) {
+		if ( $log ) {
+			return self::elog( $str, '', $return );
+		}
 		if ( $return ) {
 			return '<pre>' . print_r( $str, 1 ) . '</pre>';
 		} else {
@@ -248,6 +161,20 @@ class malCure_Utils {
 		} else {
 			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
 		}
+	}
+
+	/**
+	 * Log message to file
+	 */
+	static function flog( $str ) {
+		$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
+		$date = $date . '-' . microtime( true );
+		$file = MSS_DIR . 'log.log';
+		file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
+		//usleep( 1000 );
+		$str = print_r( $str, true );
+		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
+		//usleep( 1000 );
 	}
 
 	static function is_registered() {

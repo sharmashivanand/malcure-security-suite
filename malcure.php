@@ -71,8 +71,7 @@ final class malCure_security_suite {
 		add_action( 'wp_ajax_mss_api_register', array( $this, 'mss_api_register_handler' ) );
 		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
 
-		add_action( 'wp_ajax_mss_scan_init', array( $this, 'mss_scan_init' ) );
-		add_action( 'wp_ajax_nopriv_mss_scan_init', '__return_false' );
+		
 
 	}
 
@@ -139,10 +138,8 @@ final class malCure_security_suite {
 
 	}
 
-	function mss_scan_init() {
-		$mss_scanner = malCure_Malware_Scanner::get_instance();
-		$mss_scanner->mss_scan_handler();
-	}
+	
+	
 	function settings_page() {
 		?>
 		<div class="wrap">
@@ -177,7 +174,7 @@ final class malCure_security_suite {
 							}
 							//cachebust: Date.now(), // 
 						};
-						//$("#mss_scan").fadeTo("slow",.1,);
+						//$("#mss_trigger_scan").fadeTo("slow",.1,);
 						$.ajax({
 							url: ajaxurl,
 							method: 'POST',
@@ -216,15 +213,15 @@ final class malCure_security_suite {
 				// var_dump( malCure_Utils::update_definitions() );
 				// malCure_Utils::llog( malCure_Utils::check_definition_updates() );
 				// malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
-				submit_button( 'Init Scan', 'primary', 'mss_scan_init', true);
+				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true);
 
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
-				$("#mss_scan_init").click(function(){
-					mss_scan_init = {
-						mss_scan_init_nonce: '<?php echo wp_create_nonce( 'mss_scan_init' ); ?>',
-						action: "mss_scan_init",
+				$("#mss_trigger_scan").click(function(){
+					mss_trigger_scan = {
+						mss_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
+						action: "mss_trigger_scan",
 						cachebust: Date.now(),
 						user: {
 							id: <?php echo get_current_user_id(); ?>
@@ -233,7 +230,7 @@ final class malCure_security_suite {
 					$.ajax({
 						url: ajaxurl,
 						method: 'POST',
-						data: mss_scan_init,
+						data: mss_trigger_scan,
 						complete: function(jqXHR, textStatus) {
 							console.dir(jqXHR);
 						},
