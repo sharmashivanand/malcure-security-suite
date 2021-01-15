@@ -52,19 +52,42 @@ class malCure_Scanner {
 	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
 	 */
 	function scan_file( $file ) {
-
+		$ext = self::get_file_extension( $file );
 		if ( $this->is_valid_file( $file ) ) {
 			$status = array(
 				'severity' => '',
 				'label'    => '',
 			);
-
 			if ( $this->in_core_dir( $file ) ) { // since we are scanning this file
 
 			}
-			$definitions = self::get_definitions();
-
+			$definitions = self::get_malware_file_definitions();
+			foreach ( $definitions as $definition => $signature ) {
+				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
+					continue;
+				}
+				$matches  = @preg_match( $this->decode( $signature['signature'] ), $GLOBALS['WPMR']['tmp']['file_contents'], $found );
+				$pcre_err = preg_last_error();
+				if ( $pcre_err != 0 ) {
+					continue;
+				}
+				if ( $matches >= 1 ) {
+					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
+						//$this->update_setting( 'infected', true );
+					}
+					return array(
+						'id'       => $definition,
+						'severity' => $signature['severity'],
+						'info'     => $signature['severity'],
+					);
+				}
+			}
 		}
+	}
+
+	function get_file_extension( $filename ) {
+		$nameparts = explode( '.', ".$filename" );
+		return strtolower( $nameparts[ ( count( $nameparts ) - 1 ) ] );
 	}
 
 	/**
