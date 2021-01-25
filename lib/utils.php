@@ -2,6 +2,16 @@
 
 require_once 'scanner_base.php';
 
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	class MSS_CLI {
+		function dump() {
+			$scans = malCure_Utils::get_setting( 'scan' );
+			WP_CLI::log( print_r( $scans, 1 ) );
+		}
+	}
+	WP_CLI::add_command( 'mss', 'MSS_CLI' );
+}
+
 /**
  * Common utility functions
  */
@@ -491,6 +501,9 @@ class malCure_Utils {
 	}
 
 	static function delete_setting( $setting ) {
+		// if ( $setting == 'scan' ) {
+		// self::flog( debug_backtrace() );
+		// }
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();

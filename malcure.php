@@ -223,11 +223,10 @@ final class malCure_security_suite {
 				// malCure_Utils::llog( malCure_Utils::check_definition_updates() );
 				// malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
 				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
-				malCure_Utils::delete_setting( 'mc_scan_tracker' );
-
+				// malCure_Utils::delete_setting( 'mc_scan_tracker' );
 				// malCure_Utils::delete_setting( 'checksums' );
 				// malCure_Utils::delete_setting( 'scan' );
-				
+
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -309,7 +308,7 @@ final class malCure_security_suite {
 			echo '<div id="mss_debug_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
 			$opt = get_option( 'MSS' );
 			unset( $opt['definitions'] );
-			// unset($opt['checksums']);
+			unset( $opt['checksums'] );
 			malCure_Utils::llog( $opt );
 			?>
 			</div>

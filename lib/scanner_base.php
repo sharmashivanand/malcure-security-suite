@@ -62,10 +62,7 @@ class malCure_Scanner {
             if(empty($contents)){
                 die();
             }
-            $definitions = malCure_Utils::get_malware_file_definitions();
-            if ( preg_match( '/severe\.php/', $file ) ) {
-                malCure_Utils::flog( $definitions );
-            }
+            $definitions = malCure_Utils::get_malware_file_definitions();            
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;
@@ -102,7 +99,7 @@ class malCure_Scanner {
 				'info'     => '',
 			);
 		} else {
-			// malCure_Utils::flog( 'scan_file ! is_valid_file' . $file );
+			malCure_Utils::flog( 'scan_file ! is_valid_file: ' . $file );
 		}
 	}
 
