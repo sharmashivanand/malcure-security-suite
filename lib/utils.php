@@ -1,6 +1,6 @@
 <?php
 
-require_once('scanner_base.php');
+require_once 'scanner_base.php';
 
 /**
  * Common utility functions
@@ -66,11 +66,11 @@ class malCure_Utils {
 	}
 
 	static function encode( $str ) {
-		return urlencode( base64_encode( json_encode( $str ) ) );
+		return strtr( base64_encode( json_encode( $str ) ), '+/=', '-_,' );
 	}
 
 	static function decode( $str ) {
-		return json_decode( base64_decode( urldecode( $str ) ), true );
+		return json_decode( base64_decode( strtr( $str, '-_,', '+/=' ) ), true );
 	}
 
 	static function get_plugin_data() {

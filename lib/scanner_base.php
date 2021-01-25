@@ -10,7 +10,7 @@ class malCure_Scanner {
 	 * @param [type] $arrCreds
 	 */
 	function __construct( $arrCreds = false ) {
-		$this->set_api( $arrCreds ); // do we need this?		
+		$this->set_api( $arrCreds ); // do we need this?
 	}
 
 	/**
@@ -50,20 +50,27 @@ class malCure_Scanner {
 	function scan_file( $file ) {
 		$ext = self::get_file_extension( $file );
 
-		if (self::is_valid_file( $file ) ) {
+		if ( self::is_valid_file( $file ) ) {
 			$status = array(
 				'severity' => '',
 				'label'    => '',
 			);
 			if ( $this->in_core_dir( $file ) ) { // since we are scanning this file
 
-			}
-			$definitions = malCure_Utils::get_malware_file_definitions();
+            }
+            $contents = @file_get_contents( $file );
+            if(empty($contents)){
+                die();
+            }
+            $definitions = malCure_Utils::get_malware_file_definitions();
+            if ( preg_match( '/severe\.php/', $file ) ) {
+                malCure_Utils::flog( $definitions );
+            }
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;
-				}
-				$matches  = @preg_match( malCure_Utils::decode( $signature['signature'] ), $GLOBALS['WPMR']['tmp']['file_contents'], $found );
+				}				
+				$matches  = @preg_match( malCure_Utils::decode( $signature['signature'] ), $contents, $found );
 				$pcre_err = preg_last_error();
 				if ( $pcre_err != 0 ) {
 					continue;
@@ -72,6 +79,7 @@ class malCure_Scanner {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
 						// $this->update_setting( 'infected', true );
 					}
+					malCure_Utils::flog( 'INFECTED!!! ' . $file );
 					return array(
 						'id'       => $definition,
 						'severity' => $signature['severity'],
@@ -80,11 +88,20 @@ class malCure_Scanner {
 				}
 			}
 
+			// file is clean
 			$checksums = malCure_Utils::fetch_checksums();
-			$checksums[ malCure_Utils::normalize_path( $file ) ] = md5_file( $file );
+			$md5       = @md5_file( $file );
+			if ( $md5 ) {
+				$checksums[ malCure_Utils::normalize_path( $file ) ] = $md5;
+			}
+			// malCure_Utils::flog( 'GENERATING CHECKSUM FOR FILE: ' . $file );
 			malCure_Utils::update_setting( 'checksums', $checksums );
-		}
-		else {
+			return array(
+				'id'       => '',
+				'severity' => '',
+				'info'     => '',
+			);
+		} else {
 			// malCure_Utils::flog( 'scan_file ! is_valid_file' . $file );
 		}
 	}
@@ -109,9 +126,8 @@ class malCure_Scanner {
 	}
 
 	function is_valid_file( $file ) {
-		
-		
-		//return $this->check_valid_file(false, $file);
+
+		// return $this->check_valid_file(false, $file);
 		if ( file_exists( $file ) && // Check if file or dir exists
 			is_file( $file ) && // Check if is actually a file
 			filesize( $file ) <= $this->filemaxsize // Check if file-size qualifies
