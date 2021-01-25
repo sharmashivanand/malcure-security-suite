@@ -40,7 +40,7 @@ class malCure_Scanner {
 		return malCure_Utils::get_files();
 	}
 
-	
+
 
 	/**
 	 * Returns status of a scanned file
@@ -73,7 +73,7 @@ class malCure_Scanner {
 				}
 				if ( $matches >= 1 ) {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
-						//$this->update_setting( 'infected', true );
+						// $this->update_setting( 'infected', true );
 					}
 					return array(
 						'id'       => $definition,
@@ -147,6 +147,7 @@ class malCure_Scanner {
  */
 class malCure_Utils {
 	static $opt_name = 'MSS';
+	static $cap      = 'activate_plugins';
 
 	function __construct() {
 		// malCure_Utils::opt_name = 'MSS';
@@ -194,10 +195,10 @@ class malCure_Utils {
 		$date = $date . '-' . microtime( true );
 		$file = MSS_DIR . 'log.log';
 		file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
-		//usleep( 1000 );
+		// usleep( 1000 );
 		$str = print_r( $str, true );
 		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
-		//usleep( 1000 );
+		// usleep( 1000 );
 	}
 
 	static function is_registered() {
@@ -643,7 +644,11 @@ class malCure_Utils {
 			'how' => $how_when_where,
 			'msg' => $msg,
 		);
+		
 		asort( $errors );
+
+		$errors = array_slice( $errors, 0, 100 ); // limit errors to recent 100
+
 		return update_setting( 'errors', $errors );
 	}
 

@@ -35,6 +35,7 @@ final class malCure_security_suite {
 
 	public $dir;
 	public $url;
+	
 
 	static function get_instance() {
 		static $instance = null;
@@ -138,8 +139,7 @@ final class malCure_security_suite {
 
 	}
 
-	
-	
+
 	function settings_page() {
 		?>
 		<div class="wrap">
@@ -220,7 +220,7 @@ final class malCure_security_suite {
 			jQuery(document).ready(function($){
 				$("#mss_trigger_scan").click(function(){
 					mss_trigger_scan = {
-						mss_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
+						mss_trigger_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
 						action: "mss_trigger_scan",
 						cachebust: Date.now(),
 						user: {
