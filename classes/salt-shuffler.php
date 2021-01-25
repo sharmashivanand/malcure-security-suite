@@ -28,7 +28,7 @@ class malCure_Salt_Shuffler {
 			'malCure Salt Shuffler', // page_title
 			'Salt Shuffler', // menu_title
 			MSS_GOD, // capability
-			'salt_shuffler_mss',
+			'salt_shuffler_mss', // slug
 			array( $this, 'salt_shuffler_mss_page' )
 		);
 	}

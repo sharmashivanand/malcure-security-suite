@@ -35,7 +35,7 @@ final class malCure_security_suite {
 
 	public $dir;
 	public $url;
-	
+
 
 	static function get_instance() {
 		static $instance = null;
@@ -63,6 +63,7 @@ final class malCure_security_suite {
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
 
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
+		add_action( 'mss_settings_menu', array( $this, 'debug_menu' ) );
 
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
@@ -71,8 +72,6 @@ final class malCure_security_suite {
 
 		add_action( 'wp_ajax_mss_api_register', array( $this, 'mss_api_register_handler' ) );
 		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
-
-		
 
 	}
 
@@ -139,6 +138,16 @@ final class malCure_security_suite {
 
 	}
 
+	function debug_menu() {
+		add_submenu_page(
+			'_mss',  // parent_slug
+			'malCure Debug', // page_title
+			'malCure Debug', // menu_title
+			MSS_GOD, // capability
+			'debug_mss',
+			array( $this, 'debug_mss_page' )
+		);
+	}
 
 	function settings_page() {
 		?>
@@ -213,7 +222,8 @@ final class malCure_security_suite {
 				// var_dump( malCure_Utils::update_definitions() );
 				// malCure_Utils::llog( malCure_Utils::check_definition_updates() );
 				// malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
-				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true);
+				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
+				malCure_Utils::delete_setting( 'mc_scan_tracker' );
 
 				?>
 				<script type="text/javascript">
@@ -264,10 +274,10 @@ final class malCure_security_suite {
 				// echo 'Took ' . ($execution_time)  . 'ms or ' . human_time_diff( $start_time, $end_time );
 				// var_dump( $res );
 
-				//$mss_scanner->mss_scan_handler();
+				// $mss_scanner->mss_scan_handler();
 
 				// var_dump(  $mss_scanner->in_core_dir('/_extvol_data/html/dev/plugindev/wp-content/index.php') );
-				//malCure_Utils::llog( $mss_scanner->get_files() );
+				// malCure_Utils::llog( $mss_scanner->get_files() );
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
@@ -285,6 +295,23 @@ final class malCure_security_suite {
 
 	function render_branding() {
 		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
+	}
+
+	function debug_mss_page() {
+		?>
+		<div class="wrap">
+		<h1>malCure Debug</h1>
+			<div class="container">
+			<?php
+			echo '<div id="mss_debug_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
+			$opt = get_option( 'MSS' );
+			unset($opt['definitions']);
+			//unset($opt['checksums']);
+			malCure_Utils::llog( $opt );
+			?>
+			</div>
+		</div>
+		<?php
 	}
 
 	function mss_system_status() {

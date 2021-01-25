@@ -1,146 +1,6 @@
 <?php
 
-// Extensible class that handles malware scan processing
-class malCure_Scanner {
-
-	/**
-	 * Initialize with api credentials. First / Last name, email are must
-	 *
-	 * @param [type] $arrCreds
-	 */
-	function __construct( $arrCreds = false ) {
-		$this->set_api( $arrCreds ); // do we need this?
-		$this->filemaxsize = 10800000;
-
-		add_filter( 'mc_is_valid_file', array( $this, 'check_valid_file' ), 10, 2 );
-	}
-
-	/**
-	 * Set up credentials for use later
-	 *
-	 * @param [type] $creds
-	 * @return void
-	 */
-	function set_api( $creds = false ) {
-		if ( ! $creds ) {
-			return;
-		}
-		$this->creds = $creds;
-
-	}
-
-	function get_definitions() {
-		$definitions = malCure_Utils::get_malware_definitions();
-		if ( $definitions ) {
-			return $definitions;
-		}
-	}
-
-	function get_files( $path = false ) {
-		return malCure_Utils::get_files();
-	}
-
-
-
-	/**
-	 * Returns status of a scanned file
-	 *
-	 * @param [type] $file
-	 * @return array
-	 *  (
-	 *      'severity' => clean || unknown || mismatch || suspicious || infected    // This can be used to identify the severity of the infection
-	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
-	 */
-	function scan_file( $file ) {
-		$ext = self::get_file_extension( $file );
-		if ( $this->is_valid_file( $file ) ) {
-			$status = array(
-				'severity' => '',
-				'label'    => '',
-			);
-			if ( $this->in_core_dir( $file ) ) { // since we are scanning this file
-
-			}
-			$definitions = self::get_malware_file_definitions();
-			foreach ( $definitions as $definition => $signature ) {
-				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
-					continue;
-				}
-				$matches  = @preg_match( $this->decode( $signature['signature'] ), $GLOBALS['WPMR']['tmp']['file_contents'], $found );
-				$pcre_err = preg_last_error();
-				if ( $pcre_err != 0 ) {
-					continue;
-				}
-				if ( $matches >= 1 ) {
-					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
-						// $this->update_setting( 'infected', true );
-					}
-					return array(
-						'id'       => $definition,
-						'severity' => $signature['severity'],
-						'info'     => $signature['severity'],
-					);
-				}
-			}
-		}
-	}
-
-	function get_file_extension( $filename ) {
-		$nameparts = explode( '.', ".$filename" );
-		return strtolower( $nameparts[ ( count( $nameparts ) - 1 ) ] );
-	}
-
-	/**
-	 * Checks if a file is inside WP core directories ( inside wp-admin or wp-includes)
-	 *
-	 * @param [type] $file
-	 * @return true if file is inside one of core directories false otherwise
-	 */
-	function in_core_dir( $file ) {
-
-		if ( strpos( $file, get_home_path() . 'wp-admin/' ) === false && strpos( $file, get_home_path() . 'wp-includes/' ) === false ) { // if the file is inside wp-admin
-			return false;
-		}
-		return true;
-	}
-
-	function is_valid_file( $file ) {
-
-		return apply_filters( 'mc_is_valid_file', false, $file );
-
-	}
-
-	/**
-	 * Check if file is a valid file
-	 * DO NOT CHECK is_readable here; if ! is_readable then we want to log as error somewhere else.
-	 */
-	function check_valid_file( $valid, $file ) {
-		if ( file_exists( $file ) && // Check if file or dir exists
-			is_file( $file ) && // Check if is actually a file
-			filesize( $file ) <= $this->filemaxsize // Check if file-size qualifies
-			) {
-			return true;
-		}
-		return false;
-	}
-
-	function scan_contents( $arrContents ) {
-
-	}
-
-	function scan_content( $content ) {
-
-	}
-
-	function uencode( $data ) {
-		return urlencode( base64_encode( json_encode( $data ) ) );
-	}
-
-	function udecode( $data ) {
-		return json_decode( base64_decode( urldecode( $data ) ), 1 );
-	}
-
-}
+require_once('scanner_base.php');
 
 /**
  * Common utility functions
@@ -451,7 +311,7 @@ class malCure_Utils {
 	 *
 	 * @return array
 	 */
-	static function get_checksums() {
+	static function fetch_checksums() {
 		// $checksums = $cached ? get_transient( 'WPMR_checksums' ) : false;
 		$checksums = self::get_setting( 'checksums' );
 		if ( ! $checksums ) {
@@ -463,7 +323,7 @@ class malCure_Utils {
 					$checksums = array(); // fallback to empty array
 				}
 			}
-			$plugin_checksums = self::get_plugin_checksums();
+			$plugin_checksums = self::fetch_plugin_checksums();
 			if ( $plugin_checksums ) {
 				$checksums = array_merge( $checksums, $plugin_checksums );
 			}
@@ -477,7 +337,7 @@ class malCure_Utils {
 		}
 	}
 
-	static function get_plugin_checksums() {
+	static function fetch_plugin_checksums() {
 		$missing          = array();
 		$all_plugins      = get_plugins();
 		$install_path     = get_home_path();
@@ -514,6 +374,10 @@ class malCure_Utils {
 			$plugin_checksums = array_merge( $plugin_checksums, $extras );
 		}
 		return $plugin_checksums;
+	}
+
+	static function normalize_path( $file_path ) {
+		return str_replace( get_home_path(), '', $file_path );
 	}
 
 	/**
@@ -644,7 +508,7 @@ class malCure_Utils {
 			'how' => $how_when_where,
 			'msg' => $msg,
 		);
-		
+
 		asort( $errors );
 
 		$errors = array_slice( $errors, 0, 100 ); // limit errors to recent 100
