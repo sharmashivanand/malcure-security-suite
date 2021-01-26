@@ -223,9 +223,10 @@ final class malCure_security_suite {
 				// malCure_Utils::llog( malCure_Utils::check_definition_updates() );
 				// malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
 				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
-				// malCure_Utils::delete_setting( 'mc_scan_tracker' );
 				// malCure_Utils::delete_setting( 'checksums' );
+				// malCure_Utils::delete_setting( 'mc_scan_tracker' );
 				// malCure_Utils::delete_setting( 'scan' );
+				// malCure_Utils::update_definitions();
 
 				?>
 				<script type="text/javascript">
@@ -306,10 +307,15 @@ final class malCure_security_suite {
 			<div class="container">
 			<?php
 			echo '<div id="mss_debug_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-			$opt = get_option( 'MSS' );
-			unset( $opt['definitions'] );
-			unset( $opt['checksums'] );
-			malCure_Utils::llog( $opt );
+			malCure_Utils::llog( 'MSS' );
+			malCure_Utils::llog( var_export( get_option( 'MSS' ), 1 ) );
+			malCure_Utils::llog( var_export( get_option( 'MSS_scans' ), 1 ) );
+			// malCure_Utils::llog( 'MSS_definitions' );
+			// malCure_Utils::llog( var_export( get_option( 'MSS_definitions' ), 1 ) );
+			// malCure_Utils::llog( 'MSS_checksums_core' );
+			// malCure_Utils::llog( var_export( get_option( 'MSS_checksums_core' ), 1 ) );
+			malCure_Utils::llog( 'MSS_checksums_generated' );
+			malCure_Utils::llog( var_export( get_option( 'MSS_checksums_generated' ), 1 ) );
 			?>
 			</div>
 		</div>

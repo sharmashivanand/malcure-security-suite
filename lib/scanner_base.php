@@ -57,16 +57,17 @@ class malCure_Scanner {
 			);
 			if ( $this->in_core_dir( $file ) ) { // since we are scanning this file
 
-            }
-            $contents = @file_get_contents( $file );
-            if(empty($contents)){
-                die();
-            }
-            $definitions = malCure_Utils::get_malware_file_definitions();            
+			}
+			$contents = @file_get_contents( $file );
+			if ( empty( $contents ) ) {
+				die();
+			}
+			$definitions = malCure_Utils::get_malware_file_definitions();
+
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;
-				}				
+				}
 				$matches  = @preg_match( malCure_Utils::decode( $signature['signature'] ), $contents, $found );
 				$pcre_err = preg_last_error();
 				if ( $pcre_err != 0 ) {
@@ -76,7 +77,7 @@ class malCure_Scanner {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
 						// $this->update_setting( 'infected', true );
 					}
-					malCure_Utils::flog( 'INFECTED!!! ' . $file );
+					// malCure_Utils::flog( 'INFECTED!!! ' . $file );
 					return array(
 						'id'       => $definition,
 						'severity' => $signature['severity'],
@@ -86,13 +87,14 @@ class malCure_Scanner {
 			}
 
 			// file is clean
-			$checksums = malCure_Utils::fetch_checksums();
-			$md5       = @md5_file( $file );
+			$checksums = malCure_Utils::get_option_checksums_generated();			
+			$md5 = @md5_file( $file );
 			if ( $md5 ) {
 				$checksums[ malCure_Utils::normalize_path( $file ) ] = $md5;
 			}
 			// malCure_Utils::flog( 'GENERATING CHECKSUM FOR FILE: ' . $file );
-			malCure_Utils::update_setting( 'checksums', $checksums );
+			malCure_Utils::update_option_checksums_generated( $checksums );
+
 			return array(
 				'id'       => '',
 				'severity' => '',

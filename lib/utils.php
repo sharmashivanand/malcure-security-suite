@@ -5,8 +5,10 @@ require_once 'scanner_base.php';
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	class MSS_CLI {
 		function dump() {
-			$scans = malCure_Utils::get_setting( 'scan' );
-			WP_CLI::log( print_r( $scans, 1 ) );
+			// $scans = malCure_Utils::get_setting( 'scan' );
+			$opt = get_option( 'MSS_scans' );
+			krsort( $opt );
+			WP_CLI::log( print_r( $opt, 1 ) );
 		}
 	}
 	WP_CLI::add_command( 'mss', 'MSS_CLI' );
@@ -16,11 +18,34 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
  * Common utility functions
  */
 class malCure_Utils {
+
 	static $opt_name = 'MSS';
 	static $cap      = 'activate_plugins';
 
 	function __construct() {
 		// malCure_Utils::opt_name = 'MSS';
+	}
+
+	static function get_instance() {
+		static $instance = null;
+		if ( is_null( $instance ) ) {
+			$instance = new self();
+			$instance->init();
+		}
+		return $instance;
+	}
+
+	function init() {
+		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
+	}
+
+
+	static function generated_checksums( $checksums ) {
+		$generated = self::get_option_checksums_generated();
+		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
+			$checksums = array_merge( $generated, $checksums );
+		}
+		return $checksums;
 	}
 
 	/**
@@ -179,11 +204,14 @@ class malCure_Utils {
 	 * @return void
 	 */
 	static function get_definitions() {
-		return self::get_setting( 'definitions' );
+		return self::get_option_definitions();
 	}
 
 	static function get_definition_version() {
-		return self::get_setting( 'definitions' )['v'];
+		$defs = self::get_definitions();
+		if ( ! empty( $defs['v'] ) ) {
+			return $defs['v'];
+		}
 	}
 
 	/**
@@ -192,14 +220,20 @@ class malCure_Utils {
 	 * @return void
 	 */
 	static function get_malware_definitions() {
-		return self::get_definitions()['definitions'];
+		$defs = self::get_definitions();
+		if ( ! empty( $defs['definitions'] ) ) {
+			return $defs['definitions'];
+		}
 	}
 
 	/**
 	 * Gets malware definitions for files only
 	 */
 	static function get_malware_file_definitions() {
-		return self::get_malware_definitions()['files'];
+		$defs = self::get_malware_definitions();
+		if ( ! empty( $defs['files'] ) ) {
+			return $defs['files'];
+		}
 		// return $definitions['files'];
 	}
 
@@ -209,7 +243,10 @@ class malCure_Utils {
 	 * @return void
 	 */
 	static function get_malware_db_definitions() {
-		return self::get_malware_definitions()['db'];
+		$defs = self::get_malware_definitions();
+		if ( ! empty( $defs['db'] ) ) {
+			return $defs['db'];
+		}
 	}
 
 	/**
@@ -323,7 +360,7 @@ class malCure_Utils {
 	 */
 	static function fetch_checksums() {
 		// $checksums = $cached ? get_transient( 'WPMR_checksums' ) : false;
-		$checksums = self::get_setting( 'checksums' );
+		$checksums = self::get_option_checksums_core();
 		if ( ! $checksums ) {
 			global $wp_version;
 			$checksums = get_core_checksums( $wp_version, get_locale() );
@@ -338,7 +375,7 @@ class malCure_Utils {
 				$checksums = array_merge( $checksums, $plugin_checksums );
 			}
 			if ( $checksums ) {
-				self::update_setting( 'checksums', $checksums );
+				self::update_option_checksums_core( $checksums );
 				return apply_filters( 'mss_checksums', $checksums );
 			}
 			return apply_filters( 'mss_checksums', array() );
@@ -449,7 +486,7 @@ class malCure_Utils {
 		if ( is_wp_error( $definitions ) ) {
 			return $definitions;
 		} else {
-			self::update_setting( 'definitions', $definitions );
+			self::update_option_definitions( $definitions );
 			$time = date( 'U' );
 			self::update_setting( 'definitions_update_time', $time );
 			return true;
@@ -486,30 +523,108 @@ class malCure_Utils {
 		}
 	}
 
+	// Update options
+	static function update_option_checksums_core( $checksums ) {
+		return update_option( self::$opt_name . '_checksums_core', $checksums );
+	}
+
+	static function update_option_checksums_generated( $checksums ) {
+		return update_option( self::$opt_name . '_checksums_generated', $checksums );
+	}
+
+	static function update_option_definitions( $definitions ) {
+		return update_option( self::$opt_name . '_definitions', $definitions );
+	}
+
+	// Get options
+	static function get_option_checksums_core() {
+		return get_option( self::$opt_name . '_checksums_core' );
+	}
+
+	static function get_option_checksums_generated() {
+		$checksums = get_option( self::$opt_name . '_checksums_generated' );
+		if ( ! $checksums ) {
+			return array();
+		}
+		return $checksums;
+	}
+
+	static function get_option_definitions() {
+		return get_option( self::$opt_name . '_definitions' );
+	}
+
+	// Delete options
+	static function delete_option_checksums_core() {
+		return delete_option( self::$opt_name . '_checksums_core' );
+	}
+
+	static function delete_option_checksums_generated() {
+		return delete_option( self::$opt_name . '_checksums_generated' );
+	}
+
+	static function delete_option_definitions() {
+		return delete_option( self::$opt_name . '_definitions' );
+	}
+
+	static function await_unlock() {
+		// self::flog( __FUNCTION__ . ' called by: ' );
+		// self::flog( debug_backtrace()[2] );
+		while ( get_option( 'MSS_lock' ) == 'true' ) {
+			usleep( 1 );
+		}
+		// self::flog( 'lock acquired' );
+		update_option( 'MSS_lock', 'true' );
+	}
+
+	static function do_unlock() {
+		// self::flog( __FUNCTION__ . ' called by: ' );
+		// self::flog( debug_backtrace()[2] );
+		update_option( 'MSS_lock', 'false' );
+		// self::flog( 'lock released' );
+	}
+
 	static function get_setting( $setting ) {
+		self::await_unlock();
 		$settings = get_option( self::$opt_name );
+		self::do_unlock();
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
 	}
 
 	static function update_setting( $setting, $value ) {
+		self::await_unlock();
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		$settings[ $setting ] = $value;
-		return update_option( self::$opt_name, $settings );
+		update_option( self::$opt_name, $settings );
+		self::do_unlock();
 	}
 
 	static function delete_setting( $setting ) {
-		// if ( $setting == 'scan' ) {
-		// self::flog( debug_backtrace() );
-		// }
+		self::await_unlock();
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
+			if ( $setting == 'mc_scan_tracker' ) {
+				self::flog( 'delete_setting mc_scan_tracker got empty array' );
+			}
 			$settings = array();
 		}
+		if ( $setting == 'mc_scan_tracker' ) {
+			self::flog( __FUNCTION__ . ' called by: ' );
+			self::flog( debug_backtrace()[2] );
+			self::flog( 'delete_setting mc_scan_tracker; settings before deleting' );
+			self::flog( $settings );
+		}
 		unset( $settings[ $setting ] );
+		if ( $setting == 'mc_scan_tracker' ) {
+			self::flog( __FUNCTION__ . ' called by: ' );
+			self::flog( debug_backtrace()[2] );
+			self::flog( 'delete_setting mc_scan_tracker; settings after deleting' );
+			self::flog( $settings );
+		}
 		update_option( self::$opt_name, $settings );
+		self::do_unlock();
 	}
 
 	static function append_err( $how_when_where, $msg = '' ) {
@@ -530,3 +645,5 @@ class malCure_Utils {
 	}
 
 }
+
+// malCure_Utils::get_instance();
