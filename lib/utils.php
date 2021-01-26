@@ -17,13 +17,15 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 /**
  * Common utility functions
  */
-class malCure_Utils {
+final class malCure_Utils {
 
 	static $opt_name = 'MSS';
 	static $cap      = 'activate_plugins';
 
 	function __construct() {
 		// malCure_Utils::opt_name = 'MSS';
+		//return self::get_instance();
+		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
 	}
 
 	static function get_instance() {
@@ -37,15 +39,6 @@ class malCure_Utils {
 
 	function init() {
 		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
-	}
-
-
-	static function generated_checksums( $checksums ) {
-		$generated = self::get_option_checksums_generated();
-		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
-			$checksums = array_merge( $generated, $checksums );
-		}
-		return $checksums;
 	}
 
 	/**
@@ -422,6 +415,18 @@ class malCure_Utils {
 		}
 		return $plugin_checksums;
 	}
+	
+	static function generated_checksums( $checksums ) {
+		//malCure_Utils::flog( 'hooked generated checksums' );
+		$generated = self::get_option_checksums_generated();
+		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
+			$checksums = array_merge( $generated, $checksums );
+		}
+		else {
+			//malCure_Utils::flog( 'not sending generated checksums' );
+		}
+		return $checksums;
+	}
 
 	static function normalize_path( $file_path ) {
 		return str_replace( get_home_path(), '', $file_path );
@@ -570,7 +575,8 @@ class malCure_Utils {
 		// self::flog( __FUNCTION__ . ' called by: ' );
 		// self::flog( debug_backtrace()[2] );
 		while ( get_option( 'MSS_lock' ) == 'true' ) {
-			usleep( 1 );
+			// usleep( 1 );
+			usleep( rand( 2500, 7500 ) );
 		}
 		// self::flog( 'lock acquired' );
 		update_option( 'MSS_lock', 'true' );
@@ -604,9 +610,9 @@ class malCure_Utils {
 	static function delete_setting( $setting ) {
 		self::await_unlock();
 		$settings = get_option( self::$opt_name );
-		if ( ! $settings ) {			
+		if ( ! $settings ) {
 			$settings = array();
-		}		
+		}
 		unset( $settings[ $setting ] );
 		update_option( self::$opt_name, $settings );
 		self::do_unlock();
@@ -631,4 +637,5 @@ class malCure_Utils {
 
 }
 
-// malCure_Utils::get_instance();
+//malCure_Utils::get_instance();
+$malCure_Utils = new malCure_Utils();
