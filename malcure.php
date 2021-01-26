@@ -310,7 +310,9 @@ final class malCure_security_suite {
 			malCure_Utils::llog( 'MSS' );
 			malCure_Utils::llog( var_export( get_option( 'MSS' ), 1 ) );
 			malCure_Utils::llog( 'MSS_scans' );
-			malCure_Utils::llog( var_export( get_option( 'MSS_scans' ), 1 ) );
+			$scans = get_option( 'MSS_scans' );
+			krsort( $scans );
+			malCure_Utils::llog( var_export( $scans, 1 ) );
 			// malCure_Utils::llog( 'MSS_definitions' );
 			// malCure_Utils::llog( var_export( get_option( 'MSS_definitions' ), 1 ) );
 			// malCure_Utils::llog( 'MSS_checksums_core' );
