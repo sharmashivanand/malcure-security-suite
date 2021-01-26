@@ -604,25 +604,10 @@ class malCure_Utils {
 	static function delete_setting( $setting ) {
 		self::await_unlock();
 		$settings = get_option( self::$opt_name );
-		if ( ! $settings ) {
-			if ( $setting == 'mc_scan_tracker' ) {
-				self::flog( 'delete_setting mc_scan_tracker got empty array' );
-			}
+		if ( ! $settings ) {			
 			$settings = array();
-		}
-		if ( $setting == 'mc_scan_tracker' ) {
-			self::flog( __FUNCTION__ . ' called by: ' );
-			self::flog( debug_backtrace()[2] );
-			self::flog( 'delete_setting mc_scan_tracker; settings before deleting' );
-			self::flog( $settings );
-		}
+		}		
 		unset( $settings[ $setting ] );
-		if ( $setting == 'mc_scan_tracker' ) {
-			self::flog( __FUNCTION__ . ' called by: ' );
-			self::flog( debug_backtrace()[2] );
-			self::flog( 'delete_setting mc_scan_tracker; settings after deleting' );
-			self::flog( $settings );
-		}
 		update_option( self::$opt_name, $settings );
 		self::do_unlock();
 	}

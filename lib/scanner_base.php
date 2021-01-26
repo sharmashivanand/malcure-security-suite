@@ -101,7 +101,7 @@ class malCure_Scanner {
 				'info'     => '',
 			);
 		} else {
-			malCure_Utils::flog( 'scan_file ! is_valid_file: ' . $file );
+			//malCure_Utils::flog( 'scan_file ! is_valid_file: ' . $file );
 		}
 	}
 

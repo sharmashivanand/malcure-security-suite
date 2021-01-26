@@ -309,6 +309,7 @@ final class malCure_security_suite {
 			echo '<div id="mss_debug_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
 			malCure_Utils::llog( 'MSS' );
 			malCure_Utils::llog( var_export( get_option( 'MSS' ), 1 ) );
+			malCure_Utils::llog( 'MSS_scans' );
 			malCure_Utils::llog( var_export( get_option( 'MSS_scans' ), 1 ) );
 			// malCure_Utils::llog( 'MSS_definitions' );
 			// malCure_Utils::llog( var_export( get_option( 'MSS_definitions' ), 1 ) );
