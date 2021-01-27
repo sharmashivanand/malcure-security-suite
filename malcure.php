@@ -36,7 +36,6 @@ final class malCure_security_suite {
 	public $dir;
 	public $url;
 
-
 	static function get_instance() {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
@@ -77,12 +76,9 @@ final class malCure_security_suite {
 
 	function mss_api_register_handler() {
 		check_ajax_referer( 'mss_api_register', 'mss_api_register_nonce' );
-
-		$user = $_REQUEST['user'];
-
+		$user       = $_REQUEST['user'];
 		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
 		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
-
 		if ( empty( $user['fn'] ) ) {
 			wp_send_json_error( 'Invalid firstname.' );
 		}
@@ -92,7 +88,6 @@ final class malCure_security_suite {
 		if ( ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
 			wp_send_json_error( 'Invalid email.' );
 		}
-
 		$registration = malCure_Utils::do_mss_api_register( $user );
 		if ( is_wp_error( $registration ) ) {
 			wp_send_json_error( $registration->get_error_message() );
@@ -116,7 +111,6 @@ final class malCure_security_suite {
 	}
 
 	function plugin_res( $hook ) {
-		// $this->llog( $hook );
 		if ( preg_match( '/_mss$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
 			wp_enqueue_script( 'jquery' );
@@ -133,9 +127,7 @@ final class malCure_security_suite {
 			$this->url . 'assets/icon-dark-trans.svg', // icon_url
 			79
 		);
-
 		do_action( 'mss_settings_menu' );
-
 	}
 
 	function debug_menu() {
@@ -156,7 +148,6 @@ final class malCure_security_suite {
 			<div class="container">
 			<?php
 			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-
 			if ( ! malCure_Utils::is_registered() ) {
 				$current_user = wp_get_current_user();
 				?>
@@ -220,14 +211,11 @@ final class malCure_security_suite {
 				<?php
 			} else {
 				// var_dump( malCure_Utils::update_definitions() );
-				// malCure_Utils::llog( malCure_Utils::check_definition_updates() );
-				// malCure_Utils::llog( malCure_Utils::get_plugin_checksums() );
 				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
 				// malCure_Utils::delete_setting( 'checksums' );
 				// malCure_Utils::delete_setting( 'mc_scan_tracker' );
 				// malCure_Utils::delete_setting( 'scan' );
 				// malCure_Utils::update_definitions();
-
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -267,7 +255,6 @@ final class malCure_security_suite {
 				<?php
 				$mss_scanner = malCure_Malware_Scanner::get_instance();
 				// $mss_scanner->get_checksums();
-
 				// $start_time = microtime( true );
 				// malCure_Utils::delete_setting( 'malware-signatures-clone');
 				// $sigs = malCure_Utils::get_setting( 'malware-signatures' );
@@ -276,11 +263,8 @@ final class malCure_security_suite {
 				// $execution_time = ( $end_time - $start_time );
 				// echo 'Took ' . ($execution_time)  . 'ms or ' . human_time_diff( $start_time, $end_time );
 				// var_dump( $res );
-
 				// $mss_scanner->mss_scan_handler();
-
 				// var_dump(  $mss_scanner->in_core_dir('/_extvol_data/html/dev/plugindev/wp-content/index.php') );
-				// malCure_Utils::llog( $mss_scanner->get_files() );
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
@@ -288,7 +272,6 @@ final class malCure_security_suite {
 				<?php $this->mss_system_status(); ?>
 				<?php
 			}
-
 			?>
 				
 			</div> <!-- / .container -->
@@ -313,10 +296,6 @@ final class malCure_security_suite {
 			$scans = get_option( 'MSS_scans' );
 			krsort( $scans );
 			malCure_Utils::llog( var_export( $scans, 1 ) );
-			// malCure_Utils::llog( 'MSS_definitions' );
-			// malCure_Utils::llog( var_export( get_option( 'MSS_definitions' ), 1 ) );
-			// malCure_Utils::llog( 'MSS_checksums_core' );
-			// malCure_Utils::llog( var_export( get_option( 'MSS_checksums_core' ), 1 ) );
 			malCure_Utils::llog( 'MSS_checksums_generated' );
 			malCure_Utils::llog( var_export( get_option( 'MSS_checksums_generated' ), 1 ) );
 			?>
@@ -327,7 +306,6 @@ final class malCure_security_suite {
 
 	function mss_system_status() {
 		global $wpdb;
-
 		?>
 		<table id="mss_system_status">
 		<tr>
@@ -392,7 +370,6 @@ final class malCure_security_suite {
 			?>
 			</td>
 		</tr>
-		
 		<tr>
 			<th>PHP</th>
 			<td><?php echo phpversion(); ?></td>
@@ -425,12 +402,10 @@ final class malCure_security_suite {
 		<?php
 		$dirs = glob( trailingslashit( get_home_path() ) . '*', GLOB_ONLYDIR );
 		$dirs = array_merge( glob( trailingslashit( get_home_path() ) . 'wp-content/*', GLOB_ONLYDIR ), $dirs );
-
 		if ( $dirs ) {
 			asort( $dirs );
 			echo '<table>';
 			echo '<tr><th>Directory</th><th></th></tr>';
-
 			foreach ( $dirs as $dir ) {
 				echo '<tr><td class="dir_container">' . str_replace( get_home_path(), '', $dir ) . '</td><td class="dir_count">' . malCure_Utils::get_files( $dir )['total_files'] . '</td></tr>';
 			}
@@ -454,18 +429,14 @@ final class malCure_security_suite {
 			if ( empty( $parts [0] ) ) {
 				$newlist[ dirname( $v ) ] = '<strong>[*DIR] ' . dirname( $v ) . '</strong>';
 			}
-
 			$newlist[ $v ] = '[FILE] ' . $v;
 		}
 		echo implode( '<br />', $newlist );
 		?>
 		</td></tr>
 		<?php $this->malcure_user_sessions(); ?>
-		
 		</table>
-
 		<?php
-
 	}
 
 	function destroy_sessions() {
@@ -565,52 +536,42 @@ final class malCure_security_suite {
 	}
 
 	function malcure_security_tests( $tests ) {
-
-		$tests['direct']['abspath_perm_test'] = array(
+		$tests['direct']['abspath_perm_test']     = array(
 			'label' => __( 'Permissions of WordPress installation directory' ),
 			'test'  => array( $this, 'abspath_perm_test_callback' ),
 		);
-
-		$tests['direct']['wp_admin_perm_test'] = array(
+		$tests['direct']['wp_admin_perm_test']    = array(
 			'label' => __( 'Permissions of wp-admin directory' ),
 			'test'  => array( $this, 'wp_admin_perm_test_callback' ),
 		);
-
 		$tests['direct']['wp_includes_perm_test'] = array(
 			'label' => __( 'Permissions of wp-includes directory' ),
 			'test'  => array( $this, 'wp_includes_perm_test_callback' ),
 		);
-
-		$tests['direct']['wp_content_perm_test'] = array(
+		$tests['direct']['wp_content_perm_test']  = array(
 			'label' => __( 'Permissions of wp-content directory' ),
 			'test'  => array( $this, 'wp_content_perm_test_callback' ),
 		);
-
-		$tests['direct']['themes_perm_test'] = array(
+		$tests['direct']['themes_perm_test']      = array(
 			'label' => __( 'Permissions of themes directory' ),
 			'test'  => array( $this, 'themes_perm_test_callback' ),
 		);
-
-		$tests['direct']['plugins_perm_test'] = array(
+		$tests['direct']['plugins_perm_test']     = array(
 			'label' => __( 'Permissions of plugins directory' ),
 			'test'  => array( $this, 'plugins_perm_test_callback' ),
 		);
-
-		$tests['direct']['uploads_perm_test'] = array(
+		$tests['direct']['uploads_perm_test']     = array(
 			'label' => __( 'Permissions of uploads directory' ),
 			'test'  => array( $this, 'uploads_perm_test_callback' ),
 		);
-
-		$tests['direct']['wp_config_perm_test'] = array(
+		$tests['direct']['wp_config_perm_test']   = array(
 			'label' => __( 'Permissions of wp-config.php' ),
 			'test'  => array( $this, 'wp_config_perm_test_callback' ),
 		);
-
-		$tests['direct']['htaccess_perm_test'] = array(
+		$tests['direct']['htaccess_perm_test']    = array(
 			'label' => __( 'Permissions of .htaccess' ),
 			'test'  => array( $this, 'htaccess_perm_test_callback' ),
 		);
-
 		// Test if admin user exists
 		$tests['direct']['admin_user_test'] = array(
 			'label' => __( 'Does a user with user_login of "admin" exist?' ),
@@ -636,7 +597,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'admin_user_test',
 		);
-
 		if ( get_user_by( 'login', 'admin' ) ) {
 			$result['status']         = 'recommended';
 			$result['label']          = __( 'Admin user exists' );
@@ -644,7 +604,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <a href="https://wordpress.org/support/article/hardening-wordpress/#security-through-obscurity">%s</a></p>', __( 'A user named admin exists on your site. Many attacks target this user ID. Please change the username of this user.' ), 'WordPress Codex' );
 			$result['actions']       .= sprintf( '<p><a href="%s">%s</a></p>', esc_url( admin_url( 'users.php' ) ), __( 'Manage admin users' ) );
 		}
-
 		return $result;
 	}
 
@@ -667,7 +626,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'abspath_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $abs_path ) && $this->user_can_write( $abs_path ) && $this->user_can_execute( $abs_path ) && // 7
 			$this->group_can_read( $abs_path ) && ! $this->group_can_write( $abs_path ) && $this->group_can_execute( $abs_path ) && // 5
@@ -679,7 +637,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s %s <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'All files should be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $abs_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Your WordPress installation directory is located at:' ), esc_url( ABSPATH ) );
 		}
-
 		return $result;
 	}
 
@@ -689,10 +646,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function wp_admin_perm_test_callback() {
-
 		$core_admin_path = trailingslashit( ABSPATH ) . 'wp-admin';
-
-		$result = array(
+		$result          = array(
 			'label'       => __( 'Permissions for wp-admin' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -703,7 +658,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'wp_admin_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $core_admin_path ) && $this->user_can_write( $core_admin_path ) && $this->user_can_execute( $core_admin_path ) && // 7
 			$this->group_can_read( $core_admin_path ) && ! $this->group_can_write( $core_admin_path ) && $this->group_can_execute( $core_admin_path ) && // 5
@@ -715,7 +669,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'All files should be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $core_admin_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-admin is:' ), esc_url( $core_admin_path ) );
 		}
-
 		return $result;
 	}
 
@@ -725,10 +678,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function wp_includes_perm_test_callback() {
-
 		$core_inc_path = trailingslashit( ABSPATH ) . WPINC;
-
-		$result = array(
+		$result        = array(
 			'label'       => __( 'Permissions for wp-content' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -739,7 +690,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'wp_includes_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $core_inc_path ) && $this->user_can_write( $core_inc_path ) && $this->user_can_execute( $core_inc_path ) && // 7
 			$this->group_can_read( $core_inc_path ) && ! $this->group_can_write( $core_inc_path ) && $this->group_can_execute( $core_inc_path ) && // 5
@@ -751,7 +701,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'All files should be writable only by your user account (755). Current permissions are' ), $this->get_permissions( $core_inc_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-includes is:' ), esc_url( $core_inc_path ) );
 		}
-
 		return $result;
 	}
 
@@ -761,10 +710,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function wp_content_perm_test_callback() {
-
 		$core_content_path = WP_CONTENT_DIR;
-
-		$result = array(
+		$result            = array(
 			'label'       => __( 'Permissions for wp-content' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -775,7 +722,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'wp_content_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $core_content_path ) && $this->user_can_write( $core_content_path ) && $this->user_can_execute( $core_content_path ) && // 7
 			$this->other_can_read( $core_content_path ) && $this->other_can_write( $core_content_path ) && $this->other_can_execute( $core_content_path ) && // 7
@@ -787,7 +733,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'User-supplied content: intended to be writable by your user account and the web server process (775). Current permissions are' ), $this->get_permissions( $core_content_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to wp-content is:' ), esc_url( $core_content_path ) );
 		}
-
 		return $result;
 	}
 
@@ -797,10 +742,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function themes_perm_test_callback() {
-
 		$theme_root_path = trailingslashit( get_stylesheet_directory() ) . 'style.css';
-
-		$result = array(
+		$result          = array(
 			'label'       => __( 'Permissions for themes directory' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -811,7 +754,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'themes_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $theme_root_path ) && $this->user_can_write( $theme_root_path ) && ! $this->user_can_execute( $theme_root_path ) && // 6
 			$this->group_can_read( $theme_root_path ) && $this->group_can_write( $theme_root_path ) && ! $this->group_can_execute( $theme_root_path ) && // 6
@@ -823,7 +765,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'If you want to use the built-in theme editor, all files need to be writable by the web server process (664). If you do not want to use the built-in theme editor, all files can be writable only by your user account (644). Current permissions are' ), $this->get_permissions( $theme_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Your current theme files are inside:' ), esc_url( get_stylesheet_directory() ) );
 		}
-
 		return $result;
 	}
 
@@ -833,10 +774,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function plugins_perm_test_callback() {
-
 		$plugin_root_path = __FILE__;
-
-		$result = array(
+		$result           = array(
 			'label'       => __( 'Permissions for plugin files' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -847,7 +786,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'plugins_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $plugin_root_path ) && $this->user_can_write( $plugin_root_path ) && ! $this->user_can_execute( $plugin_root_path ) && // 6
 			$this->group_can_read( $plugin_root_path ) && ! $this->group_can_write( $plugin_root_path ) && ! $this->group_can_execute( $plugin_root_path ) && // 4
@@ -859,7 +797,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s">WordPress Codex</a>.</p>', __( 'Plugin files should be writable only by your user account (644). Current permissions are' ), $this->get_permissions( $plugin_root_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#file-permissions' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Plugins files are stored inside:' ), esc_url( $plugin_root_path ) );
 		}
-
 		return $result;
 	}
 
@@ -880,10 +817,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function wp_config_perm_test_callback() {
-
 		$config_path = $this->get_config_path();
-
-		$result = array(
+		$result      = array(
 			'label'       => __( 'Permissions for wp-config.php' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -894,11 +829,9 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'wp_config_perm_test',
 		);
-
 		if ( ! $config_path ) {
 			return $result;
 		}
-
 		if ( ! ( $this->user_can_read( $config_path ) && ! $this->user_can_write( $config_path ) && ! $this->user_can_execute( $config_path ) && // 4
 			$this->group_can_read( $config_path ) && ! $this->group_can_write( $config_path ) && ! $this->group_can_execute( $config_path ) && // 4
 			! $this->other_can_read( $config_path ) && ! $this->other_can_write( $config_path ) && ! $this->other_can_execute( $config_path )       // 0
@@ -909,7 +842,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code> <a href="%s" target="_blank">WordPress Codex</a>.</p>', __( 'Unauthorised users may modify wp-config.php to infect the website. 440 permissions are recommended. Current permissions are' ), $this->get_permissions( $config_path ), esc_url( 'https://wordpress.org/support/article/hardening-wordpress/#securing-wp-config-php' ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your wp-config.php is:' ), esc_url( $config_path ) );
 		}
-
 		return $result;
 	}
 
@@ -919,10 +851,8 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function htaccess_perm_test_callback() {
-
 		$root_htaccess_path = $this->get_htaccess_path();
-
-		$result = array(
+		$result             = array(
 			'label'       => __( 'Permissions for .htaccess' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -933,7 +863,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'htaccess_perm_test',
 		);
-
 		if ( $root_htaccess_path ) {
 			if ( ! (
 			$this->user_can_read( $root_htaccess_path ) && $this->user_can_write( $root_htaccess_path ) && ! $this->user_can_execute( $root_htaccess_path ) && // 6
@@ -947,7 +876,6 @@ final class malCure_security_suite {
 				$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your .htaccess is:' ), esc_url( $root_htaccess_path ) );
 			}
 		}
-
 		return $result;
 	}
 
@@ -957,11 +885,9 @@ final class malCure_security_suite {
 	 * @return array
 	 */
 	function uploads_perm_test_callback() {
-
 		$wp_upload_dir = wp_upload_dir();
 		$wp_upload_dir = $wp_upload_dir['basedir'];
-
-		$result = array(
+		$result        = array(
 			'label'       => __( 'Permissions for uploads directory' ),
 			'status'      => 'good',
 			'badge'       => array(
@@ -972,7 +898,6 @@ final class malCure_security_suite {
 			'actions'     => '',
 			'test'        => 'uploads_perm_test',
 		);
-
 		if ( ! (
 			$this->user_can_read( $wp_upload_dir ) && $this->user_can_write( $wp_upload_dir ) && $this->user_can_execute( $wp_upload_dir ) && // 7
 			$this->group_can_read( $wp_upload_dir ) && ! $this->group_can_write( $wp_upload_dir ) && $this->group_can_execute( $wp_upload_dir ) && // 5
@@ -984,7 +909,6 @@ final class malCure_security_suite {
 			$result['description']    = sprintf( '<p>%s <code>%s</code>.</p>', __( '755 permissions are recomended. Current permissions are' ), $this->get_permissions( $wp_upload_dir ) );
 			$result['actions']       .= sprintf( '<p>%s <code>%s</code>.</p>', __( 'Path to your uploads directory is:' ), esc_url( $wp_upload_dir ) );
 		}
-
 		return $result;
 	}
 
@@ -995,12 +919,10 @@ final class malCure_security_suite {
 	 * @return bool
 	 */
 	function user_can_read( $path ) {
-
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
-
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
 		}
@@ -1020,7 +942,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1041,7 +962,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1062,7 +982,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1083,7 +1002,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1104,7 +1022,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1125,7 +1042,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1146,7 +1062,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1167,7 +1082,6 @@ final class malCure_security_suite {
 		if ( empty( $path ) || ! file_exists( $path ) ) {
 			return;
 		}
-
 		$perms = substr( decoct( fileperms( $path ) ), -3 );
 		if ( empty( $perms ) || strlen( $perms ) < 3 ) {
 			return;
@@ -1198,9 +1112,6 @@ final class malCure_security_suite {
 			return ABSPATH . '.htaccess';
 		}
 	}
-
-
-
 }
 
 function malCure_security_suite() {

@@ -1,18 +1,7 @@
 <?php
 
 require_once 'scanner_base.php';
-
-if ( defined( 'WP_CLI' ) && WP_CLI ) {
-	class MSS_CLI {
-		function dump() {
-			// $scans = malCure_Utils::get_setting( 'scan' );
-			$opt = get_option( 'MSS_scans' );
-			krsort( $opt );
-			WP_CLI::log( print_r( $opt, 1 ) );
-		}
-	}
-	WP_CLI::add_command( 'mss', 'MSS_CLI' );
-}
+include_once 'cli.php';
 
 /**
  * Common utility functions
@@ -23,8 +12,6 @@ final class malCure_Utils {
 	static $cap      = 'activate_plugins';
 
 	function __construct() {
-		// malCure_Utils::opt_name = 'MSS';
-		//return self::get_instance();
 		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
 	}
 
@@ -52,9 +39,9 @@ final class malCure_Utils {
 			return self::elog( $str, '', $return );
 		}
 		if ( $return ) {
-			return '<pre>' . print_r( $str, 1 ) . '</pre>';
+			return '<pre style="font-weight: normal;font-style: normal; font-family: monospace;">' . print_r( $str, 1 ) . '</pre>';
 		} else {
-			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
+			echo '<pre style="font-weight: normal;font-style: normal; font-family: monospace;">' . print_r( $str, 1 ) . '</pre>';
 		}
 	}
 
@@ -83,10 +70,8 @@ final class malCure_Utils {
 		$date = $date . '-' . microtime( true );
 		$file = MSS_DIR . 'log.log';
 		file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
-		// usleep( 1000 );
 		$str = print_r( $str, true );
 		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
-		// usleep( 1000 );
 	}
 
 	static function is_registered() {
@@ -191,74 +176,6 @@ final class malCure_Utils {
 		return new WP_Error( 'broke', 'Uncaught error in ' . __FUNCTION__ . '.' );
 	}
 
-	/**
-	 * Gets the definitions from the database including version
-	 *
-	 * @return void
-	 */
-	static function get_definitions() {
-		return self::get_option_definitions();
-	}
-
-	static function get_definition_version() {
-		$defs = self::get_definitions();
-		if ( ! empty( $defs['v'] ) ) {
-			return $defs['v'];
-		}
-	}
-
-	/**
-	 * Gets all definitions excluding version
-	 *
-	 * @return void
-	 */
-	static function get_malware_definitions() {
-		$defs = self::get_definitions();
-		if ( ! empty( $defs['definitions'] ) ) {
-			return $defs['definitions'];
-		}
-	}
-
-	/**
-	 * Gets malware definitions for files only
-	 */
-	static function get_malware_file_definitions() {
-		$defs = self::get_malware_definitions();
-		if ( ! empty( $defs['files'] ) ) {
-			return $defs['files'];
-		}
-		// return $definitions['files'];
-	}
-
-	/**
-	 * Gets malware definitions for database only
-	 *
-	 * @return void
-	 */
-	static function get_malware_db_definitions() {
-		$defs = self::get_malware_definitions();
-		if ( ! empty( $defs['db'] ) ) {
-			return $defs['db'];
-		}
-	}
-
-	/**
-	 * For future, match malware in user content like post content, urls etc.?
-	 *
-	 * @return array
-	 */
-	static function get_malware_content_definitions() {
-
-	}
-
-	/**
-	 * Get firewall rules
-	 *
-	 * @return array
-	 */
-	static function get_firewall_definitions() {
-
-	}
 
 	/**
 	 * Returns full URL to API Endpoint for the requested action
@@ -391,7 +308,6 @@ final class malCure_Utils {
 				if ( is_wp_error( $checksum ) ) {
 					continue;
 				}
-
 				if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
 					if ( '404' == wp_remote_retrieve_response_code( $checksum ) ) {
 						$missing[ $key ] = array( 'Version' => $value['Version'] );
@@ -415,15 +331,12 @@ final class malCure_Utils {
 		}
 		return $plugin_checksums;
 	}
-	
+
 	static function generated_checksums( $checksums ) {
-		//malCure_Utils::flog( 'hooked generated checksums' );
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
-			$checksums = array_merge( $generated, $checksums );
-		}
-		else {
-			//malCure_Utils::flog( 'not sending generated checksums' );
+			//$checksums = array_merge( $checksums, $generated ); // Keep in this order so that generated checksums override the WP-ORG checksum for packaged themes. They'll be purged on def updates.
+		} else {
 		}
 		return $checksums;
 	}
@@ -460,7 +373,6 @@ final class malCure_Utils {
 					),
 					'http://example.com'
 				);
-
 				$checksum = wp_safe_remote_get( $checksum_url );
 				if ( is_wp_error( $checksum ) ) {
 					continue;
@@ -572,21 +484,14 @@ final class malCure_Utils {
 	}
 
 	static function await_unlock() {
-		// self::flog( __FUNCTION__ . ' called by: ' );
-		// self::flog( debug_backtrace()[2] );
 		while ( get_option( 'MSS_lock' ) == 'true' ) {
-			// usleep( 1 );
 			usleep( rand( 2500, 7500 ) );
 		}
-		// self::flog( 'lock acquired' );
 		update_option( 'MSS_lock', 'true' );
 	}
 
 	static function do_unlock() {
-		// self::flog( __FUNCTION__ . ' called by: ' );
-		// self::flog( debug_backtrace()[2] );
 		update_option( 'MSS_lock', 'false' );
-		// self::flog( 'lock released' );
 	}
 
 	static function get_setting( $setting ) {
@@ -627,15 +532,22 @@ final class malCure_Utils {
 			'how' => $how_when_where,
 			'msg' => $msg,
 		);
-
 		asort( $errors );
-
 		$errors = array_slice( $errors, 0, 100 ); // limit errors to recent 100
-
 		return update_setting( 'errors', $errors );
 	}
 
+	static function do_maintenance() {
+		self::await_unlock();
+		$scans = get_option( 'MSS_scans' );
+		if ( empty( $scans ) ) { // when no scans have been run till date			
+			$scans = array();
+		}
+		$scans = array_slice( $scans, 0, 9 );
+		update_option( 'MSS_scans', $scans );
+		self::do_unlock();
+	}
 }
 
-//malCure_Utils::get_instance();
+// malCure_Utils::get_instance();
 $malCure_Utils = new malCure_Utils();

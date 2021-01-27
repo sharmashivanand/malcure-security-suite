@@ -347,12 +347,12 @@ class malCure_Integrity {
 			}
 		}
 
-		// $this->llog( $checksums );
-		// $this->llog( $local_files );
+
+
 
 		foreach ( $checksums as $checksum => $value ) {
 			$checksum = trailingslashit( $install_path ) . $checksum;
-			// $this->llog($checksum);
+
 			if ( ! in_array( $checksum, $local_files ) ) {
 				$failed_files['missing_files'][] = $checksum;
 			}
