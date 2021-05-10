@@ -27,20 +27,19 @@ class malCure_Integrity {
 		add_action( 'load-malcure-security_page_integrity_mss', array( $this, 'add_admin_scripts' ) );
 
 	}
-
-	function add_admin_scripts() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'common' );
-		wp_enqueue_script( 'wp-lists' );
-		wp_enqueue_script( 'postbox' );
-	}
-
 	function load_meta_boxes() {
 		add_action( 'add_meta_boxes', array( $this, 'inject_metaboxes' ) );
 	}
 
 	function add_meta_boxes() {
 		do_action( 'add_meta_boxes', 'malcure-security_page_integrity_mss', '' );
+	}
+
+	function add_admin_scripts() {
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'wp-lists' );
+		wp_enqueue_script( 'postbox' );
 	}
 
 	function submenu_page() {

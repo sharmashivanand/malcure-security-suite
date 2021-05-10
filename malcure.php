@@ -54,6 +54,7 @@ final class malCure_security_suite {
 
 		include_once $this->dir . 'lib/utils.php';
 		if ( malCure_Utils::is_registered() ) {
+			include_once $this->dir . 'classes/admin.php';
 			include_once $this->dir . 'classes/integrity.php';
 			include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
@@ -74,49 +75,6 @@ final class malCure_security_suite {
 
 	}
 
-	function mss_api_register_handler() {
-		check_ajax_referer( 'mss_api_register', 'mss_api_register_nonce' );
-		$user       = $_REQUEST['user'];
-		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
-		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
-		if ( empty( $user['fn'] ) ) {
-			wp_send_json_error( 'Invalid firstname.' );
-		}
-		if ( empty( $user['fn'] ) ) {
-			wp_send_json_error( 'Invalid lastname.' );
-		}
-		if ( ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
-			wp_send_json_error( 'Invalid email.' );
-		}
-		$registration = malCure_Utils::do_mss_api_register( $user );
-		if ( is_wp_error( $registration ) ) {
-			wp_send_json_error( $registration->get_error_message() );
-		}
-		wp_send_json_success( $registration );
-		wp_send_json_success( malCure_Utils::encode( malCure_Utils::get_plugin_data() ) );
-	}
-
-	function admin_inline_style() {
-		?>
-		<style type="text/css">
-		#toplevel_page__mss .wp-menu-image img {
-			width: 24px;
-			height: auto;
-			opacity: 1;
-			/*padding: 0 0 0 0;*/
-			padding: 6px 0 0 0;
-		}
-		</style>
-		<?php
-	}
-
-	function plugin_res( $hook ) {
-		if ( preg_match( '/_mss$/', $hook ) ) {
-			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
-			wp_enqueue_script( 'jquery' );
-		}
-	}
-
 	function settings_menu() {
 		add_menu_page(
 			'malCure Security', // page_title
@@ -130,18 +88,18 @@ final class malCure_security_suite {
 		do_action( 'mss_settings_menu' );
 	}
 
-	function debug_menu() {
-		add_submenu_page(
-			'_mss',  // parent_slug
-			'malCure Debug', // page_title
-			'malCure Debug', // menu_title
-			MSS_GOD, // capability
-			'debug_mss',
-			array( $this, 'debug_mss_page' )
-		);
-	}
-
 	function settings_page() {
+		$title = 'Malcure Security Suite';
+		malCure_Utils::llog( func_get_args() );
+		?>
+		<div class="wrap">
+		<h1><?php echo $title; ?></h1>
+			<div class="container">
+			</div>
+		</div>
+			<?php
+	}
+	function settings_page_old() {
 		?>
 		<div class="wrap">
 		<h1>malCure Security Suite</h1>
@@ -279,6 +237,60 @@ final class malCure_security_suite {
 		<?php
 	}
 
+	function mss_api_register_handler() {
+		check_ajax_referer( 'mss_api_register', 'mss_api_register_nonce' );
+		$user       = $_REQUEST['user'];
+		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
+		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
+		if ( empty( $user['fn'] ) ) {
+			wp_send_json_error( 'Invalid firstname.' );
+		}
+		if ( empty( $user['fn'] ) ) {
+			wp_send_json_error( 'Invalid lastname.' );
+		}
+		if ( ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
+			wp_send_json_error( 'Invalid email.' );
+		}
+		$registration = malCure_Utils::do_mss_api_register( $user );
+		if ( is_wp_error( $registration ) ) {
+			wp_send_json_error( $registration->get_error_message() );
+		}
+		wp_send_json_success( $registration );
+		wp_send_json_success( malCure_Utils::encode( malCure_Utils::get_plugin_data() ) );
+	}
+
+	function admin_inline_style() {
+		?>
+		<style type="text/css">
+		#toplevel_page__mss .wp-menu-image img {
+			width: 24px;
+			height: auto;
+			opacity: 1;
+			/*padding: 0 0 0 0;*/
+			padding: 6px 0 0 0;
+		}
+		</style>
+		<?php
+	}
+
+	function plugin_res( $hook ) {
+		if ( preg_match( '/_mss$/', $hook ) ) {
+			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
+			wp_enqueue_script( 'jquery' );
+		}
+	}
+
+	function debug_menu() {
+		add_submenu_page(
+			'_mss',  // parent_slug
+			'malCure Debug', // page_title
+			'malCure Debug', // menu_title
+			MSS_GOD, // capability
+			'debug_mss',
+			array( $this, 'debug_mss_page' )
+		);
+	}
+
 	function render_branding() {
 		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
 	}
@@ -306,6 +318,7 @@ final class malCure_security_suite {
 
 	function mss_system_status() {
 		global $wpdb;
+		// malCure_Utils::llog(get_option( 'MSS' . '_definitions' ));
 		?>
 		<table id="mss_system_status">
 		<tr>
