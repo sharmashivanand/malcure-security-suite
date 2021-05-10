@@ -39,7 +39,7 @@ abstract class MSS_Admin {
 	}
 
 	function do_meta_box_callback() {
-		echo 'We\ll do something here!';
+		echo 'We\'ll do something here!';
 	}
 
 	public function maybe_add_main_menu() {
