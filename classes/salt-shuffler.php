@@ -15,43 +15,25 @@ class malCure_Salt_Shuffler {
 	}
 
 	function init() {
-		add_action( 'mss_settings_menu', array( $this, 'admin_menu' ) );
 		add_action( 'wp_ajax_mss_shuffle_salts', array( $this, 'mss_shuffle_salts' ) );
 		add_action( 'wp_ajax_nopriv_mss_shuffle_salts', '__return_false' );
-		add_action( 'mss_admin_scripts', array( $this, 'js' ) );
-
+		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
+		add_action( 'malCure_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
 
-	function admin_menu() {
-		add_submenu_page(
-			'_mss',  // parent_slug
-			'malCure Salt Shuffler', // page_title
-			'Salt Shuffler', // menu_title
-			MSS_GOD, // capability
-			'salt_shuffler_mss', // slug
-			array( $this, 'salt_shuffler_mss_page' )
-		);
-	}
-	
-	function render_branding() {
-		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
+	function add_meta_boxes() {
+		add_meta_box( 'mss_salt_shuffler', 'Salt Shuffler', array( $this, 'mss_salt_shuffler_ui' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
 	}
 
-	function salt_shuffler_mss_page() {
-		?>
-		<div class="wrap">
-		<h1>malCure Salts Shuffler</h1>
-			<div class="container">
-			<?php echo '<div id="mss_salt_shuffler_branding" class="mss_branding" >' . $this->render_branding() . '</div>'; ?>
-			<table id="mss_utils">
-				<tr><td><input class="button-primary mss_action" value="Shuffle Salts" id="mss_shuffle_salts" type="submit" /></td><td><p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p><div id="mss_shuffle_salts_status" class="mss_status"></div></td></tr>
-			</table>
-			</div>
-		</div>
+	function mss_salt_shuffler_ui(){ ?>
+		<p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p>
+		<input class="button-primary mss_action" value="Shuffle Salts" id="mss_shuffle_salts" type="submit" />
+		<div id="mss_shuffle_salts_status" class="mss_status"></div>
 		<?php
-    }
+	}
 
-	function js() {
+
+	function footer_scripts() {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -122,7 +104,7 @@ class malCure_Salt_Shuffler {
 		</script>
 		<?php
 	}
-    
+
 	function mss_shuffle_salts() {
 
 		WP_Filesystem();
@@ -206,9 +188,9 @@ class malCure_Salt_Shuffler {
 			}
 		}
 		return $secret_keys;
-    }
-    
-    function get_config_path() {
+	}
+
+	function get_config_path() {
 		WP_Filesystem();
 		global $wp_filesystem;
 		$config_path = '';

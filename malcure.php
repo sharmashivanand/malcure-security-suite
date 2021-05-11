@@ -49,10 +49,12 @@ final class malCure_security_suite {
 	}
 
 	function init() {
-		$this->dir = trailingslashit( plugin_dir_path( __FILE__ ) );
-		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
+		$GLOBALS[ get_class( $this ) ] = array();
+		$this->dir                     = trailingslashit( plugin_dir_path( __FILE__ ) );
+		$this->url                     = trailingslashit( plugin_dir_url( __FILE__ ) );
 
 		include_once $this->dir . 'lib/utils.php';
+		include_once $this->dir . 'classes/general_utils.php';
 		// include_once $this->dir . 'classes/admin.php';
 		if ( malCure_Utils::is_registered() ) {
 			include_once $this->dir . 'classes/integrity.php';
@@ -61,54 +63,44 @@ final class malCure_security_suite {
 		}
 
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
-		
+
 		add_action( 'admin_init', array( $this, 'hook_meta_boxes' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
-		
-		add_action( 'mss_settings_menu', array( $this, 'debug_menu' ) );
+
+		// add_action( 'mss_settings_menu', array( $this, 'debug_menu' ) );
 
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
 
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 
-		add_action( 'wp_ajax_mss_api_register', array( $this, 'mss_api_register_handler' ) );
-		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
-
+		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 	}
 
 	function hook_meta_boxes() {
 		add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
-		add_action( 'load-' . $this->pagehook, array( $this, 'do_meta_boxes' ) );
+
 		add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
 		// echo 'load-' . $this->pagehook . '-add_action-' . PHP_EOL;
 	}
 
-	function add_admin_scripts(){
+	function add_admin_scripts() {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
 	}
 
-	function add_meta_boxes() {		
-		add_meta_box( 'my_meta_slug_handle', 'my_meta_title', array( $this, 'do_meta_box_callback' ), $this->pagehook, 'main' );
+	function add_meta_boxes() {
+		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 	}
 
-	function do_meta_box_callback(){
+	function do_meta_box_callback() {
 		echo 'do something here';
 	}
 
-	function inject_metaboxes() {
-	}
-
-	function do_meta_boxes() {
-		do_action( 'add_meta_boxes', $this->pagehook, '' );
-	}
-	
-
 	function settings_menu() {
-		$this->pagehook = add_menu_page(
+		$this->pagehook                            = add_menu_page(
 			'malCure Security Suite', // page_title
 			'malCure Security', // menu_title
 			MSS_GOD,   // capability
@@ -117,22 +109,28 @@ final class malCure_security_suite {
 			$this->url . 'assets/icon-dark-trans.svg', // icon_url
 			79
 		);
+		$GLOBALS[ get_class( $this ) ]['pagehook'] = $this->pagehook;
 		do_action( 'mss_settings_menu' );
 	}
 
 	function settings_page() {
 		$title = 'Malcure Security Suite';
-		//malCure_Utils::llog( func_get_args() );
+		// malCure_Utils::llog( func_get_args() );
 		?>
 		<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<div class="container">
+			<?php
+			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
+			?>
 			</div>
 			<div id="poststuff">
 				<div class="metabox-holder columns-2" id="post-body">
 					<div class="postbox-container" id="post-body-content">
-					<?php echo $this->pagehook; ?>
 						<?php do_meta_boxes( $this->pagehook, 'main', null ); ?>
+					</div>
+					<div id="postbox-container-1" class="postbox-container">
+						<?php do_meta_boxes( $this->pagehook, 'side', null ); ?>
 					</div>
 				</div>
 			</div>
@@ -153,6 +151,7 @@ final class malCure_security_suite {
 		</script>
 			<?php
 	}
+
 	function settings_page_old() {
 		?>
 		<div class="wrap">
@@ -291,28 +290,6 @@ final class malCure_security_suite {
 		<?php
 	}
 
-	function mss_api_register_handler() {
-		check_ajax_referer( 'mss_api_register', 'mss_api_register_nonce' );
-		$user       = $_REQUEST['user'];
-		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
-		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
-		if ( empty( $user['fn'] ) ) {
-			wp_send_json_error( 'Invalid firstname.' );
-		}
-		if ( empty( $user['fn'] ) ) {
-			wp_send_json_error( 'Invalid lastname.' );
-		}
-		if ( ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
-			wp_send_json_error( 'Invalid email.' );
-		}
-		$registration = malCure_Utils::do_mss_api_register( $user );
-		if ( is_wp_error( $registration ) ) {
-			wp_send_json_error( $registration->get_error_message() );
-		}
-		wp_send_json_success( $registration );
-		wp_send_json_success( malCure_Utils::encode( malCure_Utils::get_plugin_data() ) );
-	}
-
 	function admin_inline_style() {
 		?>
 		<style type="text/css">
@@ -328,6 +305,9 @@ final class malCure_security_suite {
 	}
 
 	function plugin_res( $hook ) {
+		// echo $hook;
+		// die();
+		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 		if ( preg_match( '/_mss$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
 			wp_enqueue_script( 'jquery' );
@@ -349,257 +329,12 @@ final class malCure_security_suite {
 		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
 	}
 
-	function debug_mss_page() {
-		?>
-		<div class="wrap">
-		<h1>malCure Debug</h1>
-			<div class="container">
-			<?php
-			echo '<div id="mss_debug_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-			malCure_Utils::llog( 'MSS' );
-			malCure_Utils::llog( var_export( get_option( 'MSS' ), 1 ) );
-			malCure_Utils::llog( 'MSS_scans' );
-			$scans = get_option( 'MSS_scans' );
-			krsort( $scans );
-			malCure_Utils::llog( var_export( $scans, 1 ) );
-			malCure_Utils::llog( 'MSS_checksums_generated' );
-			malCure_Utils::llog( var_export( get_option( 'MSS_checksums_generated' ), 1 ) );
-			?>
-			</div>
-		</div>
-		<?php
-	}
-
-	function mss_system_status() {
-		global $wpdb;
-		// malCure_Utils::llog(get_option( 'MSS' . '_definitions' ));
-		?>
-		<table id="mss_system_status">
-		<tr>
-			<th>Website URL</th>
-			<td><?php echo get_bloginfo( 'url' ); ?></td>
-		</tr>
-		<tr>
-			<th>WP URL</th>
-			<td><?php echo get_bloginfo( 'wpurl' ); ?></td>
-		</tr>
-		<tr>
-			<th>WP Installation DIR</th>
-			<td><?php echo ABSPATH; ?></td>
-		</tr>
-		<tr>
-			<th>WP Version</th>
-			<td><?php echo get_bloginfo( 'version' ); ?></td>
-		</tr>
-		<tr>
-			<th>WP Language</th>
-			<td><?php echo get_bloginfo( 'language' ); ?></td>
-		</tr>
-		<tr>
-			<th>WP Multisite</th>
-			<td><?php echo is_multisite() ? 'Yes' : 'No'; ?></td>
-		</tr>
-		<tr>
-			<th>Active Theme</th>
-			<td><?php echo get_bloginfo( 'stylesheet_directory' ); ?></td>
-		</tr>
-		<tr>
-			<th>Parent Theme</th>
-			<td><?php echo get_bloginfo( 'template_directory' ); ?></td>
-		</tr>
-		<tr>
-			<th>User Roles</th>
-			<td>
-			<?php
-			global $wp_roles;
-			foreach ( $wp_roles->roles as $role => $capabilities ) {
-				echo '<span class="wpmr_bricks">' . $role . '</span>';}
-			?>
-			</td>
-		</tr>
-		<tr>
-			<th>Must-Use Plugins</th>
-			<td>
-			<?php
-			$mu = get_mu_plugins();
-			foreach ( $mu as $key => $value ) {
-				echo '<span class="wpmr_bricks">' . $key . '</span>';}
-			?>
-			</td>
-		</tr>
-		<tr>
-			<th>Drop-ins</th>
-			<td>
-			<?php
-			$dropins = get_dropins();
-			foreach ( $dropins as $key => $value ) {
-				echo '<span class="wpmr_bricks">' . $key . '</span>';}
-			?>
-			</td>
-		</tr>
-		<tr>
-			<th>PHP</th>
-			<td><?php echo phpversion(); ?></td>
-		</tr>
-		<tr>
-			<th>Web-Server</th>
-			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
-		</tr>
-		<tr>
-			<th>Server</th>
-			<td><?php echo php_uname(); ?></td>
-		</tr>
-		<tr>
-			<th>Server Address</th>
-			<td><?php echo $_SERVER['SERVER_ADDR']; ?></td>
-		</tr>
-		<tr>
-			<th>Server Port</th>
-			<td><?php echo $_SERVER['SERVER_PORT']; ?></td>
-		</tr>
-		<tr>
-		<?php $allfilescount = malCure_Utils::get_files( get_home_path() ); ?>
-			<th>Total Files</th>
-			<td>
-			<?php echo $allfilescount['total_files']; ?>
-			</td>
-		</tr>
-		
-		<tr><th>File Count (Recursive)</th><td>
-		<?php
-		$dirs = glob( trailingslashit( get_home_path() ) . '*', GLOB_ONLYDIR );
-		$dirs = array_merge( glob( trailingslashit( get_home_path() ) . 'wp-content/*', GLOB_ONLYDIR ), $dirs );
-		if ( $dirs ) {
-			asort( $dirs );
-			echo '<table>';
-			echo '<tr><th>Directory</th><th></th></tr>';
-			foreach ( $dirs as $dir ) {
-				echo '<tr><td class="dir_container">' . str_replace( get_home_path(), '', $dir ) . '</td><td class="dir_count">' . malCure_Utils::get_files( $dir )['total_files'] . '</td></tr>';
-			}
-			echo '</table>';
-		}
-		?>
-		</td></tr>
-		<tr><th>Hidden Files &amp; Folders</th>
-		<td id="hidden_files">
-		<?php
-		$hidden  = array_filter(
-			malCure_Utils::get_files( get_home_path() )['files'],
-			function( $v ) {
-				return ( empty( explode( '.', basename( $v ) )[0] ) || empty( explode( '.', basename( dirname( $v ) ) )[0] ) ) ? true : false;
-			}
-		);
-		$hidden  = array_values( $hidden );
-		$newlist = array();
-		foreach ( $hidden as $k => $v ) {
-			$parts = explode( '.', basename( dirname( $v ) ) );
-			if ( empty( $parts [0] ) ) {
-				$newlist[ dirname( $v ) ] = '<strong>[*DIR] ' . dirname( $v ) . '</strong>';
-			}
-			$newlist[ $v ] = '[FILE] ' . $v;
-		}
-		echo implode( '<br />', $newlist );
-		?>
-		</td></tr>
-		<?php $this->malcure_user_sessions(); ?>
-		</table>
-		<?php
-	}
-
-	function destroy_sessions() {
-		check_ajax_referer( 'malcure_destroy_sessions', 'malcure_destroy_sessions_nonce' );
-		$users = $this->get_users_loggedin();
-		$id    = $_REQUEST['user']['id'];
-		foreach ( $users as $user ) {
-			if ( $user->ID != $id ) {
-				$sessions = WP_Session_Tokens::get_instance( $user->ID );
-				$sessions->destroy_all();
-			}
-		}
-		wp_send_json_success();
-	}
-
-	function get_users_loggedin() {
-		return get_users(
-			array(
-				'meta_key'     => 'session_tokens',
-				'meta_compare' => 'EXISTS',
-			)
-		);
-	}
-
-	function malcure_user_sessions() {
-		?>
-		<tr><th>Logged-In Users</th><td>
-			<?php
-			submit_button( 'Logout All Users', 'primary', 'malcure_destroy_sessions' );
-			$users = $this->get_users_loggedin();
-			foreach ( $users as $user ) {
-				echo '<table class="user_details" id="user_details_"' . $user->ID . '>';
-				echo '<tr><th class="user_details_id">User ID</th><td>' . $user->ID . '</td></tr>';
-				echo '<tr><th class="user_details_roles">User Roles</th><td>' . implode( ',', $user->roles ) . '</td></tr>';
-				echo '<tr><th class="user_details_user_login">User Login</th><td>' . $user->user_login . '</td></tr>';
-				echo '<tr><th class="user_details_user_email">User Email</th><td>' . $user->user_email . '</td></tr>';
-				echo '<tr><th class="user_details_display_name">Display Name</th><td>' . $user->display_name . '</td></tr>';
-				echo '<tr><th class="user_details_user_registered">Date Registered</th><td>' . $user->user_registered . '</td></tr>';
-				$s_details = '';
-				$s_details = get_user_meta( $user->ID, 'session_tokens', true );
-				echo '<tr><th  class="user_details_session_ip">Sessions</th><td>';
-				foreach ( $s_details as $s_detail ) {
-					echo '<table class="user_details_session">';
-					echo '<tr><th  class="user_details_session_ip">IP Address</th><td>' . $s_detail['ip'] . '</td></tr>';
-					echo '<tr><th  class="user_details_session_ua">User-Agent</th><td>' . $s_detail['ua'] . '</td></tr>';
-					echo '<tr><th  class="user_details_session_login">Login Date</th><td>' . date( 'Y M d', $s_detail['login'] ) . '</td></tr>';
-					echo '<tr><th  class="user_details_session_expiration">Login Expiration Date</th><td>' . date( 'Y M d', $s_detail['expiration'] ) . '</td></tr>';
-					echo '</table>';
-				}
-				echo '</td></tr>';
-				echo '</table>';
-			}
-			?>
-			</td></tr>
-			<script type="text/javascript">
-			jQuery(document).ready(function($){
-				$("#malcure_destroy_sessions").click(function(){
-					malcure_destroy_sessions = {
-						malcure_destroy_sessions_nonce: '<?php echo wp_create_nonce( 'malcure_destroy_sessions' ); ?>',
-						action: "malcure_destroy_sessions",
-						cachebust: Date.now(),
-						user: {
-							id: <?php echo get_current_user_id(); ?>
-						}
-					};
-					$("#malcure_destroy_sessions").fadeTo("slow",.1,);
-					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						data: malcure_destroy_sessions,
-						complete: function(jqXHR, textStatus) {},
-						success: function(response) {
-							if ((typeof response) != 'object') {
-								response = JSON.parse( response );
-							}
-							if (response.hasOwnProperty('success')) {
-								$("#malcure_destroy_sessions").fadeTo("slow",1,);
-								if(confirm('All users have been logged out (except you). Reload the page now?')) {
-									location.reload();
-								}
-							} else {
-								alert('Failed to logout other users.');
-							}
-						}
-					});
-				})
-			});
-			</script>
-			<?php
-	}
-
 	function footer_scripts() {
 		$screen = get_current_screen();
-		if ( preg_match( '/_mss$/', $screen->id ) ) {
+		if ( $screen->id == $this->pagehook ) {
 			do_action( 'mss_admin_scripts' );
 		}
+
 	}
 
 	function malcure_security_tests( $tests ) {

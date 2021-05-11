@@ -16,106 +16,28 @@ class malCure_Integrity {
 
 	function init() {
 
-		add_action( 'mss_settings_menu', array( $this, 'submenu_page' ) );
-		// add_action( 'mss_admin_scripts', array( $this, 'js' ) );
+		
+		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
 		// add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
 		// add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
 		add_action( 'upgrader_process_complete', array( $this, 'delete_checksums' ), 9999, 2 );
 
-		add_action( 'load-malcure-security_page_integrity_mss', array( $this, 'load_meta_boxes' ) );
-		add_action( 'load-malcure-security_page_integrity_mss', array( $this, 'add_meta_boxes' ) );
-		add_action( 'load-malcure-security_page_integrity_mss', array( $this, 'add_admin_scripts' ) );
+		add_action( 'malCure_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 
 	}
-	function load_meta_boxes() {
-		add_action( 'add_meta_boxes', array( $this, 'inject_metaboxes' ) );
-	}
-
 	function add_meta_boxes() {
-		do_action( 'add_meta_boxes', 'malcure-security_page_integrity_mss', '' );
+
+		// add_meta_box( 'mss_integrity', 'File Integrity', array( $this, 'mss_integrity' ), $GLOBALS['malCure_security_suite']['pagehook'], 'side' );
+		global $mss_integrity_results;
+		$mss_integrity_results = $this->verify_checksums();
+		add_meta_box( 'integrity_missing', 'Integrity: Missing Files', array( $this, 'meta_box_missing_files' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'integrity_failed', 'Integrity: Failed Checksums', array( $this, 'meta_box_failed_checksums' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'integrity_extra', 'Integrity: Missing Checksums', array( $this, 'meta_box_extra_files' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+		// add_meta_box( 'integrity_extra', 'Extra Files', array( $this, 'meta_box_extra_files' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+
+		// add_meta_box( 'integrity_sb1', 'malCure', array( $this, 'meta_box_ad' ), 'malcure-security_page_integrity_mss', 'side', 'high' );
 	}
 
-	function add_admin_scripts() {
-		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( 'common' );
-		wp_enqueue_script( 'wp-lists' );
-		wp_enqueue_script( 'postbox' );
-	}
-
-	function submenu_page() {
-		add_submenu_page(
-			'_mss',  // parent_slug
-			'malCure WordPress Integrity Verifier', // page_title
-			'Integrity Verifier', // menu_title
-			MSS_GOD, // capability
-			'integrity_mss',    // menu slug
-			array( $this, 'integrity_mss_page' ), // callback
-			null // position
-		);
-	}
-
-	function integrity_mss_page() {
-		echo get_admin_page_parent();
-		?>
-		<div class="wrap">
-			<h1><?php echo get_admin_page_title(); ?></h1>
-			<div class="container">
-			<?php
-			echo '<div id="mss_interity_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-
-			global $mss_integrity_results;
-			$mss_integrity_results = $this->verify_checksums();
-			echo '<p class="mss_notice"><strong>If you find any discrepancy in the below, please note that currently theme checksums are not supported. WordPress bundles the default theme checksums which may not pass verification after default themes are updated.</strong></p>';
-			?>
-			</div>
-			<div id="poststuff">
-				<div class="metabox-holder columns-2" id="post-body">
-					<div class="postbox-container" id="post-body-content">
-						<?php do_meta_boxes( 'malcure-security_page_integrity_mss', 'main', null ); ?>
-					</div>
-					<!-- #postbox-container -->
-					<div id="postbox-container-1" class="postbox-container">
-						<?php
-								do_meta_boxes( 'malcure-security_page_integrity_mss', 'side', null );
-						?>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<script type="text/javascript">
-		//<![CDATA[
-		jQuery(document).ready(function($) {
-			// close postboxes that should be closed
-			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-			$('#integrity_missing').addClass('closed');
-			$('#integrity_failed').addClass('closed');
-			$('#integrity_extra').addClass('closed');
-			// postboxes setup
-			postboxes.add_postbox_toggles('malcure-security_page_integrity_mss');
-		});
-		//]]>
-		</script>
-		<?php
-	}
-
-	function inject_metaboxes() {
-		add_meta_box( 'integrity_missing', 'Possibly Missing Files', array( $this, 'meta_box_missing_files' ), 'malcure-security_page_integrity_mss', 'main', 'high' );
-		add_meta_box( 'integrity_failed', 'Failed Checksums', array( $this, 'meta_box_failed_checksums' ), 'malcure-security_page_integrity_mss', 'main', 'high' );
-		add_meta_box( 'integrity_extra', 'Extra Files', array( $this, 'meta_box_extra_files' ), 'malcure-security_page_integrity_mss', 'main', 'high' );
-		add_meta_box( 'integrity_extra', 'Extra Files', array( $this, 'meta_box_extra_files' ), 'malcure-security_page_integrity_mss', 'main', 'high' );
-
-		add_meta_box( 'integrity_sb1', 'malCure', array( $this, 'meta_box_ad' ), 'malcure-security_page_integrity_mss', 'side', 'high' );
-
-
-	}
-
-	function meta_box_ad(){ ?>
-		<div id="integrity_sb1_ad"><a href="https://malcure.com/?p=107&utm_source=mss-integgrity-sb-ad&utm_medium=web&utm_campaign=mss">WordPress Malware Removal Service</a></div>
-	<?php
-	}
-
-	
 	function meta_box_missing_files() {
 		global $mss_integrity_results;
 
@@ -162,15 +84,17 @@ class malCure_Integrity {
 		}
 	}
 
-	function render_branding() {
-		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
+	function meta_box_ad() {
+		?>
+		<div id="integrity_sb1_ad"><a href="https://malcure.com/?p=107&utm_source=mss-integgrity-sb-ad&utm_medium=web&utm_campaign=mss">WordPress Malware Removal Service</a></div>
+		<?php
 	}
 
 	function delete_checksums() {
 		delete_transient( 'malcure_checksums' );
 	}
 
-	function js() {
+	function footer_scripts() {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -231,6 +155,7 @@ class malCure_Integrity {
 				return false;
 			});
 		});
+		</script>
 		<?php
 	}
 
@@ -293,7 +218,6 @@ class malCure_Integrity {
 	}
 
 	function verify_integrity() {
-
 		// should return missing, extra and mismatches
 		wp_send_json_success( $this->verify_checksums() );
 		wp_send_json_success( $this->get_checksums() );
@@ -347,9 +271,6 @@ class malCure_Integrity {
 			}
 		}
 
-
-
-
 		foreach ( $checksums as $checksum => $value ) {
 			$checksum = trailingslashit( $install_path ) . $checksum;
 
@@ -361,6 +282,8 @@ class malCure_Integrity {
 	}
 
 	function get_all_files( $path = false ) {
+		$files = malCure_Utils::get_files();
+		return $files['files'];
 		if ( ! $path ) {
 			$path = get_home_path();
 			if ( empty( $path ) ) {

@@ -1,16 +1,15 @@
-.button-primary {
-	border-radius: 0 !important;
-}
 
-.ccontainer {
-	background: white;
-	padding: 1.618em 3.236em;
 
-	margin-bottom: 3.236em;
 
-	#mss_utils td {
-		padding: .6em 1em;
-		vertical-align: baseline;
+#poststuff {
+	font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	
+	.button-primary {
+		border-radius: 0 !important;
+	}
+
+	th {
+		text-align: left;
 	}
 
 	ul {
@@ -56,23 +55,9 @@
 
 #mss_system_status {
 
-	font-family: Roboto,
-	Arial,
-	-apple-system,
-	BlinkMacSystemFont,
-	"Segoe UI",
-	Oxygen-Sans,
-	Ubuntu,
-	Cantarell,
-	"Helvetica Neue",
-	sans-serif th {
-		text-align: left;
-		white-space: nowrap;
-		vertical-align: top;
-	}
-
 	th {
 		text-align: left;
+		white-space: nowrap;
 		vertical-align: top;
 	}
 
