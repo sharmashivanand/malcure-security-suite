@@ -53,16 +53,18 @@ final class malCure_security_suite {
 		$this->url = trailingslashit( plugin_dir_url( __FILE__ ) );
 
 		include_once $this->dir . 'lib/utils.php';
+		// include_once $this->dir . 'classes/admin.php';
 		if ( malCure_Utils::is_registered() ) {
-			include_once $this->dir . 'classes/admin.php';
 			include_once $this->dir . 'classes/integrity.php';
 			include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
 
 		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
-
+		
+		add_action( 'admin_init', array( $this, 'hook_meta_boxes' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
+		
 		add_action( 'mss_settings_menu', array( $this, 'debug_menu' ) );
 
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
@@ -75,9 +77,39 @@ final class malCure_security_suite {
 
 	}
 
+	function hook_meta_boxes() {
+		add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
+		add_action( 'load-' . $this->pagehook, array( $this, 'do_meta_boxes' ) );
+		add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
+		// echo 'load-' . $this->pagehook . '-add_action-' . PHP_EOL;
+	}
+
+	function add_admin_scripts(){
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'common' );
+		wp_enqueue_script( 'wp-lists' );
+		wp_enqueue_script( 'postbox' );
+	}
+
+	function add_meta_boxes() {		
+		add_meta_box( 'my_meta_slug_handle', 'my_meta_title', array( $this, 'do_meta_box_callback' ), $this->pagehook, 'main' );
+	}
+
+	function do_meta_box_callback(){
+		echo 'do something here';
+	}
+
+	function inject_metaboxes() {
+	}
+
+	function do_meta_boxes() {
+		do_action( 'add_meta_boxes', $this->pagehook, '' );
+	}
+	
+
 	function settings_menu() {
-		add_menu_page(
-			'malCure Security', // page_title
+		$this->pagehook = add_menu_page(
+			'malCure Security Suite', // page_title
 			'malCure Security', // menu_title
 			MSS_GOD,   // capability
 			'_mss',  // menu_slug
@@ -90,13 +122,35 @@ final class malCure_security_suite {
 
 	function settings_page() {
 		$title = 'Malcure Security Suite';
-		malCure_Utils::llog( func_get_args() );
+		//malCure_Utils::llog( func_get_args() );
 		?>
 		<div class="wrap">
-		<h1><?php echo $title; ?></h1>
+		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<div class="container">
 			</div>
+			<div id="poststuff">
+				<div class="metabox-holder columns-2" id="post-body">
+					<div class="postbox-container" id="post-body-content">
+					<?php echo $this->pagehook; ?>
+						<?php do_meta_boxes( $this->pagehook, 'main', null ); ?>
+					</div>
+				</div>
+			</div>
 		</div>
+		<script type="text/javascript">
+		//<![CDATA[
+		jQuery(document).ready(function($) {
+			// close postboxes that should be closed
+			// $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+			// $('#integrity_missing').addClass('closed');
+			// $('#integrity_failed').addClass('closed');
+			// $('#integrity_extra').addClass('closed');
+			// postboxes setup
+			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
+		});
+		//]]>
+		</script>
 			<?php
 	}
 	function settings_page_old() {

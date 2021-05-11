@@ -55,9 +55,10 @@ class malCure_Integrity {
 	}
 
 	function integrity_mss_page() {
+		echo get_admin_page_parent();
 		?>
 		<div class="wrap">
-			<h1>malCure WordPress Integrity Checker</h1>
+			<h1><?php echo get_admin_page_title(); ?></h1>
 			<div class="container">
 			<?php
 			echo '<div id="mss_interity_branding" class="mss_branding" >' . $this->render_branding() . '</div>';

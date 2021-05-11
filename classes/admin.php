@@ -24,18 +24,16 @@ abstract class MSS_Admin {
 	}
 
 	function add_meta_boxes() {
-		malCure_Utils::llog( __FUNCTION__ );
+
 		add_action( 'add_meta_boxes', array( $this, 'inject_metaboxes' ) );
 	}
 
 	function do_meta_boxes() {
-		malCure_Utils::llog( __FUNCTION__ );
 		do_action( 'add_meta_boxes', $this->pagehook, '' );
 	}
 
 	function inject_metaboxes() {
-		echo $this->pagehook;
-		add_meta_box( 'my_meta_slug_handle', 'my_meta_title', array( $this, 'do_meta_box_callback' ), $this->pagehook, 'main'  );
+		add_meta_box( 'my_meta_slug_handle', 'my_meta_title', array( $this, 'do_meta_box_callback' ), $this->pagehook, 'main' );
 	}
 
 	function do_meta_box_callback() {
@@ -55,7 +53,15 @@ abstract class MSS_Admin {
 				)
 			);
 
-			$this->pagehook = add_menu_page( $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'settings_page' ), $menu['icon_url'], $menu['position'] );
+			$this->pagehook = add_menu_page(
+				$menu['page_title'], // string $page_title
+				$menu['menu_title'], // string $menu_title
+				$menu['capability'], // string $capability
+				$this->page_id, // string $menu_slug
+				array( $this, 'settings_page' ), // callable $function = ''
+				$menu['icon_url'], // string $icon_url = ''
+				$menu['position'] // int $position = null
+			);
 			// var_dump( 'load-' . $this->pagehook );
 		}
 	}
@@ -72,7 +78,15 @@ abstract class MSS_Admin {
 				)
 			);
 
-			$this->pagehook = add_submenu_page( $this->page_id, $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'settings_page' ) );
+			$this->pagehook = add_submenu_page(
+				$this->page_id, // string $parent_slug
+				$menu['page_title'], // string $page_title
+				$menu['menu_title'], // string $menu_title
+				$menu['capability'], // string $capability
+				$this->page_id, // string $menu_slug
+				array( $this, 'settings_page' ), // callable $function = ''
+				// int $position = null
+			);
 			// var_dump( 'load-' . $this->pagehook );
 		}
 	}
@@ -80,7 +94,7 @@ abstract class MSS_Admin {
 	function maybe_add_submenu() {
 		// add_submenu_page
 		if ( isset( $this->menu_ops['submenu'] ) && is_array( $this->menu_ops['submenu'] ) ) {
-			$menu = wp_parse_args(
+			$menu           = wp_parse_args(
 				$this->menu_ops['submenu'],
 				array(
 					'parent_slug' => '',
@@ -89,10 +103,34 @@ abstract class MSS_Admin {
 					'capability'  => 'activate_plugins',
 				)
 			);
-
-			$this->pagehook = add_submenu_page( $menu['parent_slug'], $menu['page_title'], $menu['menu_title'], $menu['capability'], $this->page_id, array( $this, 'settings_page' ) );
+			$this->pagehook = add_submenu_page(
+				$menu['parent_slug'], // string $parent_slug
+				$menu['page_title'], // string $page_title
+				$menu['menu_title'], // string $menu_title
+				$menu['capability'], // string $capability
+				$menu['menu_slug'], // $this->page_id, // string $menu_slug
+				array( $this, 'settings_page' )// callable $function = ''
+				// int $position = null
+			);
 			// var_dump( 'load-' . $this->pagehook );
 		}
+	}
+
+	public function settings_page() {
+		?>
+		<div class="wrap">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<div class="container">
+			</div>
+			<div id="poststuff">
+				<div class="metabox-holder columns-2" id="post-body">
+					<div class="postbox-container" id="post-body-content">
+						<?php do_meta_boxes( $this->pagehook, 'main', null ); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php
 	}
 
 	function load_resources() {
@@ -115,57 +153,39 @@ abstract class MSS_Admin {
 		wp_enqueue_script( 'postbox' );
 	}
 
-	public function settings_page() {
-		?>
-		<div class="wrap">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<div class="container">
-			</div>
-			<div id="poststuff">
-				<div class="metabox-holder columns-2" id="post-body">
-					<div class="postbox-container" id="post-body-content">
-						<?php do_meta_boxes( $this->pagehook, 'main', null ); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-		<?php
-	}
-
 }
 
 class mss_test_meta extends MSS_Admin {
 	public $page_id = 'mss_tester_';
 	// public $pagehook = 'mss_tester_';
 	public $menu_ops = array(
-		'main_menu'     => array(
+		'main_menu' => array(
 			'sep'        => array(
 				'sep_position'   => '58.995',
 				'sep_capability' => 'activate_plugins',
 			),
-			'page_title' => 'Theme Settings',
-			'menu_title' => 'Genesis',
+			'page_title' => 'Main Menu',
+			'menu_title' => 'Main Menu',
 			'capability' => 'activate_plugins',
-			// 'icon_url'   => GENESIS_ADMIN_IMAGES_URL . '/genesis-menu.png',
+			// 'icon_url'   => url,
 			'position'   => '58.996',
-		),
+		), /*
 		'first_submenu' => array( // Do not use without 'main_menu'.
-			'page_title' => 'Theme Settings',
-			'menu_title' => 'Theme Settings',
+			'page_title' => 'First Submenu Page Title',
+			'menu_title' => 'First Submenu Title',
 			'capability' => 'activate_plugins',
+		),*/
+		'submenu'   => array(
+			'parent_slug' => 'mss_tester_',
+			'page_title'  => 'Submenu Page Title',
+			'menu_title'  => 'Submenu Menu Title',
+			'menu_slug'   => 'mss_tester_sub_',
+			'capability'  => 'activate_plugins',
 		),
-		/*
-		'submenu'       => array(
-			'parent_slug' => 'edit.php?post_type=boo',
-			'page_title'  => 'Archive Settings',
-			'menu_title'  => 'Archive Settings',
-			'capability'  => 'manage_options',
-		),
-		*/
 	);
 	function __construct() {
 		$this->type = 7;
-		add_action( $this->pagehook, array( $this, 'do_metaboxes' ) );
+		// add_action( $this->pagehook, array( $this, 'do_metaboxes' ) );
 		$this->init();
 	}
 
