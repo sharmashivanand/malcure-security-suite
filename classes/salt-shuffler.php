@@ -32,7 +32,6 @@ class malCure_Salt_Shuffler {
 		<?php
 	}
 
-
 	function footer_scripts() {
 		?>
 		<script type="text/javascript">

@@ -16,7 +16,6 @@ class malCure_Integrity {
 
 	function init() {
 
-		
 		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
 		// add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
 		// add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
