@@ -15,20 +15,21 @@ class malCure_Integrity {
 	}
 
 	function init() {
-
+		// $this->delete_checksums();
 		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
-		// add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
-		// add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
+		add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
+		add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
 		add_action( 'upgrader_process_complete', array( $this, 'delete_checksums' ), 9999, 2 );
 
 		add_action( 'malCure_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 
 	}
+
 	function add_meta_boxes() {
 
 		// add_meta_box( 'mss_integrity', 'File Integrity', array( $this, 'mss_integrity' ), $GLOBALS['malCure_security_suite']['pagehook'], 'side' );
 		global $mss_integrity_results;
-		$mss_integrity_results = $this->verify_checksums();
+		// $mss_integrity_results = $this->verify_checksums();
 		add_meta_box( 'integrity_missing', 'Integrity: Missing Files', array( $this, 'meta_box_missing_files' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'integrity_failed', 'Integrity: Failed Checksums', array( $this, 'meta_box_failed_checksums' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'integrity_extra', 'Integrity: Missing Checksums', array( $this, 'meta_box_extra_files' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
@@ -51,7 +52,9 @@ class malCure_Integrity {
 				echo '<h2 id="mss_integrity_missing">All core WordPress files are present.</h2>';
 			}
 		} else {
-			echo '<h2>All WordPress integrity checks pass!</h2>';
+			// echo '<h2>All WordPress integrity checks pass!</h2>';
+			submit_button( 'Show Missing Files', 'primary', 'mss_integrity_missing_files', true );
+			echo '<div class="integrity_response"></div>';
 		}
 	}
 
@@ -65,7 +68,8 @@ class malCure_Integrity {
 				echo '<li>' . $failed . '</li>';
 			}
 		} else {
-			echo '<h2 id="mss_integrity_failed">All files passed checksum verification.</h2>';
+			submit_button( 'Show Failed Checksums', 'primary', 'mss_integrity_failed_checksums', true );
+			echo '<div class="integrity_response"></div>';
 		}
 
 	}
@@ -79,8 +83,125 @@ class malCure_Integrity {
 				echo '<li>' . $extra . '</li>';
 			}
 		} else {
-			echo '<h2 id="mss_integrity_extra">No unwanted files are present.</h2>';
+			submit_button( 'Show Extra Files', 'primary', 'mss_integrity_extra_files', true );
+			echo '<div class="integrity_response"></div>';
+			// echo '<h2 id="mss_integrity_extra">No unwanted files are present.</h2>';
 		}
+	}
+
+	function footer_scripts() {
+		?>
+		<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('#mss_integrity_missing_files').click(function(e){
+				make_integrity_request($(this).attr('id'),$(this).parents('.postbox').find('.integrity_response') );
+				// $(this).parents('.postbox').find('.integrity_response').html($(this).attr('id'));
+				});
+			$('#mss_integrity_failed_checksums').click(function(e){
+				make_integrity_request($(this).attr('id'),$(this).parents('.postbox').find('.integrity_response') );
+				// $(this).parents('.postbox').find('.integrity_response').html($(this).attr('id'));
+			});
+			$('#mss_integrity_extra_files').click(function(e){
+				make_integrity_request( $(this).attr('id'), $(this).parents('.postbox').find('.integrity_response') );
+				// $(this).parents('.postbox').find('.integrity_response').html($(this).attr('id'));
+			});
+		});
+
+		function make_integrity_request(req,container){
+			$ = jQuery.noConflict();
+			// console.log(req);
+			// console.log(container);
+			mss_verify_integrity = {
+					mss_verify_integrity_nonce: '<?php echo wp_create_nonce( 'mss_verify_integrity' ); ?>',
+						action: "mss_verify_integrity",
+						cachebust: Math.floor((new Date()).getTime() / 1000),
+						request: req
+					};
+				$.ajax({
+					url: ajaxurl,
+					method: 'POST',
+					data: mss_verify_integrity,
+					complete: function(jqXHR, textStatus) {
+						// console.log('complete');
+						// console.log('jqXHR');
+						// console.log(jqXHR);
+						// console.log('textStatus');
+						// console.log(textStatus);
+					},
+					success: function(data,textStatus,jqXHR) {
+						// console.log('success');
+						// console.dir('data');
+						// console.dir(data);
+						// console.dir('textStatus');
+						// console.dir(textStatus);
+						// console.dir('jqXHR');
+						// console.dir(jqXHR);
+						if ((typeof data) != 'object') {
+							console.log('invalid data');
+							data = JSON.parse(data);
+						}
+						if (data.hasOwnProperty('success') && data.success) {
+							//console.dir( Object.entries(data.data) );
+							files = data.data;
+							// console.dir(Object.keys(files));
+							// console.dir(Object.values(files));
+							// console.dir(Object.entries(files));
+							files = Object.values(files);
+							//console.log(files);
+							//console.log(typeof(files));
+							if(files.length){								
+								files = '<ol class="mss_verify_integrity"><li>'+files.join('</li><li>')+'</li></ol>';
+								$(container).html('<div class="mss_success" style="display:flex;">'+files+'</div>');
+							}
+							else {
+								$(container).html('<p class="mss_success">No matches.</p>');
+							}
+							console.log('WordPress successfully executed the requested action.');
+						} else {
+							$(container).html('<p class="mss_error">'+data.data+'</p>');
+							console.log('WordPress failed to execute the requested action.');
+						}
+					}, // success
+					error: function(jqXHR,textStatus,errorThrown) {
+						//console.log('error');
+						//console.dir('jqXHR');
+						//console.dir(jqXHR);
+						//console.dir('textStatus');
+						//console.dir(textStatus);
+						//console.dir('errorThrown');
+						//console.dir(errorThrown);
+						if(errorThrown.length) {
+							$(container).html('<p class="mss_error">'+ errorThrown + '</p>');
+						}
+						else {
+							$(container).html('<p class="mss_error">Request failed.</p>');
+						}
+					}
+				}); // ajax post
+		}
+		</script>
+		<?php
+	}
+
+	function verify_integrity() {
+		check_ajax_referer( 'mss_verify_integrity', 'mss_verify_integrity_nonce' );
+		$req = $_REQUEST['request'];
+		// should return missing, extra and mismatches
+		// wp_send_json_success( $req );
+		$result = $this->verify_checksums();
+		// wp_send_json_success( $result );
+		switch ( $req ) {
+			case 'mss_integrity_extra_files':
+				wp_send_json_success( $result['extra_files'] );
+			case 'mss_integrity_failed_checksums':
+				wp_send_json_success( $result['failed_checksums'] );
+			case 'mss_integrity_missing_files':
+				wp_send_json_success( $result['missing_files'] );
+		}
+		$req = $_REQUEST['mss_integrity_extra_files'];
+		wp_send_json_success( $this->verify_checksums() );
+		wp_send_json_success( $this->get_checksums() );
+		wp_send_json_success( $this->get_all_files() );
 	}
 
 	function meta_box_ad() {
@@ -91,71 +212,6 @@ class malCure_Integrity {
 
 	function delete_checksums() {
 		delete_transient( 'malcure_checksums' );
-	}
-
-	function footer_scripts() {
-		?>
-		<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$('#mss_verify_integrity').click(function(e){
-				e.preventDefault();
-				mss_verify_integrity = {
-					mss_verify_integrity_nonce: '<?php echo wp_create_nonce( 'mss_verify_integrity' ); ?>',
-						action: "mss_verify_integrity",
-						cachebust: Math.floor((new Date()).getTime() / 1000),
-					};
-				$.ajax({
-					url: ajaxurl,
-					method: 'POST',
-					data: mss_verify_integrity,
-					complete: function(jqXHR, textStatus) {
-						console.log('complete');
-						console.log('jqXHR');
-						console.log(jqXHR);
-						console.log('textStatus');
-						console.log(textStatus);
-					},
-					success: function(data,textStatus,jqXHR) {
-						console.log('success');
-						console.dir('data');
-						console.dir(data);
-						console.dir('textStatus');
-						console.dir(textStatus);
-						console.dir('jqXHR');
-						console.dir(jqXHR);
-						if ((typeof data) != 'object') {
-							console.log('invalid data');
-							data = JSON.parse(data);
-						}
-						if (data.hasOwnProperty('success') && data.success) {
-							$('#mss_verify_integrity_status').html('<p class="mss_success">'+data.data+'</p>');
-							console.log('WordPress successfully executed the requested action.');
-						} else {
-							$('#mss_verify_integrity_status').html('<p class="mss_error">'+data.data+'</p>');
-							console.log('WordPress failed to execute the requested action.');
-						}
-					}, // success
-					error: function(jqXHR,textStatus,errorThrown) {
-						console.log('error');
-						console.dir('jqXHR');
-						console.dir(jqXHR);
-						console.dir('textStatus');
-						console.dir(textStatus);
-						console.dir('errorThrown');
-						console.dir(errorThrown);
-						if(errorThrown.length) {
-							$('#mss_verify_integrity_status').html('<p class="mss_error">'+ errorThrown + '</p>');
-						}
-						else {
-							$('#mss_verify_integrity_status').html('<p class="mss_error">Failed to execute the requested action.</p>');
-						}
-					}
-				}); // ajax post
-				return false;
-			});
-		});
-		</script>
-		<?php
 	}
 
 	function get_checksums( $cached = true ) {
@@ -216,12 +272,7 @@ class malCure_Integrity {
 		return $plugin_checksums;
 	}
 
-	function verify_integrity() {
-		// should return missing, extra and mismatches
-		wp_send_json_success( $this->verify_checksums() );
-		wp_send_json_success( $this->get_checksums() );
-		wp_send_json_success( $this->get_all_files() );
-	}
+
 
 	/**
 	 * Verify checksums if we have a checksum for a file
@@ -266,17 +317,23 @@ class malCure_Integrity {
 					if ( ! $allowed ) { // not an allowed file
 						$failed_files['extra_files'][ $local_file ] = $local_file; // insert into unique key to avoid duplicate insertion due to multiple matches
 					}
+				} else { // The file is not in uploads, push it into extra files (or failed checksum?)
+					$failed_files['extra_files'][ $local_file ] = $local_file;
 				}
 			}
 		}
 
 		foreach ( $checksums as $checksum => $value ) {
 			$checksum = trailingslashit( $install_path ) . $checksum;
-
 			if ( ! in_array( $checksum, $local_files ) ) {
 				$failed_files['missing_files'][] = $checksum;
 			}
 		}
+
+		// Array_values 9s a must so that json_encode returns it as a javascript array instead of object
+		$failed_files['missing_files']    = array_values( $failed_files['missing_files'] );
+		$failed_files['extra_files']      = array_values( $failed_files['extra_files'] );
+		$failed_files['failed_checksums'] = array_values( $failed_files['failed_checksums'] );
 		return $failed_files;
 	}
 
