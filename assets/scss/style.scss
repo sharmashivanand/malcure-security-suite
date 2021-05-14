@@ -3,6 +3,11 @@
 
 	.button-primary {
 		border-radius: 0 !important;
+		// background-image: url(icon-dark-trans.svg);
+		// background-repeat: no-repeat;
+		// background-position: -2.617924em center;		
+		// background-origin: content-box;
+		// padding-left: 2.617924em;
 	}
 
 	th {
@@ -18,8 +23,7 @@
 
 		&.mss_verify_integrity {
 			white-space: pre;
-			overflow-y: auto;
-			overflow-x: hidden;
+			overflow: auto;
 			height: 40vh;
 			width: 100%;
 			max-width: 100%;

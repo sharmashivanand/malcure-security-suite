@@ -150,7 +150,7 @@ class malCure_Integrity {
 							//console.log(files);
 							//console.log(typeof(files));
 							if(files.length){								
-								files = '<ol class="mss_verify_integrity"><li>'+files.join('</li><li>')+'</li></ol>';
+								files = '<ol reversed class="mss_verify_integrity"><li>'+files.join('</li><li>')+'</li></ol>';
 								$(container).html('<div class="mss_success" style="display:flex;">'+files+'</div>');
 							}
 							else {
@@ -310,7 +310,7 @@ class malCure_Integrity {
 				if ( strpos( $local_file, $wp_upload_dir ) !== false ) { // This file is a part of uploads directory (then only push if it has unwanted extension)
 					$allowed = false;
 					foreach ( $mimes as $mime ) {
-						if ( preg_match( '/\.(' . $mime . ')$/s', $local_file ) ) { // This file-type is not allowed in uploads.
+						if ( preg_match( '/\.(' . $mime . ')$/i', $local_file ) ) { // This file-type is not allowed in uploads.
 							$allowed = true;
 						}
 					}
