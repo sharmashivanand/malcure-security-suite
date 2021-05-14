@@ -54,8 +54,7 @@ final class malCure_security_suite {
 		$this->url                     = trailingslashit( plugin_dir_url( __FILE__ ) );
 
 		include_once $this->dir . 'lib/utils.php';
-		include_once $this->dir . 'classes/general_utils.php';
-		// include_once $this->dir . 'classes/admin.php';
+		include_once $this->dir . 'classes/general_features.php';
 		if ( malCure_Utils::is_registered() ) {
 			include_once $this->dir . 'classes/integrity.php';
 			include_once $this->dir . 'classes/malware_scanner.php';
