@@ -39,7 +39,9 @@ class malCure_Scanner {
 	 *      'severity' => clean || unknown || mismatch || suspicious || infected    // This can be used to identify the severity of the infection
 	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
 	 */
-	function scan_file( $file ) {
+	function scan_file( $file ) { 
+		malCure_Utils::flog('definition scan is disabled in:' . __FUNCTION__);
+		return;
 		$ext = self::get_file_extension( $file );		
 		if ( self::is_valid_file( $file ) ) {
 			$status = array(
