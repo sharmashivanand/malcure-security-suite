@@ -459,11 +459,11 @@ final class malCure_Utils {
 
 	// Get options
 	static function get_option_checksums_core() {
-		return get_option( self::$opt_name . '_checksums_core' );
+		return malCure_Utils::get_option( self::$opt_name . '_checksums_core' );
 	}
 
 	static function get_option_checksums_generated() {
-		$checksums = get_option( self::$opt_name . '_checksums_generated' );
+		$checksums = malCure_Utils::get_option( self::$opt_name . '_checksums_generated' );
 		if ( ! $checksums ) {
 			return array();
 		}
@@ -471,7 +471,7 @@ final class malCure_Utils {
 	}
 
 	static function get_option_definitions() {
-		return get_option( self::$opt_name . '_definitions' );
+		return malCure_Utils::get_option( self::$opt_name . '_definitions' );
 	}
 
 	// Delete options
@@ -488,7 +488,7 @@ final class malCure_Utils {
 	}
 
 	static function await_unlock() {
-		while ( get_option( 'MSS_lock' ) == 'true' ) {
+		while ( malCure_Utils::get_option( 'MSS_lock' ) == 'true' ) {
 			usleep( rand( 2500, 7500 ) );
 		}
 		update_option( 'MSS_lock', 'true' );
@@ -499,32 +499,32 @@ final class malCure_Utils {
 	}
 
 	static function get_setting( $setting ) {
-		self::await_unlock();
-		$settings = get_option( self::$opt_name );
-		self::do_unlock();
+		//self::await_unlock();
+		$settings = malCure_Utils::get_option( self::$opt_name );
+		//self::do_unlock();
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
 	}
 
 	static function update_setting( $setting, $value ) {
-		self::await_unlock();
-		$settings = get_option( self::$opt_name );
+		//self::await_unlock();
+		$settings = malCure_Utils::get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		$settings[ $setting ] = $value;
 		update_option( self::$opt_name, $settings );
-		self::do_unlock();
+		//self::do_unlock();
 	}
 
 	static function delete_setting( $setting ) {
-		self::await_unlock();
-		$settings = get_option( self::$opt_name );
+		//self::await_unlock();
+		$settings = malCure_Utils::get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		unset( $settings[ $setting ] );
 		update_option( self::$opt_name, $settings );
-		self::do_unlock();
+		//self::do_unlock();
 	}
 
 	static function append_err( $how_when_where, $msg = '' ) {
@@ -545,6 +545,8 @@ final class malCure_Utils {
 	// remove scan locks if they are older than 6 hours
 	static function do_maintenance() {
 		self::delete_setting( 'mc_scan_tracker' );
+		malCure_Utils::delete_setting( 'mc_scan_progress' );
+
 		$lock       = self::get_setting( 'mc_scan_tracker' );
 		$now        = time();
 		$difference = ( $now - $lock );
@@ -558,14 +560,19 @@ final class malCure_Utils {
 			self::delete_setting( 'mc_scan_tracker' );
 		}
 		// $expiration = $lock -
-		self::await_unlock();
-		$scans = get_option( 'MSS_scans' );
+		//self::await_unlock();
+		$scans = malCure_Utils::get_option( 'MSS_scans' );
 		if ( empty( $scans ) ) { // when no scans have been run till date
 			$scans = array();
 		}
 		$scans = array_slice( $scans, 0, 9 );
 		update_option( 'MSS_scans', $scans );
-		self::do_unlock();
+		//self::do_unlock();
+	}
+
+	static function get_option($option) {
+		//$GLOBALS['wp_object_cache']->delete($option, 'options' );
+		return get_option($option);
 	}
 }
 

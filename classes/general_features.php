@@ -45,13 +45,13 @@ final class mss_Utils {
 
 	function debug() {
 		malCure_Utils::llog( 'MSS' );
-		malCure_Utils::llog( var_export( get_option( 'MSS' ), 1 ) );
+		malCure_Utils::llog( var_export( malCure_Utils::get_option( 'MSS' ), 1 ) );
 		malCure_Utils::llog( 'MSS_scans' );
-		$scans = get_option( 'MSS_scans' );
+		$scans = malCure_Utils::get_option( 'MSS_scans' );
 		krsort( $scans );
 		malCure_Utils::llog( var_export( $scans, 1 ) );
 		malCure_Utils::llog( 'MSS_checksums_generated' );
-		malCure_Utils::llog( var_export( get_option( 'MSS_checksums_generated' ), 1 ) );
+		malCure_Utils::llog( var_export( malCure_Utils::get_option( 'MSS_checksums_generated' ), 1 ) );
 	}
 
 	function registration_ui() {
@@ -117,7 +117,7 @@ final class mss_Utils {
 			</script>
 			<?php
 		} else {
-			$user = get_option( malCure_Utils::$opt_name );
+			$user = malCure_Utils::get_option( malCure_Utils::$opt_name );
 			$user = $user['api-credentials'];
 			?>
 			<table id="mss_user_details">
@@ -174,7 +174,7 @@ final class mss_Utils {
 
 	function mss_system_status() {
 		global $wpdb;
-		// malCure_Utils::llog(get_option( 'MSS' . '_definitions' ));
+		// malCure_Utils::llog(malCure_Utils::get_option( 'MSS' . '_definitions' ));
 		?>
 		<table id="mss_system_status">
 		<tr>

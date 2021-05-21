@@ -15,9 +15,7 @@
 		text-align: left;
 	}
 
-	.postbox .inside {
-		
-	}
+	.postbox .inside {}
 
 	ol {
 		list-style-position: inside;
@@ -146,8 +144,12 @@
 	}
 }
 
-#mss_scanner {
+#malcure_scanner {
 	#scan_progress {
-
+		transition: all 1s linear;
+		&.inprogress {
+			height:10px;
+			border: 1px solid #000000cc;
+		}
 	}
 }
