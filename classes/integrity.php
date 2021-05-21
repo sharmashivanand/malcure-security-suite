@@ -211,11 +211,11 @@ class malCure_Integrity {
 	}
 
 	function delete_checksums() {
-		delete_transient( 'malcure_checksums' );
+		delete_transient( 'malcure_repo_checksums' );
 	}
 
 	function get_checksums( $cached = true ) {
-		$checksums = $cached ? get_transient( 'malcure_checksums' ) : false;
+		$checksums = $cached ? get_transient( 'malcure_repo_checksums' ) : false;
 		if ( ! $checksums ) {
 			global $wp_version;
 			$checksums = get_core_checksums( $wp_version, get_locale() );
@@ -227,7 +227,7 @@ class malCure_Integrity {
 				$checksums = array_merge( $checksums, $plugin_checksums );
 			}
 			if ( $checksums ) {
-				set_transient( 'malcure_checksums', $checksums, 7 * DAY_IN_SECONDS );
+				set_transient( 'malcure_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
 				return $checksums;
 			}
 			return array();

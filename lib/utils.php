@@ -1,7 +1,7 @@
 <?php
 
 require_once 'scanner_base.php';
-include_once 'cli.php';
+require_once 'cli.php';
 
 /**
  * Common utility functions
@@ -65,10 +65,14 @@ final class malCure_Utils {
 	/**
 	 * Log message to file
 	 */
-	static function flog( $str ) {
+	static function flog( $str, $file = '' ) {
 		$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
 		$date = $date . '-' . microtime( true );
-		$file = MSS_DIR . 'log.log';
+		if ( $file ) {
+			$file = MSS_DIR . $file;
+		} else {
+			$file = MSS_DIR . 'log.log';
+		}
 		file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
 		$str = print_r( $str, true );
 		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
@@ -335,7 +339,7 @@ final class malCure_Utils {
 	static function generated_checksums( $checksums ) {
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
-			//$checksums = array_merge( $checksums, $generated ); // Keep in this order so that generated checksums override the WP-ORG checksum for packaged themes. They'll be purged on def updates.
+			// $checksums = array_merge( $checksums, $generated ); // Keep in this order so that generated checksums override the WP-ORG checksum for packaged themes. They'll be purged on def updates.
 		} else {
 		}
 		return $checksums;
@@ -373,7 +377,7 @@ final class malCure_Utils {
 					),
 					'http://example.com'
 				);
-				$checksum = wp_safe_remote_get( $checksum_url );
+				$checksum     = wp_safe_remote_get( $checksum_url );
 				if ( is_wp_error( $checksum ) ) {
 					continue;
 				}
@@ -537,10 +541,26 @@ final class malCure_Utils {
 		return update_setting( 'errors', $errors );
 	}
 
+	// delete all except the last 10 scans in the settings
+	// remove scan locks if they are older than 6 hours
 	static function do_maintenance() {
+		self::delete_setting( 'mc_scan_tracker' );
+		$lock       = self::get_setting( 'mc_scan_tracker' );
+		$now        = time();
+		$difference = ( $now - $lock );
+		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;
+		self::flog( __FUNCTION__ );
+		self::flog( 'lock: ' . $lock );
+		self::flog( 'now: ' . $now );
+		self::flog( 'difference: ' . $difference );
+		self::flog( $is_expired );
+		if ( $is_expired ) {
+			self::delete_setting( 'mc_scan_tracker' );
+		}
+		// $expiration = $lock -
 		self::await_unlock();
 		$scans = get_option( 'MSS_scans' );
-		if ( empty( $scans ) ) { // when no scans have been run till date			
+		if ( empty( $scans ) ) { // when no scans have been run till date
 			$scans = array();
 		}
 		$scans = array_slice( $scans, 0, 9 );

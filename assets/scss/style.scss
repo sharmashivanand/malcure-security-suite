@@ -1,3 +1,4 @@
+// sassc
 #poststuff {
 	font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
@@ -142,5 +143,11 @@
 		border-image-source: linear-gradient(90deg, hsla(0, 0%, 0%, 0), hsl(350, 75%, 50%) 50%, hsla(0, 0%, 0%, 0));
 		border-image-slice: 1;
 		text-decoration: none;
+	}
+}
+
+#mss_scanner {
+	#scan_progress {
+
 	}
 }

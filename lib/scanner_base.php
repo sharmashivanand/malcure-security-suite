@@ -94,6 +94,7 @@ class malCure_Scanner {
 		// return $this->check_valid_file(false, $file);
 		if ( file_exists( $file ) && // Check if file or dir exists
 			is_file( $file ) && // Check if is actually a file
+			filesize( $file ) && // check if the file is not empty
 			filesize( $file ) <= $this->filemaxsize // Check if file-size qualifies
 			) {
 			return true;

@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: malCure Security Suite
  * Description: malCurity Security Suite helps you lock down and secure your WordPress site.
- * Version:     0.4
+ * Version:     0.5
  * Author:      malCure
  * Author URI:  https://malcure.com
  * Text Domain: malcure-security-suite
@@ -77,9 +77,10 @@ final class malCure_security_suite {
 	}
 
 	function hook_meta_boxes() {
-		add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
-
-		add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
+		if ( ! empty( $this->pagehook ) ) {
+			add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
+			add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
+		}
 		// echo 'load-' . $this->pagehook . '-add_action-' . PHP_EOL;
 	}
 
