@@ -76,9 +76,44 @@ final class malCure_Utils {
 		if ( $timestamp ) {
 			file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
 		}
-		//file_put_contents(  debug_backtrace()[1]['function'] . debug_backtrace()[1]['line'], FILE_APPEND | LOCK_EX );
+		// file_put_contents(  debug_backtrace()[1]['function'] . debug_backtrace()[1]['line'], FILE_APPEND | LOCK_EX );
 		$str = print_r( $str, true );
 		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
+	}
+
+	static function num_cpus() {
+		$numCpus = false;
+
+		if ( is_file( '/proc/cpuinfo' ) ) {
+			$cpuinfo = file_get_contents( '/proc/cpuinfo' );
+			preg_match_all( '/^processor/m', $cpuinfo, $matches );
+
+			$numCpus = count( $matches[0] );
+		} elseif ( 'WIN' == strtoupper( substr( PHP_OS, 0, 3 ) ) ) {
+			$process = @popen( 'wmic cpu get NumberOfCores', 'rb' );
+
+			if ( false !== $process ) {
+				fgets( $process );
+				$numCpus = intval( fgets( $process ) );
+
+				pclose( $process );
+			}
+		} else {
+			$process = @popen( 'sysctl -a', 'rb' );
+
+			if ( false !== $process ) {
+				$output = stream_get_contents( $process );
+
+				preg_match( '/hw.ncpu: (\d+)/', $output, $matches );
+				if ( $matches ) {
+					  $numCpus = intval( $matches[1][0] );
+				}
+
+				pclose( $process );
+			}
+		}
+
+		return $numCpus;
 	}
 
 	static function is_registered() {
@@ -555,10 +590,10 @@ final class malCure_Utils {
 		$difference = ( $now - $lock );
 		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;
 		// self::flog( __FUNCTION__ );
-		//self::flog( 'lock: ' . $lock );
-		//self::flog( 'now: ' . $now );
-		//self::flog( 'difference: ' . $difference );
-		//self::flog( $is_expired );
+		// self::flog( 'lock: ' . $lock );
+		// self::flog( 'now: ' . $now );
+		// self::flog( 'difference: ' . $difference );
+		// self::flog( $is_expired );
 		if ( $is_expired ) {
 			self::delete_setting( 'mc_scan_tracker' );
 		}
