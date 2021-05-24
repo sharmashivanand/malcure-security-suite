@@ -603,7 +603,11 @@ final class malCure_Utils {
 		if ( empty( $scans ) ) { // when no scans have been run till date
 			$scans = array();
 		}
-		$scans = array_slice( $scans, 0, 9 );
+		$retain  = 2;
+		$retain -= 1; // purge one extra so that we can make space for new scan. This way we'll end up having the same number after completion.
+		if ( count( $scans ) >= $retain ) {
+			$scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
+		}
 		update_option( 'MSS_scans', $scans );
 		// self::do_unlock();
 	}

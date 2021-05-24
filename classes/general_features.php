@@ -40,18 +40,6 @@ final class mss_Utils {
 		add_meta_box( 'mss_registration_ui', 'Registration', array( $this, 'registration_ui' ), $GLOBALS['malCure_security_suite']['pagehook'], 'side' );
 		add_meta_box( 'mss_site_status', 'Site Status', array( $this, 'mss_system_status' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'mss_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
-		// add_meta_box( 'mss_debug', 'Malcure Debug Info', array( $this, 'debug' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
-	}
-
-	function debug() {
-		malCure_Utils::llog( 'MSS' );
-		malCure_Utils::llog( var_export( malCure_Utils::get_option( 'MSS' ), 1 ) );
-		malCure_Utils::llog( 'MSS_scans' );
-		$scans = malCure_Utils::get_option( 'MSS_scans' );
-		krsort( $scans );
-		malCure_Utils::llog( var_export( $scans, 1 ) );
-		malCure_Utils::llog( 'MSS_checksums_generated' );
-		malCure_Utils::llog( var_export( malCure_Utils::get_option( 'MSS_checksums_generated' ), 1 ) );
 	}
 
 	function registration_ui() {
