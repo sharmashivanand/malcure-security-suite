@@ -69,6 +69,7 @@ class malCure_Scanner {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
 
 					}
+					malCure_Utils::flog("Infection $definition in $file");
 					return array(
 						'id'       => $definition,
 						'severity' => $signature['severity'],

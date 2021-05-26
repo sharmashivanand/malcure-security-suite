@@ -377,7 +377,8 @@ final class malCure_Utils {
 	static function generated_checksums( $checksums ) {
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
-
+			return array_merge( $generated, $checksums );
+			// malCure_Utils::flog($generated);
 		} else {
 		}
 		return $checksums;
@@ -591,7 +592,6 @@ final class malCure_Utils {
 		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;if ( $is_expired ) {
 			self::delete_setting( 'scan_id' );
 		}
-
 
 		$scans = self::get_option( 'MSS_scans' );
 		if ( empty( $scans ) ) { // when no scans have been run till date
