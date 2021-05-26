@@ -76,7 +76,7 @@ final class malCure_Utils {
 		if ( $timestamp ) {
 			file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
 		}
-		// file_put_contents(  debug_backtrace()[1]['function'] . debug_backtrace()[1]['line'], FILE_APPEND | LOCK_EX );
+
 		$str = print_r( $str, true );
 		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
 	}
@@ -246,7 +246,7 @@ final class malCure_Utils {
 			$state['lic'] = $lic;
 		}
 		$args['state'] = self::encode( $state );
-		// return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+
 		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
 	}
 
@@ -311,7 +311,7 @@ final class malCure_Utils {
 	 * @return array
 	 */
 	static function fetch_checksums() {
-		// $checksums = $cached ? get_transient( 'WPMR_checksums' ) : false;
+
 		$checksums = self::get_option_checksums_core();
 		if ( ! $checksums ) {
 			global $wp_version;
@@ -377,7 +377,7 @@ final class malCure_Utils {
 	static function generated_checksums( $checksums ) {
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
-			// $checksums = array_merge( $checksums, $generated ); // Keep in this order so that generated checksums override the WP-ORG checksum for packaged themes. They'll be purged on def updates.
+
 		} else {
 		}
 		return $checksums;
@@ -458,7 +458,7 @@ final class malCure_Utils {
 	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
-		// $creds = self::$creds;
+
 		$response    = wp_safe_remote_request( self::get_api_url( 'update-definitions' ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
@@ -482,7 +482,7 @@ final class malCure_Utils {
 		}
 	}
 
-	// Update options
+
 	static function update_option_checksums_core( $checksums ) {
 		return update_option( self::$opt_name . '_checksums_core', $checksums );
 	}
@@ -495,7 +495,7 @@ final class malCure_Utils {
 		return update_option( self::$opt_name . '_definitions', $definitions );
 	}
 
-	// Get options
+
 	static function get_option_checksums_core() {
 		return self::get_option( self::$opt_name . '_checksums_core' );
 	}
@@ -512,7 +512,7 @@ final class malCure_Utils {
 		return self::get_option( self::$opt_name . '_definitions' );
 	}
 
-	// Delete options
+
 	static function delete_option_checksums_core() {
 		return delete_option( self::$opt_name . '_checksums_core' );
 	}
@@ -537,32 +537,32 @@ final class malCure_Utils {
 	}
 
 	static function get_setting( $setting ) {
-		// self::await_unlock();
+
 		$settings = self::get_option( self::$opt_name );
-		// self::do_unlock();
+
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
 	}
 
 	static function update_setting( $setting, $value ) {
-		// self::await_unlock();
+
 		$settings = self::get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		$settings[ $setting ] = $value;
 		update_option( self::$opt_name, $settings );
-		// self::do_unlock();
+
 	}
 
 	static function delete_setting( $setting ) {
-		// self::await_unlock();
+
 		$settings = self::get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		unset( $settings[ $setting ] );
 		update_option( self::$opt_name, $settings );
-		// self::do_unlock();
+
 	}
 
 	static function append_err( $how_when_where, $msg = '' ) {
@@ -579,26 +579,20 @@ final class malCure_Utils {
 		return update_setting( 'errors', $errors );
 	}
 
-	// delete all except the last 10 scans in the settings
-	// remove scan locks if they are older than 6 hours
+
+
 	static function do_maintenance() {
-		self::delete_setting( 'mc_scan_tracker' );
+		self::delete_setting( 'scan_id' );
 		self::delete_setting( 'mc_scan_progress' );
 
-		$lock       = self::get_setting( 'mc_scan_tracker' );
+		$lock       = self::get_setting( 'scan_id' );
 		$now        = time();
 		$difference = ( $now - $lock );
-		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;
-		// self::flog( __FUNCTION__ );
-		// self::flog( 'lock: ' . $lock );
-		// self::flog( 'now: ' . $now );
-		// self::flog( 'difference: ' . $difference );
-		// self::flog( $is_expired );
-		if ( $is_expired ) {
-			self::delete_setting( 'mc_scan_tracker' );
+		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;if ( $is_expired ) {
+			self::delete_setting( 'scan_id' );
 		}
-		// $expiration = $lock -
-		// self::await_unlock();
+
+
 		$scans = self::get_option( 'MSS_scans' );
 		if ( empty( $scans ) ) { // when no scans have been run till date
 			$scans = array();
@@ -609,11 +603,11 @@ final class malCure_Utils {
 			$scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
 		}
 		update_option( 'MSS_scans', $scans );
-		// self::do_unlock();
+
 	}
 
 	static function get_option( $option ) {
-		// $GLOBALS['wp_object_cache']->delete($option, 'options' );
+
 		return get_option( $option );
 	}
 }

@@ -67,7 +67,7 @@ class malCure_Salt_Shuffler {
 							data = JSON.parse(data);
 						}
 						if (data.hasOwnProperty('success') && data.success) {
-							//location.reload(true);
+
 							$('#mss_shuffle_salts_status').html('<p class="mss_success">'+data.data+'</p>');
 							console.log('WordPress successfully executed the requested action.');
 						} else {
@@ -93,12 +93,7 @@ class malCure_Salt_Shuffler {
 				}); // ajax post
 				return false;
 			});
-			
-			//$('.mss_action').each(function(){
-			//	console.log($( this ).attr( "id" ));
-			//	this.click()
-			//});
-			//console.log('ready');
+
 		});
 		</script>
 		<?php
@@ -108,11 +103,6 @@ class malCure_Salt_Shuffler {
 
 		WP_Filesystem();
 		global $wp_filesystem;
-		// $config_path = $this->get_config_path();
-		// wp_send_json_error(  is_writable($config_path)   );
-		// $config_path = $this->get_config_path();
-		// $w = $wp_filesystem->is_writable( $config_path );
-		// wp_send_json('config_path:' . $config_path . '~~is_writable:' .$w);
 		$config_path = $this->get_config_path();
 		if ( ! $config_path ) {
 			wp_send_json_error( 'Failed to get location of wp-config.php' );

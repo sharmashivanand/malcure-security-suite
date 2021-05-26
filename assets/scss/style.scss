@@ -4,11 +4,6 @@
 
 	.button-primary {
 		border-radius: 0 !important;
-		// background-image: url(icon-dark-trans.svg);
-		// background-repeat: no-repeat;
-		// background-position: -2.617924em center;		
-		// background-origin: content-box;
-		// padding-left: 2.617924em;
 	}
 
 	th {
@@ -147,8 +142,9 @@
 #malcure_scanner {
 	#scan_progress {
 		transition: all 1s linear;
+
 		&.inprogress {
-			height:10px;
+			height: 10px;
 			border: 1px solid #000000cc;
 		}
 	}

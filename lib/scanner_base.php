@@ -40,8 +40,8 @@ class malCure_Scanner {
 	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
 	 */
 	function scan_file( $file ) { 
-		// malCure_Utils::flog('definition scan is disabled in:' . __FUNCTION__);
-		// return;
+
+
 		$ext = self::get_file_extension( $file );		
 		if ( self::is_valid_file( $file ) ) {
 			$status = array(
@@ -52,7 +52,7 @@ class malCure_Scanner {
 			}
 			$contents = @file_get_contents( $file );
 			if ( empty( $contents ) ) {
-				// try die() here to test hang on empty files
+
 				return;
 			}
 			$definitions = self::get_malware_file_definitions();
@@ -67,7 +67,7 @@ class malCure_Scanner {
 				}
 				if ( $matches >= 1 ) {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
-						// $this->update_setting( 'infected', true );
+
 					}
 					return array(
 						'id'       => $definition,
@@ -76,7 +76,7 @@ class malCure_Scanner {
 					);
 				}
 			}
-			// file is clean
+
 			$checksums = malCure_Utils::get_option_checksums_generated();
 			$md5       = @md5_file( $file );
 			if ( $md5 ) {
@@ -93,7 +93,7 @@ class malCure_Scanner {
 	}
 
 	function is_valid_file( $file ) {
-		// return $this->check_valid_file(false, $file);
+
 		if ( file_exists( $file ) && // Check if file or dir exists
 			is_file( $file ) && // Check if is actually a file
 			filesize( $file ) && // check if the file is not empty
@@ -162,7 +162,7 @@ class malCure_Scanner {
 		if ( ! empty( $defs['files'] ) ) {
 			return $defs['files'];
 		}
-		// return $definitions['files'];
+
 	}
 
 	/**

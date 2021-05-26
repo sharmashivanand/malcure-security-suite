@@ -67,9 +67,7 @@ final class mss_Utils {
 							ln: $('#mss_user_lname').val(),
 							email: $('#mss_user_email').val(),
 						}
-						//cachebust: Date.now(), // 
 					};
-					//$("#mss_trigger_scan").fadeTo("slow",.1,);
 					$.ajax({
 						url: ajaxurl,
 						method: 'POST',
@@ -77,7 +75,7 @@ final class mss_Utils {
 						success: function(response_data, textStatus, jqXHR) {
 							console.dir(response_data);
 							if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-								//response = JSON.parse( response );
+
 							}
 							if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
 								location.reload();
@@ -85,19 +83,8 @@ final class mss_Utils {
 								alert('Failed to register with API. Error: ' + response_data.data );
 							}
 						},
-						error: function( jqXHR, textStatus, errorThrown){
-							// console.dir('error Data Begins');
-							// console.dir(jqXHR);
-							// console.dir(textStatus);
-							// console.dir(errorThrown);
-							// console.dir('error Data Ends');
-						},
+						error: function( jqXHR, textStatus, errorThrown){},
 						complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
-							// console.dir('complete Data Begins');
-							// console.dir(jqXHR_data);
-							// console.dir(textStatus);
-							// console.dir('complete Data Ends');
-							// // a good JSON response may have status: 200, statusText: "success", responseJSON (object)
 						},
 					});
 				});
@@ -117,52 +104,9 @@ final class mss_Utils {
 		}
 	}
 
-	function scanner_ui() {
-			// var_dump( malCure_Utils::update_definitions() );
-			submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
-			// malCure_Utils::delete_setting( 'checksums' );
-			// malCure_Utils::delete_setting( 'mc_scan_tracker' );
-			// malCure_Utils::delete_setting( 'scan' );
-			// malCure_Utils::update_definitions();
-		?>
-			<script type="text/javascript">
-			jQuery(document).ready(function($){
-				$("#mss_trigger_scan").click(function(){
-					mss_trigger_scan = {
-						mss_trigger_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
-						action: "mss_trigger_scan",
-						cachebust: Date.now(),
-						user: {
-							id: <?php echo get_current_user_id(); ?>
-						}
-					};					
-					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						data: mss_trigger_scan,
-						complete: function(jqXHR, textStatus) {
-							console.dir(jqXHR);
-						},
-						ssuccess: function(response) {
-							if ((typeof response) != 'object') {
-								response = JSON.parse( response );
-							}
-							if (response.hasOwnProperty('success')) {
-								alert('Success mss_trigger_scan');
-							} else {
-								alert('Failed mss_trigger_scan.');
-							}
-						}
-					});
-				})
-			});
-			</script>
-			<?php
-	}
-
 	function mss_system_status() {
 		global $wpdb;
-		// malCure_Utils::llog(malCure_Utils::get_option( 'MSS' . '_definitions' ));
+
 		?>
 		<table id="mss_system_status">
 		<tr>
@@ -386,7 +330,7 @@ final class mss_Utils {
 	}
 
 	function resources() {
-		// enqueue scripts here
+
 	}
 
 	/**
@@ -416,8 +360,6 @@ final class mss_Utils {
 		wp_send_json_success( malCure_Utils::encode( malCure_Utils::get_plugin_data() ) );
 	}
 }
-
-
 
 function mss_Utils() {
 	return mss_Utils::get_instance();

@@ -66,8 +66,6 @@ final class malCure_security_suite {
 		add_action( 'admin_init', array( $this, 'hook_meta_boxes' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
 
-		// add_action( 'mss_settings_menu', array( $this, 'debug_menu' ) );
-
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
 
@@ -81,7 +79,6 @@ final class malCure_security_suite {
 			add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
 			add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
 		}
-		// echo 'load-' . $this->pagehook . '-add_action-' . PHP_EOL;
 	}
 
 	function add_admin_scripts() {
@@ -115,7 +112,7 @@ final class malCure_security_suite {
 
 	function settings_page() {
 		$title = 'Malcure Security Suite';
-		// malCure_Utils::llog( func_get_args() );
+
 		?>
 		<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
@@ -136,20 +133,14 @@ final class malCure_security_suite {
 			</div>
 		</div>
 		<script type="text/javascript">
-		//<![CDATA[
+
 		jQuery(document).ready(function($) {
-			// close postboxes that should be closed
-			// $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-			// $('#integrity_missing').addClass('closed');
-			// $('#integrity_failed').addClass('closed');
-			// $('#integrity_extra').addClass('closed');
-			// postboxes setup
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
 		});
-		//]]>
+
 		</script>
-			<?php
+		<?php
 	}
 
 	function settings_page_old() {
@@ -183,9 +174,9 @@ final class malCure_security_suite {
 								ln: $('#mss_user_lname').val(),
 								email: $('#mss_user_email').val(),
 							}
-							//cachebust: Date.now(), // 
+
 						};
-						//$("#mss_trigger_scan").fadeTo("slow",.1,);
+
 						$.ajax({
 							url: ajaxurl,
 							method: 'POST',
@@ -193,7 +184,7 @@ final class malCure_security_suite {
 							success: function(response_data, textStatus, jqXHR) {
 								console.dir(response_data);
 								if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-									//response = JSON.parse( response );
+
 								}
 								if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
 									location.reload();
@@ -201,19 +192,8 @@ final class malCure_security_suite {
 									alert('Failed to register with API. Error: ' + response_data.data );
 								}
 							},
-							error: function( jqXHR, textStatus, errorThrown){
-								// console.dir('error Data Begins');
-								// console.dir(jqXHR);
-								// console.dir(textStatus);
-								// console.dir(errorThrown);
-								// console.dir('error Data Ends');
-							},
+							error: function( jqXHR, textStatus, errorThrown){},
 							complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
-								// console.dir('complete Data Begins');
-								// console.dir(jqXHR_data);
-								// console.dir(textStatus);
-								// console.dir('complete Data Ends');
-								// // a good JSON response may have status: 200, statusText: "success", responseJSON (object)
 							},
 						});
 					});
@@ -221,12 +201,7 @@ final class malCure_security_suite {
 				</script>
 				<?php
 			} else {
-				// var_dump( malCure_Utils::update_definitions() );
 				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
-				// malCure_Utils::delete_setting( 'checksums' );
-				// malCure_Utils::delete_setting( 'mc_scan_tracker' );
-				// malCure_Utils::delete_setting( 'scan' );
-				// malCure_Utils::update_definitions();
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -265,17 +240,6 @@ final class malCure_security_suite {
 			</script>
 				<?php
 				$mss_scanner = malCure_Malware_Scanner::get_instance();
-				// $mss_scanner->get_checksums();
-				// $start_time = microtime( true );
-				// malCure_Utils::delete_setting( 'malware-signatures-clone');
-				// $sigs = malCure_Utils::get_setting( 'malware-signatures' );
-				// $res  = malCure_Utils::update_setting( 'malware-signatures-clone', $sigs );
-				// $end_time       = microtime( true );
-				// $execution_time = ( $end_time - $start_time );
-				// echo 'Took ' . ($execution_time)  . 'ms or ' . human_time_diff( $start_time, $end_time );
-				// var_dump( $res );
-				// $mss_scanner->mss_scan_handler();
-				// var_dump(  $mss_scanner->in_core_dir('/_extvol_data/html/dev/plugindev/wp-content/index.php') );
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
@@ -284,7 +248,6 @@ final class malCure_security_suite {
 				<?php
 			}
 			?>
-				
 			</div> <!-- / .container -->
 		</div> <!-- / .wrap -->
 		<?php
@@ -305,8 +268,6 @@ final class malCure_security_suite {
 	}
 
 	function plugin_res( $hook ) {
-		// echo $hook;
-		// die();
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 		if ( preg_match( '/_mss$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
@@ -374,7 +335,7 @@ final class malCure_security_suite {
 			'label' => __( 'Permissions of .htaccess' ),
 			'test'  => array( $this, 'htaccess_perm_test_callback' ),
 		);
-		// Test if admin user exists
+
 		$tests['direct']['admin_user_test'] = array(
 			'label' => __( 'Does a user with user_login of "admin" exist?' ),
 			'test'  => array( $this, 'admin_user_test_callback' ),
