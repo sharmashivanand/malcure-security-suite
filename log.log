@@ -1,1 +1,2598 @@
 
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+trigger_maintenance
+INITIATING SCAN ID: 1623567322
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/4_severe/new.html	 RECEIVED 11 files.
+Infection 4KI9J in /_extvol_data/html/dev/plugindev/.malware/3_high/d41d8cd9.htaccess
+Infection XS4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/2241c61e4c10670366.js
+Infection VR4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/afu.php
+Infection wO4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/class.api.php
+Infection RS4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/client.php
+Infection v059J in /_extvol_data/html/dev/plugindev/.malware/4_severe/license.php
+Infection JLG8J in /_extvol_data/html/dev/plugindev/.malware/4_severe/mal2.php
+Infection GO4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/mini.php
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/email9022.php	 RECEIVED 11 files.
+Infection 5P4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/nice.php
+Infection kR4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/q.js
+Infection rR4A1L in /_extvol_data/html/dev/plugindev/.malware/4_severe/s-hedgehogkm.php.php
+Infection JLG8J in /_extvol_data/html/dev/plugindev/.malware/4_severe/severe.php
+Infection cO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/Authentication.php
+Infection cO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/email9022.php
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/images/fname.png	 RECEIVED 11 files.
+Infection cO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/erroemail.php
+Batch Size: 18
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/index.php	 RECEIVED 18 files.
+Infection UO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/index.php
+Batch Size: 29
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/ip_files/123.php	 RECEIVED 29 files.
+Batch Size: 47
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/ip_files/166.php	 RECEIVED 47 files.
+Batch Size: 76
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/ip_files/234.php	 RECEIVED 76 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/pncdcd001w.php	 RECEIVED 111 files.
+Infection jO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/js/actions.js
+Infection cO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/pncdcd001w.php
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/languages/plugins/all-in-one-seo-pack-en_GB-1b438758e54abaa9d6428fe188670e72.json	 RECEIVED 111 files.
+Infection cO4A1L in /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/thankyou.php
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/app/Common/Admin/Notices/Import.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/app/Common/Social/Output.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/dist/Lite/assets/css/search-appearance-partials-Advanced-vue.rtl.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/dist/Lite/assets/img/mi.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/dist/Lite/assets/js/sitemaps-pro-NewsSitemap-vue.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor/woocommerce/action-scheduler/deprecated/functions.php	 RECEIVED 111 files.
+Max CPU:[3.14,1.63,1.27]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/AmqpHandler.php	 RECEIVED 37 files.
+Max CPU:[3.14,1.63,1.27]
+Batch Size: 19
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/FlowdockHandler.php	 RECEIVED 19 files.
+Max CPU:[3.14,1.63,1.27]
+Batch Size: 10
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/LogEntriesHandler.php	 RECEIVED 10 files.
+Max CPU:[3.14,1.63,1.27]
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/MongoDBHandler.php	 RECEIVED 5 files.
+Max CPU:[3.14,1.63,1.27]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/NullHandler.php	 RECEIVED 3 files.
+Max CPU:[3.05,1.64,1.27]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/ProcessableHandlerInterface.php	 RECEIVED 2 files.
+Max CPU:[3.05,1.64,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/ProcessableHandlerTrait.php	 RECEIVED 1 files.
+Max CPU:[3.05,1.64,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/PsrHandler.php	 RECEIVED 1 files.
+Max CPU:[3.05,1.64,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/PushoverHandler.php	 RECEIVED 1 files.
+Max CPU:[3.05,1.64,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/RavenHandler.php	 RECEIVED 1 files.
+Max CPU:[3.05,1.64,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/RedisHandler.php	 RECEIVED 1 files.
+Max CPU:[2.88,1.63,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/RollbarHandler.php	 RECEIVED 1 files.
+Max CPU:[2.88,1.63,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/RotatingFileHandler.php	 RECEIVED 1 files.
+Max CPU:[2.88,1.63,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SamplingHandler.php	 RECEIVED 1 files.
+Max CPU:[2.88,1.63,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/Slack/SlackRecord.php	 RECEIVED 1 files.
+Max CPU:[2.73,1.62,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SlackHandler.php	 RECEIVED 1 files.
+Max CPU:[2.73,1.62,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SlackWebhookHandler.php	 RECEIVED 1 files.
+Max CPU:[2.73,1.62,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SlackbotHandler.php	 RECEIVED 1 files.
+Max CPU:[2.73,1.62,1.27]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SocketHandler.php	 RECEIVED 1 files.
+Max CPU:[2.73,1.62,1.27]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/StreamHandler.php	 RECEIVED 1 files.
+Max CPU:[2.75,1.64,1.28]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SwiftMailerHandler.php	 RECEIVED 1 files.
+Max CPU:[2.75,1.64,1.28]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SyslogHandler.php	 RECEIVED 1 files.
+Max CPU:[2.75,1.64,1.28]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SyslogUdp/UdpSocket.php	 RECEIVED 1 files.
+Max CPU:[2.75,1.64,1.28]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/SyslogUdpHandler.php	 RECEIVED 1 files.
+Max CPU:[2.77,1.66,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/TestHandler.php	 RECEIVED 1 files.
+Max CPU:[2.77,1.66,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/WhatFailureGroupHandler.php	 RECEIVED 1 files.
+Max CPU:[2.77,1.66,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Handler/ZendMonitorHandler.php	 RECEIVED 1 files.
+Max CPU:[2.77,1.66,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Logger.php	 RECEIVED 1 files.
+Max CPU:[2.77,1.66,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/GitProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.63,1.65,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/IntrospectionProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.63,1.65,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/MemoryPeakUsageProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.63,1.65,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/MemoryProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.63,1.65,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/MemoryUsageProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.58,1.66,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/MercurialProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.58,1.66,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/ProcessIdProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.58,1.66,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/ProcessorInterface.php	 RECEIVED 1 files.
+Max CPU:[2.58,1.66,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/PsrLogMessageProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.58,1.66,1.29]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/TagProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.58,1.66,1.29]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/UidProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.61,1.68,1.3]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Processor/WebProcessor.php	 RECEIVED 1 files.
+Max CPU:[2.61,1.68,1.3]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Registry.php	 RECEIVED 1 files.
+Max CPU:[2.61,1.68,1.3]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/ResettableInterface.php	 RECEIVED 1 files.
+Max CPU:[2.61,1.68,1.3]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/SignalHandler.php	 RECEIVED 1 files.
+Max CPU:[2.72,1.72,1.31]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/monolog/monolog/src/Monolog/Utils.php	 RECEIVED 1 files.
+Max CPU:[2.72,1.72,1.31]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/LICENSE	 RECEIVED 1 files.
+Max CPU:[2.72,1.72,1.31]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/AbstractLogger.php	 RECEIVED 1 files.
+Max CPU:[2.72,1.72,1.31]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/InvalidArgumentException.php	 RECEIVED 1 files.
+Max CPU:[2.72,1.72,1.31]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/LogLevel.php	 RECEIVED 1 files.
+Max CPU:[2.72,1.72,1.31]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/LoggerAwareInterface.php	 RECEIVED 1 files.
+Max CPU:[2.67,1.72,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/LoggerAwareTrait.php	 RECEIVED 1 files.
+Max CPU:[2.67,1.72,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/LoggerInterface.php	 RECEIVED 1 files.
+Max CPU:[2.67,1.72,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/LoggerTrait.php	 RECEIVED 1 files.
+Max CPU:[2.67,1.72,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/NullLogger.php	 RECEIVED 1 files.
+Max CPU:[2.53,1.71,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/Test/DummyTest.php	 RECEIVED 1 files.
+Max CPU:[2.53,1.71,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/Test/LoggerInterfaceTest.php	 RECEIVED 1 files.
+Max CPU:[2.53,1.71,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/Test/TestLogger.php	 RECEIVED 1 files.
+Max CPU:[2.53,1.71,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/composer.json	 RECEIVED 1 files.
+Max CPU:[2.33,1.68,1.31]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/wpml-config.xml	 RECEIVED 1 files.
+Max CPU:[2.33,1.68,1.31]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/general/wp-security-list-table.php	 RECEIVED 1 files.
+Max CPU:[2.33,1.68,1.31]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/index.html	 RECEIVED 1 files.
+Max CPU:[2.33,1.68,1.31]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/index.php	 RECEIVED 1 files.
+Max CPU:[2.33,1.68,1.31]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/wp-security-admin-init.php	 RECEIVED 1 files.
+Max CPU:[2.33,1.68,1.31]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/wp-security-admin-menu.php	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/wp-security-brute-force-menu.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/wp-security-filescan-menu.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/wp-security-list-comment-spammer-ip.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/admin/wp-security-settings-menu.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/classes/wp-security-captcha.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/images/arrow.png	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/languages/all-in-one-wp-security-and-firewall-zh_CN.po	 RECEIVED 34 files.
+Max CPU:[2.29,1.69,1.32]
+Batch Size: 18
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/wp-security.php	 RECEIVED 18 files.
+Max CPU:[2.29,1.69,1.32]
+Batch Size: 10
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/css/licensing.css	 RECEIVED 10 files.
+Max CPU:[2.29,1.69,1.32]
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/catalog.png	 RECEIVED 5 files.
+Max CPU:[2.29,1.69,1.32]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/gallery.png	 RECEIVED 3 files.
+Max CPU:[2.29,1.69,1.32]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/portfolio.png	 RECEIVED 2 files.
+Max CPU:[2.29,1.69,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/pricing-table.png	 RECEIVED 1 files.
+Max CPU:[2.29,1.69,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/responsive-slider.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.72,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/share.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.72,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/slider.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.72,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/video-gallery.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.72,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/featured-plugins/video-player.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.72,1.32]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/google-maps-20-x-20.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.72,1.32]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/huge-It-logo.png	 RECEIVED 1 files.
+Max CPU:[2.32,1.72,1.33]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icon-user-manual.png	 RECEIVED 1 files.
+Max CPU:[2.32,1.72,1.33]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker128.png	 RECEIVED 1 files.
+Max CPU:[2.32,1.72,1.33]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker16.png	 RECEIVED 1 files.
+Max CPU:[2.32,1.72,1.33]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker192.png	 RECEIVED 1 files.
+Max CPU:[2.38,1.74,1.34]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker24.png	 RECEIVED 1 files.
+Max CPU:[2.38,1.74,1.34]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker256.png	 RECEIVED 1 files.
+Max CPU:[2.38,1.74,1.34]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker48.png	 RECEIVED 1 files.
+Max CPU:[2.38,1.74,1.34]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker64.png	 RECEIVED 1 files.
+Max CPU:[2.38,1.74,1.34]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/azuremarker96.png	 RECEIVED 1 files.
+Max CPU:[2.51,1.78,1.35]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag128.png	 RECEIVED 1 files.
+Max CPU:[2.51,1.78,1.35]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag16.png	 RECEIVED 1 files.
+Max CPU:[2.51,1.78,1.35]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag192.png	 RECEIVED 1 files.
+Max CPU:[2.51,1.78,1.35]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag24.png	 RECEIVED 1 files.
+Max CPU:[2.47,1.78,1.36]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag256.png	 RECEIVED 1 files.
+Max CPU:[2.47,1.78,1.36]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag48.png	 RECEIVED 1 files.
+Max CPU:[2.47,1.78,1.36]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag64.png	 RECEIVED 1 files.
+Max CPU:[2.47,1.78,1.36]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/baseflag96.png	 RECEIVED 1 files.
+Max CPU:[2.47,1.78,1.36]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker128.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.77,1.35]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker16.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.77,1.35]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker192.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.77,1.35]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker24.png	 RECEIVED 1 files.
+Max CPU:[2.35,1.77,1.35]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker256.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.81,1.37]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker48.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.81,1.37]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker64.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.81,1.37]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blackmarker96.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.81,1.37]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag128.png	 RECEIVED 1 files.
+Max CPU:[2.52,1.83,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag16.png	 RECEIVED 1 files.
+Max CPU:[2.52,1.83,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag192.png	 RECEIVED 1 files.
+Max CPU:[2.52,1.83,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag24.png	 RECEIVED 1 files.
+Max CPU:[2.52,1.83,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag256.png	 RECEIVED 1 files.
+Max CPU:[2.52,1.83,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag48.png	 RECEIVED 1 files.
+Max CPU:[2.52,1.83,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag64.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.83,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/blueflag96.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.83,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker128.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.83,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker16.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.83,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker192.png	 RECEIVED 1 files.
+Max CPU:[2.48,1.83,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker24.png	 RECEIVED 1 files.
+Max CPU:[2.36,1.82,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker256.png	 RECEIVED 1 files.
+Max CPU:[2.36,1.82,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker48.png	 RECEIVED 1 files.
+Max CPU:[2.36,1.82,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker64.png	 RECEIVED 1 files.
+Max CPU:[2.36,1.82,1.38]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/bluemarker96.png	 RECEIVED 1 files.
+Max CPU:[2.36,1.82,1.38]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft128.png	 RECEIVED 1 files.
+Max CPU:[2.41,1.84,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft16.png	 RECEIVED 1 files.
+Max CPU:[2.41,1.84,1.39]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft192.png	 RECEIVED 1 files.
+Max CPU:[2.41,1.84,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft24.png	 RECEIVED 1 files.
+Max CPU:[2.3,1.82,1.39]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft256.png	 RECEIVED 1 files.
+Max CPU:[2.3,1.82,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft48.png	 RECEIVED 1 files.
+Max CPU:[2.3,1.82,1.39]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft64.png	 RECEIVED 1 files.
+Max CPU:[2.3,1.82,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagleft96.png	 RECEIVED 1 files.
+Max CPU:[2.3,1.82,1.39]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright128.png	 RECEIVED 1 files.
+Max CPU:[2.27,1.83,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright16.png	 RECEIVED 1 files.
+Max CPU:[2.27,1.83,1.39]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright192.png	 RECEIVED 1 files.
+Max CPU:[2.27,1.83,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright24.png	 RECEIVED 1 files.
+Max CPU:[2.27,1.83,1.39]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright256.png	 RECEIVED 1 files.
+Max CPU:[2.27,1.83,1.39]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright32.png	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/flagright64.png	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/greenflag16.png	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/greenflag64.png	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/greenmarker64.png	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/paperflag24.png	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/pinkleft128.png	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/pinright16.png	 RECEIVED 34 files.
+Batch Size: 55
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/shopmarker128.png	 RECEIVED 55 files.
+Max CPU:[2.4,1.86,1.41]
+Batch Size: 29
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/toyflag48.png	 RECEIVED 29 files.
+Max CPU:[2.4,1.86,1.41]
+Batch Size: 16
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/wp_banner_bg.jpg	 RECEIVED 16 files.
+Max CPU:[2.4,1.86,1.41]
+Batch Size: 9
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/js/admin/inline-popup.js	 RECEIVED 9 files.
+Max CPU:[2.4,1.86,1.41]
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/js/admin/notices.js	 RECEIVED 5 files.
+Max CPU:[2.4,1.86,1.41]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/js/admin/polylines-save.js	 RECEIVED 3 files.
+Max CPU:[2.4,1.86,1.41]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/js/admin/scroll-map.js	 RECEIVED 2 files.
+Max CPU:[2.4,1.86,1.41]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/js/frontend/frontend.js	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/jscolor/jscolor.js	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/googlemap.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/includes/class-hugeit-maps-db-refactor.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/includes/class-hugeit-maps-query.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/templates/admin/api-key-notice.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-sitemap-generator/documentation.txt	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-sitemap-generator/lang/sitemap-hu_HU.po	 RECEIVED 34 files.
+Batch Size: 55
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/css/blocks.min.css.map	 RECEIVED 55 files.
+Batch Size: 89
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/images/datepicker/ui-icons_cd0a0a_256x240.png	 RECEIVED 89 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/includes/fields/class-gf-field-fileupload.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/includes/wizard/class-gf-upgrade-wizard.php	 RECEIVED 111 files.
+Max CPU:[2.41,1.89,1.42]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/js/jquery.maskedinput.js	 RECEIVED 37 files.
+Max CPU:[2.41,1.89,1.42]
+Batch Size: 20
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ca.mo	 RECEIVED 20 files.
+Max CPU:[2.41,1.89,1.42]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-en_GB.mo	 RECEIVED 11 files.
+Max CPU:[2.41,1.89,1.42]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-fi.mo	 RECEIVED 6 files.
+Max CPU:[2.41,1.89,1.42]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-fr_FR-4431109f2b52f456221198b68f96424a.json	 RECEIVED 3 files.
+Max CPU:[2.38,1.89,1.42]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-he_IL-4431109f2b52f456221198b68f96424a.json	 RECEIVED 2 files.
+Max CPU:[2.38,1.89,1.42]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-he_IL.mo	 RECEIVED 1 files.
+Max CPU:[2.38,1.89,1.42]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-hi_IN-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.38,1.89,1.42]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-hi_IN.mo	 RECEIVED 1 files.
+Max CPU:[2.38,1.89,1.42]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-hu_HU-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.35,1.89,1.43]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-hu_HU.mo	 RECEIVED 1 files.
+Max CPU:[2.35,1.89,1.43]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-it_IT-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.35,1.89,1.43]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-it_IT.mo	 RECEIVED 1 files.
+Max CPU:[2.35,1.89,1.43]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ja-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.35,1.89,1.43]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ja.mo	 RECEIVED 1 files.
+Max CPU:[2.35,1.89,1.43]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ka_GE.mo	 RECEIVED 1 files.
+Max CPU:[2.24,1.88,1.43]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-nb_NO-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.24,1.88,1.43]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-nb_NO.mo	 RECEIVED 1 files.
+Max CPU:[2.24,1.88,1.43]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-nl_BE-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.24,1.88,1.43]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-nl_BE.mo	 RECEIVED 1 files.
+Max CPU:[2.38,1.91,1.44]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-nl_NL-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.38,1.91,1.44]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-nl_NL.mo	 RECEIVED 1 files.
+Max CPU:[2.38,1.91,1.44]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-pt_BR-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.38,1.91,1.44]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-pt_BR.mo	 RECEIVED 1 files.
+Max CPU:[2.38,1.91,1.44]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-pt_PT-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.51,1.95,1.45]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-pt_PT.mo	 RECEIVED 1 files.
+Max CPU:[2.51,1.95,1.45]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ro_RO.mo	 RECEIVED 1 files.
+Max CPU:[2.51,1.95,1.45]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ru_RU-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.51,1.95,1.45]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-ru_RU.mo	 RECEIVED 1 files.
+Max CPU:[2.51,1.95,1.45]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-sk_SK.mo	 RECEIVED 1 files.
+Max CPU:[2.47,1.95,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-sv_SE-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.47,1.95,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-sv_SE.mo	 RECEIVED 1 files.
+Max CPU:[2.47,1.95,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-tr_TR-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.47,1.95,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-tr_TR.mo	 RECEIVED 1 files.
+Max CPU:[2.47,1.95,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-zh_CN-4431109f2b52f456221198b68f96424a.json	 RECEIVED 1 files.
+Max CPU:[2.43,1.95,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms-zh_CN.mo	 RECEIVED 1 files.
+Max CPU:[2.43,1.95,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/gravityforms.pot	 RECEIVED 1 files.
+Max CPU:[2.43,1.95,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/languages/index.php	 RECEIVED 1 files.
+Max CPU:[2.43,1.95,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/local-config.json	 RECEIVED 1 files.
+Max CPU:[2.43,1.95,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/notification.php	 RECEIVED 1 files.
+Max CPU:[2.32,1.93,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/preview.php	 RECEIVED 1 files.
+Max CPU:[2.32,1.93,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/print-entry.php	 RECEIVED 1 files.
+Max CPU:[2.32,1.93,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/select_columns.php	 RECEIVED 1 files.
+Max CPU:[2.32,1.93,1.46]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/settings.php	 RECEIVED 1 files.
+Max CPU:[2.32,1.93,1.46]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/tooltips.php	 RECEIVED 1 files.
+Max CPU:[2.37,1.95,1.47]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/widget.php	 RECEIVED 1 files.
+Max CPU:[2.37,1.95,1.47]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/xml.php	 RECEIVED 1 files.
+Max CPU:[2.37,1.95,1.47]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/16.png	 RECEIVED 1 files.
+Max CPU:[2.37,1.95,1.47]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/16a.png	 RECEIVED 1 files.
+Max CPU:[2.37,1.95,1.47]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24.png	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/am.png	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/be.png	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/ceb.png	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/en.png	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/gu.png	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/ku.png	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/sq.png	 RECEIVED 34 files.
+Batch Size: 56
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/16/fa.png	 RECEIVED 56 files.
+Batch Size: 91
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/24/bn.png	 RECEIVED 91 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/32/bn.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/48/bn.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/gtranslate-style48.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/Framework/Form/Element/AbstractChooserText.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/Framework/Misc/OAuth/HTTP.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Application/Admin/FormManager/FormManagerSlider.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Application/Admin/Layout/Block/Slide/SlideManager/AddSlide/AddSlide.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Form/Element/Radio/VerticalAlign.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Renderable/Item/Heading/ItemHeadingFrontend.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3Pro/Application/Admin/Slider/License/ControllerLicense.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3Pro/Generator/Common/Flickr/ConfigurationFlickr.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3Pro/PostBackgroundAnimation/ModelPostBackgroundAnimation.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Admin/Assets/spinner/simpleDark.gif	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Public/SmartSlider3Pro/Application/Frontend/Assets/icons/linearicons/manifest.json	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Public/SmartSlider3Pro/Widget/Arrow/ArrowGrow/Assets/grow.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/separator-shortcode-and-widget/include/otw_components/otw_shortcode/css/social_foundicons.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/simple-css/js/codemirror.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/slider-wd/demo_sliders/images/7.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/slider-wd/filemanager/js/jq_uploader/jquery.fileupload.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/slider-wd/images/loading/0.gif	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/slider-wd/languages/wds-fr_FR.mo	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/thestory/functions/init.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/thestory/images/icons_white/vimeo.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/thestory/includes/demo-data/main/data.xml	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/thestory/lib/images/default.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/thestory/lib/js/custom-page.js	 RECEIVED 111 files.
+Max CPU:[2.28,1.97,1.5]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/thestory/woocommerce.php	 RECEIVED 37 files.
+Max CPU:[2.28,1.97,1.5]
+Batch Size: 20
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/inc/helper-functions.php	 RECEIVED 20 files.
+Max CPU:[2.28,1.97,1.5]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/package.json	 RECEIVED 11 files.
+Max CPU:[2.28,1.97,1.5]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/_normalize.scss	 RECEIVED 6 files.
+Max CPU:[2.28,1.97,1.5]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/elements/_lists.scss	 RECEIVED 3 files.
+Max CPU:[2.26,1.97,1.5]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/forms/_buttons.scss	 RECEIVED 2 files.
+Max CPU:[2.26,1.97,1.5]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/forms/_fields.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.97,1.5]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/forms/_forms.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.97,1.5]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/layout/_layout.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.97,1.5]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/media/_captions.scss	 RECEIVED 1 files.
+Max CPU:[2.32,1.99,1.51]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/media/_galleries.scss	 RECEIVED 1 files.
+Max CPU:[2.32,1.99,1.51]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/media/_media.scss	 RECEIVED 1 files.
+Max CPU:[2.32,1.99,1.51]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/mixins/_mixins-master.scss	 RECEIVED 1 files.
+Max CPU:[2.32,1.99,1.51]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/mixins/_utilities.scss	 RECEIVED 1 files.
+Max CPU:[2.32,1.99,1.51]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/modules/_accessibility.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2,1.52]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/modules/_alignments.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2,1.52]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/modules/_clearings.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2,1.52]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/navigation/_links.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2,1.52]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/navigation/_menu-footer-navigation.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2,1.52]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/navigation/_menu-main-navigation.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.99,1.51]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/navigation/_menu-social-navigation.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.99,1.51]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/navigation/_navigation.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.99,1.51]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/navigation/_next-previous.scss	 RECEIVED 1 files.
+Max CPU:[2.26,1.99,1.51]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/_site.scss	 RECEIVED 1 files.
+Max CPU:[2.4,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/footer/_site-footer.scss	 RECEIVED 1 files.
+Max CPU:[2.4,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/header/_site-featured-image.scss	 RECEIVED 1 files.
+Max CPU:[2.4,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/header/_site-header.scss	 RECEIVED 1 files.
+Max CPU:[2.4,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/primary/_archives.scss	 RECEIVED 1 files.
+Max CPU:[2.4,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/primary/_comments.scss	 RECEIVED 1 files.
+Max CPU:[2.4,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/primary/_posts-and-pages.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/site/secondary/_widgets.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/typography/_copy.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/typography/_headings.scss	 RECEIVED 1 files.
+Max CPU:[2.37,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/typography/_typography.scss	 RECEIVED 1 files.
+Max CPU:[2.34,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/variables-site/_colors.scss	 RECEIVED 1 files.
+Max CPU:[2.34,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/variables-site/_columns.scss	 RECEIVED 1 files.
+Max CPU:[2.34,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/variables-site/_fonts.scss	 RECEIVED 1 files.
+Max CPU:[2.34,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/variables-site/_structure.scss	 RECEIVED 1 files.
+Max CPU:[2.34,2.02,1.53]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/variables-site/_transitions.scss	 RECEIVED 1 files.
+Max CPU:[2.34,2.02,1.53]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/sass/variables-site/_variables-site.scss	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/search.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/style-editor-customizer.scss	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/style.scss	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/themes/twentynineteen/template-parts/header/site-branding.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/uploads/2016/12/JT-Graphic-edited-1-150x150.png	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/uploads/2016/12/about.jpg	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/uploads/2016/12/ipad-banner-services.jpg	 RECEIVED 34 files.
+Batch Size: 54
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/uploads/2019/04/30703798_10155589496968691_3755115685286510592_o-1.jpg	 RECEIVED 54 files.
+Batch Size: 87
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/uploads/slider29/agencyslidethumbnails.jpg	 RECEIVED 87 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/php.ini.ninja1557845936	 RECEIVED 111 files.
+Infection HAL5K in /_extvol_data/html/dev/plugindev/.malware/dreamhost-panel-login.php.txt
+Failed to generate checksum for /_extvol_data/html/dev/plugindev/.malware/unreadable.txt
+Infection hZJ22I in /_extvol_data/html/dev/plugindev/.malware/www.news-mag.fr/mcmozmal
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-admin/css/forms.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-admin/images/post-formats-vs.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-admin/includes/ms-deprecated.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-admin/js/user-suggest.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-admin/user/credits.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/languages/plugins/woocommerce-en_GB-09b8a04693848711e3459fcc6f5f2a94.json	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/languages/plugins/woocommerce-en_GB-77b25a5ccb12a232ba73108568db40e0.json	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/languages/plugins/woocommerce-en_GB-e80539b9960e930bf0dcd334d99eb128.json	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/akismet/class.akismet-rest-api.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/lib/admin-notices/class-itsec-admin-notice-screen-blacklist.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/lib/log-util.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/modules/backup/setup.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/modules/file-change/css/index.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/modules/malware/active.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/modules/site-scanner/Repository/Repository.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/modules/user-groups/entries/settings/components/group-header/index.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/packages/components/src/malware-scan-results/style.scss	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/better-wp-security/core/packages/webpack/src/wp-externals/index.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy-digital-downloads/assets/fonts/EDD-Icons.dev.svg	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy-digital-downloads/includes/admin/admin-actions.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy-digital-downloads/includes/class-edd-stats.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy-digital-downloads/languages/easy-digital-downloads-cy.mo	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy-digital-downloads/templates/edd.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/examples/example_012.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/examples/lang/srp.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/AUTHORS	 RECEIVED 111 files.
+!!!!!!!! FAILED !!!!!!!!111
+
+Max CPU:[2.69,2.14,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/COPYING	 RECEIVED 1 files.
+Max CPU:[2.69,2.14,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/CREDITS	 RECEIVED 1 files.
+Max CPU:[2.71,2.15,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/ChangeLog	 RECEIVED 1 files.
+Max CPU:[2.71,2.15,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/ChangeLog.10070.BAK	 RECEIVED 1 files.
+Max CPU:[2.71,2.15,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/INSTALL	 RECEIVED 1 files.
+Max CPU:[2.71,2.15,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/README	 RECEIVED 1 files.
+Max CPU:[2.71,2.15,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/TROUBLESHOOTING	 RECEIVED 1 files.
+Max CPU:[2.71,2.15,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freefont-20120503/USAGE	 RECEIVED 1 files.
+Max CPU:[2.5,2.12,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemono.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.5,2.12,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemono.php	 RECEIVED 1 files.
+Max CPU:[2.5,2.12,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemono.z	 RECEIVED 1 files.
+Max CPU:[2.5,2.12,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonob.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.46,2.11,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonob.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.11,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonob.z	 RECEIVED 1 files.
+Max CPU:[2.46,2.11,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonobi.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.46,2.11,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonobi.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.11,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonobi.z	 RECEIVED 1 files.
+Max CPU:[2.46,2.11,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonoi.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.08,1.61]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonoi.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.08,1.61]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freemonoi.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.08,1.61]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesans.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.08,1.61]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesans.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.08,1.61]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesans.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.08,1.61]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansb.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.32,2.1,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansb.php	 RECEIVED 1 files.
+Max CPU:[2.32,2.1,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansb.z	 RECEIVED 1 files.
+Max CPU:[2.32,2.1,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansbi.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.32,2.1,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansbi.php	 RECEIVED 1 files.
+Max CPU:[2.37,2.11,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansbi.z	 RECEIVED 1 files.
+Max CPU:[2.37,2.11,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansi.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.37,2.11,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansi.php	 RECEIVED 1 files.
+Max CPU:[2.37,2.11,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freesansi.z	 RECEIVED 1 files.
+Max CPU:[2.37,2.11,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserif.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.37,2.11,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserif.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.09,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserif.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.09,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifb.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.09,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifb.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.09,1.62]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifb.z	 RECEIVED 1 files.
+Max CPU:[2.26,2.09,1.62]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifbi.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.24,2.09,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifbi.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.09,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifbi.z	 RECEIVED 1 files.
+Max CPU:[2.24,2.09,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifi.ctg.z	 RECEIVED 1 files.
+Max CPU:[2.24,2.09,1.63]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifi.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.09,1.63]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/freeserifi.z	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/helveticab.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/hysmyeongjostdmedium.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/pdfacourier.z	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/pdfahelvetica.z	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/fonts/pdfatimesbi.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/easy_printable_vouchers/lib/tcpdf/include/tcpdf_colors.php	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/assets/css/frontend-rtl.min.css	 RECEIVED 34 files.
+Max CPU:[2.36,2.12,1.64]
+Batch Size: 18
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/assets/lib/smartmenus/jquery.smartmenus.min.js	 RECEIVED 18 files.
+Max CPU:[2.36,2.12,1.64]
+Batch Size: 10
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/core/admin/canary-deployment.php	 RECEIVED 10 files.
+Max CPU:[2.36,2.12,1.64]
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/core/editor/template.php	 RECEIVED 5 files.
+Max CPU:[2.36,2.12,1.64]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/elementor-pro.php	 RECEIVED 3 files.
+Max CPU:[2.36,2.12,1.64]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/license.txt	 RECEIVED 2 files.
+Max CPU:[2.36,2.12,1.64]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/license/admin.php	 RECEIVED 1 files.
+Max CPU:[2.36,2.12,1.64]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/license/api.php	 RECEIVED 1 files.
+Max CPU:[2.34,2.12,1.64]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/license/updater.php	 RECEIVED 1 files.
+Max CPU:[2.34,2.12,1.64]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/animated-headline/module.php	 RECEIVED 1 files.
+Max CPU:[2.34,2.12,1.64]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/animated-headline/widgets/animated-headline.php	 RECEIVED 1 files.
+Max CPU:[2.31,2.12,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/fonts-manager.php	 RECEIVED 1 files.
+Max CPU:[2.31,2.12,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/fonts/custom-fonts.php	 RECEIVED 1 files.
+Max CPU:[2.31,2.12,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/fonts/typekit-fonts.php	 RECEIVED 1 files.
+Max CPU:[2.31,2.12,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons-manager.php	 RECEIVED 1 files.
+Max CPU:[2.31,2.12,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/custom-icons.php	 RECEIVED 1 files.
+Max CPU:[2.28,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/font-awesome-pro.php	 RECEIVED 1 files.
+Max CPU:[2.28,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/icon-sets/fontastic.php	 RECEIVED 1 files.
+Max CPU:[2.28,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/icon-sets/fontello.php	 RECEIVED 1 files.
+Max CPU:[2.28,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/icon-sets/icomoon.php	 RECEIVED 1 files.
+Max CPU:[2.28,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/icon-sets/icon-set-base.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/asset-types/icons/templates.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/classes/assets-base.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/classes/font-base.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/assets-manager/module.php	 RECEIVED 1 files.
+Max CPU:[2.26,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/blockquote/module.php	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/call-to-action/module.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/carousel/widgets/base.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/countdown/widgets/countdown.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/dynamic-tags/acf/tags/acf-text.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/dynamic-tags/tags/archive-title.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/dynamic-tags/tags/post-terms.php	 RECEIVED 21 files.
+Max CPU:[2.23,2.11,1.65]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/dynamic-tags/tags/user-profile-picture.php	 RECEIVED 11 files.
+Max CPU:[2.23,2.11,1.65]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/dynamic-tags/toolset/tags/toolset-text.php	 RECEIVED 6 files.
+Max CPU:[2.23,2.11,1.65]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/flip-box/widgets/flip-box.php	 RECEIVED 3 files.
+Max CPU:[2.23,2.11,1.65]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/activity-log.php	 RECEIVED 2 files.
+Max CPU:[2.23,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/cf7db.php	 RECEIVED 1 files.
+Max CPU:[2.23,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/convertkit.php	 RECEIVED 1 files.
+Max CPU:[2.23,2.11,1.65]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/discord.php	 RECEIVED 1 files.
+Max CPU:[2.23,2.11,1.65]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/drip.php	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/email2.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/mailerlite.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/actions/webhook.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/classes/getresponse-handler.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/forms/fields/tel.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/popup/assets/images/timing-tab.svg	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/pricing/widgets/price-table.php	 RECEIVED 34 files.
+Batch Size: 56
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/elementor-pro/modules/theme-builder/documents/theme-document.php	 RECEIVED 56 files.
+Batch Size: 90
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/fw-tester/index.php	 RECEIVED 90 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/jilt-for-woocommerce/lib/skyverge/woocommerce/api/abstract-sv-wc-api-json-request.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/malcure-security-suite/.git/objects/1d/3f8709d81d0351a972b35efa00c9d5cbb8cb74	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/malcure-security-suite/.git/objects/64/f9574c837136899d55325c6921b53cdf8c862a	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/malcure-security-suite/.git/objects/a9/abada3de29dadb0cae98c3819a8f9d73406a59	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/malcure-security-suite/.git/objects/ed/c5305f2307cf1f1173aaa46a98b23db52ac298	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/ninjafirewall/lib/event_updates.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/post-duplicator/includes/scripts.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/query-monitor/wp-content/db.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/redirection/matches/ip.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/sucuri-scanner/inc/tpl/lastlogins-all.html.tpl	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/sucuri-scanner/src/strings.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/atomic/blocks/product-elements/shared/with-product-selector.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/base/components/cart-checkout/totals/taxes/style.scss	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/base/components/state-input/shipping-state-input.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/base/hooks/use-shallow-equal.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/blocks/price-filter/use-price-constraints.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/data/schema/test/selectors.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/assets/js/module_replacements/dashicon.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/build/atomic-block-components/title.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/src/BlockTypes/ReviewsByCategory.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/vendor/automattic/jetpack-autoloader/src/class-plugins-handler.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woo-gutenberg-products-block/vendor/composer/jetpack_autoload_psr4.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce-services/dist/chunks/126c11cbf2b1c9c3bee0.min.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce-services/dist/chunks/c6d69fbef1612388d23c.min.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce-services/readme.txt	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/assets/fonts/star.ttf	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/assets/js/admin/woocommerce_admin.min.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/includes/admin/class-wc-admin-attributes.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/includes/admin/settings/class-wc-settings-general.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/includes/class-wc-product-query.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/includes/legacy/api/class-wc-rest-legacy-coupons-controller.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/includes/rest-api/Controllers/Version3/class-wc-rest-data-continents-controller.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/includes/wccom-site/class-wc-wccom-site-installer-requirements-check.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-admin/dist/chunks/10.style.rtl.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-admin/images/onboarding/other-small.jpg	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-admin/src/DateTimeProvider/DateTimeProviderInterface.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-admin/src/ReportExporter.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-admin/vendor/composer/installers/src/Composer/Installers/RedaxoInstaller.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/atomic/blocks/product-elements/image/index.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/base/components/cart-checkout/totals/index.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/base/components/select/style.scss	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/base/hooks/test/use-shallow-equal.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/blocks/handpicked-products/block.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/data/query-state/utils.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/assets/js/icons/library/trash.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/atomic-block-components/sku.js	 RECEIVED 111 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/product-categories.asset.php	 RECEIVED 37 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 20
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/reviews-frontend.asset.php	 RECEIVED 20 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/vendors.js	 RECEIVED 11 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-blocks-registry.js	 RECEIVED 6 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-cheque.asset.php	 RECEIVED 3 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-cod.asset.php	 RECEIVED 2 files.
+Max CPU:[2.49,2.15,1.7]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-cod.js	 RECEIVED 1 files.
+Max CPU:[2.45,2.15,1.71]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-paypal.asset.php	 RECEIVED 1 files.
+Max CPU:[2.45,2.15,1.71]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-paypal.js	 RECEIVED 1 files.
+Max CPU:[2.45,2.15,1.71]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-stripe.asset.php	 RECEIVED 1 files.
+Max CPU:[2.45,2.15,1.71]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-payment-method-stripe.js	 RECEIVED 1 files.
+Max CPU:[2.45,2.15,1.71]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-settings.asset.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.15,1.71]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-settings.js	 RECEIVED 1 files.
+Max CPU:[2.41,2.15,1.71]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-shared-context.asset.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.15,1.71]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-shared-context.js	 RECEIVED 1 files.
+Max CPU:[2.41,2.15,1.71]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-shared-hocs.asset.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.15,1.71]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/wc-shared-hocs.js	 RECEIVED 1 files.
+Max CPU:[2.46,2.16,1.72]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/readme.txt	 RECEIVED 1 files.
+Max CPU:[2.46,2.16,1.72]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Assets.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.16,1.72]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Assets/Api.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.16,1.72]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Assets/AssetDataRegistry.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.16,1.72]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Assets/BackCompatAssetDataRegistry.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.19,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AbstractBlock.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.19,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AbstractDynamicBlock.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.19,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AbstractProductGrid.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.19,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ActiveFilters.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.19,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AllProducts.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.19,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AllReviews.php	 RECEIVED 1 files.
+Max CPU:[2.54,2.19,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AtomicBlock.php	 RECEIVED 1 files.
+Max CPU:[2.54,2.19,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/AttributeFilter.php	 RECEIVED 1 files.
+Max CPU:[2.54,2.19,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/Cart.php	 RECEIVED 1 files.
+Max CPU:[2.54,2.19,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/Checkout.php	 RECEIVED 1 files.
+Max CPU:[2.54,2.19,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/FeaturedCategory.php	 RECEIVED 1 files.
+Max CPU:[2.54,2.19,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/FeaturedProduct.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.17,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/HandpickedProducts.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.17,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/PriceFilter.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.17,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductBestSellers.php	 RECEIVED 1 files.
+Max CPU:[2.41,2.17,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductCategories.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.18,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductCategory.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.18,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductNew.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.18,1.73]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductOnSale.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.18,1.73]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductSearch.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.21,1.75]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductTag.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.21,1.75]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductTopRated.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.21,1.75]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ProductsByAttribute.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.21,1.75]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ReviewsByCategory.php	 RECEIVED 1 files.
+Max CPU:[2.58,2.21,1.75]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/ReviewsByProduct.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.19,1.74]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/BlockTypes/SingleProduct.php	 RECEIVED 1 files.
+Max CPU:[2.46,2.19,1.74]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Bootstrap.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.31,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Package.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.31,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Services/CreateAccount.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.32,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Services/DraftOrders.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.32,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Domain/Services/Email/CustomerNewAccount.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.32,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Installer.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.32,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Library.php	 RECEIVED 1 files.
+Max CPU:[2.98,2.32,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Package.php	 RECEIVED 1 files.
+Max CPU:[2.82,2.3,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Api.php	 RECEIVED 1 files.
+Max CPU:[2.82,2.3,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Integrations/AbstractPaymentMethodType.php	 RECEIVED 1 files.
+Max CPU:[2.82,2.3,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Integrations/BankTransfer.php	 RECEIVED 1 files.
+Max CPU:[2.82,2.3,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Integrations/CashOnDelivery.php	 RECEIVED 1 files.
+Max CPU:[2.82,2.3,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Integrations/Cheque.php	 RECEIVED 1 files.
+Max CPU:[2.82,2.3,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Integrations/PayPal.php	 RECEIVED 1 files.
+Max CPU:[2.68,2.27,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/Integrations/Stripe.php	 RECEIVED 1 files.
+Max CPU:[2.68,2.27,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/PaymentContext.php	 RECEIVED 1 files.
+Max CPU:[2.68,2.27,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/PaymentMethodRegistry.php	 RECEIVED 1 files.
+Max CPU:[2.68,2.27,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/PaymentMethodTypeInterface.php	 RECEIVED 1 files.
+Max CPU:[2.7,2.29,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Payments/PaymentResult.php	 RECEIVED 1 files.
+Max CPU:[2.7,2.29,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/AbstractDependencyType.php	 RECEIVED 1 files.
+Max CPU:[2.7,2.29,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/Container.php	 RECEIVED 1 files.
+Max CPU:[2.7,2.29,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/FactoryType.php	 RECEIVED 1 files.
+Max CPU:[2.7,2.29,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/Registry/SharedType.php	 RECEIVED 1 files.
+Max CPU:[2.7,2.29,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/RestApi.php	 RECEIVED 1 files.
+Max CPU:[2.65,2.28,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/AbstractCartRoute.php	 RECEIVED 1 files.
+Max CPU:[2.65,2.28,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/AbstractRoute.php	 RECEIVED 1 files.
+Max CPU:[2.65,2.28,1.79]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/AbstractTermsRoute.php	 RECEIVED 1 files.
+Max CPU:[2.65,2.28,1.79]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/Cart.php	 RECEIVED 1 files.
+Max CPU:[2.51,2.26,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartAddItem.php	 RECEIVED 1 files.
+Max CPU:[2.51,2.26,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartApplyCoupon.php	 RECEIVED 1 files.
+Max CPU:[2.51,2.26,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartCoupons.php	 RECEIVED 1 files.
+Max CPU:[2.51,2.26,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartCouponsByCode.php	 RECEIVED 1 files.
+Max CPU:[2.51,2.26,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartItems.php	 RECEIVED 1 files.
+Max CPU:[2.51,2.26,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartItemsByKey.php	 RECEIVED 1 files.
+Max CPU:[2.39,2.24,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartRemoveCoupon.php	 RECEIVED 1 files.
+Max CPU:[2.39,2.24,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartRemoveItem.php	 RECEIVED 1 files.
+Max CPU:[2.39,2.24,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartSelectShippingRate.php	 RECEIVED 1 files.
+Max CPU:[2.39,2.24,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartUpdateItem.php	 RECEIVED 1 files.
+Max CPU:[2.39,2.24,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/CartUpdateShipping.php	 RECEIVED 1 files.
+Max CPU:[2.39,2.24,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/Checkout.php	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/ProductAttributes.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/ProductCategoriesById.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Routes/ProductsById.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Schemas/CartItemSchema.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/src/StoreApi/Schemas/TermSchema.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/automattic/jetpack-autoloader/src/class-manifest-handler.php	 RECEIVED 21 files.
+Max CPU:[2.35,2.23,1.78]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/autoload_real.php	 RECEIVED 11 files.
+Max CPU:[2.35,2.23,1.78]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/AimeosInstaller.php	 RECEIVED 6 files.
+Max CPU:[2.35,2.23,1.78]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/AttogramInstaller.php	 RECEIVED 3 files.
+Max CPU:[2.35,2.23,1.78]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/BitrixInstaller.php	 RECEIVED 2 files.
+Max CPU:[2.35,2.23,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/BonefishInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.35,2.23,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/CakePHPInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.35,2.23,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/ChefInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.35,2.23,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/CiviCrmInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.21,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/ClanCatsFrameworkInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.21,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/CockpitInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.21,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/CodeIgniterInstaller.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.21,1.78]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/Concrete5Installer.php	 RECEIVED 1 files.
+Max CPU:[2.24,2.21,1.78]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/CraftInstaller.php	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/DecibelInstaller.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/DolibarrInstaller.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/EzPlatformInstaller.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/JoomlaInstaller.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/MajimaInstaller.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/composer/installers/src/Composer/Installers/PrestashopInstaller.php	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/packages/woocommerce-blocks/vendor/jetpack-autoloader/class-autoloader-locator.php	 RECEIVED 34 files.
+Batch Size: 55
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/templates/content-widget-price-filter.php	 RECEIVED 55 files.
+Batch Size: 89
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/templates/single-product/add-to-cart/variation.php	 RECEIVED 89 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/vendor/composer/installers/src/Composer/Installers/PPIInstaller.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/woocommerce/vendor/symfony/css-selector/Node/SelectorNode.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-designer/readme.txt	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-maintenance-mode/views/loginform.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/10/67437112c8fef0637186a170e67aec9b31ff05	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/23/a0fce0b429b2c68c5d8695ed4368e66b9a546f	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/37/e4031f70dab2314b4937d36a8347e350cd4081	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/4e/73a354dd61475dab1959501df5c1ec67fdcdd5	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/5f/a977aec5b960cea89ccb69d749754069e0d0fe	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/72/5c25407473db0cc13ed3287636ed2e1499d769	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/84/6e8e44bfba66cdb040d815fe099315da15ce21	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/94/92d9578dfab8c7a77009afa24967c29ea960f8	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/aa/1dfdb174956b5ca574df8e86f108e96fbfe1c6	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/bc/bb52818ec6fcb2407f6a882928c757950de854	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/d0/041060a0c7173bb7df59337babf9507d392e8c	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/e5/61670aa112a38676eeb928e6b34e65258878be	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/.git/objects/f9/6180db6f3bdc3a5f4f94c690498dba34d7a95d	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/assets/fonts/roboto/KFOmCnqEu92Fr1Mu7mxKOzY.woff2	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-malware-removal/assets/fonts/spacemono/i7dSIFZifjKcF5UAWdDRYERE_FeqHCSR.woff2	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-real-time-social-proof/.git/objects/0f/a38c5a91dc3081601875811bf99c7d099cfd88	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-real-time-social-proof/assets/fonts/roboto/KFOjCnqEu92Fr1Mu51S7ACc6CsQ.woff2	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-real-time-social-proof/assets/fonts/robotomono/L0xkDF4xlVMF-BfR8bXMIjC4iGqxf78.woff2	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-real-time-social-proof/wprtsppro/pro/readme.txt	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/action-scheduler/classes/migration/Config.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/functions/google-analytics/vendor/firebase/php-jwt/src/JWT.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/functions/google-analytics/vendor/google/apiclient-services/src/Google/Service/Analytics/Resource/ManagementProfileFilterLinks.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/functions/google-analytics/vendor/google/apiclient-services/src/Google/Service/Webmasters/UrlCrawlErrorCountsPerType.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/functions/google-analytics/vendor/guzzlehttp/guzzle/src/functions.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/functions/google-analytics/vendor/monolog/monolog/src/Monolog/Handler/NewRelicHandler.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-seopress-pro/inc/functions/google-analytics/vendor/monolog/monolog/tests/Monolog/Processor/WebProcessorTest.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/.git/hooks/pre-applypatch.sample	 RECEIVED 111 files.
+Max CPU:[2.35,2.22,1.81]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/.git/objects/e6/6207e7973891b768a8e7029c26950d81251c49	 RECEIVED 37 files.
+Max CPU:[2.35,2.22,1.81]
+Batch Size: 20
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/proof-styles.css	 RECEIVED 20 files.
+Max CPU:[2.35,2.22,1.81]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/exquisite.mp3	 RECEIVED 11 files.
+Max CPU:[2.35,2.22,1.81]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/jubilation.mp3	 RECEIVED 6 files.
+Max CPU:[2.35,2.22,1.81]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/micro.mp3	 RECEIVED 3 files.
+Max CPU:[2.48,2.25,1.82]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/oringz-w433.mp3	 RECEIVED 2 files.
+Max CPU:[2.48,2.25,1.82]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/oringz-w438.mp3	 RECEIVED 1 files.
+Max CPU:[2.48,2.25,1.82]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/oringz-w444.mp3	 RECEIVED 1 files.
+Max CPU:[2.48,2.25,1.82]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/oringz-w445.mp3	 RECEIVED 1 files.
+Max CPU:[2.48,2.25,1.82]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/oringz-w466.mp3	 RECEIVED 1 files.
+Max CPU:[2.48,2.25,1.82]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/pitched-so-high.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.82]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/plastik.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.82]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/proud.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.82]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/quiet-knock.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.82]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/quite-impressed.mp3	 RECEIVED 1 files.
+Max CPU:[2.57,2.28,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/salient.mp3	 RECEIVED 1 files.
+Max CPU:[2.57,2.28,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/show-stopper.mp3	 RECEIVED 1 files.
+Max CPU:[2.57,2.28,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/small-footprint.mp3	 RECEIVED 1 files.
+Max CPU:[2.57,2.28,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/small-tip.mp3	 RECEIVED 1 files.
+Max CPU:[2.57,2.28,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/stuffed-and-dropped.mp3	 RECEIVED 1 files.
+Max CPU:[2.57,2.28,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/successful.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/take-this.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/takes-off.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/thin.mp3	 RECEIVED 1 files.
+Max CPU:[2.44,2.25,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/tiny-steel-ball.mp3	 RECEIVED 1 files.
+Max CPU:[2.49,2.27,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/to-the-point.mp3	 RECEIVED 1 files.
+Max CPU:[2.49,2.27,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/trick.mp3	 RECEIVED 1 files.
+Max CPU:[2.49,2.27,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/unsure.mp3	 RECEIVED 1 files.
+Max CPU:[2.49,2.27,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/what-friends-are-for.mp3	 RECEIVED 1 files.
+Max CPU:[2.49,2.27,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/who.mp3	 RECEIVED 1 files.
+Max CPU:[2.49,2.27,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/sounds/wind-up-2.mp3	 RECEIVED 1 files.
+Max CPU:[2.37,2.25,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/verified-badge.svg	 RECEIVED 1 files.
+Max CPU:[2.37,2.25,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/verified.svg	 RECEIVED 1 files.
+Max CPU:[2.37,2.25,1.83]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/wprtsp-cpt-admin.js	 RECEIVED 1 files.
+Max CPU:[2.37,2.25,1.83]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/wprtsp.js	 RECEIVED 1 files.
+Max CPU:[2.42,2.26,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/assets/wprtspcpt.js	 RECEIVED 1 files.
+Max CPU:[2.42,2.26,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/index.php	 RECEIVED 1 files.
+Max CPU:[2.42,2.26,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/pro/pro.php	 RECEIVED 1 files.
+Max CPU:[2.42,2.26,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/pro/updater.php	 RECEIVED 1 files.
+Max CPU:[2.42,2.26,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/readme.txt	 RECEIVED 1 files.
+Max CPU:[2.47,2.27,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/screenshot1.png	 RECEIVED 1 files.
+Max CPU:[2.47,2.27,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/screenshot2.png	 RECEIVED 1 files.
+Max CPU:[2.47,2.27,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/screenshot3.png	 RECEIVED 1 files.
+Max CPU:[2.47,2.27,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wp-social-proof/wprtsp.php	 RECEIVED 1 files.
+Max CPU:[2.47,2.27,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/css/admin-addons.css	 RECEIVED 1 files.
+Max CPU:[2.35,2.25,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/css/admin.css	 RECEIVED 1 files.
+Max CPU:[2.35,2.25,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/css/frontend.css	 RECEIVED 1 files.
+Max CPU:[2.35,2.25,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/active0.png	 RECEIVED 1 files.
+Max CPU:[2.35,2.25,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/active1.png	 RECEIVED 1 files.
+Max CPU:[2.32,2.25,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/min.png	 RECEIVED 1 files.
+Max CPU:[2.32,2.25,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/placeholder-300x300.png	 RECEIVED 1 files.
+Max CPU:[2.32,2.25,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/plus.png	 RECEIVED 1 files.
+Max CPU:[2.32,2.25,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/wp-fomo-icon.png	 RECEIVED 1 files.
+Max CPU:[2.32,2.25,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/img/wpfomo-logo-w.png	 RECEIVED 1 files.
+Max CPU:[2.32,2.25,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/admin-addons.js	 RECEIVED 1 files.
+Max CPU:[2.29,2.24,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/admin-settings.js	 RECEIVED 1 files.
+Max CPU:[2.29,2.24,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/admin.js	 RECEIVED 1 files.
+Max CPU:[2.29,2.24,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/frontend.js	 RECEIVED 1 files.
+Max CPU:[2.29,2.24,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/helper.js	 RECEIVED 1 files.
+Max CPU:[2.27,2.24,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/jquery.cookie.js	 RECEIVED 1 files.
+Max CPU:[2.27,2.24,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/assets/js/jquery.session.js	 RECEIVED 1 files.
+Max CPU:[2.27,2.24,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/changelog.txt	 RECEIVED 1 files.
+Max CPU:[2.27,2.24,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/classes/class-ibx-wpfomo-addon.php	 RECEIVED 1 files.
+Max CPU:[2.27,2.24,1.84]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/classes/class-ibx-wpfomo-addons.php	 RECEIVED 1 files.
+Max CPU:[2.27,2.24,1.84]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/classes/class-ibx-wpfomo-admin.php	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/classes/class-ibx-wpfomo-api.php	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/classes/class-ibx-wpfomo-frontend.php	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/includes/admin-preview.php	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/includes/mbt/classes/class-mbt-ajax.php	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/plugins/wpfomify/includes/mbt/includes/field-suggest.php	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/genesis/CHANGELOG.md	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/genesis/lib/classes/class-genesis-admin-seo-settings.php	 RECEIVED 34 files.
+Batch Size: 56
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/genesis/lib/languages/genesis.pot	 RECEIVED 56 files.
+Batch Size: 91
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/thesis/index.php	 RECEIVED 91 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/thesis/lib/fonts/t_font.ttf	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/twentynineteen/inc/back-compat.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/twentyseventeen/inc/template-functions.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/twentytwenty/print.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/themes/twentytwentyone/assets/sass/05-blocks/rss/_editor.scss	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/thesis/skins/focus/lib/scss/mixins/grt-content.scss	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/cap-2-200x200.jpg	 RECEIVED 111 files.
+Max CPU:[2.5,2.28,1.87]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/hoodie-with-logo-2-250x250.jpg	 RECEIVED 37 files.
+Max CPU:[2.5,2.28,1.87]
+Batch Size: 19
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/hoodie-with-zipper-2-200x200.jpg	 RECEIVED 19 files.
+Max CPU:[2.5,2.28,1.87]
+Batch Size: 10
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/logo-1-200x200.jpg	 RECEIVED 10 files.
+Max CPU:[2.62,2.31,1.88]
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/logo-1-600x599.jpg	 RECEIVED 5 files.
+Max CPU:[2.62,2.31,1.88]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-100x100.jpg	 RECEIVED 3 files.
+Max CPU:[2.62,2.31,1.88]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-200x200.jpg	 RECEIVED 2 files.
+Max CPU:[2.62,2.31,1.88]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.62,2.31,1.88]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.62,2.31,1.88]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.81,2.35,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-450x450.jpg	 RECEIVED 1 files.
+Max CPU:[2.81,2.35,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-600x600.jpg	 RECEIVED 1 files.
+Max CPU:[2.81,2.35,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2-768x768.jpg	 RECEIVED 1 files.
+Max CPU:[2.81,2.35,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/long-sleeve-tee-2.jpg	 RECEIVED 1 files.
+Max CPU:[2.81,2.35,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.75,2.35,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-150x150.jpg	 RECEIVED 1 files.
+Max CPU:[2.75,2.35,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-200x200.jpg	 RECEIVED 1 files.
+Max CPU:[2.75,2.35,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.75,2.35,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.69,2.34,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.69,2.34,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-450x450.jpg	 RECEIVED 1 files.
+Max CPU:[2.69,2.34,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-600x600.jpg	 RECEIVED 1 files.
+Max CPU:[2.69,2.34,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1-768x768.jpg	 RECEIVED 1 files.
+Max CPU:[2.69,2.34,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/pennant-1.jpg	 RECEIVED 1 files.
+Max CPU:[2.69,2.34,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.63,2.34,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-150x150.jpg	 RECEIVED 1 files.
+Max CPU:[2.63,2.34,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-200x200.jpg	 RECEIVED 1 files.
+Max CPU:[2.63,2.34,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.63,2.34,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.63,2.34,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.63,2.34,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-450x449.jpg	 RECEIVED 1 files.
+Max CPU:[2.5,2.31,1.89]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-600x599.jpg	 RECEIVED 1 files.
+Max CPU:[2.5,2.31,1.89]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2-768x767.jpg	 RECEIVED 1 files.
+Max CPU:[2.5,2.31,1.89]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/polo-2.jpg	 RECEIVED 1 files.
+Max CPU:[2.5,2.31,1.89]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sample_products.csv	 RECEIVED 1 files.
+Max CPU:[2.46,2.31,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.46,2.31,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-150x150.jpg	 RECEIVED 1 files.
+Max CPU:[2.46,2.31,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-200x200.jpg	 RECEIVED 1 files.
+Max CPU:[2.46,2.31,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.46,2.31,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.46,2.31,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.58,2.34,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-450x450.jpg	 RECEIVED 1 files.
+Max CPU:[2.58,2.34,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-600x600.jpg	 RECEIVED 1 files.
+Max CPU:[2.58,2.34,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1-768x768.jpg	 RECEIVED 1 files.
+Max CPU:[2.58,2.34,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/single-1.jpg	 RECEIVED 1 files.
+Max CPU:[2.54,2.33,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.54,2.33,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-150x150.jpg	 RECEIVED 1 files.
+Max CPU:[2.54,2.33,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-200x200.jpg	 RECEIVED 1 files.
+Max CPU:[2.54,2.33,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.54,2.33,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.49,2.32,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.49,2.32,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-450x450.jpg	 RECEIVED 1 files.
+Max CPU:[2.49,2.32,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-600x600.jpg	 RECEIVED 1 files.
+Max CPU:[2.49,2.32,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2-768x768.jpg	 RECEIVED 1 files.
+Max CPU:[2.49,2.32,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/sunglasses-2.jpg	 RECEIVED 1 files.
+Max CPU:[2.53,2.34,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.53,2.34,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-150x150.jpg	 RECEIVED 1 files.
+Max CPU:[2.53,2.34,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-200x200.jpg	 RECEIVED 1 files.
+Max CPU:[2.53,2.34,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.53,2.34,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.53,2.34,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.41,2.31,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-450x450.jpg	 RECEIVED 1 files.
+Max CPU:[2.41,2.31,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-600x600.jpg	 RECEIVED 1 files.
+Max CPU:[2.41,2.31,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1-768x768.jpg	 RECEIVED 1 files.
+Max CPU:[2.41,2.31,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/t-shirt-with-logo-1.jpg	 RECEIVED 1 files.
+Max CPU:[2.41,2.31,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.3,2.29,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-150x150.jpg	 RECEIVED 1 files.
+Max CPU:[2.3,2.29,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-200x200.jpg	 RECEIVED 1 files.
+Max CPU:[2.3,2.29,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-250x250.jpg	 RECEIVED 1 files.
+Max CPU:[2.3,2.29,1.9]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-300x300.jpg	 RECEIVED 1 files.
+Max CPU:[2.3,2.29,1.9]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-350x350.jpg	 RECEIVED 1 files.
+Max CPU:[2.27,2.29,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-450x450.jpg	 RECEIVED 1 files.
+Max CPU:[2.27,2.29,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-600x600.jpg	 RECEIVED 1 files.
+Max CPU:[2.27,2.29,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2-768x768.jpg	 RECEIVED 1 files.
+Max CPU:[2.27,2.29,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/tshirt-2.jpg	 RECEIVED 1 files.
+Max CPU:[2.27,2.29,1.91]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/vnech-tee-blue-1-100x100.jpg	 RECEIVED 1 files.
+Max CPU:[2.27,2.29,1.91]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/vnech-tee-blue-1-150x150.jpg	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/vnech-tee-blue-1-300x300.jpg	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/vnech-tee-blue-1-600x600.jpg	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/vnech-tee-green-1-250x250.jpg	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/02/vneck-tee-2-150x150.jpg	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/2019/11/gsc-security-issues-150x150.png	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-content/uploads/wc-logs/fatal-errors-2021-05-17-8b9121843d69a93a5d2c743ef09c8ed5.log	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/ID3/getid3.lib.php	 RECEIVED 34 files.
+Batch Size: 54
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/Requests/Exception/HTTP/413.php	 RECEIVED 54 files.
+Batch Size: 88
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/block-patterns/three-buttons.php	 RECEIVED 88 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/class-wp-date-query.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/css/dist/components/style-rtl.min.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/http.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/customize-preview-widgets.min.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/dist/vendor/wp-polyfill-node-contains.js	 RECEIVED 111 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/jquery.min.js	 RECEIVED 37 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 20
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/core.min.js	 RECEIVED 20 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-bounce.js	 RECEIVED 11 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 6
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-explode.js	 RECEIVED 6 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-fade.min.js	 RECEIVED 3 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-fold.min.js	 RECEIVED 2 files.
+Max CPU:[2.37,2.3,1.92]
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-highlight.js	 RECEIVED 1 files.
+Max CPU:[2.37,2.3,1.92]
+Minimum batch size reached. Waiting for breath.
+Batch Size: 1
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-highlight.min.js	 RECEIVED 1 files.
+Batch Size: 2
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-puff.min.js	 RECEIVED 2 files.
+Batch Size: 3
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-scale.js	 RECEIVED 3 files.
+Batch Size: 5
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/effect-size.min.js	 RECEIVED 5 files.
+Batch Size: 8
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/menu.min.js	 RECEIVED 8 files.
+Batch Size: 13
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/jquery/ui/sortable.js	 RECEIVED 13 files.
+Batch Size: 21
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/media-views.js	 RECEIVED 21 files.
+Batch Size: 34
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/shortcode.min.js	 RECEIVED 34 files.
+Batch Size: 55
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/js/tinymce/plugins/wpview/plugin.js	 RECEIVED 55 files.
+Batch Size: 89
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/link-template.php	 RECEIVED 89 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/sodium_compat/namespaced/Core/Curve25519.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/wp-includes/widgets/class-wp-widget-media.php	 RECEIVED 111 files.
+Max CPU:[2.32,2.29,1.92]
+Batch Size: 37
+		SCANNING: /_extvol_data/html/dev/plugindev/xmlrpc.php	 RECEIVED 20 files.
+Check value of $mc_scan_progress since no files remaining.
+Array
+(
+    [total] => 20797
+    [remaining] => 0
+    [rate] => 21.928737216127
+)
+
+Failure Count: 111
+Full Scan Completion Time: 16 mins
+COMPLETED SCAN ID: 1623567322
+INITIATING SCAN ID: 1623570918
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/4_severe/new.html	 RECEIVED 11 files.
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/email9022.php	 RECEIVED 11 files.
+Batch Size: 11
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/images/fname.png	 RECEIVED 11 files.
+Batch Size: 18
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/index.php	 RECEIVED 18 files.
+Batch Size: 30
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/ip_files/124.php	 RECEIVED 30 files.
+Batch Size: 49
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/ip_files/169.php	 RECEIVED 49 files.
+Batch Size: 80
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/5.others/opal-logs/m.firsttechfedcu/ip_files/240.php	 RECEIVED 80 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/cache/nextend/notweb/n2-ss-1/slideren_GB1	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/languages/plugins/all-in-one-seo-pack-en_GB-2a3d2362d1f662ded29b25e3f82ffcbb.json	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/app/Common/Admin/Usage.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/app/Common/Traits/Helpers/ActionScheduler.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/dist/Lite/assets/css/search-appearance-partials-lite-Schema-vue.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/dist/Lite/assets/img/tf.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/dist/Lite/assets/js/social-networks-Pinterest-vue.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor/woocommerce/action-scheduler/lib/cron-expression/CronExpression_FieldFactory.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-seo-pack/vendor_prefixed/psr/log/Psr/Log/LogLevel.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/all-in-one-wp-security-and-firewall/other-includes/wp-security-rename-login-feature-pre-5-2.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/marker128.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/assets/images/icons/redflag64.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/google-maps/templates/admin/edit-map-layered-maps.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/css/chosen.min.css	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/images/gf-expand-title-bg-rtl.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/includes/fields/class-gf-field-singleshipping.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gravityforms/js/gf_field_filter.min.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/24/el.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/16/cs.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/24/cs.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/32/cs.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/flags/48/cs.png	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/gtranslate/url_addon/cacert.pem	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/Framework/Form/Element/Button/ButtonMoreLess.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/Framework/Misc/String/SingleByte.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Application/Admin/FormManager/Slider/SliderDeveloper.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Application/Admin/Layout/Block/Slider/DeviceZoom/DeviceZoom.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Generator/AbstractGeneratorGroupConfiguration.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3/Renderable/Item/Missing/ItemMissingFrontend.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3Pro/Application/Admin/Slider/Template/ShapeDivider.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3Pro/Generator/Common/Flickr/Sources/FlickrPeopleAlbum.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Nextend/SmartSlider3Pro/Renderable/Item/Area/ItemArea.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Public/SmartSlider3/Application/Frontend/Assets/dist/n2-j.min.js	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Public/SmartSlider3Pro/Application/Frontend/Assets/icons/materialicons/dist/MaterialIcons-Regular.woff2	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/nextend-smart-slider3-pro/Public/SmartSlider3Pro/Widget/Arrow/ArrowGrow/Assets/next/thin-horizontal.svg	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/separator-shortcode-and-widget/include/otw_components/otw_shortcode/fonts/general_foundicons.woff	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/simple-css/simple-css.php	 RECEIVED 111 files.
+Batch Size: 111
+		SCANNING: /_extvol_data/html/dev/plugindev/.malware/6_chris/plugins/slider-wd/demo_sliders/images/eye-hover.svg	 RECEIVED 111 files.

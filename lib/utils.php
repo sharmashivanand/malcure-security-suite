@@ -530,11 +530,11 @@ final class malCure_Utils {
 		while ( self::get_option( 'MSS_lock' ) == 'true' ) {
 			usleep( rand( 2500, 7500 ) );
 		}
-		update_option( 'MSS_lock', 'true' );
+		malCure_Utils::update_option( 'MSS_lock', 'true' );
 	}
 
 	static function do_unlock() {
-		update_option( 'MSS_lock', 'false' );
+		malCure_Utils::update_option( 'MSS_lock', 'false' );
 	}
 
 	static function get_setting( $setting ) {
@@ -580,8 +580,6 @@ final class malCure_Utils {
 		return update_setting( 'errors', $errors );
 	}
 
-
-
 	static function do_maintenance() {
 		self::delete_setting( 'scan_id' );
 		self::delete_setting( 'mc_scan_progress' );
@@ -602,13 +600,16 @@ final class malCure_Utils {
 		if ( count( $scans ) >= $retain ) {
 			$scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
 		}
-		update_option( 'MSS_scans', $scans );
+		malCure_Utils::update_option( 'MSS_scans', $scans );
 
 	}
 
 	static function get_option( $option ) {
-
 		return get_option( $option );
+	}
+
+	static function update_option( $option, $value ) {
+		return update_option( self::$opt_name . $option, $value );
 	}
 }
 

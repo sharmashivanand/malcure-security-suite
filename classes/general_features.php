@@ -30,19 +30,98 @@ final class mss_Utils {
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			$('.postbox').each(function() {
 				$(this).addClass('closed');
+				
 			});
+
+			$('#mss_connection_ui').removeClass('closed');
+
+			$('#mss_connection_ui').keypress(function (e) {
+				var key = e.which;
+				if(key == 13)  // the enter key code
+				{
+				$('#mss_api_register_btn').click();
+				return false;  
+				}
+			}); 
+			
 		});
 		</script>
 		<?php
 	}
 
 	function add_meta_boxes() {
-		add_meta_box( 'mss_registration_ui', 'Registration', array( $this, 'registration_ui' ), $GLOBALS['malCure_security_suite']['pagehook'], 'side' );
-		add_meta_box( 'mss_site_status', 'Site Status', array( $this, 'mss_system_status' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
-		add_meta_box( 'mss_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+		if ( malCure_Utils::is_registered() ) {
+			add_meta_box( 'mss_connection_details', 'Connection Details', array( $this, 'registration_details' ), $GLOBALS['malCure_security_suite']['pagehook'], 'side' );
+			add_meta_box( 'mss_site_status', 'Site Status', array( $this, 'mss_system_status' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+			add_meta_box( 'mss_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+		} else {
+			add_meta_box( 'mss_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['malCure_security_suite']['pagehook'], 'main' );
+		}
 	}
 
-	function registration_ui() {
+	function connection_ui() {
+		if ( ! malCure_Utils::is_registered() ) {
+			$current_user = wp_get_current_user();
+			?>
+			<h3>Quick connection with the Malcure API</h3>
+			<p>A connection to the API endpoint is required for Malcure to protect your site.</p>
+			<p><label><strong>First Name:</strong><br />
+			<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
+			<p><label><strong>Last Name:</strong><br />
+			<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
+			<p><label><strong>Email:</strong><br />
+			<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
+			<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
+			<a href="#" class="button-primary" id="mss_api_register_btn" role="button">Complete Setup&nbsp;&rarr;</a>
+			<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$("#mss_api_register_btn").click(function(){
+					mss_api_register = {
+						mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
+						action: "mss_api_register",
+						user: {
+							fn: $('#mss_user_fname').val(),
+							ln: $('#mss_user_lname').val(),
+							email: $('#mss_user_email').val(),
+						}
+					};
+					$.ajax({
+						url: ajaxurl,
+						method: 'POST',
+						data: mss_api_register,
+						success: function(response_data, textStatus, jqXHR) {
+							console.dir(response_data);
+							if ((typeof response_data) != 'object') { // is the server not sending us JSON?
+
+							}
+							if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
+								location.reload();
+							} else { // perhaps this is just JSON without a success object
+								alert('Failed to register with API. Error: ' + response_data.data );
+							}
+						},
+						error: function( jqXHR, textStatus, errorThrown){},
+						complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
+						},
+					});
+				});
+			});
+			</script>
+			<?php
+		} else {
+			$user = malCure_Utils::get_option( malCure_Utils::$opt_name );
+			$user = $user['api-credentials'];
+			?>
+			<table id="mss_user_details">
+			<tr><th>Name</th><td><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></td></tr>
+			<tr><th>Email</th><td><?php echo $user['user_email']; ?></td></tr>
+			<tr><th>API User ID</th><td><?php echo $user['ID']; ?></td></tr>
+			</table>
+			<?php
+		}
+	}
+
+	function registration_details() {
 		if ( ! malCure_Utils::is_registered() ) {
 			$current_user = wp_get_current_user();
 			?>
@@ -98,7 +177,7 @@ final class mss_Utils {
 			<table id="mss_user_details">
 			<tr><th>Name</th><td><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></td></tr>
 			<tr><th>Email</th><td><?php echo $user['user_email']; ?></td></tr>
-			<tr><th>API User ID</th><td><?php echo $user['ID']; ?></td></tr>
+			<tr><th>API Connector ID</th><td><?php echo $user['ID']; ?></td></tr>
 			</table>
 			<?php
 		}
@@ -106,7 +185,6 @@ final class mss_Utils {
 
 	function mss_system_status() {
 		global $wpdb;
-
 		?>
 		<table id="mss_system_status">
 		<tr>
