@@ -446,10 +446,20 @@ final class malCure_Utils {
 		if ( is_wp_error( $definitions ) ) {
 			return $definitions;
 		} else {
+			if ( $definitions['v'] != self::get_definition_version() ) {
+				self::delete_option( 'checksums_generated' );
+			}
 			self::update_option_definitions( $definitions );
 			$time = date( 'U' );
 			self::update_setting( 'definitions_update_time', $time );
 			return true;
+		}
+	}
+
+	function get_definition_version() {
+		$definitions = self::get_option( 'definitions' );
+		if ( $definitions && ! empty( $definitions['v'] ) ) {
+			return $definitions['v'];
 		}
 	}
 
@@ -485,24 +495,24 @@ final class malCure_Utils {
 
 
 	static function update_option_checksums_core( $checksums ) {
-		return update_option( self::$opt_name . '_checksums_core', $checksums );
+		return self::update_option( 'checksums_core', $checksums );
 	}
 
 	static function update_option_checksums_generated( $checksums ) {
-		return update_option( self::$opt_name . '_checksums_generated', $checksums );
+		return self::update_option( 'checksums_generated', $checksums );
 	}
 
 	static function update_option_definitions( $definitions ) {
-		return update_option( self::$opt_name . '_definitions', $definitions );
+		return self::update_option( 'definitions', $definitions );
 	}
 
 
 	static function get_option_checksums_core() {
-		return self::get_option( self::$opt_name . '_checksums_core' );
+		return self::get_option( 'checksums_core' );
 	}
 
 	static function get_option_checksums_generated() {
-		$checksums = self::get_option( self::$opt_name . '_checksums_generated' );
+		$checksums = self::get_option( 'checksums_generated' );
 		if ( ! $checksums ) {
 			return array();
 		}
@@ -510,43 +520,43 @@ final class malCure_Utils {
 	}
 
 	static function get_option_definitions() {
-		return self::get_option( self::$opt_name . '_definitions' );
+		return self::get_option( 'definitions' );
 	}
 
 
 	static function delete_option_checksums_core() {
-		return delete_option( self::$opt_name . '_checksums_core' );
+		return self::delete_option( 'checksums_core' );
 	}
 
 	static function delete_option_checksums_generated() {
-		return delete_option( self::$opt_name . '_checksums_generated' );
+		return self::delete_option( 'checksums_generated' );
 	}
 
 	static function delete_option_definitions() {
-		return delete_option( self::$opt_name . '_definitions' );
+		return self::delete_option( 'definitions' );
 	}
 
 	static function await_unlock() {
 		while ( self::get_option( 'MSS_lock' ) == 'true' ) {
 			usleep( rand( 2500, 7500 ) );
 		}
-		malCure_Utils::update_option( 'MSS_lock', 'true' );
+		self::update_option( 'MSS_lock', 'true' );
 	}
 
 	static function do_unlock() {
-		malCure_Utils::update_option( 'MSS_lock', 'false' );
+		self::update_option( 'MSS_lock', 'false' );
 	}
 
 	static function get_setting( $setting ) {
 
-		$settings = self::get_option( self::$opt_name );
+		$settings = get_option( self::$opt_name );
 
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
 	}
 
 	static function update_setting( $setting, $value ) {
 
-		$settings = self::get_option( self::$opt_name );
+		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
@@ -557,7 +567,7 @@ final class malCure_Utils {
 
 	static function delete_setting( $setting ) {
 
-		$settings = self::get_option( self::$opt_name );
+		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
@@ -582,6 +592,7 @@ final class malCure_Utils {
 
 	static function do_maintenance() {
 		self::delete_setting( 'scan_id' );
+
 		self::delete_setting( 'mc_scan_progress' );
 
 		$lock       = self::get_setting( 'scan_id' );
@@ -591,7 +602,7 @@ final class malCure_Utils {
 			self::delete_setting( 'scan_id' );
 		}
 
-		$scans = self::get_option( 'MSS_scans' );
+		$scans = self::get_option( 'scans' );
 		if ( empty( $scans ) ) { // when no scans have been run till date
 			$scans = array();
 		}
@@ -600,16 +611,20 @@ final class malCure_Utils {
 		if ( count( $scans ) >= $retain ) {
 			$scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
 		}
-		malCure_Utils::update_option( 'MSS_scans', $scans );
+		self::update_option( 'scans', $scans );
 
 	}
 
 	static function get_option( $option ) {
-		return get_option( $option );
+		return get_option( self::$opt_name . '_' . $option );
 	}
 
 	static function update_option( $option, $value ) {
-		return update_option( self::$opt_name . $option, $value );
+		return update_option( self::$opt_name . '_' . $option, $value );
+	}
+
+	static function delete_option( $option ) {
+		return delete_option( self::$opt_name . '_' . $option );
 	}
 }
 

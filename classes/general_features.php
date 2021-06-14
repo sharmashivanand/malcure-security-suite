@@ -60,7 +60,8 @@ final class mss_Utils {
 	}
 
 	function connection_ui() {
-		if ( ! malCure_Utils::is_registered() ) {
+		
+		
 			$current_user = wp_get_current_user();
 			?>
 			<h3>Quick connection with the Malcure API</h3>
@@ -108,79 +109,22 @@ final class mss_Utils {
 			});
 			</script>
 			<?php
-		} else {
-			$user = malCure_Utils::get_option( malCure_Utils::$opt_name );
-			$user = $user['api-credentials'];
-			?>
-			<table id="mss_user_details">
-			<tr><th>Name</th><td><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></td></tr>
-			<tr><th>Email</th><td><?php echo $user['user_email']; ?></td></tr>
-			<tr><th>API User ID</th><td><?php echo $user['ID']; ?></td></tr>
-			</table>
-			<?php
-		}
+		
 	}
 
 	function registration_details() {
-		if ( ! malCure_Utils::is_registered() ) {
-			$current_user = wp_get_current_user();
-			?>
-			<h3>You have successfully installed malCure Security Suite</h3>
-			<p>Submit the following information to download free anti-virus definitions and malCure rules.</p>
-			<p><label><strong>First Name:</strong><br />
-			<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
-			<p><label><strong>Last Name:</strong><br />
-			<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
-			<p><label><strong>Email:</strong><br />
-			<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
-			<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-			<a href="#" class="button-primary" id="mss_api_register_btn" role="button">Next&nbsp;&rarr;</a>
-			<script type="text/javascript">
-			jQuery(document).ready(function($){
-				$("#mss_api_register_btn").click(function(){
-					mss_api_register = {
-						mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
-						action: "mss_api_register",
-						user: {
-							fn: $('#mss_user_fname').val(),
-							ln: $('#mss_user_lname').val(),
-							email: $('#mss_user_email').val(),
-						}
-					};
-					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						data: mss_api_register,
-						success: function(response_data, textStatus, jqXHR) {
-							console.dir(response_data);
-							if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-
-							}
-							if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
-								location.reload();
-							} else { // perhaps this is just JSON without a success object
-								alert('Failed to register with API. Error: ' + response_data.data );
-							}
-						},
-						error: function( jqXHR, textStatus, errorThrown){},
-						complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
-						},
-					});
-				});
-			});
-			</script>
-			<?php
-		} else {
-			$user = malCure_Utils::get_option( malCure_Utils::$opt_name );
-			$user = $user['api-credentials'];
-			?>
-			<table id="mss_user_details">
-			<tr><th>Name</th><td><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></td></tr>
-			<tr><th>Email</th><td><?php echo $user['user_email']; ?></td></tr>
-			<tr><th>API Connector ID</th><td><?php echo $user['ID']; ?></td></tr>
-			</table>
-			<?php
-		}
+		
+		$user = malCure_Utils::is_registered();
+		//var_dump(malCure_Utils::$opt_name);
+		//$user = $user['api-credentials'];
+		?>
+		<table id="mss_user_details">
+		<tr><th>Name</th><td><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></td></tr>
+		<tr><th>Email</th><td><?php echo $user['user_email']; ?></td></tr>
+		<tr><th>API Connector ID</th><td><?php echo $user['ID']; ?></td></tr>
+		</table>
+		<?php
+	
 	}
 
 	function mss_system_status() {
