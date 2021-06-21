@@ -540,7 +540,7 @@ final class malCure_Utils {
 	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
-
+		
 		$response    = wp_safe_remote_request( self::get_api_url( 'update-definitions' ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );

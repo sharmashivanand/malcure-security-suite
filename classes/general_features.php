@@ -61,7 +61,6 @@ final class mss_Utils {
 
 	function connection_ui() {
 		
-		
 			$current_user = wp_get_current_user();
 			?>
 			<h3>Quick connection with the Malcure API</h3>

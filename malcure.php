@@ -72,6 +72,7 @@ final class malCure_security_suite {
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
+		
 	}
 
 	function hook_meta_boxes() {
