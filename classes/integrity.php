@@ -50,7 +50,7 @@ class malCure_Integrity {
 			}
 		} else {
 
-			submit_button( 'Show Missing Files', 'primary', 'mss_integrity_missing_files', true );
+			submit_button( 'Show Files Without Checksums', 'primary', 'mss_integrity_missing_files', true );
 			echo '<div class="integrity_response"></div>';
 		}
 	}
@@ -187,6 +187,7 @@ class malCure_Integrity {
 	}
 
 	function get_checksums( $cached = true ) {
+		return malCure_Utils::fetch_checksums();
 		$checksums = $cached ? get_transient( 'malcure_repo_checksums' ) : false;
 		if ( ! $checksums ) {
 			global $wp_version;
@@ -302,9 +303,18 @@ class malCure_Integrity {
 			}
 		}
 
-		$failed_files['missing_files']    = array_values( $failed_files['missing_files'] );
-		$failed_files['extra_files']      = array_values( $failed_files['extra_files'] );
-		$failed_files['failed_checksums'] = array_values( $failed_files['failed_checksums'] );
+		$missing_files = array_values( $failed_files['missing_files'] );
+		ksort( $missing_files );
+		$failed_files['missing_files'] = array_values( $missing_files );
+
+		$extra_files = array_values( $failed_files['extra_files'] );
+		ksort( $extra_files );
+		$failed_files['extra_files'] = array_values( $extra_files );
+
+		$failed_checksums = array_values( $failed_files['failed_checksums'] );
+		ksort( $failed_checksums );
+		$failed_files['failed_checksums'] = array_values( $failed_checksums );
+
 		return $failed_files;
 	}
 

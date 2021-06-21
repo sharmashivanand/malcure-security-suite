@@ -326,6 +326,10 @@ final class malCure_Utils {
 			if ( $plugin_checksums ) {
 				$checksums = array_merge( $checksums, $plugin_checksums );
 			}
+			$theme_checksums  = self::fetch_theme_checksums();
+			if ( $theme_checksums ) {
+				$checksums = array_merge( $checksums, $theme_checksums );
+			}
 			if ( $checksums ) {
 				self::update_option_checksums_core( $checksums );
 				return apply_filters( 'mss_checksums', $checksums );
@@ -372,6 +376,37 @@ final class malCure_Utils {
 			$plugin_checksums = array_merge( $plugin_checksums, $extras );
 		}
 		return $plugin_checksums;
+	}
+
+	static function fetch_theme_checksums(){
+		$all_themes      = wp_get_themes();
+		$install_path    = get_home_path();
+		$theme_checksums = array();
+		$theme_root      = get_theme_root();
+		//$state           = $this->get_setting( 'user' );
+		//$state           = $this->encode( $state );
+		foreach ( $all_themes as $key => $value ) {
+			$theme_file   = trailingslashit( $theme_root ) . $key;
+			$theme_file   = str_replace( $install_path, '', $theme_file );
+			$checksum_url = self::get_api_url( 'wpmr_checksum' ) . '&slug=' . $key . '&version=' . $value['Version'] . '&type=theme';
+			
+			$checksum     = wp_safe_remote_get( $checksum_url );
+			if ( is_wp_error( $checksum ) ) {
+				continue;
+			}
+			if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
+				continue;
+			}
+			$checksum = wp_remote_retrieve_body( $checksum );
+			$checksum = json_decode( $checksum, true );
+			if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
+				$checksum = $checksum['files'];
+				foreach ( $checksum as $file => $checksums ) {
+					$theme_checksums[ trailingslashit( dirname( $theme_file ) ) . $file ] = $checksums['md5'];
+				}
+			}
+		}
+		return $theme_checksums;
 	}
 
 	static function generated_checksums( $checksums ) {
@@ -449,6 +484,42 @@ final class malCure_Utils {
 			if ( $definitions['v'] != self::get_definition_version() ) {
 				self::delete_option( 'checksums_generated' );
 			}
+
+			$severe     = array();
+			$high       = array();
+			$suspicious = array();
+			foreach ( $definitions['definitions']['files'] as $definition => $signature ) { // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
+				if ( $signature['severity'] == 'severe' ) {
+					$severe[ $definition ] = $definitions['definitions']['files'][ $definition ];
+				}
+				if ( $signature['severity'] == 'high' ) {
+					$high[ $definition ] = $definitions['definitions']['files'][ $definition ];
+				}
+				if ( $signature['severity'] == 'suspicious' ) {
+					$suspicious[ $definition ] = $definitions['definitions']['files'][ $definition ];
+				}
+			}
+			$files = array_merge( $severe, $high, $suspicious ); // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
+
+			$severe     = array();
+			$high       = array();
+			$suspicious = array();
+			foreach ( $definitions['definitions']['db'] as $definition => $signature ) { // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
+				if ( $signature['severity'] == 'severe' ) {
+					$severe[ $definition ] = $definitions['definitions']['db'][ $definition ];
+				}
+				if ( $signature['severity'] == 'high' ) {
+					$high[ $definition ] = $definitions['definitions']['db'][ $definition ];
+				}
+				if ( $signature['severity'] == 'suspicious' ) {
+					$suspicious[ $definition ] = $definitions['definitions']['db'][ $definition ];
+				}
+			}
+			$db = array_merge( $severe, $high, $suspicious );
+
+			$definitions['definitions']['files'] = $files; // array_filter because for some reason we have an empty element too
+			$definitions['definitions']['db']    = $db;
+
 			self::update_option_definitions( $definitions );
 			$time = date( 'U' );
 			self::update_setting( 'definitions_update_time', $time );
@@ -456,7 +527,7 @@ final class malCure_Utils {
 		}
 	}
 
-	function get_definition_version() {
+	static function get_definition_version() {
 		$definitions = self::get_option( 'definitions' );
 		if ( $definitions && ! empty( $definitions['v'] ) ) {
 			return $definitions['v'];
