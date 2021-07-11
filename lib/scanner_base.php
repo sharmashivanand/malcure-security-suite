@@ -1,6 +1,6 @@
 <?php
 // Extensible class that handles malware scan processing
-class malCure_Scanner {
+class MI_Scanner {
 
 	public $filemaxsize = 10800000;
 
@@ -27,7 +27,7 @@ class malCure_Scanner {
 	}
 
 	function get_files( $path = false ) {
-		return malCure_Utils::get_files();
+		return nsmi_utils::get_files();
 	}
 
 	/**
@@ -60,7 +60,7 @@ class malCure_Scanner {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;
 				}
-				$matches  = @preg_match( malCure_Utils::decode( $signature['signature'] ), $contents, $found );
+				$matches  = @preg_match( nsmi_utils::decode( $signature['signature'] ), $contents, $found );
 				$pcre_err = preg_last_error();
 				if ( $pcre_err != 0 ) {
 					continue;
@@ -69,7 +69,7 @@ class malCure_Scanner {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
 
 					}
-					malCure_Utils::flog("Infection $definition in $file");
+
 					return array(
 						'id'       => $definition,
 						'severity' => $signature['severity'],
@@ -78,12 +78,12 @@ class malCure_Scanner {
 				}
 			}
 
-			$checksums = malCure_Utils::get_option_checksums_generated();
+			$checksums = nsmi_utils::get_option_checksums_generated();
 			$md5       = @md5_file( $file );
 			if ( $md5 ) {
-				$checksums[ malCure_Utils::normalize_path( $file ) ] = $md5;
+				$checksums[ nsmi_utils::normalize_path( $file ) ] = $md5;
 			}
-			malCure_Utils::update_option_checksums_generated( $checksums );
+			nsmi_utils::update_option_checksums_generated( $checksums );
 			return array(
 				'id'       => '',
 				'severity' => '',
@@ -142,7 +142,7 @@ class malCure_Scanner {
 	 * @return void
 	 */
 	static function get_definitions_data() {
-		$defs = malCure_Utils::get_option_definitions();
+		$defs = nsmi_utils::get_option_definitions();
 		if ( ! empty( $defs['definitions'] ) ) {
 			return $defs['definitions'];
 		}

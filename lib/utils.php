@@ -6,13 +6,13 @@ require_once 'cli.php';
 /**
  * Common utility functions
  */
-final class malCure_Utils {
+final class nsmi_utils {
 
-	static $opt_name = 'MSS';
+	static $opt_name = 'NSMI';
 	static $cap      = 'activate_plugins';
 
 	function __construct() {
-		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
+		add_filter( 'nsmi_checksums', array( $this, 'generated_checksums' ) );
 	}
 
 	static function get_instance() {
@@ -25,7 +25,7 @@ final class malCure_Utils {
 	}
 
 	function init() {
-		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
+		add_filter( 'nsmi_checksums', array( $this, 'generated_checksums' ) );
 	}
 
 	/**
@@ -69,9 +69,9 @@ final class malCure_Utils {
 		$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
 		$date = $date . '-' . microtime( true );
 		if ( $file ) {
-			$file = MSS_DIR . $file;
+			$file = NSMI_DIR . $file;
 		} else {
-			$file = MSS_DIR . 'log.log';
+			$file = NSMI_DIR . 'log.log';
 		}
 		if ( $timestamp ) {
 			file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
@@ -132,7 +132,7 @@ final class malCure_Utils {
 		if ( ! function_exists( 'get_plugin_data' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
-		return get_plugin_data( MSS_FILE, false, false );
+		return get_plugin_data( NSMI_FILE, false, false );
 	}
 
 	/**
@@ -162,7 +162,7 @@ final class malCure_Utils {
 	 *
 	 * @return mixed data or wp_error
 	 */
-	static function do_mss_api_register( $user ) {
+	static function do_nsmi_api_register( $user ) {
 		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
 		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
 		if ( empty( $user['fn'] ) || empty( $user['ln'] ) || ! filter_var( $user['email'], FILTER_VALIDATE_EMAIL ) ) {
@@ -188,7 +188,7 @@ final class malCure_Utils {
 			add_query_arg(
 				'p',
 				'495',
-				add_query_arg( 'reg_details', $data, MSS_API_EP )
+				add_query_arg( 'reg_details', $data, NSMI_API_EP )
 			)
 		);
 		$response = wp_safe_remote_request(
@@ -247,7 +247,7 @@ final class malCure_Utils {
 		}
 		$args['state'] = self::encode( $state );
 
-		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+		return trailingslashit( NSMI_API_EP ) . '?' . urldecode( http_build_query( $args ) );
 	}
 
 	/**
@@ -332,11 +332,11 @@ final class malCure_Utils {
 			}
 			if ( $checksums ) {
 				self::update_option_checksums_core( $checksums );
-				return apply_filters( 'mss_checksums', $checksums );
+				return apply_filters( 'nsmi_checksums', $checksums );
 			}
-			return apply_filters( 'mss_checksums', array() );
+			return apply_filters( 'nsmi_checksums', array() );
 		} else {
-			return apply_filters( 'mss_checksums', $checksums );
+			return apply_filters( 'nsmi_checksums', $checksums );
 		}
 	}
 
@@ -347,7 +347,7 @@ final class malCure_Utils {
 		$plugin_checksums = array();
 		foreach ( $all_plugins as $key => $value ) {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
+				$plugin_file  = trailingslashit( dirname( NSMI_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
 				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
 				$checksum     = wp_safe_remote_get( $checksum_url );
@@ -413,7 +413,7 @@ final class malCure_Utils {
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
 			return array_merge( $generated, $checksums );
-			// malCure_Utils::flog($generated);
+
 		} else {
 		}
 		return $checksums;
@@ -440,7 +440,7 @@ final class malCure_Utils {
 		$plugin_checksums = array();
 		foreach ( $all_plugins as $key => $value ) {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
+				$plugin_file  = trailingslashit( dirname( NSMI_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
 				$checksum_url = self::get_api_url( 'wpmr_checksum' );
 				$checksum_url = add_query_arg(
@@ -608,14 +608,14 @@ final class malCure_Utils {
 	}
 
 	static function await_unlock() {
-		while ( self::get_option( 'MSS_lock' ) == 'true' ) {
+		while ( self::get_option( 'NSMI_lock' ) == 'true' ) {
 			usleep( rand( 2500, 7500 ) );
 		}
-		self::update_option( 'MSS_lock', 'true' );
+		self::update_option( 'NSMI_lock', 'true' );
 	}
 
 	static function do_unlock() {
-		self::update_option( 'MSS_lock', 'false' );
+		self::update_option( 'NSMI_lock', 'false' );
 	}
 
 	static function get_setting( $setting ) {
@@ -664,7 +664,7 @@ final class malCure_Utils {
 	static function do_maintenance() {
 		self::delete_setting( 'scan_id' );
 
-		self::delete_setting( 'mc_scan_progress' );
+		self::delete_setting( 'scan_progress' );
 
 		$lock       = self::get_setting( 'scan_id' );
 		$now        = time();
@@ -699,5 +699,5 @@ final class malCure_Utils {
 	}
 }
 
-// malCure_Utils::get_instance();
-$malCure_Utils = new malCure_Utils();
+// nsmi_utils::get_instance();
+$nsmi_utils = new nsmi_utils();

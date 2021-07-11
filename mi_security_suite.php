@@ -1,37 +1,37 @@
 <?php
 /**
- * malCure Security Suite
+ * MI Security Suite
  *
- * @package     malCure Security Suite
- * @author      malCure
- * @copyright   2020 malcure.com
+ * @package     MI Security Suite
+ * @author      Malware Intercept
+ * @copyright   2021 malwareintercept.com
  * @license     MIT
  *
  * @wordpress-plugin
- * Plugin Name: malCure Security Suite
- * Description: malCurity Security Suite helps you lock down and secure your WordPress site.
+ * Plugin Name: MI Security Suite
+ * Description: MI Security Suite helps you lock down and secure your WordPress site.
  * Version:     0.5
- * Author:      malCure
- * Author URI:  https://malcure.com
+ * Author:      malcure
+ * Author URI:  https://malwareintercept.com
  * Text Domain: malcure-security-suite
  * License:     MIT
  * License URI: https://opensource.org/licenses/MIT
- * Plugin URI:  https://malcure.com/
+ * Plugin URI:  https://malwareintercept.com
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-if ( ! defined( 'MSS_GOD' ) ) {
-	define( 'MSS_GOD', 'activate_plugins' );
+if ( ! defined( 'NSMI_GOD' ) ) {
+	define( 'NSMI_GOD', 'activate_plugins' );
 }
 
-define( 'MSS_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'MSS_FILE', __FILE__ );
-define( 'MSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'MSS_API_EP', 'https://wp-malware-removal.com/' );
+define( 'NSMI_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'NSMI_FILE', __FILE__ );
+define( 'NSMI_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'NSMI_API_EP', 'https://wp-malware-removal.com/' );
 
-final class malCure_security_suite {
+final class MI_security_suite {
 
 	public $dir;
 	public $url;
@@ -55,13 +55,13 @@ final class malCure_security_suite {
 
 		include_once $this->dir . 'lib/utils.php';
 		include_once $this->dir . 'classes/general_features.php';
-		if ( malCure_Utils::is_registered() ) {
+		if ( nsmi_utils::is_registered() ) {
 			include_once $this->dir . 'classes/integrity.php';
 			include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
 
-		add_filter( 'site_status_tests', array( $this, 'malcure_security_tests' ) );
+		add_filter( 'site_status_tests', array( $this, 'nsmi_security_tests' ) );
 
 		add_action( 'admin_init', array( $this, 'hook_meta_boxes' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
@@ -99,27 +99,27 @@ final class malCure_security_suite {
 
 	function settings_menu() {
 		$this->pagehook                            = add_menu_page(
-			'malCure Security Suite', // page_title
-			'malCure Security', // menu_title
-			MSS_GOD,   // capability
-			'_mss',  // menu_slug
+			'MI Security Suite', // page_title
+			'MI Security Suite', // menu_title
+			NSMI_GOD,   // capability
+			'_nsmi',  // menu_slug
 			array( $this, 'settings_page' ), // function
 			$this->url . 'assets/icon-dark-trans.svg', // icon_url
 			79
 		);
 		$GLOBALS[ get_class( $this ) ]['pagehook'] = $this->pagehook;
-		do_action( 'mss_settings_menu' );
+		do_action( 'nsmi_settings_menu' );
 	}
 
 	function settings_page() {
-		$title = 'Malcure Security Suite';
+		$title = 'MI Security Suite';
 
 		?>
 		<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<div class="container">
 			<?php
-			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
+			echo '<div id="nsmi_branding" class="nsmi_branding" >' . $this->render_branding() . '</div>';
 			?>
 			</div>
 			<div id="poststuff">
@@ -147,33 +147,33 @@ final class malCure_security_suite {
 	function settings_page_old() {
 		?>
 		<div class="wrap">
-		<h1>malCure Security Suite</h1>
+		<h1>MI Security Suite</h1>
 			<div class="container">
 			<?php
-			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-			if ( ! malCure_Utils::is_registered() ) {
+			echo '<div id="nsmi_branding" class="nsmi_branding" >' . $this->render_branding() . '</div>';
+			if ( ! nsmi_utils::is_registered() ) {
 				$current_user = wp_get_current_user();
 				?>
-				<h3>You have successfully installed malCure Security Suite</h3>
-				<p>Submit the following information to download free anti-virus definitions and malCure rules.</p>
+				<h3>You have successfully installed MI Security Suite</h3>
+				<p>Submit the following information to download free anti-virus definitions and Malcure rules.</p>
 				<p><label><strong>First Name:</strong><br />
-				<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
+				<input type="text" id="nsmi_user_fname" name="nsmi_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
 				<p><label><strong>Last Name:</strong><br />
-				<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
+				<input type="text" id="nsmi_user_lname" name="nsmi_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
 				<p><label><strong>Email:</strong><br />
-				<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
+				<input type="text" id="nsmi_user_email" name="nsmi_user_email" value="" /></label></p>
 				<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-				<a href="#" class="button-primary" id="mss_api_register_btn" role="button">Next&nbsp;&rarr;</a>
+				<a href="#" class="button-primary" id="nsmi_api_register_btn" role="button">Next&nbsp;&rarr;</a>
 				<script type="text/javascript">
 				jQuery(document).ready(function($){
-					$("#mss_api_register_btn").click(function(){
-						mss_api_register = {
-							mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
-							action: "mss_api_register",
+					$("#nsmi_api_register_btn").click(function(){
+						nsmi_api_register = {
+							nsmi_api_register_nonce: '<?php echo wp_create_nonce( 'nsmi_api_register' ); ?>',
+							action: "nsmi_api_register",
 							user: {
-								fn: $('#mss_user_fname').val(),
-								ln: $('#mss_user_lname').val(),
-								email: $('#mss_user_email').val(),
+								fn: $('#nsmi_user_fname').val(),
+								ln: $('#nsmi_user_lname').val(),
+								email: $('#nsmi_user_email').val(),
 							}
 
 						};
@@ -181,7 +181,7 @@ final class malCure_security_suite {
 						$.ajax({
 							url: ajaxurl,
 							method: 'POST',
-							data: mss_api_register,
+							data: nsmi_api_register,
 							success: function(response_data, textStatus, jqXHR) {
 								console.dir(response_data);
 								if ((typeof response_data) != 'object') { // is the server not sending us JSON?
@@ -202,14 +202,14 @@ final class malCure_security_suite {
 				</script>
 				<?php
 			} else {
-				submit_button( 'Init Scan', 'primary', 'mss_trigger_scan', true );
+				submit_button( 'Init Scan', 'primary', 'nsmi_trigger_scan', true );
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
-				$("#mss_trigger_scan").click(function(){
-					mss_trigger_scan = {
-						mss_trigger_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
-						action: "mss_trigger_scan",
+				$("#nsmi_trigger_scan").click(function(){
+					nsmi_trigger_scan = {
+						nsmi_trigger_scan_nonce: '<?php echo wp_create_nonce( 'nsmi_trigger_scan' ); ?>',
+						action: "nsmi_trigger_scan",
 						cachebust: Date.now(),
 						user: {
 							id: <?php echo get_current_user_id(); ?>
@@ -218,7 +218,7 @@ final class malCure_security_suite {
 					$.ajax({
 						url: ajaxurl,
 						method: 'POST',
-						data: mss_trigger_scan,
+						data: nsmi_trigger_scan,
 						complete: function(jqXHR, textStatus) {
 							console.dir(jqXHR);
 						},
@@ -227,7 +227,7 @@ final class malCure_security_suite {
 								response = JSON.parse( response );
 							}
 							if (response.hasOwnProperty('success')) {
-								$("#malcure_destroy_sessions").fadeTo("slow",1,);
+								$("#nsmi_destroy_sessions").fadeTo("slow",1,);
 								if(confirm('All users have been logged out (except you). Reload the page now?')) {
 									location.reload();
 								}
@@ -240,12 +240,12 @@ final class malCure_security_suite {
 			});
 			</script>
 				<?php
-				$mss_scanner = malCure_Malware_Scanner::get_instance();
+				$nsmi_scanner = MI_Malware_Scanner::get_instance();
 				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
 				<h2>System Status</h2>
-				<?php $this->mss_system_status(); ?>
+				<?php $this->nsmi_system_status(); ?>
 				<?php
 			}
 			?>
@@ -257,7 +257,7 @@ final class malCure_security_suite {
 	function admin_inline_style() {
 		?>
 		<style type="text/css">
-		#toplevel_page__mss .wp-menu-image img {
+		#toplevel_page__nsmi .wp-menu-image img {
 			width: 24px;
 			height: auto;
 			opacity: 1;
@@ -270,7 +270,7 @@ final class malCure_security_suite {
 
 	function plugin_res( $hook ) {
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
-		if ( preg_match( '/_mss$/', $hook ) ) {
+		if ( preg_match( '/_nsmi$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
 			wp_enqueue_script( 'jquery' );
 		}
@@ -278,28 +278,28 @@ final class malCure_security_suite {
 
 	function debug_menu() {
 		add_submenu_page(
-			'_mss',  // parent_slug
-			'malCure Debug', // page_title
-			'malCure Debug', // menu_title
-			MSS_GOD, // capability
-			'debug_mss',
-			array( $this, 'debug_mss_page' )
+			'_nsmi',  // parent_slug
+			'Malcure Debug', // page_title
+			'Malcure Debug', // menu_title
+			NSMI_GOD, // capability
+			'debug_nsmi',
+			array( $this, 'debug_nsmi_page' )
 		);
 	}
 
 	function render_branding() {
-		return '<img src="' . MSS_URL . 'assets/logo-light-trans.svg" />';
+		return '<img src="' . NSMI_URL . 'assets/logo-light-trans.svg" />';
 	}
 
 	function footer_scripts() {
 		$screen = get_current_screen();
 		if ( $screen->id == $this->pagehook ) {
-			do_action( 'mss_admin_scripts' );
+			do_action( 'nsmi_admin_scripts' );
 		}
 
 	}
 
-	function malcure_security_tests( $tests ) {
+	function nsmi_security_tests( $tests ) {
 		$tests['direct']['abspath_perm_test']     = array(
 			'label' => __( 'Permissions of WordPress installation directory' ),
 			'test'  => array( $this, 'abspath_perm_test_callback' ),
@@ -354,7 +354,7 @@ final class malCure_security_suite {
 			'label'       => __( 'No access for admin user account' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Admin user doesn\'t exist.' ) ),
@@ -383,7 +383,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for WordPress installation directory' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions for WordPress installation directory are set to 755' ) ),
@@ -415,7 +415,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for wp-admin' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-admin directory are set to 755' ) ),
@@ -447,7 +447,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for wp-content' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-includes directory are set to 755' ) ),
@@ -479,7 +479,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for wp-content' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-content directory are set to 775' ) ),
@@ -511,7 +511,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for themes directory' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on themes files are set to 664' ) ),
@@ -543,7 +543,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for plugin files' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on plugin files are set to 644' ) ),
@@ -586,7 +586,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for wp-config.php' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-config.php are set to 400 or 440' ) ),
@@ -620,7 +620,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for .htaccess' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on .htaccess are set to 664' ) ),
@@ -655,7 +655,7 @@ final class malCure_security_suite {
 			'label'       => __( 'Permissions for uploads directory' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'malCure Security Suite' ),
+				'label' => __( 'MI Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on uploads directory are set to 755' ) ),
@@ -878,8 +878,8 @@ final class malCure_security_suite {
 	}
 }
 
-function malCure_security_suite() {
-	return malCure_security_suite::get_instance();
+function MI_security_suite() {
+	return MI_security_suite::get_instance();
 }
 
-malCure_security_suite();
+MI_security_suite();

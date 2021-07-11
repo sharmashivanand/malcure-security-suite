@@ -1,4 +1,4 @@
-=== malCure Security Suite ===
+=== MI Security Suite ===
 Contributors: malcure
 Tags: security, anti-malware, hardening
 Requires at least: 3.7.4
@@ -8,11 +8,11 @@ Stable tag: 0.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
-malCurity Security Suite helps you lock down and secure your WordPress site.
+MI Security Suite helps you lock down and secure your WordPress site.
 
 == Description ==
 
-malCurity Security Suite helps you lock down and secure your WordPress site.
+MI Security Suite helps you lock down and secure your WordPress site.
 
 == Upgrade Notice ==
 
@@ -52,8 +52,8 @@ Upload the plugin to your blog. Activate it. Create a support thread in case of 
 
 == Frequently Asked Questions ==
 
-= Does malCure Security Suite protect my website? =
-malCure Security Suite is intended to help you harden and secure your WordPress install. You'll need to review and implement security best-practices with the help of plugin's output.
+= Does MI Security Suite protect my website? =
+MI Security Suite is intended to help you harden and secure your WordPress install. You'll need to review and implement security best-practices with the help of plugin's output.
 
 
 == Screenshots ==
