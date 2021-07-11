@@ -63,8 +63,8 @@ final class nsmi_gen_utils {
 		
 			$current_user = wp_get_current_user();
 			?>
-			<h3>Quick connection with the Malcure API</h3>
-			<p>A connection to the API endpoint is required for Malcure to protect your site.</p>
+			<h3>Quick connection with the Malware Intercept API</h3>
+			<p>A connection to the API endpoint is required for MI Security Suite to protect your site.</p>
 			<p><label><strong>First Name:</strong><br />
 			<input type="text" id="nsmi_user_fname" name="nsmi_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
 			<p><label><strong>Last Name:</strong><br />

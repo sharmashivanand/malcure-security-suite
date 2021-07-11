@@ -178,7 +178,7 @@ class MI_Integrity {
 
 	function meta_box_ad() {
 		?>
-		<div id="integrity_sb1_ad"><a href="https://malcure.com/?p=107&utm_source=mss-integgrity-sb-ad&utm_medium=web&utm_campaign=mss">WordPress Malware Removal Service</a></div>
+		<div id="integrity_sb1_ad"><a href="https://malwareintercept.com/?&utm_source=mss-integgrity-sb-ad&utm_medium=web&utm_campaign=mss">WordPress Malware Removal Service</a></div>
 		<?php
 	}
 

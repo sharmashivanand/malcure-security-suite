@@ -279,8 +279,8 @@ final class MI_security_suite {
 	function debug_menu() {
 		add_submenu_page(
 			'_nsmi',  // parent_slug
-			'Malcure Debug', // page_title
-			'Malcure Debug', // menu_title
+			'MI Debug', // page_title
+			'MI Debug', // menu_title
 			NSMI_GOD, // capability
 			'debug_nsmi',
 			array( $this, 'debug_nsmi_page' )
