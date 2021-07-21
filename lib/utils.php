@@ -662,9 +662,9 @@ final class nsmi_utils {
 	}
 
 	static function do_maintenance() {
-		self::delete_setting( 'scan_id' );
+		// self::delete_setting( 'scan_id' );
 
-		self::delete_setting( 'scan_progress' );
+		// self::delete_setting( 'scan_progress' );
 
 		$lock       = self::get_setting( 'scan_id' );
 		$now        = time();
