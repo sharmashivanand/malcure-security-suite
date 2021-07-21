@@ -188,25 +188,25 @@ class MI_Integrity {
 
 	function get_checksums( $cached = true ) {
 		return nsmi_utils::fetch_checksums();
-		$checksums = $cached ? get_transient( 'nsmi_repo_checksums' ) : false;
-		if ( ! $checksums ) {
-			global $wp_version;
-			$checksums = get_core_checksums( $wp_version, get_locale() );
-			if ( ! $checksums ) { // get_core_checksums failed
-				$checksums = array();
-			}
-			$plugin_checksums = $this->get_plugin_checksums();
-			if ( $plugin_checksums ) {
-				$checksums = array_merge( $checksums, $plugin_checksums );
-			}
-			if ( $checksums ) {
-				set_transient( 'nsmi_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
-				return $checksums;
-			}
-			return array();
-		} else {
-			return $checksums;
-		}
+		// $checksums = $cached ? get_transient( 'nsmi_repo_checksums' ) : false;
+		// if ( ! $checksums ) {
+		// 	global $wp_version;
+		// 	$checksums = get_core_checksums( $wp_version, get_locale() );
+		// 	if ( ! $checksums ) { // get_core_checksums failed
+		// 		$checksums = array();
+		// 	}
+		// 	$plugin_checksums = $this->get_plugin_checksums();
+		// 	if ( $plugin_checksums ) {
+		// 		$checksums = array_merge( $checksums, $plugin_checksums );
+		// 	}
+		// 	if ( $checksums ) {
+		// 		set_transient( 'nsmi_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
+		// 		return $checksums;
+		// 	}
+		// 	return array();
+		// } else {
+		// 	return $checksums;
+		// }
 	}
 
 	function get_plugin_checksums() {

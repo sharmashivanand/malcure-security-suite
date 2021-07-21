@@ -54,12 +54,26 @@ final class nsmi_utils {
 	 * @return void
 	 */
 	static function elog( $how_when_where, $msg, $return = false ) {
-		self::append_err( $how_when_where, $msg );
+		self::append_log( $how_when_where, $msg );
 		if ( $return ) {
 			return '<pre>' . print_r( $str, 1 ) . '</pre>';
 		} else {
 			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
 		}
+	}
+
+	static function append_log( $how_when_where, $msg = '' ) {
+		$errors = self::get_setting( 'log' );
+		if ( ! $errors ) {
+			$errors = array();
+		}
+		$errors[ time() ] = array(
+			'how' => $how_when_where,
+			'msg' => $msg,
+		);
+		asort( $errors );
+		$errors = array_slice( $errors, 0, 100 ); // limit errors to recent 100
+		return self::update_setting( 'log', $errors );
 	}
 
 	/**
@@ -645,20 +659,6 @@ final class nsmi_utils {
 		unset( $settings[ $setting ] );
 		update_option( self::$opt_name, $settings );
 
-	}
-
-	static function append_err( $how_when_where, $msg = '' ) {
-		$errors = self::get_setting( 'errors' );
-		if ( ! $errors ) {
-			$errors = array();
-		}
-		$errors[ time() ] = array(
-			'how' => $how_when_where,
-			'msg' => $msg,
-		);
-		asort( $errors );
-		$errors = array_slice( $errors, 0, 100 ); // limit errors to recent 100
-		return update_setting( 'errors', $errors );
 	}
 
 	static function do_maintenance() {
