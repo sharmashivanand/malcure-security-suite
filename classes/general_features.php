@@ -1,5 +1,4 @@
 <?php
-
 final class nsmi_gen_utils {
 	private function __construct(){}
 	static function get_instance() {
@@ -10,18 +9,15 @@ final class nsmi_gen_utils {
 		}
 		return $instance;
 	}
-
 	function init() {
 		add_action( 'MI_security_suite_plugin_res', array( $this, 'resources' ) );
 		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'nsmi_admin_scripts', array( $this, 'footer_scripts' ) );
-
-		add_action( 'wp_ajax_nsmi_api_register', array( $this, 'nsmi_api_register_handler' ) );
+		add_action( 'wp_ajax_nsmi_api_register', array( $this, 'api_register_handler' ) );
 		add_action( 'wp_ajax_nopriv_nsmi_api_register', '__return_false' );
 		add_action( 'wp_ajax_nsmi_destroy_sessions', array( $this, 'destroy_sessions' ) );
 		add_action( 'wp_ajax_nopriv_nsmi_api_register', '__return_false' );
 	}
-
 	function footer_scripts() {
 		?>
 		<script type="text/javascript">
@@ -30,37 +26,30 @@ final class nsmi_gen_utils {
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			$('.postbox').each(function() {
 				$(this).addClass('closed');
-				
 			});
-
 			$('#nsmi_connection_ui').removeClass('closed');
-
 			$('#nsmi_connection_ui').keypress(function (e) {
 				var key = e.which;
 				if(key == 13)  // the enter key code
 				{
 				$('#nsmi_api_register_btn').click();
-				return false;  
+				return false;
 				}
-			}); 
-			
+			});
 		});
 		</script>
 		<?php
 	}
-
 	function add_meta_boxes() {
 		if ( nsmi_utils::is_registered() ) {
 			add_meta_box( 'nsmi_connection_details', 'Connection Details', array( $this, 'registration_details' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
-			add_meta_box( 'nsmi_site_status', 'Site Status', array( $this, 'nsmi_system_status' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
+			add_meta_box( 'nsmi_site_status', 'Site Status', array( $this, 'system_status' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 			add_meta_box( 'nsmi_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		} else {
 			add_meta_box( 'nsmi_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		}
 	}
-
 	function connection_ui() {
-		
 			$current_user = wp_get_current_user();
 			?>
 			<h3>Quick connection with the Malware Intercept API</h3>
@@ -72,7 +61,7 @@ final class nsmi_gen_utils {
 			<p><label><strong>Email:</strong><br />
 			<input type="text" id="nsmi_user_email" name="nsmi_user_email" value="" /></label></p>
 			<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-			<a href="#" class="button-primary" id="nsmi_api_register_btn" role="button">Complete Setup&nbsp;&rarr;</a>
+			<a href="#" class="nsmi_action" id="nsmi_api_register_btn" role="button">Complete Setup&nbsp;&rarr;</a>
 			<script type="text/javascript">
 			jQuery(document).ready(function($){
 				$("#nsmi_api_register_btn").click(function(){
@@ -92,7 +81,6 @@ final class nsmi_gen_utils {
 						success: function(response_data, textStatus, jqXHR) {
 							console.dir(response_data);
 							if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-
 							}
 							if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
 								location.reload();
@@ -108,11 +96,8 @@ final class nsmi_gen_utils {
 			});
 			</script>
 			<?php
-		
 	}
-
 	function registration_details() {
-		
 		$user = nsmi_utils::is_registered();
 		//var_dump(nsmi_utils::$opt_name);
 		//$user = $user['api-credentials'];
@@ -123,13 +108,11 @@ final class nsmi_gen_utils {
 		<tr><th>API Connector ID</th><td><?php echo $user['ID']; ?></td></tr>
 		</table>
 		<?php
-	
 	}
-
-	function nsmi_system_status() {
+	function system_status() {
 		global $wpdb;
 		?>
-		<table id="nsmi_system_status">
+		<table id="system_status">
 		<tr>
 			<th>Website URL</th>
 			<td><?php echo get_bloginfo( 'url' ); ?></td>
@@ -168,7 +151,7 @@ final class nsmi_gen_utils {
 			<?php
 			global $wp_roles;
 			foreach ( $wp_roles->roles as $role => $capabilities ) {
-				echo '<span class="wpmr_bricks">' . $role . '</span>';}
+				echo '<span class="nsmi_bricks">' . $role . '</span>';}
 			?>
 			</td>
 		</tr>
@@ -178,7 +161,7 @@ final class nsmi_gen_utils {
 			<?php
 			$mu = get_mu_plugins();
 			foreach ( $mu as $key => $value ) {
-				echo '<span class="wpmr_bricks">' . $key . '</span>';}
+				echo '<span class="nsmi_bricks">' . $key . '</span>';}
 			?>
 			</td>
 		</tr>
@@ -188,7 +171,7 @@ final class nsmi_gen_utils {
 			<?php
 			$dropins = get_dropins();
 			foreach ( $dropins as $key => $value ) {
-				echo '<span class="wpmr_bricks">' . $key . '</span>';}
+				echo '<span class="nsmi_bricks">' . $key . '</span>';}
 			?>
 			</td>
 		</tr>
@@ -219,7 +202,6 @@ final class nsmi_gen_utils {
 			<?php echo $allfilescount['total_files']; ?>
 			</td>
 		</tr>
-		
 		<tr><th>File Count (Recursive)</th><td>
 		<?php
 		$dirs = glob( trailingslashit( get_home_path() ) . '*', GLOB_ONLYDIR );
@@ -259,7 +241,6 @@ final class nsmi_gen_utils {
 		</table>
 		<?php
 	}
-
 	function session_management() {
 		?>
 		<h3>Logged-In Users</h3>
@@ -289,7 +270,7 @@ final class nsmi_gen_utils {
 			}
 			?>
 		<?php
-			submit_button( 'Logout All Users', 'primary', 'nsmi_destroy_sessions' );
+			echo '<input class="nsmi_action" value="Logout All Users" id="nsmi_destroy_sessions" type="submit" />';
 		?>
 			<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -327,7 +308,6 @@ final class nsmi_gen_utils {
 			</script>
 			<?php
 	}
-
 	function destroy_sessions() {
 		check_ajax_referer( 'nsmi_destroy_sessions', 'nsmi_destroy_sessions_nonce' );
 		$users = $this->get_users_loggedin();
@@ -340,7 +320,6 @@ final class nsmi_gen_utils {
 		}
 		wp_send_json_success();
 	}
-
 	function get_users_loggedin() {
 		return get_users(
 			array(
@@ -349,17 +328,14 @@ final class nsmi_gen_utils {
 			)
 		);
 	}
-
 	function resources() {
-
 	}
-
 	/**
 	 * Trigger User registration Server-Side / Ajax
 	 *
 	 * @return void
 	 */
-	function nsmi_api_register_handler() {
+	function api_register_handler() {
 		check_ajax_referer( 'nsmi_api_register', 'nsmi_api_register_nonce' );
 		$user       = $_REQUEST['user'];
 		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
@@ -381,9 +357,7 @@ final class nsmi_gen_utils {
 		wp_send_json_success( nsmi_utils::encode( nsmi_utils::get_plugin_data() ) );
 	}
 }
-
 function nsmi_gen_utils() {
 	return nsmi_gen_utils::get_instance();
 }
-
 nsmi_gen_utils();

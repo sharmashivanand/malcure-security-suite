@@ -1,16 +1,12 @@
 <?php
-
 require_once 'scanner_base.php';
 require_once 'cli.php';
-
 /**
  * Common utility functions
  */
 final class nsmi_utils {
-
 	static $opt_name = 'NSMI';
 	static $cap      = 'activate_plugins';
-
 	function __construct() {
 		add_filter( 'nsmi_checksums', array( $this, 'generated_checksums' ) );
 	}
@@ -61,7 +57,7 @@ final class nsmi_utils {
 			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
 		}
 	}
-
+	
 	static function append_log( $how_when_where, $msg = '' ) {
 		$errors = self::get_setting( 'log' );
 		if ( ! $errors ) {
@@ -90,43 +86,34 @@ final class nsmi_utils {
 		if ( $timestamp ) {
 			file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
 		}
-
 		$str = print_r( $str, true );
 		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
 	}
 
 	static function num_cpus() {
 		$numCpus = false;
-
 		if ( is_file( '/proc/cpuinfo' ) ) {
 			$cpuinfo = file_get_contents( '/proc/cpuinfo' );
 			preg_match_all( '/^processor/m', $cpuinfo, $matches );
-
 			$numCpus = count( $matches[0] );
 		} elseif ( 'WIN' == strtoupper( substr( PHP_OS, 0, 3 ) ) ) {
 			$process = @popen( 'wmic cpu get NumberOfCores', 'rb' );
-
 			if ( false !== $process ) {
 				fgets( $process );
 				$numCpus = intval( fgets( $process ) );
-
 				pclose( $process );
 			}
 		} else {
 			$process = @popen( 'sysctl -a', 'rb' );
-
 			if ( false !== $process ) {
 				$output = stream_get_contents( $process );
-
 				preg_match( '/hw.ncpu: (\d+)/', $output, $matches );
 				if ( $matches ) {
 					  $numCpus = intval( $matches[1][0] );
 				}
-
 				pclose( $process );
 			}
 		}
-
 		return $numCpus;
 	}
 
@@ -232,7 +219,6 @@ final class nsmi_utils {
 		return new WP_Error( 'broke', 'Uncaught error in ' . __FUNCTION__ . '.' );
 	}
 
-
 	/**
 	 * Returns full URL to API Endpoint for the requested action
 	 */
@@ -260,7 +246,6 @@ final class nsmi_utils {
 			$state['lic'] = $lic;
 		}
 		$args['state'] = self::encode( $state );
-
 		return trailingslashit( NSMI_API_EP ) . '?' . urldecode( http_build_query( $args ) );
 	}
 
@@ -318,14 +303,13 @@ final class nsmi_utils {
 			return $version;
 		}
 	}
-
+	
 	/**
 	 * Gets WordPress Core and plugin checksums
 	 *
 	 * @return array
 	 */
 	static function fetch_checksums() {
-
 		$checksums = self::get_option_checksums_core();
 		if ( ! $checksums ) {
 			global $wp_version;
@@ -403,7 +387,6 @@ final class nsmi_utils {
 			$theme_file   = trailingslashit( $theme_root ) . $key;
 			$theme_file   = str_replace( $install_path, '', $theme_file );
 			$checksum_url = self::get_api_url( 'wpmr_checksum' ) . '&slug=' . $key . '&version=' . $value['Version'] . '&type=theme';
-			
 			$checksum     = wp_safe_remote_get( $checksum_url );
 			if ( is_wp_error( $checksum ) ) {
 				continue;
@@ -427,7 +410,6 @@ final class nsmi_utils {
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
 			return array_merge( $generated, $checksums );
-
 		} else {
 		}
 		return $checksums;
@@ -491,14 +473,12 @@ final class nsmi_utils {
 	 */
 	static function update_definitions() {
 		$definitions = self::fetch_definitions();
-
 		if ( is_wp_error( $definitions ) ) {
 			return $definitions;
 		} else {
 			if ( $definitions['v'] != self::get_definition_version() ) {
 				self::delete_option( 'checksums_generated' );
 			}
-
 			$severe     = array();
 			$high       = array();
 			$suspicious = array();
@@ -514,7 +494,6 @@ final class nsmi_utils {
 				}
 			}
 			$files = array_merge( $severe, $high, $suspicious ); // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
-
 			$severe     = array();
 			$high       = array();
 			$suspicious = array();
@@ -530,10 +509,8 @@ final class nsmi_utils {
 				}
 			}
 			$db = array_merge( $severe, $high, $suspicious );
-
 			$definitions['definitions']['files'] = $files; // array_filter because for some reason we have an empty element too
 			$definitions['definitions']['db']    = $db;
-
 			self::update_option_definitions( $definitions );
 			$time = date( 'U' );
 			self::update_setting( 'definitions_update_time', $time );
@@ -554,7 +531,6 @@ final class nsmi_utils {
 	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
-		
 		$response    = wp_safe_remote_request( self::get_api_url( 'update-definitions' ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
@@ -578,7 +554,6 @@ final class nsmi_utils {
 		}
 	}
 
-
 	static function update_option_checksums_core( $checksums ) {
 		return self::update_option( 'checksums_core', $checksums );
 	}
@@ -590,8 +565,7 @@ final class nsmi_utils {
 	static function update_option_definitions( $definitions ) {
 		return self::update_option( 'definitions', $definitions );
 	}
-
-
+	
 	static function get_option_checksums_core() {
 		return self::get_option( 'checksums_core' );
 	}
@@ -607,7 +581,6 @@ final class nsmi_utils {
 	static function get_option_definitions() {
 		return self::get_option( 'definitions' );
 	}
-
 
 	static function delete_option_checksums_core() {
 		return self::delete_option( 'checksums_core' );
@@ -633,46 +606,40 @@ final class nsmi_utils {
 	}
 
 	static function get_setting( $setting ) {
-
 		$settings = get_option( self::$opt_name );
-
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
 	}
 
 	static function update_setting( $setting, $value ) {
-
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		$settings[ $setting ] = $value;
 		update_option( self::$opt_name, $settings );
-
 	}
 
 	static function delete_setting( $setting ) {
-
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
 		unset( $settings[ $setting ] );
 		update_option( self::$opt_name, $settings );
-
 	}
 
 	static function do_maintenance() {
-		// self::delete_setting( 'scan_id' );
+		self::delete_setting( 'scan_id' );
+		
+		return;
 
-		// self::delete_setting( 'scan_progress' );
-
+		// self::delete_setting( 'scan_status' );
 		$lock       = self::get_setting( 'scan_id' );
 		$now        = time();
 		$difference = ( $now - $lock );
 		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;if ( $is_expired ) {
 			self::delete_setting( 'scan_id' );
 		}
-
 		$scans = self::get_option( 'scans' );
 		if ( empty( $scans ) ) { // when no scans have been run till date
 			$scans = array();
@@ -683,7 +650,6 @@ final class nsmi_utils {
 			$scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
 		}
 		self::update_option( 'scans', $scans );
-
 	}
 
 	static function get_option( $option ) {
@@ -698,6 +664,5 @@ final class nsmi_utils {
 		return delete_option( self::$opt_name . '_' . $option );
 	}
 }
-
 // nsmi_utils::get_instance();
 $nsmi_utils = new nsmi_utils();

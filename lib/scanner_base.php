@@ -1,9 +1,7 @@
 <?php
 // Extensible class that handles malware scan processing
 class MI_Scanner {
-
-	public $filemaxsize = 10800000;
-
+	public $filemaxsize = 1111111;
 	/**
 	 * Initialize with api credentials. First / Last name, email are must
 	 *
@@ -12,7 +10,6 @@ class MI_Scanner {
 	function __construct( $arrCreds = false ) {
 		$this->set_api( $arrCreds ); // do we need this?
 	}
-
 	/**
 	 * Set up credentials for use later
 	 *
@@ -25,11 +22,9 @@ class MI_Scanner {
 		}
 		$this->creds = $creds;
 	}
-
 	function get_files( $path = false ) {
 		return nsmi_utils::get_files();
 	}
-
 	/**
 	 * Returns status of a scanned file
 	 *
@@ -39,10 +34,11 @@ class MI_Scanner {
 	 *      'severity' => clean || unknown || mismatch || suspicious || infected    // This can be used to identify the severity of the infection
 	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
 	 */
-	function scan_file( $file ) { 
+	function scan_file( $file ) {
+		// nsmi_utils::flog( 'backtrack_limit ' . ini_get( 'pcre.backtrack_limit' ) );
 
+		$ext = self::get_file_extension( $file );
 
-		$ext = self::get_file_extension( $file );		
 		if ( self::is_valid_file( $file ) ) {
 			$status = array(
 				'severity' => '',
@@ -52,10 +48,11 @@ class MI_Scanner {
 			}
 			$contents = @file_get_contents( $file );
 			if ( empty( $contents ) ) {
-
 				return;
 			}
+			// $s = microtime(1);
 			$definitions = self::get_malware_file_definitions();
+			// nsmi_utils::flog('get_malware_file_definitions took ' . (microtime(1) - $s) . 'sec');
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;
@@ -67,9 +64,7 @@ class MI_Scanner {
 				}
 				if ( $matches >= 1 ) {
 					if ( in_array( $signature['severity'], array( 'severe', 'high' ) ) ) {
-
 					}
-
 					return array(
 						'id'       => $definition,
 						'severity' => $signature['severity'],
@@ -77,7 +72,6 @@ class MI_Scanner {
 					);
 				}
 			}
-
 			$checksums = nsmi_utils::get_option_checksums_generated();
 			$md5       = @md5_file( $file );
 			if ( $md5 ) {
@@ -89,12 +83,10 @@ class MI_Scanner {
 				'severity' => '',
 				'info'     => '',
 			);
-		} else {		
+		} else {
 		}
 	}
-
 	function is_valid_file( $file ) {
-
 		if ( file_exists( $file ) && // Check if file or dir exists
 			is_file( $file ) && // Check if is actually a file
 			filesize( $file ) && // check if the file is not empty
@@ -109,7 +101,6 @@ class MI_Scanner {
 		$nameparts = explode( '.', ".$filename" );
 		return strtolower( $nameparts[ ( count( $nameparts ) - 1 ) ] );
 	}
-
 	/**
 	 * Checks if a file is inside WP core directories ( inside wp-admin or wp-includes)
 	 *
@@ -122,20 +113,16 @@ class MI_Scanner {
 		}
 		return true;
 	}
-
 	function scan_contents( $arrContents ) {
 	}
-
 	function scan_content( $content ) {
 	}
-
 	function get_all_definitions() {
 		$definitions = self::get_definitions_data();
 		if ( $definitions ) {
 			return $definitions;
 		}
 	}
-
 	/**
 	 * Gets all definitions excluding version
 	 *
@@ -147,14 +134,12 @@ class MI_Scanner {
 			return $defs['definitions'];
 		}
 	}
-
 	static function get_definition_version() {
 		$defs = self::get_all_definitions();
 		if ( ! empty( $defs['v'] ) ) {
 			return $defs['v'];
 		}
 	}
-
 	/**
 	 * Gets malware definitions for files only
 	 */
@@ -163,9 +148,7 @@ class MI_Scanner {
 		if ( ! empty( $defs['files'] ) ) {
 			return $defs['files'];
 		}
-
 	}
-
 	/**
 	 * Gets malware definitions for database only
 	 *
@@ -177,7 +160,6 @@ class MI_Scanner {
 			return $defs['db'];
 		}
 	}
-
 	/**
 	 * For future, match malware in user content like post content, urls etc.?
 	 *
@@ -185,7 +167,6 @@ class MI_Scanner {
 	 */
 	static function get_malware_content_definitions() {
 	}
-
 	/**
 	 * Get firewall rules
 	 *
@@ -193,5 +174,4 @@ class MI_Scanner {
 	 */
 	static function get_firewall_definitions() {
 	}
-
 }

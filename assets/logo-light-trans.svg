@@ -11,36 +11,29 @@
                 --m-blue-dark: hsla(190, 100%, 40%, 1);
                 --dark-trans: hsla(0, 0%, 0%, .5);
             }
-
             .logo-bg, .emblem-bg-grad {
                 fill: url(#bg-gradient);
                 _fill: hsl(224, 13%, 17%);
                 _fill: transparent;
             }
-
             .circle, .tagline {
                 fill: #fff;
             }
-
             .tagline {
                 _transform: translate(0px, 5px);
             }
-
             .hidden-dot {
                 fill: none;
             }
-
             .brandname {
                 fill: url(#brand-gradient);
                 fill: url(#brand-gradient2);
                 fill: url(#brand-gradient);
                 _fill: var(--m-red);
             }
-
             .brandname-bg {
                 fill: transparent;
             }
-
             #outer-bricks-wrap, #dial-middle-wrap, #_dial-inner-wrap {
                 animation: mspin 120s infinite alternate ease;
                 transform-origin: center;
@@ -49,7 +42,6 @@
                 transform-style: unset;
                 transform-box: fill-box;
             }
-
             #dial-outer-wrap, #_dial-middle-wrap, #dial-inner-wrap {
                 animation: mspin 120s infinite alternate-reverse linear;
                 transform-origin: center;
@@ -58,27 +50,21 @@
                 transform-style: unset;
                 transform-box: fill-box;
             }
-
             #dial-inner-wrap, #dial-middle-wrap {
                 transform-origin: 50%;
             }
-
             #dial-inner-wrap {
                 animation: mspin 2s infinite linear;
             }
-
             .vertical-bricks {
                 fill: var(--m-blue);
             }
-
             .horizontal-bricks {
                 fill: var(--m-blue);
             }
-
             .dial-outer {
                 fill: var(--m-blue);
             }
-
             .dial-middle {
                 _stroke: transparent;
                 _stroke-width: 0.5px;
@@ -88,40 +74,33 @@
                 _fill: transparent;
                 fill: var(--m-blue);
             }
-
             .dial-middle-open {
                 stroke: var(--m-blue);
                 stroke-width: 0.33;
                 filter: url(#subtleGlow);
                 fill: transparent;
             }
-
             .dial-inner {
                 stroke: var(--m-blue);
                 stroke-width: 0.5px;
                 fill: var(--dark-trans);
             }
-
             .circle {
                 filter: url(#strongGlow);
                 fill: white;
                 stroke: var(--m-blue-highlight);
             }
-
             .checkmark {
                 fill: var(--m-blue-dark);
                 stroke: var(--m-blue-dark);
                 ;
             }
-
             .vertical-bricks, .circle, .checkmark {
                 stroke-miterlimit: 10;
             }
-
             .vertical-bricks, .checkmark {
                 stroke-width: 0.5px;
             }
-
             @keyframes mspin {
                 0% {
                     transform: rotate(0deg);
@@ -130,9 +109,7 @@
                     transform: rotate(360deg);
                 }
             }
-
             .shield-wrap {}
-
             .shield {
                 _stroke: url(#shield-stroke-rad);
                 _stroke: var(--m-blue);
@@ -144,54 +121,41 @@
                 _fill: hsl(225, 5%, 40%);
                 _fill: transparent;
             }
-
             #circle-check, #techno {
                 _opacity: 0;
             }
-
             /**** WHITE VERSION ****/
-
             .light .logo-bg, .light .emblem-bg-grad {
                 fill: transparent;
             }
-
             .light .logo-bg {
                 fill: white;
             }
-
             .light .brandname {
                 fill: var(--m-red);
                 fill: url(#brand-gradient-w);
             }
-
             .light .tagline {
                 fill: hsl(216, 37%, 16%);
             }
-
             .light .shield {
                 fill: hsl(210, 25%, 75%);
                 fill: hsl(210, 33%, 33%);
             }
-
             .light .dial-middle-open {
                 filter: none;
             }
-
             .light .dial-inner {
                 fill: transparent;
             }
-
             .light .circle {
                 filter: none;
             }
-
         </style>
-
         <radialGradient id="bg-gradient" r=".5">
             <stop offset="0" stop-color="hsl(215, 50%, 20%)"/>
             <stop offset="1" stop-color="hsl(215, 35%, 15%)"/>
         </radialGradient>
-
         <!-- subtleGlow: Tiny subtle soft glow -->
         <filter id="subtleGlow" height="200%" width="200%" x="-50%" y="-50%">
             <!-- Thicken out the original shape -->
@@ -208,7 +172,6 @@
                 <feMergeNode in="SourceGraphic"/>
             </feMerge>
         </filter>
-
         <!-- strongGlow: Strongest large soft glow -->
         <filter id="strongGlow" height="200%" width="200%" x="-50%" y="-50%">
             <!-- radius: controls the size. Thicken out the original shape -->
@@ -217,7 +180,6 @@
             <feGaussianBlur in="thicken" stdDeviation="4" result="blurred1"/>
             <!-- Change the colour <animate attributeName="flood-color" from="hsla(190, 100%, 45%,1)" to="transparent" dur="4s" repeatCount="indefinite"/> -->
             <feFlood flood-color="hsla(190, 100%, 45%,1)" id="flood" result="glowColor1">
-
             </feFlood>
             <!-- Color in the glows -->
             <feComposite in="glowColor1" in2="blurred1" operator="in" result="softGlow_colored1"/>
@@ -227,7 +189,6 @@
                 <feMergeNode in="SourceGraphic"/>
             </feMerge>
         </filter>
-
         <linearGradient id="brand-gradient" gradientTransform="rotate(90)">
             <stop offset="0%" stop-color="hsla(350, 100%, 45%,1)"/>
             <stop offset="7%" stop-color="hsla(350, 100%, 45%,1)"/>
@@ -235,7 +196,6 @@
             <stop offset="15%" stop-color="hsla(350, 65%, 45%,1)"/>
             <stop offset="100%" stop-color="hsla(350, 65%, 45%,1)"/>
         </linearGradient>
-
         <linearGradient id="brand-gradient-w" gradientTransform="rotate(90)">
             <stop offset="0%" stop-color="hsla(350, 100%, 45%,1)"/>
             <stop offset="7%" stop-color="hsla(350, 100%, 45%,1)"/>

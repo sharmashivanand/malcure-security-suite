@@ -18,24 +18,20 @@
  * License URI: https://opensource.org/licenses/MIT
  * Plugin URI:  https://malwareintercept.com
  */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( ! defined( 'NSMI_GOD' ) ) {
 	define( 'NSMI_GOD', 'activate_plugins' );
 }
-
 define( 'NSMI_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'NSMI_FILE', __FILE__ );
 define( 'NSMI_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'NSMI_API_EP', 'https://wp-malware-removal.com/' );
-
+define( 'NSMI_ID', 134 );
 final class MI_security_suite {
-
 	public $dir;
 	public $url;
-
 	static function get_instance() {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
@@ -44,15 +40,12 @@ final class MI_security_suite {
 		}
 		return $instance;
 	}
-
 	private function __construct() {
 	}
-
 	function init() {
 		$GLOBALS[ get_class( $this ) ] = array();
 		$this->dir                     = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url                     = trailingslashit( plugin_dir_url( __FILE__ ) );
-
 		include_once $this->dir . 'lib/utils.php';
 		include_once $this->dir . 'classes/general_features.php';
 		if ( nsmi_utils::is_registered() ) {
@@ -60,43 +53,32 @@ final class MI_security_suite {
 			include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
-
-		add_filter( 'site_status_tests', array( $this, 'nsmi_security_tests' ) );
-
+		add_filter( 'site_status_tests', array( $this, 'security_tests' ) );
 		add_action( 'admin_init', array( $this, 'hook_meta_boxes' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
-
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
-
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
-
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
-		
 	}
-
 	function hook_meta_boxes() {
 		if ( ! empty( $this->pagehook ) ) {
 			add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
 			add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
 		}
 	}
-
 	function add_admin_scripts() {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
 	}
-
 	function add_meta_boxes() {
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 	}
-
 	function do_meta_box_callback() {
 		echo 'do something here';
 	}
-
 	function settings_menu() {
 		$this->pagehook                            = add_menu_page(
 			'MI Security Suite', // page_title
@@ -110,10 +92,8 @@ final class MI_security_suite {
 		$GLOBALS[ get_class( $this ) ]['pagehook'] = $this->pagehook;
 		do_action( 'nsmi_settings_menu' );
 	}
-
 	function settings_page() {
 		$title = 'MI Security Suite';
-
 		?>
 		<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
@@ -134,16 +114,13 @@ final class MI_security_suite {
 			</div>
 		</div>
 		<script type="text/javascript">
-
 		jQuery(document).ready(function($) {
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
 		});
-
 		</script>
 		<?php
 	}
-
 	function settings_page_old() {
 		?>
 		<div class="wrap">
@@ -163,7 +140,7 @@ final class MI_security_suite {
 				<p><label><strong>Email:</strong><br />
 				<input type="text" id="nsmi_user_email" name="nsmi_user_email" value="" /></label></p>
 				<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-				<a href="#" class="button-primary" id="nsmi_api_register_btn" role="button">Next&nbsp;&rarr;</a>
+				<a href="#" class="nsmi_action" id="nsmi_api_register_btn" role="button">Next&nbsp;&rarr;</a>
 				<script type="text/javascript">
 				jQuery(document).ready(function($){
 					$("#nsmi_api_register_btn").click(function(){
@@ -175,9 +152,7 @@ final class MI_security_suite {
 								ln: $('#nsmi_user_lname').val(),
 								email: $('#nsmi_user_email').val(),
 							}
-
 						};
-
 						$.ajax({
 							url: ajaxurl,
 							method: 'POST',
@@ -185,7 +160,6 @@ final class MI_security_suite {
 							success: function(response_data, textStatus, jqXHR) {
 								console.dir(response_data);
 								if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-
 								}
 								if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
 									location.reload();
@@ -202,7 +176,7 @@ final class MI_security_suite {
 				</script>
 				<?php
 			} else {
-				submit_button( 'Init Scan', 'primary', 'nsmi_trigger_scan', true );
+				echo '<input class="nsmi_action" value="Init Scan" id="nsmi_trigger_scan" type="submit" />';
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -214,7 +188,7 @@ final class MI_security_suite {
 						user: {
 							id: <?php echo get_current_user_id(); ?>
 						}
-					};					
+					};
 					$.ajax({
 						url: ajaxurl,
 						method: 'POST',
@@ -245,7 +219,7 @@ final class MI_security_suite {
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
 				<h2>System Status</h2>
-				<?php $this->nsmi_system_status(); ?>
+				<?php $this->system_status(); ?>
 				<?php
 			}
 			?>
@@ -253,7 +227,6 @@ final class MI_security_suite {
 		</div> <!-- / .wrap -->
 		<?php
 	}
-
 	function admin_inline_style() {
 		?>
 		<style type="text/css">
@@ -267,7 +240,6 @@ final class MI_security_suite {
 		</style>
 		<?php
 	}
-
 	function plugin_res( $hook ) {
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 		if ( preg_match( '/_nsmi$/', $hook ) ) {
@@ -275,7 +247,6 @@ final class MI_security_suite {
 			wp_enqueue_script( 'jquery' );
 		}
 	}
-
 	function debug_menu() {
 		add_submenu_page(
 			'_nsmi',  // parent_slug
@@ -286,20 +257,16 @@ final class MI_security_suite {
 			array( $this, 'debug_nsmi_page' )
 		);
 	}
-
 	function render_branding() {
 		return '<img src="' . NSMI_URL . 'assets/logo-light-trans.svg" />';
 	}
-
 	function footer_scripts() {
 		$screen = get_current_screen();
 		if ( $screen->id == $this->pagehook ) {
 			do_action( 'nsmi_admin_scripts' );
 		}
-
 	}
-
-	function nsmi_security_tests( $tests ) {
+	function security_tests( $tests ) {
 		$tests['direct']['abspath_perm_test']     = array(
 			'label' => __( 'Permissions of WordPress installation directory' ),
 			'test'  => array( $this, 'abspath_perm_test_callback' ),
@@ -336,14 +303,12 @@ final class MI_security_suite {
 			'label' => __( 'Permissions of .htaccess' ),
 			'test'  => array( $this, 'htaccess_perm_test_callback' ),
 		);
-
 		$tests['direct']['admin_user_test'] = array(
 			'label' => __( 'Does a user with user_login of "admin" exist?' ),
 			'test'  => array( $this, 'admin_user_test_callback' ),
 		);
 		return $tests;
 	}
-
 	/**
 	 * Check if a user with slug "admin" exists
 	 *
@@ -370,7 +335,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for WordPress installation directory permissions
 	 *
@@ -403,7 +367,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for wp-admin directory permissions
 	 *
@@ -435,7 +398,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for wp-includes directory permissions
 	 *
@@ -467,7 +429,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for wp-content directory permissions
 	 *
@@ -499,7 +460,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for themes directory permissions
 	 *
@@ -531,7 +491,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for plugins directory permissions
 	 *
@@ -563,7 +522,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	function get_config_path() {
 		WP_Filesystem();
 		global $wp_filesystem;
@@ -574,7 +532,6 @@ final class MI_security_suite {
 			return dirname( ABSPATH ) . '/wp-config.php'; // The config file resides one level above ABSPATH but is not part of another installation
 		}
 	}
-
 	/**
 	 * File permission test callback for wp-config.php file permissions
 	 *
@@ -608,7 +565,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for root .htaccess file permissions
 	 *
@@ -642,7 +598,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * File permission test callback for uploads directory permissions
 	 *
@@ -675,7 +630,6 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
-
 	/**
 	 * Given a path, checks if user_can_[permission]
 	 *
@@ -695,7 +649,6 @@ final class MI_security_suite {
 		$user_perms = substr( $user_perms, 0, 1 );
 		return intval( $user_perms );
 	}
-
 	/**
 	 * Given a path, checks if user_can_[permission]
 	 *
@@ -715,7 +668,6 @@ final class MI_security_suite {
 		$user_perms = substr( $user_perms, 1, 1 );
 		return intval( $user_perms );
 	}
-
 	/**
 	 * Given a path, checks if user_can_[permission]
 	 *
@@ -735,7 +687,6 @@ final class MI_security_suite {
 		$user_perms = substr( $user_perms, 2, 1 );
 		return intval( $user_perms );
 	}
-
 	/**
 	 * Given a path, checks if group_can_[permission]
 	 *
@@ -755,7 +706,6 @@ final class MI_security_suite {
 		$group_perms = substr( $group_perms, 0, 1 );
 		return intval( $group_perms );
 	}
-
 	/**
 	 * Given a path, checks if group_can_[permission]
 	 *
@@ -775,7 +725,6 @@ final class MI_security_suite {
 		$group_perms = substr( $group_perms, 1, 1 );
 		return intval( $group_perms );
 	}
-
 	/**
 	 * Given a path, checks if group_can_[permission]
 	 *
@@ -795,7 +744,6 @@ final class MI_security_suite {
 		$group_perms = substr( $group_perms, 2, 1 );
 		return intval( $group_perms );
 	}
-
 	/**
 	 * Given a path, checks if other_can_[permission]
 	 *
@@ -815,7 +763,6 @@ final class MI_security_suite {
 		$other_perms = substr( $other_perms, 0, 1 );
 		return intval( $other_perms );
 	}
-
 	/**
 	 * Given a path, checks if other_can_[permission]
 	 *
@@ -835,7 +782,6 @@ final class MI_security_suite {
 		$other_perms = substr( $other_perms, 1, 1 );
 		return intval( $other_perms );
 	}
-
 	/**
 	 * Given a path, checks if other_can_[permission]
 	 *
@@ -855,7 +801,6 @@ final class MI_security_suite {
 		$other_perms = substr( $other_perms, 2, 1 );
 		return intval( $other_perms );
 	}
-
 	/**
 	 * Get file permissions in octal notation
 	 *
@@ -865,7 +810,6 @@ final class MI_security_suite {
 	function get_permissions( $path ) {
 		return substr( sprintf( '%o', fileperms( $path ) ), -3 );
 	}
-
 	/**
 	 * Return the absolute path of root .htaccess if it exists
 	 *
@@ -877,9 +821,7 @@ final class MI_security_suite {
 		}
 	}
 }
-
 function MI_security_suite() {
 	return MI_security_suite::get_instance();
 }
-
 MI_security_suite();
