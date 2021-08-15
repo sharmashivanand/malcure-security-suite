@@ -318,7 +318,7 @@ final class MI_security_suite {
 		?>
 		<style type="text/css">
 		#toplevel_page__nsmi .wp-menu-image img {
-			width: 24px;
+			_width: 24px;
 			height: auto;
 			opacity: 1;
 			/*padding: 0 0 0 0;*/
