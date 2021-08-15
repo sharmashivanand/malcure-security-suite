@@ -299,9 +299,6 @@ final class MI_security_suite {
 				})
 			});
 			</script>
-				<?php
-				$nsmi_scanner = MI_Malware_Scanner::get_instance();
-				?>
 				<h2>Notice</h2>
 				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
 				<h2>System Status</h2>

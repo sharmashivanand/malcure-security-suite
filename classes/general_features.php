@@ -41,14 +41,15 @@ final class nsmi_gen_utils {
 		<?php
 	}
 	function add_meta_boxes() {
+		add_meta_box( 'nsmi_config', 'Configuration', array( $this, 'configuration' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
 		if ( nsmi_utils::is_registered() ) {
 			add_meta_box( 'nsmi_connection_details', 'Connection Details', array( $this, 'registration_details' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
 			add_meta_box( 'nsmi_site_status', 'Site Status', array( $this, 'system_status' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 			add_meta_box( 'nsmi_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
+			add_meta_box( 'nsmi_logs', 'Logs &amp; Disgnostics', array( $this, 'diags' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
 		} else {
 			add_meta_box( 'nsmi_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		}
-		add_meta_box( 'nsmi_config', 'Configuration', array( $this, 'configuration' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
 	}
 
 	function configuration() {
@@ -58,17 +59,21 @@ final class nsmi_gen_utils {
 			$options[ strtolower( sanitize_text_field( $color_scheme ) ) ] = $color_scheme;
 		}
 		// print_r($options);
-		$current = nsmi_utils::get_setting('color_scheme');
+		$current = nsmi_utils::get_setting( 'color_scheme' );
 		?>
 		<p><label foe="nsmi_color_scheme"><strong>Color Scheme:</strong></label></p>
 		<select name="nsmi_color_scheme" id="nsmi_color_scheme">
 		<?php
 		foreach ( $options as $v => $k ) {
-			echo '<option value="'.$v.'"' . selected( $current, $v, 0 )  . '>'.$k.'</option>';
+			echo '<option value="' . $v . '"' . selected( $current, $v, 0 ) . '>' . $k . '</option>';
 		}
 		?>
 	</select>
 		<?php
+	}
+
+	function diags() {
+		nsmi_utils::llog( nsmi_utils::get_setting( 'log' ) );
 	}
 
 	function connection_ui() {

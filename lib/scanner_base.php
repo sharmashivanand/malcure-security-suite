@@ -1,7 +1,9 @@
 <?php
 // Extensible class that handles malware scan processing
 class MI_Scanner {
+
 	public $filemaxsize = 1111111;
+	
 	/**
 	 * Initialize with api credentials. First / Last name, email are must
 	 *
@@ -10,6 +12,7 @@ class MI_Scanner {
 	function __construct( $arrCreds = false ) {
 		$this->set_api( $arrCreds ); // do we need this?
 	}
+
 	/**
 	 * Set up credentials for use later
 	 *
@@ -22,9 +25,11 @@ class MI_Scanner {
 		}
 		$this->creds = $creds;
 	}
+
 	function get_files( $path = false ) {
 		return nsmi_utils::get_files();
 	}
+
 	/**
 	 * Returns status of a scanned file
 	 *
@@ -51,7 +56,7 @@ class MI_Scanner {
 				return;
 			}
 			// $s = microtime(1);
-			$definitions = self::get_malware_file_definitions();
+			$definitions = $this->definitions;// self::get_malware_file_definitions();
 			// nsmi_utils::flog('get_malware_file_definitions took ' . (microtime(1) - $s) . 'sec');
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
@@ -86,6 +91,7 @@ class MI_Scanner {
 		} else {
 		}
 	}
+
 	function is_valid_file( $file ) {
 		if ( file_exists( $file ) && // Check if file or dir exists
 			is_file( $file ) && // Check if is actually a file
@@ -101,6 +107,7 @@ class MI_Scanner {
 		$nameparts = explode( '.', ".$filename" );
 		return strtolower( $nameparts[ ( count( $nameparts ) - 1 ) ] );
 	}
+
 	/**
 	 * Checks if a file is inside WP core directories ( inside wp-admin or wp-includes)
 	 *
@@ -113,16 +120,20 @@ class MI_Scanner {
 		}
 		return true;
 	}
+
 	function scan_contents( $arrContents ) {
 	}
+
 	function scan_content( $content ) {
 	}
+
 	function get_all_definitions() {
 		$definitions = self::get_definitions_data();
 		if ( $definitions ) {
 			return $definitions;
 		}
 	}
+
 	/**
 	 * Gets all definitions excluding version
 	 *
@@ -134,12 +145,14 @@ class MI_Scanner {
 			return $defs['definitions'];
 		}
 	}
+
 	static function get_definition_version() {
 		$defs = self::get_all_definitions();
 		if ( ! empty( $defs['v'] ) ) {
 			return $defs['v'];
 		}
 	}
+
 	/**
 	 * Gets malware definitions for files only
 	 */
@@ -149,6 +162,7 @@ class MI_Scanner {
 			return $defs['files'];
 		}
 	}
+
 	/**
 	 * Gets malware definitions for database only
 	 *
@@ -160,6 +174,7 @@ class MI_Scanner {
 			return $defs['db'];
 		}
 	}
+
 	/**
 	 * For future, match malware in user content like post content, urls etc.?
 	 *
@@ -167,6 +182,7 @@ class MI_Scanner {
 	 */
 	static function get_malware_content_definitions() {
 	}
+
 	/**
 	 * Get firewall rules
 	 *

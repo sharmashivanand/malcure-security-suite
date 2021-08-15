@@ -12,6 +12,7 @@ body {
             padding: .618em 1em;
             border: none;
             font-weight: bold;
+            line-height: 1;
 
             &:hover {
                 background-color: hsl(210, 66%, 25%);
@@ -289,7 +290,8 @@ body.nsmi_darko {
 
         .nsmi_action {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
-            color: hsl(200, 15%, 50%);
+            // color: hsl(200, 15%, 50%);
+            color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
             outline: 1px solid hsla(180, 100%, 50%, 0.5);
             mix-blend-mode: screen;
@@ -301,8 +303,9 @@ body.nsmi_darko {
 
             &:active {
                 color: white;
-                background: radial-gradient(hsla(350, 33%, 27%, 1), hsla(210, 33%, 27%, 1));
-                box-shadow: 0px 0px 10px hsla(350, 33%, 27%, 1);
+                // background: radial-gradient(hsla(350, 33%, 27%, 1), hsla(210, 33%, 27%, 1));
+                background: hsla(180, 100%, 50%, 0.75);
+                box-shadow: 0px 0px 10px hsla(180, 100%, 50%, 0.75);
             }
         }
     }

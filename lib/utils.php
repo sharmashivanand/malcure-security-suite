@@ -12,8 +12,8 @@ final class nsmi_utils {
 		add_filter( 'nsmi_checksums', array( $this, 'generated_checksums' ) );
 	}
 
-	static function set_color_scheme( $scheme ){
-		return self::update_setting( 'color_scheme' , $scheme );
+	static function set_color_scheme( $scheme ) {
+		return self::update_setting( 'color_scheme', $scheme );
 	}
 
 	static function get_instance() {
@@ -62,7 +62,7 @@ final class nsmi_utils {
 			echo '<pre>' . print_r( $str, 1 ) . '</pre>';
 		}
 	}
-	
+
 	static function append_log( $how_when_where, $msg = '' ) {
 		$errors = self::get_setting( 'log' );
 		if ( ! $errors ) {
@@ -308,7 +308,7 @@ final class nsmi_utils {
 			return $version;
 		}
 	}
-	
+
 	/**
 	 * Gets WordPress Core and plugin checksums
 	 *
@@ -329,7 +329,7 @@ final class nsmi_utils {
 			if ( $plugin_checksums ) {
 				$checksums = array_merge( $checksums, $plugin_checksums );
 			}
-			$theme_checksums  = self::fetch_theme_checksums();
+			$theme_checksums = self::fetch_theme_checksums();
 			if ( $theme_checksums ) {
 				$checksums = array_merge( $checksums, $theme_checksums );
 			}
@@ -381,13 +381,13 @@ final class nsmi_utils {
 		return $plugin_checksums;
 	}
 
-	static function fetch_theme_checksums(){
+	static function fetch_theme_checksums() {
 		$all_themes      = wp_get_themes();
 		$install_path    = get_home_path();
 		$theme_checksums = array();
 		$theme_root      = get_theme_root();
-		//$state           = $this->get_setting( 'user' );
-		//$state           = $this->encode( $state );
+		// $state           = $this->get_setting( 'user' );
+		// $state           = $this->encode( $state );
 		foreach ( $all_themes as $key => $value ) {
 			$theme_file   = trailingslashit( $theme_root ) . $key;
 			$theme_file   = str_replace( $install_path, '', $theme_file );
@@ -498,7 +498,7 @@ final class nsmi_utils {
 					$suspicious[ $definition ] = $definitions['definitions']['files'][ $definition ];
 				}
 			}
-			$files = array_merge( $severe, $high, $suspicious ); // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
+			$files      = array_merge( $severe, $high, $suspicious ); // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
 			$severe     = array();
 			$high       = array();
 			$suspicious = array();
@@ -513,7 +513,7 @@ final class nsmi_utils {
 					$suspicious[ $definition ] = $definitions['definitions']['db'][ $definition ];
 				}
 			}
-			$db = array_merge( $severe, $high, $suspicious );
+			$db                                  = array_merge( $severe, $high, $suspicious );
 			$definitions['definitions']['files'] = $files; // array_filter because for some reason we have an empty element too
 			$definitions['definitions']['db']    = $db;
 			self::update_option_definitions( $definitions );
@@ -570,7 +570,7 @@ final class nsmi_utils {
 	static function update_option_definitions( $definitions ) {
 		return self::update_option( 'definitions', $definitions );
 	}
-	
+
 	static function get_option_checksums_core() {
 		return self::get_option( 'checksums_core' );
 	}
@@ -634,8 +634,11 @@ final class nsmi_utils {
 	}
 
 	static function do_maintenance() {
-		self::delete_setting( 'scan_id' );
-		
+
+		$time = self::get_setting( 'scan_id' );
+		if ( ! empty( $time ) && time() - $time >= 10800 ) { // Delete only if the scan strted 3 hrs back or earlier
+			self::delete_setting( 'scan_id' );
+		}
 		return;
 
 		// self::delete_setting( 'scan_status' );
