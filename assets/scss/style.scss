@@ -172,8 +172,8 @@ body {
 
         .nsmi_bricks {
             display: inline-block;
-            padding: 4px 6px 3px;
-            margin: 2px 0px 4px 2px;
+            padding: 4px 6px;
+            margin: 2px 4px 4px 0px;
             background: hsla(210, 10%, 15%, 0.15);
             font-weight: bold;
         }
@@ -260,6 +260,7 @@ body.nsmi_darko {
         color: hsl(200, 15%, 50%);
         border: 1px solid transparent;
         outline: 1px solid hsla(180, 100%, 50%, 0.5);
+        -webkit-appearance: auto;
     }
 
     #wpcontent {

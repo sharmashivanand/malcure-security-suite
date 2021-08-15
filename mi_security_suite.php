@@ -348,7 +348,7 @@ final class MI_security_suite {
 	}
 
 	function render_branding() {
-		return '<img src="' . NSMI_URL . 'assets/logo-light-trans.svg" />';
+		return '<img src="' . NSMI_URL . 'assets/logo-mi-dark.svg" />';
 	}
 
 	function footer_scripts() {
