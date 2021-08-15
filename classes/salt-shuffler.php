@@ -21,7 +21,7 @@ class MI_Salt_Shuffler {
 	}
 	function salt_shuffler_ui(){ ?>
 		<p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p>
-		<input class="nsmi_action" value="Shuffle Salts" id="nsmi_shuffle_salts" type="submit" />
+		<input class="nsmi_action" value="Shuffle Salts&nbsp;&rarr;" id="nsmi_shuffle_salts" type="submit" />
 		
 		<div id="nsmi_shuffle_salts_status" class="nsmi_status"></div>
 		<?php

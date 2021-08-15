@@ -48,10 +48,32 @@ final class nsmi_gen_utils {
 		} else {
 			add_meta_box( 'nsmi_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		}
+		add_meta_box( 'nsmi_config', 'Configuration', array( $this, 'configuration' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
 	}
+
+	function configuration() {
+		$color_schemes = array( 'Default', 'Darko' );
+		$options       = array();
+		foreach ( $color_schemes as $color_scheme ) {
+			$options[ strtolower( sanitize_text_field( $color_scheme ) ) ] = $color_scheme;
+		}
+		// print_r($options);
+		$current = nsmi_utils::get_setting('color_scheme');
+		?>
+		<p><label foe="nsmi_color_scheme"><strong>Color Scheme:</strong></label></p>
+		<select name="nsmi_color_scheme" id="nsmi_color_scheme">
+		<?php
+		foreach ( $options as $v => $k ) {
+			echo '<option value="'.$v.'"' . selected( $current, $v, 0 )  . '>'.$k.'</option>';
+		}
+		?>
+	</select>
+		<?php
+	}
+
 	function connection_ui() {
 			$current_user = wp_get_current_user();
-			?>
+		?>
 			<h3>Quick connection with the Malware Intercept API</h3>
 			<p>This plugin is a SaaS solution and allows you to integrate your website with Malware Intercept Security Suite and uptime-monitoring services. A connection to the API endpoint is required for MI Security Suite to protect your site. API access is free for fair use and as our user base and traffic load grows, we continue to refine access limits. <a href="https://malwareintercept.com/?p=3&utm_source=adminnotice&utm_medium=web&utm_campaign=mintercept" target="_blank">Privacy Policy.</a></p>
 			<p><label><strong>First Name:</strong><br />
@@ -99,8 +121,8 @@ final class nsmi_gen_utils {
 	}
 	function registration_details() {
 		$user = nsmi_utils::is_registered();
-		//var_dump(nsmi_utils::$opt_name);
-		//$user = $user['api-credentials'];
+		// var_dump(nsmi_utils::$opt_name);
+		// $user = $user['api-credentials'];
 		?>
 		<table id="nsmi_user_details">
 		<tr><th>Name</th><td><?php echo $user['first_name'] . ' ' . $user['last_name']; ?></td></tr>
@@ -270,7 +292,7 @@ final class nsmi_gen_utils {
 			}
 			?>
 		<?php
-			echo '<input class="nsmi_action" value="Logout All Users" id="nsmi_destroy_sessions" type="submit" />';
+			echo '<input class="nsmi_action" value="Logout All Users&nbsp;&rarr;" id="nsmi_destroy_sessions" type="submit" />';
 		?>
 			<script type="text/javascript">
 			jQuery(document).ready(function($){

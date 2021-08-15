@@ -36,7 +36,7 @@ class MI_Integrity {
 				echo '<h2 id="nsmi_integrity_missing">All core WordPress files are present.</h2>';
 			}
 		} else {
-			echo '<input class="nsmi_action" value="Show Missing Files" id="nsmi_integrity_missing_files" type="submit" />';
+			echo '<input class="nsmi_action" value="Show Missing Files&nbsp;&rarr;" id="nsmi_integrity_missing_files" type="submit" />';
 			echo '<div class="integrity_response"></div>';
 		}
 	}
@@ -49,7 +49,7 @@ class MI_Integrity {
 				echo '<li>' . $failed . '</li>';
 			}
 		} else {
-			echo '<input class="nsmi_action" value="Show Failed Checksums" id="nsmi_integrity_failed_checksums" type="submit" />';
+			echo '<input class="nsmi_action" value="Show Failed Checksums&nbsp;&rarr;" id="nsmi_integrity_failed_checksums" type="submit" />';
 			echo '<div class="integrity_response"></div>';
 		}
 	}
@@ -62,7 +62,7 @@ class MI_Integrity {
 				echo '<li>' . $extra . '</li>';
 			}
 		} else {
-			echo '<input class="nsmi_action" value="Show Extra Files" id="nsmi_integrity_extra_files" type="submit" />';
+			echo '<input class="nsmi_action" value="Show Extra Files&nbsp;&rarr;" id="nsmi_integrity_extra_files" type="submit" />';
 			echo '<div class="integrity_response"></div>';
 		}
 	}
@@ -128,6 +128,7 @@ class MI_Integrity {
 		<?php
 	}
 	function verify_integrity() {
+		// wp_send_json_error();
 		check_ajax_referer( 'nsmi_verify_integrity', 'nsmi_verify_integrity_nonce' );
 		$req = $_REQUEST['request'];
 		$result = $this->verify_checksums();
@@ -144,11 +145,13 @@ class MI_Integrity {
 		wp_send_json_success( $this->get_checksums() );
 		wp_send_json_success( $this->get_all_files() );
 	}
+
 	function meta_box_ad() {
 		?>
 		<div id="integrity_sb1_ad"><a href="https://malwareintercept.com/?&utm_source=mss-integgrity-sb-ad&utm_medium=web&utm_campaign=mss">WordPress Malware Removal Service</a></div>
 		<?php
 	}
+
 	function delete_checksums() {
 		delete_transient( 'nsmi_repo_checksums' );
 	}

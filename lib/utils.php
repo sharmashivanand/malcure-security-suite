@@ -7,8 +7,13 @@ require_once 'cli.php';
 final class nsmi_utils {
 	static $opt_name = 'NSMI';
 	static $cap      = 'activate_plugins';
+
 	function __construct() {
 		add_filter( 'nsmi_checksums', array( $this, 'generated_checksums' ) );
+	}
+
+	static function set_color_scheme( $scheme ){
+		return self::update_setting( 'color_scheme' , $scheme );
 	}
 
 	static function get_instance() {

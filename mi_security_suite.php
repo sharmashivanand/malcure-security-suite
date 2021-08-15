@@ -18,17 +18,21 @@
  * License URI: https://opensource.org/licenses/MIT
  * Plugin URI:  https://malwareintercept.com
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
 if ( ! defined( 'NSMI_GOD' ) ) {
 	define( 'NSMI_GOD', 'activate_plugins' );
 }
+
 define( 'NSMI_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'NSMI_FILE', __FILE__ );
 define( 'NSMI_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'NSMI_API_EP', 'https://wp-malware-removal.com/' );
 define( 'NSMI_ID', 134 );
+
 final class MI_security_suite {
 	public $dir;
 	public $url;
@@ -40,8 +44,10 @@ final class MI_security_suite {
 		}
 		return $instance;
 	}
+
 	private function __construct() {
 	}
+
 	function init() {
 		$GLOBALS[ get_class( $this ) ] = array();
 		$this->dir                     = trailingslashit( plugin_dir_path( __FILE__ ) );
@@ -60,25 +66,43 @@ final class MI_security_suite {
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
+
+		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
+
+		add_action( 'wp_ajax_nsmi_ajax', array( $this, 'nsmi_ajax' ) );
+		add_action( 'wp_ajax_nopriv_nsmi_ajax', '__return_false' );
 	}
+
 	function hook_meta_boxes() {
 		if ( ! empty( $this->pagehook ) ) {
 			add_action( 'load-' . $this->pagehook, array( $this, 'add_meta_boxes' ) );
 			add_action( 'load-' . $this->pagehook, array( $this, 'add_admin_scripts' ) );
 		}
 	}
+
 	function add_admin_scripts() {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
 	}
+
 	function add_meta_boxes() {
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 	}
+
 	function do_meta_box_callback() {
 		echo 'do something here';
 	}
+
+	function admin_body_class( $classes ) {
+		$color_scheme = nsmi_utils::get_setting( 'color_scheme' );
+		if ( ! empty( $color_scheme ) ) {
+			$classes .= ' ' . 'nsmi_' . $color_scheme;
+		}
+		return $classes;
+	}
+
 	function settings_menu() {
 		$this->pagehook                            = add_menu_page(
 			'MI Security Suite', // page_title
@@ -92,6 +116,7 @@ final class MI_security_suite {
 		$GLOBALS[ get_class( $this ) ]['pagehook'] = $this->pagehook;
 		do_action( 'nsmi_settings_menu' );
 	}
+
 	function settings_page() {
 		$title = 'MI Security Suite';
 		?>
@@ -117,10 +142,71 @@ final class MI_security_suite {
 		jQuery(document).ready(function($) {
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
+			$('#nsmi_color_scheme').on('change',function(){
+				$classes = $('body').attr('class');
+				$classes = $classes.split(" ");
+				$classes = $classes.filter(function(value) {
+    				return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^nsmi_/ig) );
+				});
+				$classes.push('nsmi_' + this.value);
+				$classes = $classes.join(' ');
+				$classes = $('body').attr('class',$classes);
+				ajax_request( 'set_color_scheme', this.value, 'color_scheme_cb' ); 
+			});
 		});
+
+		function color_scheme_cb($response){
+			console.dir($response);
+		}
+
+		function ajax_request(request, data, callback){
+			nsmi_ajax_payload = {
+				nsmi_ajax_nonce: '<?php echo wp_create_nonce( 'nsmi_ajax' ); ?>',
+				action: "nsmi_ajax",
+				payload: {
+					data: data,
+					request: request
+				} 
+			};
+			$ = jQuery.noConflict();
+			$.ajax({
+				url: ajaxurl,
+				method: 'POST',
+				data: nsmi_ajax_payload,
+				success: function(response_data, textStatus, jqXHR) {
+					console.dir(response_data);
+					if ((typeof response_data) != 'object') { // is the server not sending us JSON?
+					}
+					if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
+					} else { // perhaps this is just JSON without a success object
+					}
+				},
+				error: function( jqXHR, textStatus, errorThrown){},
+				complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
+					window[callback](jqXHR_data);
+				},
+			});
+		}
 		</script>
 		<?php
 	}
+
+	function nsmi_ajax() {
+		check_ajax_referer( 'nsmi_ajax', 'nsmi_ajax_nonce' );
+		if ( ! empty( $_REQUEST['payload'] ) && ! empty( $_REQUEST['payload']['request'] ) && method_exists( 'nsmi_utils', $_REQUEST['payload']['request'] ) ) {
+			if ( ! empty( $_REQUEST['payload']['data'] ) ) {
+				// $result = nsmi_utils::$_REQUEST['payload']['request']($_REQUEST['payload']['data']);
+				$result = forward_static_call( array( nsmi_utils, $_REQUEST['payload']['request'] ), $_REQUEST['payload']['data'] );
+			} else {
+				$result = forward_static_call( array( nsmi_utils, $_REQUEST['payload']['request'] ) );
+			}
+			wp_send_json_success( $result );
+		} else {
+			wp_send_json_error( 'Something went wrong.' );
+		}
+
+	}
+
 	function settings_page_old() {
 		?>
 		<div class="wrap">
@@ -176,7 +262,7 @@ final class MI_security_suite {
 				</script>
 				<?php
 			} else {
-				echo '<input class="nsmi_action" value="Init Scan" id="nsmi_trigger_scan" type="submit" />';
+				echo '<input class="nsmi_action" value="Init Scan &rarr;" id="nsmi_trigger_scan" type="submit" />';
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
@@ -227,6 +313,7 @@ final class MI_security_suite {
 		</div> <!-- / .wrap -->
 		<?php
 	}
+
 	function admin_inline_style() {
 		?>
 		<style type="text/css">
@@ -240,6 +327,7 @@ final class MI_security_suite {
 		</style>
 		<?php
 	}
+
 	function plugin_res( $hook ) {
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 		if ( preg_match( '/_nsmi$/', $hook ) ) {
@@ -247,6 +335,7 @@ final class MI_security_suite {
 			wp_enqueue_script( 'jquery' );
 		}
 	}
+
 	function debug_menu() {
 		add_submenu_page(
 			'_nsmi',  // parent_slug
@@ -257,9 +346,11 @@ final class MI_security_suite {
 			array( $this, 'debug_nsmi_page' )
 		);
 	}
+
 	function render_branding() {
 		return '<img src="' . NSMI_URL . 'assets/logo-light-trans.svg" />';
 	}
+
 	function footer_scripts() {
 		$screen = get_current_screen();
 		if ( $screen->id == $this->pagehook ) {
@@ -303,12 +394,13 @@ final class MI_security_suite {
 			'label' => __( 'Permissions of .htaccess' ),
 			'test'  => array( $this, 'htaccess_perm_test_callback' ),
 		);
-		$tests['direct']['admin_user_test'] = array(
+		$tests['direct']['admin_user_test']       = array(
 			'label' => __( 'Does a user with user_login of "admin" exist?' ),
 			'test'  => array( $this, 'admin_user_test_callback' ),
 		);
 		return $tests;
 	}
+
 	/**
 	 * Check if a user with slug "admin" exists
 	 *
@@ -335,6 +427,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for WordPress installation directory permissions
 	 *
@@ -367,6 +460,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for wp-admin directory permissions
 	 *
@@ -398,6 +492,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for wp-includes directory permissions
 	 *
@@ -429,6 +524,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for wp-content directory permissions
 	 *
@@ -460,6 +556,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for themes directory permissions
 	 *
@@ -491,6 +588,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for plugins directory permissions
 	 *
@@ -522,6 +620,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	function get_config_path() {
 		WP_Filesystem();
 		global $wp_filesystem;
@@ -532,6 +631,7 @@ final class MI_security_suite {
 			return dirname( ABSPATH ) . '/wp-config.php'; // The config file resides one level above ABSPATH but is not part of another installation
 		}
 	}
+
 	/**
 	 * File permission test callback for wp-config.php file permissions
 	 *
@@ -565,6 +665,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for root .htaccess file permissions
 	 *
@@ -598,6 +699,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * File permission test callback for uploads directory permissions
 	 *
@@ -630,6 +732,7 @@ final class MI_security_suite {
 		}
 		return $result;
 	}
+
 	/**
 	 * Given a path, checks if user_can_[permission]
 	 *
@@ -649,6 +752,7 @@ final class MI_security_suite {
 		$user_perms = substr( $user_perms, 0, 1 );
 		return intval( $user_perms );
 	}
+
 	/**
 	 * Given a path, checks if user_can_[permission]
 	 *
@@ -668,6 +772,7 @@ final class MI_security_suite {
 		$user_perms = substr( $user_perms, 1, 1 );
 		return intval( $user_perms );
 	}
+
 	/**
 	 * Given a path, checks if user_can_[permission]
 	 *
@@ -687,6 +792,7 @@ final class MI_security_suite {
 		$user_perms = substr( $user_perms, 2, 1 );
 		return intval( $user_perms );
 	}
+
 	/**
 	 * Given a path, checks if group_can_[permission]
 	 *
@@ -706,6 +812,7 @@ final class MI_security_suite {
 		$group_perms = substr( $group_perms, 0, 1 );
 		return intval( $group_perms );
 	}
+
 	/**
 	 * Given a path, checks if group_can_[permission]
 	 *
@@ -725,6 +832,7 @@ final class MI_security_suite {
 		$group_perms = substr( $group_perms, 1, 1 );
 		return intval( $group_perms );
 	}
+
 	/**
 	 * Given a path, checks if group_can_[permission]
 	 *
@@ -744,6 +852,7 @@ final class MI_security_suite {
 		$group_perms = substr( $group_perms, 2, 1 );
 		return intval( $group_perms );
 	}
+
 	/**
 	 * Given a path, checks if other_can_[permission]
 	 *
@@ -763,6 +872,7 @@ final class MI_security_suite {
 		$other_perms = substr( $other_perms, 0, 1 );
 		return intval( $other_perms );
 	}
+
 	/**
 	 * Given a path, checks if other_can_[permission]
 	 *
@@ -782,6 +892,7 @@ final class MI_security_suite {
 		$other_perms = substr( $other_perms, 1, 1 );
 		return intval( $other_perms );
 	}
+
 	/**
 	 * Given a path, checks if other_can_[permission]
 	 *
@@ -801,6 +912,7 @@ final class MI_security_suite {
 		$other_perms = substr( $other_perms, 2, 1 );
 		return intval( $other_perms );
 	}
+
 	/**
 	 * Get file permissions in octal notation
 	 *
@@ -810,6 +922,7 @@ final class MI_security_suite {
 	function get_permissions( $path ) {
 		return substr( sprintf( '%o', fileperms( $path ) ), -3 );
 	}
+
 	/**
 	 * Return the absolute path of root .htaccess if it exists
 	 *
@@ -821,7 +934,9 @@ final class MI_security_suite {
 		}
 	}
 }
+
 function MI_security_suite() {
 	return MI_security_suite::get_instance();
 }
+
 MI_security_suite();
