@@ -196,9 +196,9 @@ final class MI_security_suite {
 		if ( ! empty( $_REQUEST['payload'] ) && ! empty( $_REQUEST['payload']['request'] ) && method_exists( 'nsmi_utils', $_REQUEST['payload']['request'] ) ) {
 			if ( ! empty( $_REQUEST['payload']['data'] ) ) {
 				// $result = nsmi_utils::$_REQUEST['payload']['request']($_REQUEST['payload']['data']);
-				$result = forward_static_call( array( nsmi_utils, $_REQUEST['payload']['request'] ), $_REQUEST['payload']['data'] );
+				$result = forward_static_call( array( 'nsmi_utils', $_REQUEST['payload']['request'] ), $_REQUEST['payload']['data'] );
 			} else {
-				$result = forward_static_call( array( nsmi_utils, $_REQUEST['payload']['request'] ) );
+				$result = forward_static_call( array( 'nsmi_utils', $_REQUEST['payload']['request'] ) );
 			}
 			wp_send_json_success( $result );
 		} else {
