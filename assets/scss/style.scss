@@ -5,6 +5,10 @@ body {
     #poststuff {
         font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
+        .postbox .inside {
+            overflow: auto;
+        }
+
         .nsmi_action {
             transition: all .1s linear;
             background: hsl(210, 50%, 33%) padding-box;
@@ -13,13 +17,17 @@ body {
             border: none;
             font-weight: bold;
             line-height: 1;
-
             &:hover {
                 background-color: hsl(210, 66%, 25%);
             }
 
             &:active {
                 background-color: hsl(210, 100%, 15%);
+            }
+
+            &[disabled] {
+                mix-blend-mode: luminosity;
+                background: hsl(210, 50%, 33%) padding-box;
             }
         }
 
@@ -290,22 +298,30 @@ body.nsmi_darko {
 
         .nsmi_action {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
+            background: hsla(180, 50%, 50%, .15) padding-box;
             // color: hsl(200, 15%, 50%);
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
             outline: 1px solid hsla(180, 100%, 50%, 0.5);
-            mix-blend-mode: screen;
+            // mix-blend-mode: screen;
 
             &:hover {
                 background: hsla(210, 33%, 27%, 1) padding-box;
+                background: hsla(180, 50%, 50%, .25) padding-box;
                 box-shadow: 0px 0px 10px hsl(180, 33%, 27%);
             }
 
             &:active {
                 color: white;
                 // background: radial-gradient(hsla(350, 33%, 27%, 1), hsla(210, 33%, 27%, 1));
-                background: hsla(180, 100%, 50%, 0.75);
+                // background: hsla(180, 100%, 50%, 0.75);
+                background: hsla(180, 50%, 50%, .50) padding-box;
                 box-shadow: 0px 0px 10px hsla(180, 100%, 50%, 0.75);
+            }
+
+            &[disabled] {
+                background: hsla(180, 50%, 50%, .15) padding-box;
+                box-shadow: none;
             }
         }
     }

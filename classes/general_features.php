@@ -74,6 +74,7 @@ final class nsmi_gen_utils {
 
 	function diags() {
 		nsmi_utils::llog( nsmi_utils::get_setting( 'log' ) );
+		// var_dump(nsmi_utils::get_setting( 'log' ));
 	}
 
 	function connection_ui() {
@@ -124,6 +125,7 @@ final class nsmi_gen_utils {
 			</script>
 			<?php
 	}
+
 	function registration_details() {
 		$user = nsmi_utils::is_registered();
 		// var_dump(nsmi_utils::$opt_name);

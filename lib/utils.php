@@ -72,8 +72,8 @@ final class nsmi_utils {
 			'how' => $how_when_where,
 			'msg' => $msg,
 		);
-		asort( $errors );
-		$errors = array_slice( $errors, 0, 100 ); // limit errors to recent 100
+		ksort( $errors );
+		$errors = array_slice( $errors, -10, 10, true ); // limit errors to recent 100
 		return self::update_setting( 'log', $errors );
 	}
 
@@ -635,10 +635,18 @@ final class nsmi_utils {
 
 	static function do_maintenance() {
 
-		$time = self::get_setting( 'scan_id' );
-		if ( ! empty( $time ) && time() - $time >= 10800 ) { // Delete only if the scan strted 3 hrs back or earlier
+		$started = self::get_setting( 'scan_id' );
+		if ( ! empty( $started ) && time() - $started >= 10800 ) { // Delete only if the scan strted 3 hrs back or earlier
 			self::delete_setting( 'scan_id' );
 		}
+
+		$logs = self::get_setting( 'log' );
+		if ( ! empty( $logs ) && is_array( $logs ) && count( $logs ) >= 11 ) {
+			ksort( $logs );
+			$logs = array_slice( $logs, -10, 10, true ); // limit errors to recent 100
+			self::update_setting( 'log', $logs );
+		}
+
 		return;
 
 		// self::delete_setting( 'scan_status' );
