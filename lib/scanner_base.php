@@ -141,8 +141,8 @@ class MI_Scanner {
 	 */
 	static function get_definitions_data() {
 		$defs = nsmi_utils::get_option_definitions();
-		if ( ! empty( $defs['definitions'] ) ) {
-			return $defs['definitions'];
+		if ( ! empty( $defs['malware'] ) ) {
+			return $defs['malware'];
 		}
 	}
 

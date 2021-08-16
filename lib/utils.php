@@ -484,38 +484,6 @@ final class nsmi_utils {
 			if ( $definitions['v'] != self::get_definition_version() ) {
 				self::delete_option( 'checksums_generated' );
 			}
-			$severe     = array();
-			$high       = array();
-			$suspicious = array();
-			foreach ( $definitions['definitions']['files'] as $definition => $signature ) { // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
-				if ( $signature['severity'] == 'severe' ) {
-					$severe[ $definition ] = $definitions['definitions']['files'][ $definition ];
-				}
-				if ( $signature['severity'] == 'high' ) {
-					$high[ $definition ] = $definitions['definitions']['files'][ $definition ];
-				}
-				if ( $signature['severity'] == 'suspicious' ) {
-					$suspicious[ $definition ] = $definitions['definitions']['files'][ $definition ];
-				}
-			}
-			$files      = array_merge( $severe, $high, $suspicious ); // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
-			$severe     = array();
-			$high       = array();
-			$suspicious = array();
-			foreach ( $definitions['definitions']['db'] as $definition => $signature ) { // always return definitions in this sequence else suspicious matches are returned first without scanning for severe infections.
-				if ( $signature['severity'] == 'severe' ) {
-					$severe[ $definition ] = $definitions['definitions']['db'][ $definition ];
-				}
-				if ( $signature['severity'] == 'high' ) {
-					$high[ $definition ] = $definitions['definitions']['db'][ $definition ];
-				}
-				if ( $signature['severity'] == 'suspicious' ) {
-					$suspicious[ $definition ] = $definitions['definitions']['db'][ $definition ];
-				}
-			}
-			$db                                  = array_merge( $severe, $high, $suspicious );
-			$definitions['definitions']['files'] = $files; // array_filter because for some reason we have an empty element too
-			$definitions['definitions']['db']    = $db;
 			self::update_option_definitions( $definitions );
 			$time = date( 'U' );
 			self::update_setting( 'definitions_update_time', $time );

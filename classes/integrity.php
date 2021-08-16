@@ -80,15 +80,21 @@ class MI_Integrity {
 				make_integrity_request( $(this).attr('id'), $(this).parents('.postbox').find('.integrity_response') );
 			});
 		});
+
 		function make_integrity_request(req,container){
-			$ = jQuery.noConflict();
-			nsmi_verify_integrity = {
+			// $ = jQuery.noConflict();
+			// !!! for some reason $ doesn't work when the scan is running.
+			if(window.nsmi_checksums){
+				update_ui_integrity(req,container,window.nsmi_checksums);
+			}
+			else {
+				nsmi_verify_integrity = {
 					nsmi_verify_integrity_nonce: '<?php echo wp_create_nonce( 'nsmi_verify_integrity' ); ?>',
 						action: "nsmi_verify_integrity",
 						cachebust: Math.floor((new Date()).getTime() / 1000),
 						request: req
 					};
-				$.ajax({
+				jQuery.ajax({
 					url: ajaxurl,
 					method: 'POST',
 					data: nsmi_verify_integrity,
@@ -99,38 +105,60 @@ class MI_Integrity {
 							data = JSON.parse(data);
 						}
 						if (data.hasOwnProperty('success') && data.success) {
-							files = data.data;
-							files = Object.values(files);
-							if(files.length){
-								files = '<ol reversed class="nsmi_verify_integrity"><li>'+files.join('</li><li>')+'</li></ol>';
-								$(container).html('<div class="nsmi_success" style="display:flex;">'+files+'</div>');
+							if(Object.keys(data.data).length){
+								update_ui_integrity(req,container,data.data);
 							}
 							else {
-								$(container).html('<p class="nsmi_success">No matches.</p>');
+								jQuery(container).html('<p class="nsmi_success">No matches.</p>');
 							}
 							console.log('WordPress successfully executed the requested action.');
 						} else {
-							$(container).html('<p class="nsmi_error">'+data.data+'</p>');
+							jQuery(container).html('<p class="nsmi_error">'+data.data+'</p>');
 							console.log('WordPress failed to execute the requested action.');
 						}
 					}, // success
 					error: function(jqXHR,textStatus,errorThrown) {
 						if(errorThrown.length) {
-							$(container).html('<p class="nsmi_error">'+ errorThrown + '</p>');
+							jQuery(container).html('<p class="nsmi_error">'+ errorThrown + '</p>');
 						}
 						else {
-							$(container).html('<p class="nsmi_error">Request failed.</p>');
+							jQuery(container).html('<p class="nsmi_error">Request failed.</p>');
 						}
 					}
 				}); // ajax post
+			}
+		}
+
+		function update_ui_integrity(req,container,data){
+			// console.dir(req);
+			// console.dir(container);
+			// console.dir(data);
+			window.nsmi_checksums = data;
+			switch(req) {
+				case 'nsmi_integrity_extra_files':
+					data = Object.values(data['extra_files']);
+				break;
+				case 'nsmi_integrity_failed_checksums':
+					data = Object.values(data['failed_checksums']);
+				break;
+				case 'nsmi_integrity_missing_files':
+					data = Object.values(data['missing_files']);
+				break;
+				default:
+				// code block
+			}
+			data = '<ol reversed class="nsmi_verify_integrity"><li>'+data.join('</li><li>')+'</li></ol>';
+			jQuery(container).html('<div class="nsmi_success" style="display:flex;">'+data+'</div>');
 		}
 		</script>
 		<?php
 	}
+
 	function verify_integrity() {
 		// wp_send_json_error();
 		check_ajax_referer( 'nsmi_verify_integrity', 'nsmi_verify_integrity_nonce' );
 		$req = $_REQUEST['request'];
+		wp_send_json_success( $this->verify_checksums() );
 		$result = $this->verify_checksums();
 		switch ( $req ) {
 			case 'nsmi_integrity_extra_files':
@@ -141,7 +169,6 @@ class MI_Integrity {
 				wp_send_json_success( $result['missing_files'] );
 		}
 		$req = $_REQUEST['nsmi_integrity_extra_files'];
-		wp_send_json_success( $this->verify_checksums() );
 		wp_send_json_success( $this->get_checksums() );
 		wp_send_json_success( $this->get_all_files() );
 	}
@@ -159,22 +186,22 @@ class MI_Integrity {
 		return nsmi_utils::fetch_checksums();
 		// $checksums = $cached ? get_transient( 'nsmi_repo_checksums' ) : false;
 		// if ( ! $checksums ) {
-		// 	global $wp_version;
-		// 	$checksums = get_core_checksums( $wp_version, get_locale() );
-		// 	if ( ! $checksums ) { // get_core_checksums failed
-		// 		$checksums = array();
-		// 	}
-		// 	$plugin_checksums = $this->get_plugin_checksums();
-		// 	if ( $plugin_checksums ) {
-		// 		$checksums = array_merge( $checksums, $plugin_checksums );
-		// 	}
-		// 	if ( $checksums ) {
-		// 		set_transient( 'nsmi_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
-		// 		return $checksums;
-		// 	}
-		// 	return array();
+		// global $wp_version;
+		// $checksums = get_core_checksums( $wp_version, get_locale() );
+		// if ( ! $checksums ) { // get_core_checksums failed
+		// $checksums = array();
+		// }
+		// $plugin_checksums = $this->get_plugin_checksums();
+		// if ( $plugin_checksums ) {
+		// $checksums = array_merge( $checksums, $plugin_checksums );
+		// }
+		// if ( $checksums ) {
+		// set_transient( 'nsmi_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
+		// return $checksums;
+		// }
+		// return array();
 		// } else {
-		// 	return $checksums;
+		// return $checksums;
 		// }
 	}
 	function get_plugin_checksums() {
@@ -265,10 +292,10 @@ class MI_Integrity {
 		$missing_files = array_values( $failed_files['missing_files'] );
 		ksort( $missing_files );
 		$failed_files['missing_files'] = array_values( $missing_files );
-		$extra_files = array_values( $failed_files['extra_files'] );
+		$extra_files                   = array_values( $failed_files['extra_files'] );
 		ksort( $extra_files );
 		$failed_files['extra_files'] = array_values( $extra_files );
-		$failed_checksums = array_values( $failed_files['failed_checksums'] );
+		$failed_checksums            = array_values( $failed_files['failed_checksums'] );
 		ksort( $failed_checksums );
 		$failed_files['failed_checksums'] = array_values( $failed_checksums );
 		return $failed_files;
