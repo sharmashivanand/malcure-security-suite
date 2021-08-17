@@ -23,15 +23,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! defined( 'NSMI_GOD' ) ) {
-	define( 'NSMI_GOD', 'activate_plugins' );
+if ( ! defined( 'MSS_GOD' ) ) {
+	define( 'MSS_GOD', 'activate_plugins' );
 }
 
-define( 'NSMI_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'NSMI_FILE', __FILE__ );
-define( 'NSMI_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'NSMI_API_EP', 'https://wp-malware-removal.com/' );
-define( 'NSMI_ID', 134 );
+define( 'MSS_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
+define( 'MSS_FILE', __FILE__ );
+define( 'MSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'MSS_API_EP', 'https://wp-malware-removal.com/' );
+define( 'MSS_ID', 134 );
 
 final class MI_security_suite {
 	public $dir;
@@ -54,7 +54,7 @@ final class MI_security_suite {
 		$this->url                     = trailingslashit( plugin_dir_url( __FILE__ ) );
 		include_once $this->dir . 'lib/utils.php';
 		include_once $this->dir . 'classes/general_features.php';
-		if ( nsmi_utils::is_registered() ) {
+		if ( mss_utils::is_registered() ) {
 			include_once $this->dir . 'classes/integrity.php';
 			include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
@@ -69,8 +69,8 @@ final class MI_security_suite {
 
 		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
 
-		add_action( 'wp_ajax_nsmi_ajax', array( $this, 'nsmi_ajax' ) );
-		add_action( 'wp_ajax_nopriv_nsmi_ajax', '__return_false' );
+		add_action( 'wp_ajax_mss_ajax', array( $this, 'mss_ajax' ) );
+		add_action( 'wp_ajax_nopriv_mss_ajax', '__return_false' );
 	}
 
 	function hook_meta_boxes() {
@@ -96,9 +96,9 @@ final class MI_security_suite {
 	}
 
 	function admin_body_class( $classes ) {
-		$color_scheme = nsmi_utils::get_setting( 'color_scheme' );
+		$color_scheme = mss_utils::get_setting( 'color_scheme' );
 		if ( ! empty( $color_scheme ) ) {
-			$classes .= ' ' . 'nsmi_' . $color_scheme;
+			$classes .= ' ' . 'mss_' . $color_scheme;
 		}
 		return $classes;
 	}
@@ -107,14 +107,14 @@ final class MI_security_suite {
 		$this->pagehook                            = add_menu_page(
 			'MI Security Suite', // page_title
 			'MI Security Suite', // menu_title
-			NSMI_GOD,   // capability
-			'_nsmi',  // menu_slug
+			MSS_GOD,   // capability
+			'_mss',  // menu_slug
 			array( $this, 'settings_page' ), // function
 			$this->url . 'assets/icon-dark-trans.svg', // icon_url
 			79
 		);
 		$GLOBALS[ get_class( $this ) ]['pagehook'] = $this->pagehook;
-		do_action( 'nsmi_settings_menu' );
+		do_action( 'mss_settings_menu' );
 	}
 
 	function settings_page() {
@@ -124,7 +124,7 @@ final class MI_security_suite {
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<div class="container">
 			<?php
-			echo '<div id="nsmi_branding" class="nsmi_branding" >' . $this->render_branding() . '</div>';
+			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
 			?>
 			</div>
 			<div id="poststuff">
@@ -142,13 +142,13 @@ final class MI_security_suite {
 		jQuery(document).ready(function($) {
 			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
-			$('#nsmi_color_scheme').on('change',function(){
+			$('#mss_color_scheme').on('change',function(){
 				$classes = $('body').attr('class');
 				$classes = $classes.split(" ");
 				$classes = $classes.filter(function(value) {
-    				return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^nsmi_/ig) );
+    				return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^mss_/ig) );
 				});
-				$classes.push('nsmi_' + this.value);
+				$classes.push('mss_' + this.value);
 				$classes = $classes.join(' ');
 				$classes = $('body').attr('class',$classes);
 				ajax_request( 'set_color_scheme', this.value, 'color_scheme_cb' ); 
@@ -160,9 +160,9 @@ final class MI_security_suite {
 		}
 
 		function ajax_request(request, data, callback){
-			nsmi_ajax_payload = {
-				nsmi_ajax_nonce: '<?php echo wp_create_nonce( 'nsmi_ajax' ); ?>',
-				action: "nsmi_ajax",
+			mss_ajax_payload = {
+				mss_ajax_nonce: '<?php echo wp_create_nonce( 'mss_ajax' ); ?>',
+				action: "mss_ajax",
 				payload: {
 					data: data,
 					request: request
@@ -172,7 +172,7 @@ final class MI_security_suite {
 			$.ajax({
 				url: ajaxurl,
 				method: 'POST',
-				data: nsmi_ajax_payload,
+				data: mss_ajax_payload,
 				success: function(response_data, textStatus, jqXHR) {
 					console.dir(response_data);
 					if ((typeof response_data) != 'object') { // is the server not sending us JSON?
@@ -191,14 +191,14 @@ final class MI_security_suite {
 		<?php
 	}
 
-	function nsmi_ajax() {
-		check_ajax_referer( 'nsmi_ajax', 'nsmi_ajax_nonce' );
-		if ( ! empty( $_REQUEST['payload'] ) && ! empty( $_REQUEST['payload']['request'] ) && method_exists( 'nsmi_utils', $_REQUEST['payload']['request'] ) ) {
+	function mss_ajax() {
+		check_ajax_referer( 'mss_ajax', 'mss_ajax_nonce' );
+		if ( ! empty( $_REQUEST['payload'] ) && ! empty( $_REQUEST['payload']['request'] ) && method_exists( 'mss_utils', $_REQUEST['payload']['request'] ) ) {
 			if ( ! empty( $_REQUEST['payload']['data'] ) ) {
-				// $result = nsmi_utils::$_REQUEST['payload']['request']($_REQUEST['payload']['data']);
-				$result = forward_static_call( array( 'nsmi_utils', $_REQUEST['payload']['request'] ), $_REQUEST['payload']['data'] );
+				// $result = mss_utils::$_REQUEST['payload']['request']($_REQUEST['payload']['data']);
+				$result = forward_static_call( array( 'mss_utils', $_REQUEST['payload']['request'] ), $_REQUEST['payload']['data'] );
 			} else {
-				$result = forward_static_call( array( 'nsmi_utils', $_REQUEST['payload']['request'] ) );
+				$result = forward_static_call( array( 'mss_utils', $_REQUEST['payload']['request'] ) );
 			}
 			wp_send_json_success( $result );
 		} else {
@@ -213,36 +213,36 @@ final class MI_security_suite {
 		<h1>MI Security Suite</h1>
 			<div class="container">
 			<?php
-			echo '<div id="nsmi_branding" class="nsmi_branding" >' . $this->render_branding() . '</div>';
-			if ( ! nsmi_utils::is_registered() ) {
+			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
+			if ( ! mss_utils::is_registered() ) {
 				$current_user = wp_get_current_user();
 				?>
 				<h3>You have successfully installed MI Security Suite</h3>
 				<p>Submit the following information to download free anti-virus definitions and Malcure rules.</p>
 				<p><label><strong>First Name:</strong><br />
-				<input type="text" id="nsmi_user_fname" name="nsmi_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
+				<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
 				<p><label><strong>Last Name:</strong><br />
-				<input type="text" id="nsmi_user_lname" name="nsmi_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
+				<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
 				<p><label><strong>Email:</strong><br />
-				<input type="text" id="nsmi_user_email" name="nsmi_user_email" value="" /></label></p>
+				<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
 				<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-				<a href="#" class="nsmi_action" id="nsmi_api_register_btn" role="button">Next&nbsp;&rarr;</a>
+				<a href="#" class="mss_action" id="mss_api_register_btn" role="button">Next&nbsp;&rarr;</a>
 				<script type="text/javascript">
 				jQuery(document).ready(function($){
-					$("#nsmi_api_register_btn").click(function(){
-						nsmi_api_register = {
-							nsmi_api_register_nonce: '<?php echo wp_create_nonce( 'nsmi_api_register' ); ?>',
-							action: "nsmi_api_register",
+					$("#mss_api_register_btn").click(function(){
+						mss_api_register = {
+							mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
+							action: "mss_api_register",
 							user: {
-								fn: $('#nsmi_user_fname').val(),
-								ln: $('#nsmi_user_lname').val(),
-								email: $('#nsmi_user_email').val(),
+								fn: $('#mss_user_fname').val(),
+								ln: $('#mss_user_lname').val(),
+								email: $('#mss_user_email').val(),
 							}
 						};
 						$.ajax({
 							url: ajaxurl,
 							method: 'POST',
-							data: nsmi_api_register,
+							data: mss_api_register,
 							success: function(response_data, textStatus, jqXHR) {
 								console.dir(response_data);
 								if ((typeof response_data) != 'object') { // is the server not sending us JSON?
@@ -262,14 +262,14 @@ final class MI_security_suite {
 				</script>
 				<?php
 			} else {
-				echo '<input class="nsmi_action" value="Init Scan &rarr;" id="nsmi_trigger_scan" type="submit" />';
+				echo '<input class="mss_action" value="Init Scan &rarr;" id="mss_trigger_scan" type="submit" />';
 				?>
 				<script type="text/javascript">
 			jQuery(document).ready(function($){
-				$("#nsmi_trigger_scan").click(function(){
-					nsmi_trigger_scan = {
-						nsmi_trigger_scan_nonce: '<?php echo wp_create_nonce( 'nsmi_trigger_scan' ); ?>',
-						action: "nsmi_trigger_scan",
+				$("#mss_trigger_scan").click(function(){
+					mss_trigger_scan = {
+						mss_trigger_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
+						action: "mss_trigger_scan",
 						cachebust: Date.now(),
 						user: {
 							id: <?php echo get_current_user_id(); ?>
@@ -278,7 +278,7 @@ final class MI_security_suite {
 					$.ajax({
 						url: ajaxurl,
 						method: 'POST',
-						data: nsmi_trigger_scan,
+						data: mss_trigger_scan,
 						complete: function(jqXHR, textStatus) {
 							console.dir(jqXHR);
 						},
@@ -287,7 +287,7 @@ final class MI_security_suite {
 								response = JSON.parse( response );
 							}
 							if (response.hasOwnProperty('success')) {
-								$("#nsmi_destroy_sessions").fadeTo("slow",1,);
+								$("#mss_destroy_sessions").fadeTo("slow",1,);
 								if(confirm('All users have been logged out (except you). Reload the page now?')) {
 									location.reload();
 								}
@@ -314,7 +314,7 @@ final class MI_security_suite {
 	function admin_inline_style() {
 		?>
 		<style type="text/css">
-		#toplevel_page__nsmi .wp-menu-image img {
+		#toplevel_page__mss .wp-menu-image img {
 			_width: 24px;
 			height: auto;
 			opacity: 1;
@@ -327,7 +327,7 @@ final class MI_security_suite {
 
 	function plugin_res( $hook ) {
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
-		if ( preg_match( '/_nsmi$/', $hook ) ) {
+		if ( preg_match( '/_mss$/', $hook ) ) {
 			wp_enqueue_style( 'mss-stylesheet', $this->url . 'assets/style.css', array(), filemtime( $this->dir . 'assets/style.css' ) );
 			wp_enqueue_script( 'jquery' );
 		}
@@ -335,23 +335,23 @@ final class MI_security_suite {
 
 	function debug_menu() {
 		add_submenu_page(
-			'_nsmi',  // parent_slug
+			'_mss',  // parent_slug
 			'MI Debug', // page_title
 			'MI Debug', // menu_title
-			NSMI_GOD, // capability
-			'debug_nsmi',
-			array( $this, 'debug_nsmi_page' )
+			MSS_GOD, // capability
+			'debug_mss',
+			array( $this, 'debug_mss_page' )
 		);
 	}
 
 	function render_branding() {
-		return '<img src="' . NSMI_URL . 'assets/logo-mi-dark.svg" />';
+		return '<img src="' . MSS_URL . 'assets/logo-mi-dark.svg" />';
 	}
 
 	function footer_scripts() {
 		$screen = get_current_screen();
 		if ( $screen->id == $this->pagehook ) {
-			do_action( 'nsmi_admin_scripts' );
+			do_action( 'mss_admin_scripts' );
 		}
 	}
 	function security_tests( $tests ) {

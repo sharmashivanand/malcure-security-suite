@@ -11,58 +11,58 @@ class MI_Integrity {
 	private function __construct() {
 	}
 	function init() {
-		add_action( 'nsmi_admin_scripts', array( $this, 'footer_scripts' ) );
-		add_action( 'wp_ajax_nsmi_verify_integrity', array( $this, 'verify_integrity' ) );
-		add_action( 'wp_ajax_nopriv_nsmi_verify_integrity', '__return_false' );
+		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
+		add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
+		add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
 		add_action( 'upgrader_process_complete', array( $this, 'delete_checksums' ), 9999, 2 );
 		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
 	function add_meta_boxes() {
-		global $nsmi_integrity_results;
+		global $mss_integrity_results;
 		add_meta_box( 'integrity_missing', 'Integrity: Missing Files', array( $this, 'meta_box_missing_files' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'integrity_failed', 'Integrity: Failed Checksums', array( $this, 'meta_box_failed_checksums' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'integrity_extra', 'Integrity: Missing Checksums', array( $this, 'meta_box_extra_files' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 	}
 	function meta_box_missing_files() {
-		global $nsmi_integrity_results;
-		if ( ! empty( $nsmi_integrity_results ) ) {
-			if ( ! empty( $nsmi_integrity_results['missing_files'] ) ) {
-				echo '<p class="nsmi_notice"><strong>The following files are missing and form a part of the WordPress distribution and / or the installed plugin(s). This could indicate a broken WordPress install or broken plugin(s).</strong></p>';
+		global $mss_integrity_results;
+		if ( ! empty( $mss_integrity_results ) ) {
+			if ( ! empty( $mss_integrity_results['missing_files'] ) ) {
+				echo '<p class="mss_notice"><strong>The following files are missing and form a part of the WordPress distribution and / or the installed plugin(s). This could indicate a broken WordPress install or broken plugin(s).</strong></p>';
 				echo '<ul>';
-				foreach ( $nsmi_integrity_results['missing_files'] as $missing ) {
+				foreach ( $mss_integrity_results['missing_files'] as $missing ) {
 					echo '<li>' . $missing . '</li>';
 				}
 			} else {
-				echo '<h2 id="nsmi_integrity_missing">All core WordPress files are present.</h2>';
+				echo '<h2 id="mss_integrity_missing">All core WordPress files are present.</h2>';
 			}
 		} else {
-			echo '<input class="nsmi_action" value="Show Missing Files&nbsp;&rarr;" id="nsmi_integrity_missing_files" type="submit" />';
+			echo '<input class="mss_action" value="Show Missing Files&nbsp;&rarr;" id="mss_integrity_missing_files" type="submit" />';
 			echo '<div class="integrity_response"></div>';
 		}
 	}
 	function meta_box_failed_checksums() {
-		global $nsmi_integrity_results;
-		if ( ! empty( $nsmi_integrity_results['failed_checksums'] ) ) {
-			echo '<p class="nsmi_notice"><strong>The following files failed checksum verification.</strong></p>';
+		global $mss_integrity_results;
+		if ( ! empty( $mss_integrity_results['failed_checksums'] ) ) {
+			echo '<p class="mss_notice"><strong>The following files failed checksum verification.</strong></p>';
 			echo '<ul>';
-			foreach ( $nsmi_integrity_results['failed_checksums'] as $failed ) {
+			foreach ( $mss_integrity_results['failed_checksums'] as $failed ) {
 				echo '<li>' . $failed . '</li>';
 			}
 		} else {
-			echo '<input class="nsmi_action" value="Show Failed Checksums&nbsp;&rarr;" id="nsmi_integrity_failed_checksums" type="submit" />';
+			echo '<input class="mss_action" value="Show Failed Checksums&nbsp;&rarr;" id="mss_integrity_failed_checksums" type="submit" />';
 			echo '<div class="integrity_response"></div>';
 		}
 	}
 	function meta_box_extra_files() {
-		global $nsmi_integrity_results;
-		if ( ! empty( $nsmi_integrity_results['extra_files'] ) ) {
-			echo '<p class="nsmi_notice"><strong>The following files do not have a checksum. It\'s possible that these files may be from premium plugins, themes or may not strictly be required (could even have been injected malware). Please review if you really need them.</strong></p>';
+		global $mss_integrity_results;
+		if ( ! empty( $mss_integrity_results['extra_files'] ) ) {
+			echo '<p class="mss_notice"><strong>The following files do not have a checksum. It\'s possible that these files may be from premium plugins, themes or may not strictly be required (could even have been injected malware). Please review if you really need them.</strong></p>';
 			echo '<ul>';
-			foreach ( $nsmi_integrity_results['extra_files'] as $extra ) {
+			foreach ( $mss_integrity_results['extra_files'] as $extra ) {
 				echo '<li>' . $extra . '</li>';
 			}
 		} else {
-			echo '<input class="nsmi_action" value="Show Extra Files&nbsp;&rarr;" id="nsmi_integrity_extra_files" type="submit" />';
+			echo '<input class="mss_action" value="Show Extra Files&nbsp;&rarr;" id="mss_integrity_extra_files" type="submit" />';
 			echo '<div class="integrity_response"></div>';
 		}
 	}
@@ -70,13 +70,13 @@ class MI_Integrity {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
-			$('#nsmi_integrity_missing_files').click(function(e){
+			$('#mss_integrity_missing_files').click(function(e){
 				make_integrity_request($(this).attr('id'),$(this).parents('.postbox').find('.integrity_response') );
 				});
-			$('#nsmi_integrity_failed_checksums').click(function(e){
+			$('#mss_integrity_failed_checksums').click(function(e){
 				make_integrity_request($(this).attr('id'),$(this).parents('.postbox').find('.integrity_response') );
 			});
-			$('#nsmi_integrity_extra_files').click(function(e){
+			$('#mss_integrity_extra_files').click(function(e){
 				make_integrity_request( $(this).attr('id'), $(this).parents('.postbox').find('.integrity_response') );
 			});
 		});
@@ -84,20 +84,20 @@ class MI_Integrity {
 		function make_integrity_request(req,container){
 			// $ = jQuery.noConflict();
 			// !!! for some reason $ doesn't work when the scan is running.
-			if(window.nsmi_checksums){
-				update_ui_integrity(req,container,window.nsmi_checksums);
+			if(window.mss_checksums){
+				update_ui_integrity(req,container,window.mss_checksums);
 			}
 			else {
-				nsmi_verify_integrity = {
-					nsmi_verify_integrity_nonce: '<?php echo wp_create_nonce( 'nsmi_verify_integrity' ); ?>',
-						action: "nsmi_verify_integrity",
+				mss_verify_integrity = {
+					mss_verify_integrity_nonce: '<?php echo wp_create_nonce( 'mss_verify_integrity' ); ?>',
+						action: "mss_verify_integrity",
 						cachebust: Math.floor((new Date()).getTime() / 1000),
 						request: req
 					};
 				jQuery.ajax({
 					url: ajaxurl,
 					method: 'POST',
-					data: nsmi_verify_integrity,
+					data: mss_verify_integrity,
 					complete: function(jqXHR, textStatus) {},
 					success: function(data,textStatus,jqXHR) {
 						if ((typeof data) != 'object') {
@@ -109,20 +109,20 @@ class MI_Integrity {
 								update_ui_integrity(req,container,data.data);
 							}
 							else {
-								jQuery(container).html('<p class="nsmi_success">No matches.</p>');
+								jQuery(container).html('<p class="mss_success">No matches.</p>');
 							}
 							console.log('WordPress successfully executed the requested action.');
 						} else {
-							jQuery(container).html('<p class="nsmi_error">'+data.data+'</p>');
+							jQuery(container).html('<p class="mss_error">'+data.data+'</p>');
 							console.log('WordPress failed to execute the requested action.');
 						}
 					}, // success
 					error: function(jqXHR,textStatus,errorThrown) {
 						if(errorThrown.length) {
-							jQuery(container).html('<p class="nsmi_error">'+ errorThrown + '</p>');
+							jQuery(container).html('<p class="mss_error">'+ errorThrown + '</p>');
 						}
 						else {
-							jQuery(container).html('<p class="nsmi_error">Request failed.</p>');
+							jQuery(container).html('<p class="mss_error">Request failed.</p>');
 						}
 					}
 				}); // ajax post
@@ -133,22 +133,22 @@ class MI_Integrity {
 			// console.dir(req);
 			// console.dir(container);
 			// console.dir(data);
-			window.nsmi_checksums = data;
+			window.mss_checksums = data;
 			switch(req) {
-				case 'nsmi_integrity_extra_files':
+				case 'mss_integrity_extra_files':
 					data = Object.values(data['extra_files']);
 				break;
-				case 'nsmi_integrity_failed_checksums':
+				case 'mss_integrity_failed_checksums':
 					data = Object.values(data['failed_checksums']);
 				break;
-				case 'nsmi_integrity_missing_files':
+				case 'mss_integrity_missing_files':
 					data = Object.values(data['missing_files']);
 				break;
 				default:
 				// code block
 			}
-			data = '<ol reversed class="nsmi_verify_integrity"><li>'+data.join('</li><li>')+'</li></ol>';
-			jQuery(container).html('<div class="nsmi_success" style="display:flex;">'+data+'</div>');
+			data = '<ol reversed class="mss_verify_integrity"><li>'+data.join('</li><li>')+'</li></ol>';
+			jQuery(container).html('<div class="mss_success" style="display:flex;">'+data+'</div>');
 		}
 		</script>
 		<?php
@@ -156,19 +156,19 @@ class MI_Integrity {
 
 	function verify_integrity() {
 		// wp_send_json_error();
-		check_ajax_referer( 'nsmi_verify_integrity', 'nsmi_verify_integrity_nonce' );
+		check_ajax_referer( 'mss_verify_integrity', 'mss_verify_integrity_nonce' );
 		$req = $_REQUEST['request'];
 		wp_send_json_success( $this->verify_checksums() );
 		$result = $this->verify_checksums();
 		switch ( $req ) {
-			case 'nsmi_integrity_extra_files':
+			case 'mss_integrity_extra_files':
 				wp_send_json_success( $result['extra_files'] );
-			case 'nsmi_integrity_failed_checksums':
+			case 'mss_integrity_failed_checksums':
 				wp_send_json_success( $result['failed_checksums'] );
-			case 'nsmi_integrity_missing_files':
+			case 'mss_integrity_missing_files':
 				wp_send_json_success( $result['missing_files'] );
 		}
-		$req = $_REQUEST['nsmi_integrity_extra_files'];
+		$req = $_REQUEST['mss_integrity_extra_files'];
 		wp_send_json_success( $this->get_checksums() );
 		wp_send_json_success( $this->get_all_files() );
 	}
@@ -180,11 +180,11 @@ class MI_Integrity {
 	}
 
 	function delete_checksums() {
-		delete_transient( 'nsmi_repo_checksums' );
+		delete_transient( 'mss_repo_checksums' );
 	}
 	function get_checksums( $cached = true ) {
-		return nsmi_utils::fetch_checksums();
-		// $checksums = $cached ? get_transient( 'nsmi_repo_checksums' ) : false;
+		return mss_utils::fetch_checksums();
+		// $checksums = $cached ? get_transient( 'mss_repo_checksums' ) : false;
 		// if ( ! $checksums ) {
 		// global $wp_version;
 		// $checksums = get_core_checksums( $wp_version, get_locale() );
@@ -196,7 +196,7 @@ class MI_Integrity {
 		// $checksums = array_merge( $checksums, $plugin_checksums );
 		// }
 		// if ( $checksums ) {
-		// set_transient( 'nsmi_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
+		// set_transient( 'mss_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
 		// return $checksums;
 		// }
 		// return array();
@@ -211,7 +211,7 @@ class MI_Integrity {
 		$plugin_checksums = array();
 		foreach ( $all_plugins as $key => $value ) {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				$plugin_file  = trailingslashit( dirname( NSMI_DIR ) ) . $key;
+				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
 				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
 				$checksum     = wp_safe_remote_get( $checksum_url );
@@ -301,7 +301,7 @@ class MI_Integrity {
 		return $failed_files;
 	}
 	function get_all_files( $path = false ) {
-		$files = nsmi_utils::get_files();
+		$files = mss_utils::get_files();
 		return $files['files'];
 		if ( ! $path ) {
 			$path = get_home_path();

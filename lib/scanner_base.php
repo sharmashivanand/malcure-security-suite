@@ -27,7 +27,7 @@ class MI_Scanner {
 	}
 
 	function get_files( $path = false ) {
-		return nsmi_utils::get_files();
+		return mss_utils::get_files();
 	}
 
 	/**
@@ -40,7 +40,7 @@ class MI_Scanner {
 	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
 	 */
 	function scan_file( $file ) {
-		// nsmi_utils::flog( 'backtrack_limit ' . ini_get( 'pcre.backtrack_limit' ) );
+		// mss_utils::flog( 'backtrack_limit ' . ini_get( 'pcre.backtrack_limit' ) );
 
 		$ext = self::get_file_extension( $file );
 
@@ -57,12 +57,12 @@ class MI_Scanner {
 			}
 			// $s = microtime(1);
 			$definitions = $this->definitions;// self::get_malware_file_definitions();
-			// nsmi_utils::flog('get_malware_file_definitions took ' . (microtime(1) - $s) . 'sec');
+			// mss_utils::flog('get_malware_file_definitions took ' . (microtime(1) - $s) . 'sec');
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;
 				}
-				$matches  = @preg_match( nsmi_utils::decode( $signature['signature'] ), $contents, $found );
+				$matches  = @preg_match( mss_utils::decode( $signature['signature'] ), $contents, $found );
 				$pcre_err = preg_last_error();
 				if ( $pcre_err != 0 ) {
 					continue;
@@ -77,12 +77,12 @@ class MI_Scanner {
 					);
 				}
 			}
-			$checksums = nsmi_utils::get_option_checksums_generated();
+			$checksums = mss_utils::get_option_checksums_generated();
 			$md5       = @md5_file( $file );
 			if ( $md5 ) {
-				$checksums[ nsmi_utils::normalize_path( $file ) ] = $md5;
+				$checksums[ mss_utils::normalize_path( $file ) ] = $md5;
 			}
-			nsmi_utils::update_option_checksums_generated( $checksums );
+			mss_utils::update_option_checksums_generated( $checksums );
 			return array(
 				'id'       => '',
 				'severity' => '',
@@ -140,7 +140,7 @@ class MI_Scanner {
 	 * @return void
 	 */
 	static function get_definitions_data() {
-		$defs = nsmi_utils::get_option_definitions();
+		$defs = mss_utils::get_option_definitions();
 		if ( ! empty( $defs['malware'] ) ) {
 			return $defs['malware'];
 		}

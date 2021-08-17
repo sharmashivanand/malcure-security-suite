@@ -11,36 +11,36 @@ class MI_Salt_Shuffler {
 	private function __construct() {
 	}
 	function init() {
-		add_action( 'wp_ajax_nsmi_shuffle_salts', array( $this, 'shuffle_salts' ) );
-		add_action( 'wp_ajax_nopriv_nsmi_shuffle_salts', '__return_false' );
-		add_action( 'nsmi_admin_scripts', array( $this, 'footer_scripts' ) );
+		add_action( 'wp_ajax_mss_shuffle_salts', array( $this, 'shuffle_salts' ) );
+		add_action( 'wp_ajax_nopriv_mss_shuffle_salts', '__return_false' );
+		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
 		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
 	function add_meta_boxes() {
-		add_meta_box( 'nsmi_salt_shuffler', 'Salt Shuffler', array( $this, 'salt_shuffler_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'mss_salt_shuffler', 'Salt Shuffler', array( $this, 'salt_shuffler_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 	}
 	function salt_shuffler_ui(){ ?>
 		<p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p>
-		<input class="nsmi_action" value="Shuffle Salts&nbsp;&rarr;" id="nsmi_shuffle_salts" type="submit" />
+		<input class="mss_action" value="Shuffle Salts&nbsp;&rarr;" id="mss_shuffle_salts" type="submit" />
 		
-		<div id="nsmi_shuffle_salts_status" class="nsmi_status"></div>
+		<div id="mss_shuffle_salts_status" class="mss_status"></div>
 		<?php
 	}
 	function footer_scripts() {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
-			$('#nsmi_shuffle_salts').click(function(e){
+			$('#mss_shuffle_salts').click(function(e){
 				e.preventDefault();
-				nsmi_shuffle_salts = {
-					nsmi_shuffle_salts_nonce: '<?php echo wp_create_nonce( 'nsmi_shuffle_salts' ); ?>',
-						action: "nsmi_shuffle_salts",
+				mss_shuffle_salts = {
+					mss_shuffle_salts_nonce: '<?php echo wp_create_nonce( 'mss_shuffle_salts' ); ?>',
+						action: "mss_shuffle_salts",
 						cachebust: Math.floor((new Date()).getTime() / 1000),
 					};
 				$.ajax({
 					url: ajaxurl,
 					method: 'POST',
-					data: nsmi_shuffle_salts,
+					data: mss_shuffle_salts,
 					complete: function(jqXHR, textStatus) {
 						console.log('complete');
 						console.log('jqXHR');
@@ -61,10 +61,10 @@ class MI_Salt_Shuffler {
 							data = JSON.parse(data);
 						}
 						if (data.hasOwnProperty('success') && data.success) {
-							$('#nsmi_shuffle_salts_status').html('<p class="nsmi_success">'+data.data+'</p>');
+							$('#mss_shuffle_salts_status').html('<p class="mss_success">'+data.data+'</p>');
 							console.log('WordPress successfully executed the requested action.');
 						} else {
-							$('#nsmi_shuffle_salts_status').html('<p class="nsmi_error">'+data.data+'</p>');
+							$('#mss_shuffle_salts_status').html('<p class="mss_error">'+data.data+'</p>');
 							console.log('WordPress failed to execute the requested action.');
 						}
 					}, // success
@@ -77,10 +77,10 @@ class MI_Salt_Shuffler {
 						console.dir('errorThrown');
 						console.dir(errorThrown);
 						if(errorThrown.length) {
-							$('#nsmi_shuffle_salts_status').html('<p class="nsmi_error">'+ errorThrown + '</p>');
+							$('#mss_shuffle_salts_status').html('<p class="mss_error">'+ errorThrown + '</p>');
 						}
 						else {
-							$('#nsmi_shuffle_salts_status').html('<p class="nsmi_error">Failed to execute the requested action.</p>');
+							$('#mss_shuffle_salts_status').html('<p class="mss_error">Failed to execute the requested action.</p>');
 						}
 					}
 				}); // ajax post
