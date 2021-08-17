@@ -81,18 +81,20 @@ final class nsmi_utils {
 	 * Log message to file
 	 */
 	static function flog( $str, $file = '', $timestamp = false ) {
-		$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
-		$date = $date . '-' . microtime( true );
-		if ( $file ) {
-			$file = NSMI_DIR . $file;
-		} else {
-			$file = NSMI_DIR . 'log.log';
+		if(defined('WP_DEBUG') && true === WP_DEBUG) {			
+			$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
+			$date = $date . '-' . microtime( true );
+			if ( $file ) {
+				$file = NSMI_DIR . $file;
+			} else {
+				$file = NSMI_DIR . 'log.log';
+			}
+			if ( $timestamp ) {
+				file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
+			}
+			$str = print_r( $str, true );
+			file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
 		}
-		if ( $timestamp ) {
-			file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
-		}
-		$str = print_r( $str, true );
-		file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
 	}
 
 	static function num_cpus() {
