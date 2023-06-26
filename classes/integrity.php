@@ -8,8 +8,10 @@ class MI_Integrity {
 		}
 		return $instance;
 	}
+
 	private function __construct() {
 	}
+
 	function init() {
 		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
 		add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
@@ -17,12 +19,14 @@ class MI_Integrity {
 		add_action( 'upgrader_process_complete', array( $this, 'delete_checksums' ), 9999, 2 );
 		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
+
 	function add_meta_boxes() {
 		global $mss_integrity_results;
 		add_meta_box( 'integrity_missing', 'Integrity: Missing Files', array( $this, 'meta_box_missing_files' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'integrity_failed', 'Integrity: Failed Checksums', array( $this, 'meta_box_failed_checksums' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 		add_meta_box( 'integrity_extra', 'Integrity: Missing Checksums', array( $this, 'meta_box_extra_files' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 	}
+
 	function meta_box_missing_files() {
 		global $mss_integrity_results;
 		if ( ! empty( $mss_integrity_results ) ) {
@@ -40,6 +44,7 @@ class MI_Integrity {
 			echo '<div class="integrity_response"></div>';
 		}
 	}
+
 	function meta_box_failed_checksums() {
 		global $mss_integrity_results;
 		if ( ! empty( $mss_integrity_results['failed_checksums'] ) ) {
@@ -53,6 +58,7 @@ class MI_Integrity {
 			echo '<div class="integrity_response"></div>';
 		}
 	}
+
 	function meta_box_extra_files() {
 		global $mss_integrity_results;
 		if ( ! empty( $mss_integrity_results['extra_files'] ) ) {
@@ -66,6 +72,7 @@ class MI_Integrity {
 			echo '<div class="integrity_response"></div>';
 		}
 	}
+
 	function footer_scripts() {
 		?>
 		<script type="text/javascript">
@@ -182,6 +189,7 @@ class MI_Integrity {
 	function delete_checksums() {
 		delete_transient( 'mss_repo_checksums' );
 	}
+
 	function get_checksums( $cached = true ) {
 		return mss_utils::fetch_checksums();
 		// $checksums = $cached ? get_transient( 'mss_repo_checksums' ) : false;
@@ -204,6 +212,7 @@ class MI_Integrity {
 		// return $checksums;
 		// }
 	}
+
 	function get_plugin_checksums() {
 		$missing          = array();
 		$all_plugins      = get_plugins();
@@ -237,6 +246,7 @@ class MI_Integrity {
 		}
 		return $plugin_checksums;
 	}
+
 	/**
 	 * Verify checksums if we have a checksum for a file
 	 *
@@ -300,6 +310,7 @@ class MI_Integrity {
 		$failed_files['failed_checksums'] = array_values( $failed_checksums );
 		return $failed_files;
 	}
+	
 	function get_all_files( $path = false ) {
 		$files = mss_utils::get_files();
 		return $files['files'];

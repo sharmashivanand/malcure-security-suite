@@ -149,16 +149,62 @@ final class mss_utils {
 	 * @param boolean $path
 	 * @return array, file-paths and file-count
 	 */
-	static function get_files( $path = false ) {
+
+	static function get_files( $directory = false ) {
+		if ( ! $directory ) {
+			$directory = ABSPATH;
+		}
+		$files = array();
+
+		if ( is_readable( $directory ) ) {
+			$iterator = new RecursiveIteratorIterator(
+				new RecursiveDirectoryIterator( $directory, RecursiveDirectoryIterator::SKIP_DOTS ),
+				RecursiveIteratorIterator::LEAVES_ONLY,
+				RecursiveIteratorIterator::CATCH_GET_CHILD // Catch exceptions for unreadable directories/files
+			);
+
+			foreach ( $iterator as $file ) {
+				try {
+					if ( $file->isFile() ) {
+						$files[] = $file->getPathname();
+					}
+				} catch ( UnexpectedValueException $e ) {
+					// Handle exception for unreadable files/directories
+					continue;
+				}
+			}
+		}
+
+		sort( $files );
+		if ( $directory == ABSPATH ) {
+			// self::flog( $files );
+		}
+		return array(
+			'total_files' => count( $files ),
+			'files'       => $files,
+		);
+	}
+
+	static function O_get_files( $path = false ) {
 		if ( ! $path ) {
 			$path = ABSPATH;
 		}
+		self::flog( '$path' );
+		self::flog( $path );
 		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
 		$files    = array();
-		foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
-			$files[] = $filename;
+		try {
+			foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
+				if ( is_file( $filename ) ) {
+					$files[] = $filename;
+				}
+			}
+		} catch ( Exception $e ) {
+			// Handle the exception and continue to the next file
+			self::flog( $e );
 		}
 		sort( $files );
+		self::flog( $files );
 		return array(
 			'total_files' => count( $files ),
 			'files'       => $files,

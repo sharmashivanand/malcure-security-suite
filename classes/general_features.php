@@ -1,5 +1,5 @@
 <?php
-final class mss_gen_utils {
+final class mss_gen_features {
 	private function __construct(){}
 	static function get_instance() {
 		static $instance = null;
@@ -9,6 +9,7 @@ final class mss_gen_utils {
 		}
 		return $instance;
 	}
+
 	function init() {
 		add_action( 'MI_security_suite_plugin_res', array( $this, 'resources' ) );
 		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
@@ -18,6 +19,7 @@ final class mss_gen_utils {
 		add_action( 'wp_ajax_mss_destroy_sessions', array( $this, 'destroy_sessions' ) );
 		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
 	}
+
 	function footer_scripts() {
 		?>
 		<script type="text/javascript">
@@ -40,6 +42,7 @@ final class mss_gen_utils {
 		</script>
 		<?php
 	}
+
 	function add_meta_boxes() {
 		add_meta_box( 'mss_config', 'Configuration', array( $this, 'configuration' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
 		if ( mss_utils::is_registered() ) {
@@ -52,6 +55,58 @@ final class mss_gen_utils {
 		}
 	}
 
+	function connection_ui() {
+		$current_user = wp_get_current_user();
+		?>
+		<h3>Quick connection with the Malware Intercept API</h3>
+		<p>This plugin is a SaaS solution and allows you to integrate your website with Malware Intercept Security Suite and uptime-monitoring services. A connection to the API endpoint is required for MI Security Suite to protect your site. API access is free for fair use and as our user base and traffic load grows, we continue to refine access limits. <a href="https://malwareintercept.com/?p=3&utm_source=adminnotice&utm_medium=web&utm_campaign=mintercept" target="_blank">Privacy Policy.</a></p>
+		<p><label><strong>First Name:</strong><br />
+		<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
+		<p><label><strong>Last Name:</strong><br />
+		<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
+		<p><label><strong>Email:</strong><br />
+		<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
+		<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
+		<a href="#" class="mss_action" id="mss_api_register_btn" role="button">Complete Setup&nbsp;&rarr;</a>
+		<script type="text/javascript">
+		jQuery(document).ready(function($){
+			$("#mss_api_register_btn").click(function(){
+				mss_api_register = {
+					mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
+					action: "mss_api_register",
+					user: {
+						fn: $('#mss_user_fname').val(),
+						ln: $('#mss_user_lname').val(),
+						email: $('#mss_user_email').val(),
+					}
+				};
+				$.ajax({
+					url: ajaxurl,
+					method: 'POST',
+					data: mss_api_register,
+					success: function(response_data, textStatus, jqXHR) {
+						console.dir(response_data);
+						if ((typeof response_data) != 'object') { // is the server not sending us JSON?
+						}
+						if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
+							location.reload();
+						} else { // perhaps this is just JSON without a success object
+							alert('Failed to register with API. Error: ' + response_data.data );
+						}
+					},
+					error: function( jqXHR, textStatus, errorThrown){},
+					complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
+					},
+				});
+			});
+		});
+		</script>
+		<?php
+	}
+
+	/**
+	 * For now, allows selection of color scheme
+	 */
 	function configuration() {
 		$color_schemes = array( 'Default', 'Darko' );
 		$options       = array();
@@ -68,64 +123,21 @@ final class mss_gen_utils {
 			echo '<option value="' . $v . '"' . selected( $current, $v, 0 ) . '>' . $k . '</option>';
 		}
 		?>
-	</select>
+		</select>
 		<?php
 	}
 
+	/**
+	 * Show mss error log
+	 */
 	function diags() {
 		mss_utils::llog( mss_utils::get_setting( 'log' ) );
 		// var_dump(mss_utils::get_setting( 'log' ));
 	}
 
-	function connection_ui() {
-			$current_user = wp_get_current_user();
-		?>
-			<h3>Quick connection with the Malware Intercept API</h3>
-			<p>This plugin is a SaaS solution and allows you to integrate your website with Malware Intercept Security Suite and uptime-monitoring services. A connection to the API endpoint is required for MI Security Suite to protect your site. API access is free for fair use and as our user base and traffic load grows, we continue to refine access limits. <a href="https://malwareintercept.com/?p=3&utm_source=adminnotice&utm_medium=web&utm_campaign=mintercept" target="_blank">Privacy Policy.</a></p>
-			<p><label><strong>First Name:</strong><br />
-			<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
-			<p><label><strong>Last Name:</strong><br />
-			<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
-			<p><label><strong>Email:</strong><br />
-			<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
-			<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-			<a href="#" class="mss_action" id="mss_api_register_btn" role="button">Complete Setup&nbsp;&rarr;</a>
-			<script type="text/javascript">
-			jQuery(document).ready(function($){
-				$("#mss_api_register_btn").click(function(){
-					mss_api_register = {
-						mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
-						action: "mss_api_register",
-						user: {
-							fn: $('#mss_user_fname').val(),
-							ln: $('#mss_user_lname').val(),
-							email: $('#mss_user_email').val(),
-						}
-					};
-					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						data: mss_api_register,
-						success: function(response_data, textStatus, jqXHR) {
-							console.dir(response_data);
-							if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-							}
-							if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
-								location.reload();
-							} else { // perhaps this is just JSON without a success object
-								alert('Failed to register with API. Error: ' + response_data.data );
-							}
-						},
-						error: function( jqXHR, textStatus, errorThrown){},
-						complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
-						},
-					});
-				});
-			});
-			</script>
-			<?php
-	}
-
+	/**
+	 * Show user registration details
+	 */
 	function registration_details() {
 		$user = mss_utils::is_registered();
 		// var_dump(mss_utils::$opt_name);
@@ -138,6 +150,12 @@ final class mss_gen_utils {
 		</table>
 		<?php
 	}
+
+	/**
+	 * Show verbose system information
+	 *
+	 * @return void
+	 */
 	function system_status() {
 		global $wpdb;
 		?>
@@ -270,6 +288,12 @@ final class mss_gen_utils {
 		</table>
 		<?php
 	}
+
+	/**
+	 * Show logged in usres
+	 *
+	 * @return void
+	 */
 	function session_management() {
 		?>
 		<h3>Logged-In Users</h3>
@@ -337,6 +361,10 @@ final class mss_gen_utils {
 			</script>
 			<?php
 	}
+
+	/**
+	 * Logout all other users
+	 */
 	function destroy_sessions() {
 		check_ajax_referer( 'mss_destroy_sessions', 'mss_destroy_sessions_nonce' );
 		$users = $this->get_users_loggedin();
@@ -349,6 +377,12 @@ final class mss_gen_utils {
 		}
 		wp_send_json_success();
 	}
+
+	/**
+	 * Returns all logged-in users
+	 *
+	 * @return void
+	 */
 	function get_users_loggedin() {
 		return get_users(
 			array(
@@ -357,8 +391,10 @@ final class mss_gen_utils {
 			)
 		);
 	}
+
 	function resources() {
 	}
+
 	/**
 	 * Trigger User registration Server-Side / Ajax
 	 *
@@ -385,8 +421,9 @@ final class mss_gen_utils {
 		wp_send_json_success( $registration );
 		wp_send_json_success( mss_utils::encode( mss_utils::get_plugin_data() ) );
 	}
+
 }
-function mss_gen_utils() {
-	return mss_gen_utils::get_instance();
+function mss_gen_features() {
+	return mss_gen_features::get_instance();
 }
-mss_gen_utils();
+mss_gen_features();

@@ -40,7 +40,6 @@ class MI_Scanner {
 	 *      'label' => 'unknown file found' || 'suspicious file contents' || 'severe infection found' // This can be used to present information on the UI
 	 */
 	function scan_file( $file ) {
-		// mss_utils::flog( 'backtrack_limit ' . ini_get( 'pcre.backtrack_limit' ) );
 
 		$ext = self::get_file_extension( $file );
 
@@ -57,7 +56,6 @@ class MI_Scanner {
 			}
 			// $s = microtime(1);
 			$definitions = $this->definitions;// self::get_malware_file_definitions();
-			// mss_utils::flog('get_malware_file_definitions took ' . (microtime(1) - $s) . 'sec');
 			foreach ( $definitions as $definition => $signature ) {
 				if ( $signature['class'] == 'htaccess' && $ext != 'htaccess' ) {
 					continue;

@@ -8,17 +8,21 @@ class MI_Salt_Shuffler {
 		}
 		return $instance;
 	}
+
 	private function __construct() {
 	}
+
 	function init() {
 		add_action( 'wp_ajax_mss_shuffle_salts', array( $this, 'shuffle_salts' ) );
 		add_action( 'wp_ajax_nopriv_mss_shuffle_salts', '__return_false' );
 		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
 		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
+
 	function add_meta_boxes() {
 		add_meta_box( 'mss_salt_shuffler', 'Salt Shuffler', array( $this, 'salt_shuffler_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
 	}
+
 	function salt_shuffler_ui(){ ?>
 		<p>WordPress salts make your passwords harder to crack. Shuffling WordPress salts will automatically log everyone out of your website, forcing them to relogin. Take it with a pinch of salt!</p>
 		<input class="mss_action" value="Shuffle Salts&nbsp;&rarr;" id="mss_shuffle_salts" type="submit" />
@@ -26,6 +30,7 @@ class MI_Salt_Shuffler {
 		<div id="mss_shuffle_salts_status" class="mss_status"></div>
 		<?php
 	}
+
 	function footer_scripts() {
 		?>
 		<script type="text/javascript">
@@ -90,6 +95,7 @@ class MI_Salt_Shuffler {
 		</script>
 		<?php
 	}
+
 	function shuffle_salts() {
 		WP_Filesystem();
 		global $wp_filesystem;
@@ -131,6 +137,7 @@ class MI_Salt_Shuffler {
 		}
 		wp_send_json_error( 'Failed to get wp-config.php location or it is not writable.' );
 	}
+
 	function generate_salt() {
 		try {
 			$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_ []{}<>~`+=,.;:/?|';
@@ -158,6 +165,7 @@ class MI_Salt_Shuffler {
 		}
 		return $secret_keys;
 	}
+	
 	function get_config_path() {
 		WP_Filesystem();
 		global $wp_filesystem;

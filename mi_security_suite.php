@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: MI Security Suite
  * Description: MI Security Suite helps you lock down and secure your WordPress site.
- * Version:     0.6
+ * Version:     0.7
  * Author:      Malware Intercept
  * Author URI:  https://malwareintercept.com
  * Text Domain: malcure-security-suite
