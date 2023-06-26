@@ -67,7 +67,8 @@ final class MI_security_suite {
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
-		//add_action( 'admin_footer', array( $this, 'fw_installer' ) );
+		add_action( 'admin_footer', array( $this, 'fw_installer' ) );
+		add_action( 'mss_admin_scripts', array( $this, 'mss_footer_script' ) );
 
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 
@@ -142,56 +143,7 @@ final class MI_security_suite {
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
-			$('#mss_color_scheme').on('change',function(){
-				$classes = $('body').attr('class');
-				$classes = $classes.split(" ");
-				$classes = $classes.filter(function(value) {
-    				return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^mss_/ig) );
-				});
-				$classes.push('mss_' + this.value);
-				$classes = $classes.join(' ');
-				$classes = $('body').attr('class',$classes);
-				ajax_request( 'set_color_scheme', this.value, 'color_scheme_cb' ); 
-			});
-		});
-
-		function color_scheme_cb($response){
-			console.dir($response);
-		}
-
-		function ajax_request(request, data, callback){
-			mss_ajax_payload = {
-				mss_ajax_nonce: '<?php echo wp_create_nonce( 'mss_ajax' ); ?>',
-				action: "mss_ajax",
-				payload: {
-					data: data,
-					request: request
-				} 
-			};
-			$ = jQuery.noConflict();
-			$.ajax({
-				url: ajaxurl,
-				method: 'POST',
-				data: mss_ajax_payload,
-				success: function(response_data, textStatus, jqXHR) {
-					console.dir(response_data);
-					if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-					}
-					if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
-					} else { // perhaps this is just JSON without a success object
-					}
-				},
-				error: function( jqXHR, textStatus, errorThrown){},
-				complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
-					window[callback](jqXHR_data);
-				},
-			});
-		}
-		</script>
+		
 		<?php
 	}
 
@@ -209,110 +161,6 @@ final class MI_security_suite {
 			wp_send_json_error( 'Something went wrong.' );
 		}
 
-	}
-
-	function settings_page_old() {
-		?>
-		<div class="wrap">
-		<h1>MI Security Suite</h1>
-			<div class="container">
-			<?php
-			echo '<div id="mss_branding" class="mss_branding" >' . $this->render_branding() . '</div>';
-			if ( ! mss_utils::is_registered() ) {
-				$current_user = wp_get_current_user();
-				?>
-				<h3>You have successfully installed MI Security Suite</h3>
-				<p>Submit the following information to download free anti-virus definitions and Malcure rules.</p>
-				<p><label><strong>First Name:</strong><br />
-				<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
-				<p><label><strong>Last Name:</strong><br />
-				<input type="text" id="mss_user_lname" name="mss_user_lname" value="<?php $current_user->user_lastname; ?>" /></label></p>
-				<p><label><strong>Email:</strong><br />
-				<input type="text" id="mss_user_email" name="mss_user_email" value="" /></label></p>
-				<p><small>We do not use this email address for any other purpose unless you opt-in to receive other mailings. You can turn off alerts in the options.</small></p>
-				<a href="#" class="mss_action" id="mss_api_register_btn" role="button">Next&nbsp;&rarr;</a>
-				<script type="text/javascript">
-				jQuery(document).ready(function($){
-					$("#mss_api_register_btn").click(function(){
-						mss_api_register = {
-							mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
-							action: "mss_api_register",
-							user: {
-								fn: $('#mss_user_fname').val(),
-								ln: $('#mss_user_lname').val(),
-								email: $('#mss_user_email').val(),
-							}
-						};
-						$.ajax({
-							url: ajaxurl,
-							method: 'POST',
-							data: mss_api_register,
-							success: function(response_data, textStatus, jqXHR) {
-								console.dir(response_data);
-								if ((typeof response_data) != 'object') { // is the server not sending us JSON?
-								}
-								if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
-									location.reload();
-								} else { // perhaps this is just JSON without a success object
-									alert('Failed to register with API. Error: ' + response_data.data );
-								}
-							},
-							error: function( jqXHR, textStatus, errorThrown){},
-							complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
-							},
-						});
-					});
-				});
-				</script>
-				<?php
-			} else {
-				echo '<input class="mss_action" value="Init Scan &rarr;" id="mss_trigger_scan" type="submit" />';
-				?>
-				<script type="text/javascript">
-			jQuery(document).ready(function($){
-				$("#mss_trigger_scan").click(function(){
-					mss_trigger_scan = {
-						mss_trigger_scan_nonce: '<?php echo wp_create_nonce( 'mss_trigger_scan' ); ?>',
-						action: "mss_trigger_scan",
-						cachebust: Date.now(),
-						user: {
-							id: <?php echo get_current_user_id(); ?>
-						}
-					};
-					$.ajax({
-						url: ajaxurl,
-						method: 'POST',
-						data: mss_trigger_scan,
-						complete: function(jqXHR, textStatus) {
-							console.dir(jqXHR);
-						},
-						ssuccess: function(response) {
-							if ((typeof response) != 'object') {
-								response = JSON.parse( response );
-							}
-							if (response.hasOwnProperty('success')) {
-								$("#mss_destroy_sessions").fadeTo("slow",1,);
-								if(confirm('All users have been logged out (except you). Reload the page now?')) {
-									location.reload();
-								}
-							} else {
-								alert('Failed to logout other users.');
-							}
-						}
-					});
-				})
-			});
-			</script>
-				<h2>Notice</h2>
-				<p><strong>This plugin is meant for security experts to interpret the results and implement necessary measures as required. Here's the system status. For other features and functions please make your selection from the plugin-sub-menu from the left.</strong></p>
-				<h2>System Status</h2>
-				<?php $this->system_status(); ?>
-				<?php
-			}
-			?>
-			</div> <!-- / .container -->
-		</div> <!-- / .wrap -->
-		<?php
 	}
 
 	function admin_inline_style() {
@@ -359,9 +207,71 @@ final class MI_security_suite {
 		}
 	}
 
-	/*function fw_installer() {
+	function mss_footer_script(){
+		?>
+		<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+			postboxes.add_postbox_toggles('<?php echo $this->pagehook; ?>');
+			$('#mss_color_scheme').on('change',function(){
+				$classes = $('body').attr('class');
+				$classes = $classes.split(" ");
+				$classes = $classes.filter(function(value) {
+    				return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^mss_/ig) );
+				});
+				$classes.push('mss_' + this.value);
+				$classes = $classes.join(' ');
+				$classes = $('body').attr('class',$classes);
+				ajax_request( 'set_color_scheme', this.value, 'color_scheme_cb' ); 
+			});
+		});
+
+		function color_scheme_cb($response){
+			console.dir('color_scheme_cb');
+			console.dir($response);
+		}
+
+		function ajax_request(request, data, callback){
+			mss_ajax_payload = {
+				mss_ajax_nonce: '<?php echo wp_create_nonce( 'mss_ajax' ); ?>',
+				action: "mss_ajax",
+				payload: {
+					data: data,
+					request: request
+				} 
+			};
+			$ = jQuery.noConflict();
+			$.ajax({
+				url: ajaxurl,
+				method: 'POST',
+				data: mss_ajax_payload,
+				success: function(response_data, textStatus, jqXHR) {
+					console.dir(response_data);
+					if ((typeof response_data) != 'object') { // is the server not sending us JSON?
+					}
+					if (response_data.hasOwnProperty('success') && response_data.success) { // ajax request has a success but we haven't tested if success is true or false
+					} else { // perhaps this is just JSON without a success object
+					}
+				},
+				error: function( jqXHR, textStatus, errorThrown){},
+				complete: function(jqXHR_data, textStatus) { // use this since we need to run and catch regardless of success and failure
+					window[callback](jqXHR_data);
+				},
+			});
+		}
+		</script>
+		<?php
+	}
+
+	function fw_installer() {
+		?>
+		<script type="text/javascript">
+			console.log("<?php echo __FUNCTION__; ?> needs to be implemented. ");
+		</script>
+		<?php
+		return;
 		$screen = get_current_screen();
-		$this->llog( $screen );
+		mss_utils::llog( $screen );
 		if ( ! preg_match( '/malcure.*?firewall/', $screen->id ) ) {
 			return;
 		}
@@ -408,7 +318,7 @@ final class MI_security_suite {
 			//]]>
 		</script>
 		<?php
-	}*/
+	}
 	
 	function security_tests( $tests ) {
 		$tests['direct']['abspath_perm_test']     = array(

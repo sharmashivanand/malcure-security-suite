@@ -1,0 +1,178 @@
+deleting setting: scan_id
+deleting setting before: 
+Array
+(
+    [api-credentials] => Array
+        (
+            [ID] => 33
+            [user_email] => shivanand@binaryturf.com
+            [first_name] => Shivanand
+            [last_name] => Sharma
+            [success] => 1
+        )
+
+    [definitions_update_time] => 1687802726
+    [scan_progress] => Array
+        (
+            [total] => 408390
+            [remaining] => 391329
+            [rate] => 8.6805102235552
+            [scanning] => /_extvol_data/html/dev/plugindev/wp/.malware/numerous_files/file-1657119967-5016
+        )
+
+    [log] => Array
+        (
+            [1687798469] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798470] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798471] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798472] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798474] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798475] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798476] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798477] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798478] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687802800] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 
+                    [msg] => 
+                )
+
+        )
+
+    [color_scheme] => darko
+    [scan_id] => 1687802725
+)
+
+deleting setting after: 
+Array
+(
+    [api-credentials] => Array
+        (
+            [ID] => 33
+            [user_email] => shivanand@binaryturf.com
+            [first_name] => Shivanand
+            [last_name] => Sharma
+            [success] => 1
+        )
+
+    [definitions_update_time] => 1687802726
+    [scan_progress] => Array
+        (
+            [total] => 408390
+            [remaining] => 391329
+            [rate] => 8.6805102235552
+            [scanning] => /_extvol_data/html/dev/plugindev/wp/.malware/numerous_files/file-1657119967-5016
+        )
+
+    [log] => Array
+        (
+            [1687798469] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798470] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798471] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798472] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798474] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798475] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798476] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798477] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687798478] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 502
+                    [msg] => 
+                )
+
+            [1687802800] => Array
+                (
+                    [how] => ERROR: make_scan_request: received response code 
+                    [msg] => 
+                )
+
+        )
+
+    [color_scheme] => darko
+)
+

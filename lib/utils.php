@@ -90,10 +90,10 @@ final class mss_utils {
 				$file = MSS_DIR . 'log.log';
 			}
 			if ( $timestamp ) {
-				file_put_contents( $file, PHP_EOL . $date, FILE_APPEND | LOCK_EX );
+				file_put_contents( $file, $date . PHP_EOL, FILE_APPEND | LOCK_EX );
 			}
 			$str = print_r( $str, true );
-			file_put_contents( $file, PHP_EOL . $str, FILE_APPEND | LOCK_EX );
+			file_put_contents( $file, $str . PHP_EOL, FILE_APPEND | LOCK_EX );
 		}
 	}
 
@@ -641,11 +641,16 @@ final class mss_utils {
 	}
 
 	static function delete_setting( $setting ) {
+		self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
+		self::flog( 'deleting setting before: ' );
+		self::flog( $settings );
 		unset( $settings[ $setting ] );
+		self::flog( 'deleting setting after: ' );
+		self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
 
