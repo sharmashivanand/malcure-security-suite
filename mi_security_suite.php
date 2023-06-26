@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name: MI Security Suite
  * Description: MI Security Suite helps you lock down and secure your WordPress site.
- * Version:     0.5
+ * Version:     0.6
  * Author:      Malware Intercept
  * Author URI:  https://malwareintercept.com
  * Text Domain: malcure-security-suite
@@ -67,6 +67,8 @@ final class MI_security_suite {
 		add_action( 'admin_head', array( $this, 'admin_inline_style' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'plugin_res' ) );
 		add_action( 'admin_footer', array( $this, 'footer_scripts' ) );
+		//add_action( 'admin_footer', array( $this, 'fw_installer' ) );
+
 		do_action( get_class( $this ) . '_' . __FUNCTION__ );
 
 		add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
@@ -356,6 +358,58 @@ final class MI_security_suite {
 			do_action( 'mss_admin_scripts' );
 		}
 	}
+
+	/*function fw_installer() {
+		$screen = get_current_screen();
+		$this->llog( $screen );
+		if ( ! preg_match( '/malcure.*?firewall/', $screen->id ) ) {
+			return;
+		}
+		?>
+		<script type="text/javascript">
+			//<![CDATA[
+				var wpmr = {
+					wpmr_ajax_request: function( f_call, a_args ){
+						console.dir($);
+						if($ === undefined) {
+							$ = jQuery.noConflict();
+						}
+						$.ajax({
+								url: ajaxurl,
+								method: 'POST',
+								data: {
+									wpmr_ajax_data_nonce: '<?php echo wp_create_nonce( 'wpmr_ajax_data' ); ?>',
+									action: "wpmr_ajax_request",
+									cachebust: Date.now(),
+									request: [f_call, a_args],
+								},
+								complete: function(o_jqXHR, s_textStatus) {
+									// triggers regardless of ajax success failure
+									//console.log(o_jqXHR.responseJSON);
+								},
+								success: function( o_data, s_textStatus, o_jqXHR) {
+									console.dir('Request was successful.');
+									console.log('Result:');
+									console.log(o_jqXHR.responseJSON);
+								},
+								error: function ( o_jqXHR, s_textStatus, s_errorThrown) {
+									console.dir('Request failed.');
+								}
+
+							});
+					}
+				};
+				console.log( 'typeof wpmr:' + typeof wpmr );
+				console.log( wpmr.somevar );
+
+				jQuery(document).ready(function($) {
+					console.log('jQuery init');
+				});
+			//]]>
+		</script>
+		<?php
+	}*/
+	
 	function security_tests( $tests ) {
 		$tests['direct']['abspath_perm_test']     = array(
 			'label' => __( 'Permissions of WordPress installation directory' ),

@@ -4,7 +4,7 @@ Tags: security, anti-malware, hardening
 Requires at least: 3.7.4
 Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 0.5
+Stable tag: 0.6
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 MI Security Suite helps you lock down and secure your WordPress site.
@@ -12,7 +12,16 @@ MI Security Suite helps you lock down and secure your WordPress site.
 == Description ==
 MI Security Suite helps you lock down and secure your WordPress site.
 
+Features:
+* Reset WordPress Salts.
+* Verify WordPress integrity.
+* Manage WordPress user-sessions.
+* WordPress malware scan.
+
 == Upgrade Notice ==
+
+= 0.6 =
+* Tested for compatibility with WordPress 6.0.1
 
 = 0.5 =
 * Implemented basic scanner
@@ -31,6 +40,9 @@ MI Security Suite helps you lock down and secure your WordPress site.
 * Submitted for review.
 
 == Changelog ==
+
+= 0.6 =
+* Tested for compatibility with WordPress 6.0.1
 
 = 0.5 =
 * Implemented basic scanner
