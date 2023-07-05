@@ -59,7 +59,7 @@ final class mss_gen_features {
 		$current_user = wp_get_current_user();
 		?>
 		<h3>Quick connection with the Malware Intercept API</h3>
-		<p>This plugin is a SaaS solution and allows you to integrate your website with Malware Intercept Security Suite and uptime-monitoring services. A connection to the API endpoint is required for MI Security Suite to protect your site. API access is free for fair use and as our user base and traffic load grows, we continue to refine access limits. <a href="https://malwareintercept.com/?p=3&utm_source=adminnotice&utm_medium=web&utm_campaign=mintercept" target="_blank">Privacy Policy.</a></p>
+		<p>This plugin is a SaaS solution and allows you to integrate your website with Malware Intercept Security Suite and uptime-monitoring services. A connection to the API endpoint is required for Malcure Security Suite to protect your site. API access is free for fair use and as our user base and traffic load grows, we continue to refine access limits. <a href="https://malwareintercept.com/?p=3&utm_source=adminnotice&utm_medium=web&utm_campaign=mintercept" target="_blank">Privacy Policy.</a></p>
 		<p><label><strong>First Name:</strong><br />
 		<input type="text" id="mss_user_fname" name="mss_user_fname" value="<?php $current_user->user_firstname; ?>" /></label></p>
 		<p><label><strong>Last Name:</strong><br />

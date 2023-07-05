@@ -1,15 +1,15 @@
 <?php
 /**
- * MI Security Suite
+ * Malcure Security Suite
  *
- * @package     MI Security Suite
+ * @package     Malcure Security Suite
  * @author      Malware Intercept
  * @copyright   2021 malwareintercept.com
  * @license     MIT
  *
  * @wordpress-plugin
- * Plugin Name: MI Security Suite
- * Description: MI Security Suite helps you lock down and secure your WordPress site.
+ * Plugin Name: Malcure Security Suite
+ * Description: Malcure Security Suite helps you lock down and secure your WordPress site.
  * Version:     0.7
  * Author:      Malware Intercept
  * Author URI:  https://malwareintercept.com
@@ -61,6 +61,7 @@ final class MI_security_suite {
 			include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
+		register_activation_hook( __FILE__, array( $this, 'mss_plugin_activation' ) );
 		add_filter( 'site_status_tests', array( $this, 'security_tests' ) );
 		add_action( 'admin_init', array( $this, 'hook_meta_boxes' ) );
 		add_action( 'admin_menu', array( $this, 'settings_menu' ) );
@@ -76,6 +77,39 @@ final class MI_security_suite {
 
 		add_action( 'wp_ajax_mss_ajax', array( $this, 'mss_ajax' ) );
 		add_action( 'wp_ajax_nopriv_mss_ajax', '__return_false' );
+		add_action( 'plugins_loaded', array( $this, 'upgrade_tables' ) );
+
+	}
+
+	function mss_plugin_activation() {
+		$this->db_install();
+	}
+
+	function upgrade_tables() {
+		$db_version = mss_utils::get_setting( 'db_version' );
+		if ( ! $db_version || version_compare( $db_version, '1.0', '<' ) ) {
+			$this->db_install();
+		}
+	}
+
+	function db_install() {
+		global $wpdb;
+		$table_name      = $wpdb->prefix . 'mss_files';
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE $table_name (
+			file_id INT(11) NOT NULL AUTO_INCREMENT,
+			file_path LONGTEXT NOT NULL,
+			file_checksum LONGTEXT NOT NULL,
+			status LONGTEXT NOT NULL,
+			definitions_version LONGTEXT NOT NULL,
+			custom_attributes LONGBLOB,
+			PRIMARY KEY (file_id)
+		) $charset_collate;";
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+		mss_utils::update_setting( 'db_version', '1.0' );
 	}
 
 	function hook_meta_boxes() {
@@ -110,8 +144,8 @@ final class MI_security_suite {
 
 	function settings_menu() {
 		$this->pagehook                            = add_menu_page(
-			'MI Security Suite', // page_title
-			'MI Security Suite', // menu_title
+			'Malcure Security Suite', // page_title
+			'Malcure Security Suite', // menu_title
 			MSS_GOD,   // capability
 			'_mss',  // menu_slug
 			array( $this, 'settings_page' ), // function
@@ -123,7 +157,7 @@ final class MI_security_suite {
 	}
 
 	function settings_page() {
-		$title = 'MI Security Suite';
+		$title = 'Malcure Security Suite';
 		?>
 		<div class="wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
@@ -188,8 +222,8 @@ final class MI_security_suite {
 	function debug_menu() {
 		add_submenu_page(
 			'_mss',  // parent_slug
-			'MI Debug', // page_title
-			'MI Debug', // menu_title
+			'Malcure Debug', // page_title
+			'Malcure Debug', // menu_title
 			MSS_GOD, // capability
 			'debug_mss',
 			array( $this, 'debug_mss_page' )
@@ -207,7 +241,7 @@ final class MI_security_suite {
 		}
 	}
 
-	function mss_footer_script(){
+	function mss_footer_script() {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
@@ -217,7 +251,7 @@ final class MI_security_suite {
 				$classes = $('body').attr('class');
 				$classes = $classes.split(" ");
 				$classes = $classes.filter(function(value) {
-    				return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^mss_/ig) );
+					return ((value.replaceAll(/\s+/ig,'')).length != 0 ) && ( ! value.match(/^mss_/ig) );
 				});
 				$classes.push('mss_' + this.value);
 				$classes = $classes.join(' ');
@@ -319,7 +353,7 @@ final class MI_security_suite {
 		</script>
 		<?php
 	}
-	
+
 	function security_tests( $tests ) {
 		$tests['direct']['abspath_perm_test']     = array(
 			'label' => __( 'Permissions of WordPress installation directory' ),
@@ -374,7 +408,7 @@ final class MI_security_suite {
 			'label'       => __( 'No access for admin user account' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Admin user doesn\'t exist.' ) ),
@@ -403,7 +437,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for WordPress installation directory' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions for WordPress installation directory are set to 755' ) ),
@@ -435,7 +469,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for wp-admin' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-admin directory are set to 755' ) ),
@@ -467,7 +501,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for wp-content' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-includes directory are set to 755' ) ),
@@ -499,7 +533,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for wp-content' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-content directory are set to 775' ) ),
@@ -531,7 +565,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for themes directory' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on themes files are set to 664' ) ),
@@ -563,7 +597,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for plugin files' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on plugin files are set to 644' ) ),
@@ -606,7 +640,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for wp-config.php' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on wp-config.php are set to 400 or 440' ) ),
@@ -640,7 +674,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for .htaccess' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on .htaccess are set to 664' ) ),
@@ -675,7 +709,7 @@ final class MI_security_suite {
 			'label'       => __( 'Permissions for uploads directory' ),
 			'status'      => 'good',
 			'badge'       => array(
-				'label' => __( 'MI Security Suite' ),
+				'label' => __( 'Malcure Security Suite' ),
 				'color' => 'blue',
 			),
 			'description' => sprintf( '<p>%s</p>', __( 'Permissions on uploads directory are set to 755' ) ),

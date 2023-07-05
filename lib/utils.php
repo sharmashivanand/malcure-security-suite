@@ -1,6 +1,7 @@
 <?php
 require_once 'scanner_base.php';
 require_once 'cli.php';
+
 /**
  * Common utility functions
  */
@@ -11,11 +12,22 @@ final class mss_utils {
 	function __construct() {
 		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
 	}
-
+	
+	/**
+	 * Updates the color scheme of the UI
+	 *
+	 * @param [type] $scheme
+	 * @return void
+	 */
 	static function set_color_scheme( $scheme ) {
 		return self::update_setting( 'color_scheme', $scheme );
 	}
 
+	/**
+	 * Ensure singleton
+	 *
+	 * @return object / instance
+	 */
 	static function get_instance() {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
@@ -25,6 +37,11 @@ final class mss_utils {
 		return $instance;
 	}
 
+	/**
+	 * Initialize hooks
+	 *
+	 * @return void
+	 */
 	function init() {
 		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
 	}
@@ -63,6 +80,13 @@ final class mss_utils {
 		}
 	}
 
+	/**
+	 * Add message to database log
+	 *
+	 * @param [type] $how_when_where
+	 * @param string $msg
+	 * @return void
+	 */
 	static function append_log( $how_when_where, $msg = '' ) {
 		$errors = self::get_setting( 'log' );
 		if ( ! $errors ) {
@@ -97,6 +121,11 @@ final class mss_utils {
 		}
 	}
 
+	/**
+	 * get number of CPUs
+	 *
+	 * @return void
+	 */
 	static function num_cpus() {
 		$numCpus = false;
 		if ( is_file( '/proc/cpuinfo' ) ) {
@@ -124,18 +153,40 @@ final class mss_utils {
 		return $numCpus;
 	}
 
+	/**
+	 * If the plugin is registered with the API
+	 *
+	 * @return boolean
+	 */
 	static function is_registered() {
 		return self::get_setting( 'api-credentials' );
 	}
 
+	/**
+	 * String encode to keep it URL safe and not break JSON and not flagged by other scanners
+	 *
+	 * @param [type] $str
+	 * @return void
+	 */
 	static function encode( $str ) {
 		return strtr( base64_encode( json_encode( $str ) ), '+/=', '-_,' );
 	}
 
+	/**
+	 * Companion function to the encode fn above. Decodes the string and make it usable again
+	 *
+	 * @param [type] $str
+	 * @return void
+	 */
 	static function decode( $str ) {
 		return json_decode( base64_decode( strtr( $str, '-_,', '+/=' ) ), true );
 	}
 
+	/**
+	 * Plugin data to ensure the API returns the correct data for the respective configuration
+	 *
+	 * @return void
+	 */
 	static function get_plugin_data() {
 		if ( ! function_exists( 'get_plugin_data' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -149,7 +200,6 @@ final class mss_utils {
 	 * @param boolean $path
 	 * @return array, file-paths and file-count
 	 */
-
 	static function get_files( $directory = false ) {
 		if ( ! $directory ) {
 			$directory = ABSPATH;
@@ -179,32 +229,6 @@ final class mss_utils {
 		if ( $directory == ABSPATH ) {
 			// self::flog( $files );
 		}
-		return array(
-			'total_files' => count( $files ),
-			'files'       => $files,
-		);
-	}
-
-	static function O_get_files( $path = false ) {
-		if ( ! $path ) {
-			$path = ABSPATH;
-		}
-		self::flog( '$path' );
-		self::flog( $path );
-		$allfiles = new RecursiveDirectoryIterator( $path, RecursiveDirectoryIterator::SKIP_DOTS );
-		$files    = array();
-		try {
-			foreach ( new RecursiveIteratorIterator( $allfiles ) as $filename => $cur ) {
-				if ( is_file( $filename ) ) {
-					$files[] = $filename;
-				}
-			}
-		} catch ( Exception $e ) {
-			// Handle the exception and continue to the next file
-			self::flog( $e );
-		}
-		sort( $files );
-		self::flog( $files );
 		return array(
 			'total_files' => count( $files ),
 			'files'       => $files,
@@ -391,6 +415,11 @@ final class mss_utils {
 		}
 	}
 
+	/**
+	 * Fetches checksums for premium plugins from the API server
+	 *
+	 * @return void
+	 */
 	static function fetch_plugin_checksums() {
 		$missing          = array();
 		$all_plugins      = get_plugins();
@@ -429,6 +458,11 @@ final class mss_utils {
 		return $plugin_checksums;
 	}
 
+	/**
+	 * Gets checksums for themes from the API server
+	 *
+	 * @return void
+	 */
 	static function fetch_theme_checksums() {
 		$all_themes      = wp_get_themes();
 		$install_path    = get_home_path();
@@ -459,6 +493,12 @@ final class mss_utils {
 		return $theme_checksums;
 	}
 
+	/**
+	 * Add locally generated checksums to the checksums array
+	 *
+	 * @param [type] $checksums
+	 * @return void
+	 */
 	static function generated_checksums( $checksums ) {
 		$generated = self::get_option_checksums_generated();
 		if ( $generated && is_array( $generated ) && ! empty( $checksums ) && is_array( $checksums ) ) {
@@ -468,6 +508,9 @@ final class mss_utils {
 		return $checksums;
 	}
 
+	/**
+	 * Replace absolute path of the file with the WordPress relative path
+	 */
 	static function normalize_path( $file_path ) {
 		return str_replace( get_home_path(), '', $file_path );
 	}
@@ -539,6 +582,11 @@ final class mss_utils {
 		}
 	}
 
+	/**
+	 * Returns the version of the definitions
+	 *
+	 * @return void
+	 */
 	static function get_definition_version() {
 		$definitions = self::get_option( 'definitions' );
 		if ( $definitions && ! empty( $definitions['v'] ) ) {
@@ -575,22 +623,48 @@ final class mss_utils {
 		}
 	}
 
+	/**
+	 * Update core checksums
+	 *
+	 * @param [type] $checksums
+	 * @return void
+	 */
 	static function update_option_checksums_core( $checksums ) {
 		return self::update_option( 'checksums_core', $checksums );
 	}
 
+	/**
+	 * Update locally generate checksums
+	 *
+	 * @param [type] $checksums
+	 * @return void
+	 */
 	static function update_option_checksums_generated( $checksums ) {
 		return self::update_option( 'checksums_generated', $checksums );
 	}
 
+	/**
+	 * Save definitions to the database
+	 *
+	 * @param [type] $definitions
+	 * @return void
+	 */
 	static function update_option_definitions( $definitions ) {
 		return self::update_option( 'definitions', $definitions );
 	}
 
+	/**
+	 * Return core WordPress checksums
+	 *
+	 * @return void
+	 */
 	static function get_option_checksums_core() {
 		return self::get_option( 'checksums_core' );
 	}
 
+	/**
+	 * Return locally generated checksums
+	 */
 	static function get_option_checksums_generated() {
 		$checksums = self::get_option( 'checksums_generated' );
 		if ( ! $checksums ) {
@@ -599,22 +673,47 @@ final class mss_utils {
 		return $checksums;
 	}
 
+	/**
+	 * Return definitions
+	 *
+	 * @return void
+	 */
 	static function get_option_definitions() {
 		return self::get_option( 'definitions' );
 	}
 
+	/**
+	 * Delete core WordPress checksums
+	 *
+	 * @return void
+	 */
 	static function delete_option_checksums_core() {
 		return self::delete_option( 'checksums_core' );
 	}
 
+	/**
+	 * Delete locally generated checksums
+	 *
+	 * @return void
+	 */
 	static function delete_option_checksums_generated() {
 		return self::delete_option( 'checksums_generated' );
 	}
 
+	/**
+	 * Delete definitions
+	 *
+	 * @return void
+	 */
 	static function delete_option_definitions() {
 		return self::delete_option( 'definitions' );
 	}
 
+	/**
+	 * Wait for the lock to clear before getting lock
+	 *
+	 * @return void
+	 */
 	static function await_unlock() {
 		while ( self::get_option( 'MSS_lock' ) == 'true' ) {
 			usleep( rand( 2500, 7500 ) );
@@ -622,15 +721,33 @@ final class mss_utils {
 		self::update_option( 'MSS_lock', 'true' );
 	}
 
+	/**
+	 * Clear the lock
+	 *
+	 * @return void
+	 */
 	static function do_unlock() {
 		self::update_option( 'MSS_lock', 'false' );
 	}
 
+	/**
+	 * Get a specific setting from our settings array in the database option
+	 *
+	 * @param [type] $setting
+	 * @return void
+	 */
 	static function get_setting( $setting ) {
 		$settings = get_option( self::$opt_name );
 		return isset( $settings[ $setting ] ) ? $settings[ $setting ] : false;
 	}
 
+	/**
+	 * Update a specific setting in our settings array in the database option
+	 *
+	 * @param [type] $setting
+	 * @param [type] $value
+	 * @return void
+	 */
 	static function update_setting( $setting, $value ) {
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
@@ -640,6 +757,12 @@ final class mss_utils {
 		update_option( self::$opt_name, $settings );
 	}
 
+	/**
+	 * Delete a specific setting in our settings array in the database option
+	 *
+	 * @param [type] $setting
+	 * @return void
+	 */
 	static function delete_setting( $setting ) {
 		self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
@@ -654,6 +777,11 @@ final class mss_utils {
 		update_option( self::$opt_name, $settings );
 	}
 
+	/**
+	 * Run periodic maintenance tasks
+	 *
+	 * @return void
+	 */
 	static function do_maintenance() {
 
 		$started = self::get_setting( 'scan_id' );
@@ -689,14 +817,33 @@ final class mss_utils {
 		self::update_option( 'scans', $scans );
 	}
 
+	/**
+	 * Return our option from the database
+	 *
+	 * @param [type] $option
+	 * @return void
+	 */
 	static function get_option( $option ) {
 		return get_option( self::$opt_name . '_' . $option );
 	}
 
+	/**
+	 * Update our option in the database
+	 *
+	 * @param [type] $option
+	 * @param [type] $value
+	 * @return void
+	 */
 	static function update_option( $option, $value ) {
 		return update_option( self::$opt_name . '_' . $option, $value );
 	}
 
+	/**
+	 * Delete our option from the database
+	 *
+	 * @param [type] $option
+	 * @return void
+	 */
 	static function delete_option( $option ) {
 		return delete_option( self::$opt_name . '_' . $option );
 	}
