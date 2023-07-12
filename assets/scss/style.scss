@@ -2,6 +2,10 @@
 $bg-color: hsla(210, 48%, 17%, 1);
 
 body {
+    input[type="text"], input[type="password"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], select, textarea {
+        border-radius: 0;
+    }
+
     #poststuff {
         font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
@@ -18,6 +22,7 @@ body {
             border: none;
             font-weight: bold;
             line-height: 1;
+            text-decoration: none;
 
             &:hover {
                 background-color: hsl(210, 66%, 25%);
@@ -105,7 +110,6 @@ body {
             }
 
             .sig {
-
                 &.severe {
                     background: hsla(350, 67%, 48%, 1) padding-box;
                     color: white;
@@ -174,7 +178,6 @@ body {
 
     /* System Status Table */
     #system_status {
-
         th {
             text-align: left;
             white-space: nowrap;
@@ -245,7 +248,6 @@ body {
 }
 
 body.mss_darko {
-
     color: hsl(200, 20%, 50%);
 
     .notice,
@@ -273,6 +275,7 @@ body.mss_darko {
         border: 1px solid transparent;
         outline: 1px solid hsla(180, 100%, 50%, 0.5);
         -webkit-appearance: auto;
+        appearance: auto;
     }
 
     #wpcontent {
@@ -301,34 +304,38 @@ body.mss_darko {
 
         .mss_action {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
-            background: hsla(180, 50%, 50%, .15) padding-box;
+            background: hsla(180, 50%, 50%, 0.15) padding-box;
+
             // color: hsl(200, 15%, 50%);
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
             outline: 1px solid hsla(180, 100%, 50%, 0.5);
+
             // mix-blend-mode: screen;
 
             // background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(0, 100%, 50%, 1) 50%, hsla(180, 50%, 50%, .15) 50%) padding-box;
-            
+
             &.loading {
-                animation: btnloading 5s ease 0s infinite normal none running;            
+                animation: btnloading 5s ease 0s infinite normal none running;
             }
+
             &:hover {
                 background: hsla(210, 33%, 27%, 1) padding-box;
-                background: hsla(180, 50%, 50%, .25) padding-box;
+                background: hsla(180, 50%, 50%, 0.25) padding-box;
                 box-shadow: 0px 0px 10px hsl(180, 33%, 27%);
             }
 
             &:active {
                 color: white;
+
                 // background: radial-gradient(hsla(350, 33%, 27%, 1), hsla(210, 33%, 27%, 1));
                 // background: hsla(180, 100%, 50%, 0.75);
-                background: hsla(180, 50%, 50%, .50) padding-box;
+                background: hsla(180, 50%, 50%, 0.5) padding-box;
                 box-shadow: 0px 0px 10px hsla(180, 100%, 50%, 0.75);
             }
 
             &[disabled] {
-                background: hsla(180, 50%, 50%, .15) padding-box;
+                background: hsla(180, 50%, 50%, 0.15) padding-box;
                 box-shadow: none;
             }
         }
@@ -341,22 +348,18 @@ body.mss_darko {
     }
 
     #mss_scanner {
-
         #scan_status {
-
             &.inprogress {
                 border: 1px solid hsla(175, 100%, 75%, 0.75);
             }
         }
 
         #scan_results {
-
             .result {
                 color: aqua;
             }
 
             .sig {
-
                 &.severe {
                     background: hsla(350, 67%, 48%, 0.5) padding-box;
                     border: 1px solid transparent;
@@ -396,7 +399,6 @@ body.mss_darko {
 
     /* System Status Table */
     #system_status {
-
         .mss_bricks {
             background: hsla(210, 50%, 15%, 0.85);
         }
@@ -405,18 +407,22 @@ body.mss_darko {
 
 @keyframes btnloading {
     0% {
-        background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(350, 50%, 50%, 1) 0%, hsla(180, 50%, 50%, .15) 0%) padding-box;
+        background: linear-gradient(90deg, hsla(180, 50%, 50%, 0.15), hsla(350, 50%, 50%, 1) 0%, hsla(180, 50%, 50%, 0.15) 0%) padding-box;
     }
+
     25% {
-        background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(350, 50%, 50%, 1) 25%, hsla(180, 50%, 50%, .15) 25%) padding-box;
+        background: linear-gradient(90deg, hsla(180, 50%, 50%, 0.15), hsla(350, 50%, 50%, 1) 25%, hsla(180, 50%, 50%, 0.15) 25%) padding-box;
     }
+
     50% {
-        background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(350, 50%, 50%, 1) 50%, hsla(180, 50%, 50%, .15) 50%) padding-box;
+        background: linear-gradient(90deg, hsla(180, 50%, 50%, 0.15), hsla(350, 50%, 50%, 1) 50%, hsla(180, 50%, 50%, 0.15) 50%) padding-box;
     }
+
     75% {
-        background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(350, 50%, 50%, 1) 75%, hsla(180, 50%, 50%, .15) 75%) padding-box;
+        background: linear-gradient(90deg, hsla(180, 50%, 50%, 0.15), hsla(350, 50%, 50%, 1) 75%, hsla(180, 50%, 50%, 0.15) 75%) padding-box;
     }
+
     100% {
-        background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(350, 50%, 50%, 1) 100%, hsla(180, 50%, 50%, .15) 100%) padding-box;
+        background: linear-gradient(90deg, hsla(180, 50%, 50%, 0.15), hsla(350, 50%, 50%, 1) 100%, hsla(180, 50%, 50%, 0.15) 100%) padding-box;
     }
 }

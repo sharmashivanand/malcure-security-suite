@@ -12,7 +12,7 @@ final class mss_utils {
 	function __construct() {
 		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
 	}
-	
+
 	/**
 	 * Updates the color scheme of the UI
 	 *
@@ -194,13 +194,103 @@ final class mss_utils {
 		return get_plugin_data( MSS_FILE, false, false );
 	}
 
+	static function get_home_dir() {
+		$home    = set_url_scheme( get_option( 'home' ), 'http' );
+		$siteurl = set_url_scheme( get_option( 'siteurl' ), 'http' );
+		if ( ! empty( $home ) && 0 !== strcasecmp( $home, $siteurl ) &&
+			! ( defined( 'WP_CLI' ) && WP_CLI ) // Don't detect when using WP CLI
+		) {
+			$wp_path_rel_to_home = str_ireplace( $home, '', $siteurl );
+			$pos                 = strripos( str_replace( '\\', '/', $_SERVER['SCRIPT_FILENAME'] ), trailingslashit( $wp_path_rel_to_home ) );
+			$home_path           = substr( $_SERVER['SCRIPT_FILENAME'], 0, $pos );
+			$home_path           = trailingslashit( $home_path );
+		} else {
+			$home_path = ABSPATH;
+		}
+		$home_path = str_replace( '\\', '/', $home_path );
+		return trailingslashit( self::realpath( $home_path ) );
+	}
+
+	static function raise_limits_conditionally() {
+		if ( strpos( ini_get( 'disable_functions' ), 'ini_set' ) === false ) {
+			if ( function_exists( 'memory_get_usage' ) && ( (int) @ini_get( 'memory_limit' ) < 256 ) ) {
+				@ini_set( 'memory_limit', 256 . 'M' );
+			}
+		}
+		@ini_set( 'max_execution_time', max( (int) @ini_get( 'max_execution_time' ), 90 ) );
+	}
+
+	static function get_files( $path = false ) {
+		self::raise_limits_conditionally();
+		//self::flog( debug_backtrace()[1] );
+		//die();
+		// if ( defined( 'WP_CLI' ) && WP_CLI ) {
+		//
+		// } else {
+		// @ini_set( 'max_execution_time', 90 ); // Don't kill if using WP CLI
+		// @set_time_limit( 0 );
+		// }
+		if ( ! $path ) {
+			$path = self::get_home_dir();
+			if ( empty( $path ) ) {
+				self::flog( 'Dang!' );
+				return array();
+			}
+		}
+		if ( is_link( $path ) ) {
+			return array();
+		}
+		$path     = untrailingslashit( $path );
+		$children = @scandir( $path );
+		// self::flog($children);
+		if ( is_array( $children ) ) {
+			$children = array_diff( $children, array( '..', '.' ) );
+			$dirs     = array();
+			$files    = array();
+			foreach ( $children as $child ) {
+				$target = untrailingslashit( $path ) . DIRECTORY_SEPARATOR . $child;
+				if ( is_dir( $target ) && ! is_link( $target ) ) {
+					$elements = self::get_files( $target );
+					if ( $elements ) {
+						foreach ( $elements as $element ) {
+							if ( is_file( $element ) && ! is_link( $element ) ) {
+								// $files[] = self::realpath( $element );
+								self::insertFileIntoDatabase( self::realpath( $element ) );
+							}
+						}
+					}
+				}
+				if ( is_file( $target ) ) {
+					// $files[] = self::realpath( $target );
+					self::insertFileIntoDatabase( self::realpath( $target ) );
+				}
+			}
+			return $files;
+		}
+
+	}
+
+	static function insertFileIntoDatabase( $filePath ) {
+		global $wpdb;
+		$tableName = $wpdb->prefix . 'mss_files';
+		self::flog($filePath);
+		$data = array(
+			'path' => $filePath,
+			// additional columns and their respective values
+		);
+
+		$wpdb->insert( $tableName, $data );
+	}
+
+
 	/**
 	 * Returns all files at the specified path
 	 *
 	 * @param boolean $path
 	 * @return array, file-paths and file-count
 	 */
-	static function get_files( $directory = false ) {
+	static function get_all_files_o( $directory = false ) {
+
 		if ( ! $directory ) {
 			$directory = ABSPATH;
 		}
@@ -233,6 +323,15 @@ final class mss_utils {
 			'total_files' => count( $files ),
 			'files'       => $files,
 		);
+	}
+
+	static function realpath( $path ) {
+		self::flog( $path );
+		$realpath = realpath( $path );
+		if ( $realpath ) {
+			return $realpath;
+		}
+		return $path;
 	}
 
 	/**
@@ -805,16 +904,16 @@ final class mss_utils {
 		$is_expired = $difference > ( 3600 * 6 ) ? 1 : 0;if ( $is_expired ) {
 			self::delete_setting( 'scan_id' );
 		}
-		$scans = self::get_option( 'scans' );
-		if ( empty( $scans ) ) { // when no scans have been run till date
-			$scans = array();
-		}
-		$retain  = 2;
-		$retain -= 1; // purge one extra so that we can make space for new scan. This way we'll end up having the same number after completion.
-		if ( count( $scans ) >= $retain ) {
-			$scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
-		}
-		self::update_option( 'scans', $scans );
+		// $scans = self::get_option( 'scans' );
+		// if ( empty( $scans ) ) { // when no scans have been run till date
+		// $scans = array();
+		// }
+		// $retain  = 2;
+		// $retain -= 1; // purge one extra so that we can make space for new scan. This way we'll end up having the same number after completion.
+		// if ( count( $scans ) >= $retain ) {
+		// $scans = array_slice( $scans, count( $scans ) - $retain, $retain, true );
+		// }
+		// self::update_option( 'scans', $scans );
 	}
 
 	/**

@@ -3,7 +3,7 @@
 class MI_Scanner {
 
 	public $filemaxsize = 1111111;
-	
+
 	/**
 	 * Initialize with api credentials. First / Last name, email are must
 	 *
@@ -26,6 +26,12 @@ class MI_Scanner {
 		$this->creds = $creds;
 	}
 
+	/**
+	 * Buggy function. Do not use
+	 *
+	 * @param boolean $path
+	 * @return void
+	 */
 	function get_files( $path = false ) {
 		return mss_utils::get_files();
 	}
@@ -90,8 +96,11 @@ class MI_Scanner {
 		}
 	}
 
+	/**
+	 * Checks if a file is valid for scanning
+	 */
 	function is_valid_file( $file ) {
-		if ( file_exists( $file ) && // Check if file or dir exists
+		if (
 			is_file( $file ) && // Check if is actually a file
 			filesize( $file ) && // check if the file is not empty
 			filesize( $file ) <= $this->filemaxsize // Check if file-size qualifies
@@ -101,6 +110,12 @@ class MI_Scanner {
 		return false;
 	}
 
+	/**
+	 * returns the extension of a file
+	 *
+	 * @param [type] $filename
+	 * @return void
+	 */
 	function get_file_extension( $filename ) {
 		$nameparts = explode( '.', ".$filename" );
 		return strtolower( $nameparts[ ( count( $nameparts ) - 1 ) ] );
@@ -113,18 +128,36 @@ class MI_Scanner {
 	 * @return true if file is inside one of core directories false otherwise
 	 */
 	function in_core_dir( $file ) {
-		if ( strpos( $file, get_home_path() . 'wp-admin/' ) === false && strpos( $file, get_home_path() . 'wp-includes/' ) === false ) { // if the file is inside wp-admin
-			return false;
+		$file = mss_utils::realpath( $file );
+		if ( strpos( $file, trailingslashit( mss_utils::realpath( ABSPATH ) ) . 'wp-admin/' ) !== false || strpos( $file, trailingslashit( mss_utils::realpath( ABSPATH ) ) . WPINC ) !== false ) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
+	/**
+	 * Scans plaintext contents
+	 *
+	 * @param [type] $arrContents
+	 * @return void
+	 */
 	function scan_contents( $arrContents ) {
 	}
 
+	/**
+	 * Scans plaintext content
+	 *
+	 * @param [type] $content
+	 * @return void
+	 */
 	function scan_content( $content ) {
 	}
 
+	/**
+	 * Return full definitions array
+	 *
+	 * @return array
+	 */
 	function get_all_definitions() {
 		$definitions = self::get_definitions_data();
 		if ( $definitions ) {
@@ -143,7 +176,11 @@ class MI_Scanner {
 			return $defs['malware'];
 		}
 	}
-
+	/**
+	 * Returns the version of definition
+	 *
+	 * @return string
+	 */
 	static function get_definition_version() {
 		$defs = self::get_all_definitions();
 		if ( ! empty( $defs['v'] ) ) {

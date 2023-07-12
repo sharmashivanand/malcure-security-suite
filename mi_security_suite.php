@@ -4,19 +4,19 @@
  *
  * @package     Malcure Security Suite
  * @author      Malware Intercept
- * @copyright   2021 malwareintercept.com
+ * @copyright   2023 malcure.com
  * @license     MIT
  *
  * @wordpress-plugin
  * Plugin Name: Malcure Security Suite
  * Description: Malcure Security Suite helps you lock down and secure your WordPress site.
  * Version:     0.7
- * Author:      Malware Intercept
- * Author URI:  https://malwareintercept.com
+ * Author:      Malcure
+ * Author URI:  https://malcure.com
  * Text Domain: malcure-security-suite
  * License:     MIT
  * License URI: https://opensource.org/licenses/MIT
- * Plugin URI:  https://malwareintercept.com
+ * Plugin URI:  https://malcure.com
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,6 +51,12 @@ final class MI_security_suite {
 	}
 
 	function init() {
+		//if ( defined( 'WP_CLI' ) && WP_CLI ) {
+//
+		//} else {
+		//	@ini_set( 'max_execution_time', 90 ); // Don't kill if using WP CLI
+		//	@set_time_limit(0);
+		//}
 		$GLOBALS[ get_class( $this ) ] = array();
 		$this->dir                     = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url                     = trailingslashit( plugin_dir_url( __FILE__ ) );
@@ -87,6 +93,7 @@ final class MI_security_suite {
 
 	function upgrade_tables() {
 		$db_version = mss_utils::get_setting( 'db_version' );
+		
 		if ( ! $db_version || version_compare( $db_version, '1.0', '<' ) ) {
 			$this->db_install();
 		}
@@ -99,11 +106,11 @@ final class MI_security_suite {
 
 		$sql = "CREATE TABLE $table_name (
 			file_id INT(11) NOT NULL AUTO_INCREMENT,
-			file_path LONGTEXT NOT NULL,
-			file_checksum LONGTEXT NOT NULL,
+			path LONGTEXT NOT NULL UNIQUE,
+			checksum LONGTEXT NOT NULL,
 			status LONGTEXT NOT NULL,
-			definitions_version LONGTEXT NOT NULL,
-			custom_attributes LONGBLOB,
+			sver LONGTEXT NOT NULL,
+			attrib LONGBLOB,
 			PRIMARY KEY (file_id)
 		) $charset_collate;";
 

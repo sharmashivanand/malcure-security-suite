@@ -17,7 +17,7 @@ final class mss_gen_features {
 		add_action( 'wp_ajax_mss_api_register', array( $this, 'api_register_handler' ) );
 		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
 		add_action( 'wp_ajax_mss_destroy_sessions', array( $this, 'destroy_sessions' ) );
-		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
+		add_action( 'wp_ajax_nopriv_mss_destroy_sessions', '__return_false' );
 	}
 
 	function footer_scripts() {
@@ -70,7 +70,8 @@ final class mss_gen_features {
 		<a href="#" class="mss_action" id="mss_api_register_btn" role="button">Complete Setup&nbsp;&rarr;</a>
 		<script type="text/javascript">
 		jQuery(document).ready(function($){
-			$("#mss_api_register_btn").click(function(){
+			$("#mss_api_register_btn").click(function(event){
+				event.preventDefault();
 				mss_api_register = {
 					mss_api_register_nonce: '<?php echo wp_create_nonce( 'mss_api_register' ); ?>',
 					action: "mss_api_register",
@@ -242,49 +243,7 @@ final class mss_gen_features {
 			<th>Server Port</th>
 			<td><?php echo $_SERVER['SERVER_PORT']; ?></td>
 		</tr>
-		<tr>
-		<?php $allfilescount = mss_utils::get_files( get_home_path() ); ?>
-			<th>Total Files</th>
-			<td>
-			<?php echo $allfilescount['total_files']; ?>
-			</td>
-		</tr>
-		<tr><th>File Count (Recursive)</th><td>
-		<?php
-		$dirs = glob( trailingslashit( get_home_path() ) . '*', GLOB_ONLYDIR );
-		$dirs = array_merge( glob( trailingslashit( get_home_path() ) . 'wp-content/*', GLOB_ONLYDIR ), $dirs );
-		if ( $dirs ) {
-			asort( $dirs );
-			echo '<table>';
-			echo '<tr><th>Directory</th><th></th></tr>';
-			foreach ( $dirs as $dir ) {
-				echo '<tr><td class="dir_container">' . str_replace( get_home_path(), '', $dir ) . '</td><td class="dir_count">' . mss_utils::get_files( $dir )['total_files'] . '</td></tr>';
-			}
-			echo '</table>';
-		}
-		?>
-		</td></tr>
-		<tr><th>Hidden Files &amp; Folders</th>
-		<td id="hidden_files">
-		<?php
-		$hidden  = array_filter(
-			mss_utils::get_files( get_home_path() )['files'],
-			function( $v ) {
-				return ( empty( explode( '.', basename( $v ) )[0] ) || empty( explode( '.', basename( dirname( $v ) ) )[0] ) ) ? true : false;
-			}
-		);
-		$hidden  = array_values( $hidden );
-		$newlist = array();
-		foreach ( $hidden as $k => $v ) {
-			$parts = explode( '.', basename( dirname( $v ) ) );
-			if ( empty( $parts [0] ) ) {
-				$newlist[ dirname( $v ) ] = '<strong>[*DIR] ' . dirname( $v ) . '</strong>';
-			}
-			$newlist[ $v ] = '[FILE] ' . $v;
-		}
-		echo implode( '<br />', $newlist );
-		?>
-		</td></tr>
+		
 		</table>
 		<?php
 	}
@@ -401,10 +360,12 @@ final class mss_gen_features {
 	 * @return void
 	 */
 	function api_register_handler() {
+		mss_utils::flog($_REQUEST);
 		check_ajax_referer( 'mss_api_register', 'mss_api_register_nonce' );
 		$user       = $_REQUEST['user'];
 		$user['fn'] = preg_replace( '/[^A-Za-z ]/', '', $user['fn'] );
 		$user['ln'] = preg_replace( '/[^A-Za-z ]/', '', $user['ln'] );
+		mss_utils::flog($user);
 		if ( empty( $user['fn'] ) ) {
 			wp_send_json_error( 'Invalid firstname.' );
 		}

@@ -1,5 +1,5 @@
-===Malcure Security Suite ===
-Contributors: malwareintercept
+=== Malcure Security Suite ===
+Contributors: malwareintercept,malcure
 Tags: security, anti-malware, hardening
 Requires at least: 3.7.4
 Tested up to: 6.2.2
