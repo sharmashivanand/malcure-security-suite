@@ -270,14 +270,7 @@ final class mss_utils {
 
 	}
 
-	static function insertFileIntoDatabase( $filePath ) {
-		global $wpdb;
-		$tableName = $wpdb->prefix . 'mss_files';
-		self::flog( $filePath );
 
-		// $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName, $data ) );
-		$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path) VALUES (%s)", $filePath ) );
-	}
 
 
 	/**
@@ -566,11 +559,29 @@ final class mss_utils {
 		self::insertChecksumIntoDatabase( $core_checksums, 'core', $ver );
 	}
 
+	static function insertFileIntoDatabase( $filePath ) {
+		global $wpdb;
+		$tableName = $wpdb->prefix . 'mss_files';
+		self::flog( $filePath );
+
+		// $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName, $data ) );
+		$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path) VALUES (%s)", $filePath ) );
+	}
+
 	static function insertChecksumIntoDatabase( $arrChecksums, $type, $version ) {
 		global $wpdb;
 		$tableName = $wpdb->prefix . 'mss_checksums';
 		foreach ( $arrChecksums as $key => $value ) {
-			$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path, checksum, type, ver) VALUES (%s, %s, %s, %s)", $key, $value, $type, $version ) );
+			$wpdb->query(
+				$wpdb->prepare(
+					"INSERT INTO $tableName (path, checksum, type, ver) VALUES (%s, %s, %s, %s) 
+        			ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)",
+					$key,
+					$value,
+					$type,
+					$version
+				)
+			);
 		}
 	}
 
@@ -585,14 +596,10 @@ final class mss_utils {
 		$install_path     = self::get_home_dir();
 		$plugin_checksums = array();
 		foreach ( $all_plugins as $key => $value ) {
-			// print_r( trailingslashit( dirname( MSS_DIR ) ) . $key );
-			// print_r(PHP_EOL);
-			// print_r( $value );
-			// print_r(PHP_EOL);
-			// continue;
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
 				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
+				$t1           = time();
 				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
 				$checksum     = wp_safe_remote_get( $checksum_url );
 				if ( is_wp_error( $checksum ) ) {
@@ -609,28 +616,25 @@ final class mss_utils {
 
 				if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
 					$checksum = $checksum['files'];
-					
+					$k        = trailingslashit( $install_path . dirname( $plugin_file ) );
+					$t0e      = time();
+					echo "fetched web\t" . ( $t0e - $t1 ) . PHP_EOL;
 					foreach ( $checksum as $file => $checksums ) {
 						if ( is_array( $checksums['sha256'] ) ) {
 							$checksums['sha256'] = $checksums['sha256'][0];
 						}
-						$plugin_checksums[ trailingslashit( $install_path . dirname( $plugin_file ) ) . $file ] = $checksums['sha256'];
+						$plugin_checksums[ $k . $file ] = $checksums['sha256'];
 					}
-					// self::flog( $plugin_checksums );
-					self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
-					//print_r( PHP_EOL );
-					//continue;
 				}
-			}
 
-			//self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
+				$t2s = time();
+				echo "Built array\t" . ( $t2s - $t0e ) . PHP_EOL;
+				self::flog( 'Updating checksums for: ' . trailingslashit( $install_path . dirname( $plugin_file ) ) );
+				self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
+				$t2 = time();
+				echo "Updated db\t" . ( time() - $t2 ) . PHP_EOL;
+			}
 		}
-		// $extras = self::get_pro_checksums( $missing );
-		// if ( $extras ) {
-		// $plugin_checksums = array_merge( $plugin_checksums, $extras );
-		// }
-		// //return $plugin_checksums;
-		// self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $ver );
 	}
 
 	/**
