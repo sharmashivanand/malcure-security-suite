@@ -222,8 +222,8 @@ final class mss_utils {
 
 	static function get_files( $path = false ) {
 		self::raise_limits_conditionally();
-		//self::flog( debug_backtrace()[1] );
-		//die();
+		// self::flog( debug_backtrace()[1] );
+		// die();
 		// if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		//
 		// } else {
@@ -273,13 +273,10 @@ final class mss_utils {
 	static function insertFileIntoDatabase( $filePath ) {
 		global $wpdb;
 		$tableName = $wpdb->prefix . 'mss_files';
-		self::flog($filePath);
-		$data = array(
-			'path' => $filePath,
-			// additional columns and their respective values
-		);
+		self::flog( $filePath );
 
-		$wpdb->insert( $tableName, $data );
+		// $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName, $data ) );
+		$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path) VALUES (%s)", $filePath ) );
 	}
 
 
@@ -398,18 +395,18 @@ final class mss_utils {
 	/**
 	 * Returns full URL to API Endpoint for the requested action
 	 */
-	static function get_api_url( $action ) {
-		return self::build_api_url( $action );
+	static function get_api_url( $data ) {
+		return self::build_api_url( $data );
 	}
 
 	/**
 	 * Builds full URL to API Endpoint for the requested action
 	 */
-	static function build_api_url( $action ) {
-		$args          = array(
-			'cachebust'   => time(),
-			'wpmr_action' => $action,
-		);
+	static function build_api_url( $data ) {
+
+		$data['cachebust']   = time();
+		$data['wpmr_action'] = $data['action'];
+
 		$compatibility = self::get_plugin_data();
 		$state         = self::get_setting( 'api-credentials' );
 		$lic           = self::get_setting( 'license_key' );
@@ -421,8 +418,8 @@ final class mss_utils {
 		if ( $lic ) {
 			$state['lic'] = $lic;
 		}
-		$args['state'] = self::encode( $state );
-		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $args ) );
+		$data['state'] = self::encode( $state );
+		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $data ) );
 	}
 
 	/**
@@ -487,30 +484,93 @@ final class mss_utils {
 	 */
 	static function fetch_checksums() {
 		$checksums = self::get_option_checksums_core();
-		if ( ! $checksums ) {
-			global $wp_version;
-			$checksums = get_core_checksums( $wp_version, get_locale() );
-			if ( ! $checksums ) { // get_core_checksums failed
-				$checksums = get_core_checksums( $wp_version, 'en_US' ); // try en_US locale
-				if ( ! $checksums ) {
-					$checksums = array(); // fallback to empty array
-				}
+
+		return apply_filters( 'mss_checksums', $checksums );
+
+	}
+
+	static function get_checksums_db() {
+		global $wpdb;
+		$query     = "SELECT * FROM {$wpdb->prefix}mss_checksums";
+		$checksums = $wpdb->get_results( $query, ARRAY_A );
+		if ( empty( $checksums ) ) {
+			self::update_checksums_web();
+			$checksums = self::get_checksums_db();
+			if ( empty( $checksums ) ) {
+				return array();
 			}
-			$plugin_checksums = self::fetch_plugin_checksums();
-			if ( $plugin_checksums ) {
-				$checksums = array_merge( $checksums, $plugin_checksums );
+		}
+		return $checksums;
+	}
+
+
+	static function update_checksums_web() {
+		global $wp_version;
+		$checksums = self::update_checksums_core( $wp_version, get_locale() );
+		if ( ! $checksums ) { // get_core_checksums failed
+			$checksums = self::update_checksums_core( $wp_version, 'en_US' ); // try en_US locale
+			if ( ! $checksums ) {
+				$checksums = array(); // fallback to empty array
 			}
-			$theme_checksums = self::fetch_theme_checksums();
-			if ( $theme_checksums ) {
-				$checksums = array_merge( $checksums, $theme_checksums );
+		}
+		$plugin_checksums = self::update_checksums_plugins();
+		if ( $plugin_checksums ) {
+			$checksums = array_merge( $checksums, $plugin_checksums );
+		}
+		// $theme_checksums = self::fetch_theme_checksums();
+		// if ( $theme_checksums ) {
+		// $checksums = array_merge( $checksums, $theme_checksums );
+		// }
+		// if ( $checksums ) {
+		// self::update_option_checksums_core( $checksums );
+		// return apply_filters( 'mss_checksums', $checksums );
+		// }
+		// return apply_filters( 'mss_checksums', array() );
+	}
+
+	static function update_checksums_core( $ver = false, $locale = 'en_US' ) {
+		$state = self::get_setting( 'user' );
+		$state = self::encode( $state );
+		global $wp_version;
+		if ( ! $ver ) {
+			$ver = $wp_version;
+		}
+		$checksum_url = self::get_api_url(
+			array(
+				'action'  => 'wpmr_checksum',
+				'slug'    => 'wordpress',
+				'version' => $ver,
+				'locale'  => $locale,
+				'type'    => 'core',
+
+			)
+		);// WPMR_SERVER . '?wpmr_action=wpmr_checksum&slug=wordpress&version=' . $ver . '&locale=' . $locale . '&type=core&state=' . $state;
+		// $checksum_url = http_build_query();
+		// return $checksum_url;
+		$core_checksums = array();
+		$checksum       = wp_safe_remote_get( $checksum_url );
+		if ( is_wp_error( $checksum ) ) {
+			return;
+		}
+		if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
+			return;
+		}
+		$checksum = wp_remote_retrieve_body( $checksum );
+		$checksum = json_decode( $checksum, true );
+		if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
+			$checksum = $checksum['files'];
+			foreach ( $checksum as $file => $checksums ) {
+				$core_checksums[ $file ] = $checksums['sha256'];
 			}
-			if ( $checksums ) {
-				self::update_option_checksums_core( $checksums );
-				return apply_filters( 'mss_checksums', $checksums );
-			}
-			return apply_filters( 'mss_checksums', array() );
-		} else {
-			return apply_filters( 'mss_checksums', $checksums );
+		}
+		self::insertChecksumIntoDatabase( $core_checksums, 'core', $ver );
+	}
+
+	static function insertChecksumIntoDatabase( $arrChecksums, $type, $version ) {
+		global $wpdb;
+		$tableName = $wpdb->prefix . 'mss_checksums';
+		foreach ( $arrChecksums as $key => $value ) {
+			$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path, checksum, type, ver) VALUES (%s, %s, %s, %s)", $key, $value, $type, $version ) );
 		}
 	}
 
@@ -519,12 +579,17 @@ final class mss_utils {
 	 *
 	 * @return void
 	 */
-	static function fetch_plugin_checksums() {
+	static function update_checksums_plugins() {
 		$missing          = array();
 		$all_plugins      = get_plugins();
-		$install_path     = get_home_path();
+		$install_path     = self::get_home_dir();
 		$plugin_checksums = array();
 		foreach ( $all_plugins as $key => $value ) {
+			// print_r( trailingslashit( dirname( MSS_DIR ) ) . $key );
+			// print_r(PHP_EOL);
+			// print_r( $value );
+			// print_r(PHP_EOL);
+			// continue;
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
 				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
@@ -541,20 +606,31 @@ final class mss_utils {
 				}
 				$checksum = wp_remote_retrieve_body( $checksum );
 				$checksum = json_decode( $checksum, true );
+
 				if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
 					$checksum = $checksum['files'];
+					
 					foreach ( $checksum as $file => $checksums ) {
-						$plugin_checksums[ trailingslashit( dirname( $plugin_file ) ) . $file ] = $checksums['md5'];
+						if ( is_array( $checksums['sha256'] ) ) {
+							$checksums['sha256'] = $checksums['sha256'][0];
+						}
+						$plugin_checksums[ trailingslashit( $install_path . dirname( $plugin_file ) ) . $file ] = $checksums['sha256'];
 					}
+					// self::flog( $plugin_checksums );
+					self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
+					//print_r( PHP_EOL );
+					//continue;
 				}
-			} else {
 			}
+
+			//self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
 		}
-		$extras = self::get_pro_checksums( $missing );
-		if ( $extras ) {
-			$plugin_checksums = array_merge( $plugin_checksums, $extras );
-		}
-		return $plugin_checksums;
+		// $extras = self::get_pro_checksums( $missing );
+		// if ( $extras ) {
+		// $plugin_checksums = array_merge( $plugin_checksums, $extras );
+		// }
+		// //return $plugin_checksums;
+		// self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $ver );
 	}
 
 	/**

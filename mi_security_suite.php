@@ -92,6 +92,7 @@ final class MI_security_suite {
 	}
 
 	function upgrade_tables() {
+		// $this->db_install();
 		$db_version = mss_utils::get_setting( 'db_version' );
 		
 		if ( ! $db_version || version_compare( $db_version, '1.0', '<' ) ) {
@@ -101,21 +102,32 @@ final class MI_security_suite {
 
 	function db_install() {
 		global $wpdb;
-		$table_name      = $wpdb->prefix . 'mss_files';
+		$table_mss_files      = $wpdb->prefix . 'mss_files';
+		$table_mss_checksums      = $wpdb->prefix . 'mss_checksums';
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$sql = "CREATE TABLE $table_name (
+		$mss_files = "CREATE TABLE $table_mss_files (
 			file_id INT(11) NOT NULL AUTO_INCREMENT,
 			path LONGTEXT NOT NULL UNIQUE,
 			checksum LONGTEXT NOT NULL,
 			status LONGTEXT NOT NULL,
+			type LONGTEXT NOT NULL,
 			sver LONGTEXT NOT NULL,
 			attrib LONGBLOB,
 			PRIMARY KEY (file_id)
 		) $charset_collate;";
+		$mss_checksums = "CREATE TABLE $table_mss_checksums (
+			file_id INT(11) NOT NULL AUTO_INCREMENT,
+			path LONGTEXT NOT NULL UNIQUE,
+			checksum LONGTEXT NOT NULL,
+			type LONGTEXT NOT NULL,
+			ver LONGTEXT NOT NULL,
+			PRIMARY KEY (file_id)
+		) $charset_collate;";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $sql );
+		dbDelta( $mss_checksums );
+		dbDelta( $mss_files );
 		mss_utils::update_setting( 'db_version', '1.0' );
 	}
 
