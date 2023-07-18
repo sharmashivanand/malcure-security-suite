@@ -399,7 +399,9 @@ final class mss_utils {
 	 * Builds full URL to API Endpoint for the requested action
 	 */
 	static function build_api_url( $data ) {
-
+		if ( ! is_array( $data ) ) {
+			$data = array();
+		}
 		$data['cachebust']   = time();
 		$data['wpmr_action'] = $data['action'];
 
@@ -587,27 +589,6 @@ final class mss_utils {
 		}
 	}
 
-	static function insertChecksumIntoDatabase( $arrChecksums, $type, $version ) {
-		global $wpdb;
-		$tableName = $wpdb->prefix . 'mss_checksums';
-
-		$query             = "INSERT INTO $tableName (path, checksum, type, ver) VALUES ";
-		$valuePlaceholders = array();
-
-		foreach ( $arrChecksums as $key => $value ) {
-			$valuePlaceholders[] = $wpdb->prepare( '(%s, %s, %s, %s)', $key, $value, $type, $version );
-		}
-
-		if ( ! empty( $valuePlaceholders ) ) {
-			$query .= implode( ', ', $valuePlaceholders );
-			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
-			self::flog( $query );
-			self::flog( PHP_EOL );
-			$wpdb->query( $query );
-		}
-	}
-
-
 	/**
 	 * Fetches checksums for premium plugins from the API server
 	 *
@@ -618,10 +599,8 @@ final class mss_utils {
 		$all_plugins  = get_plugins();
 		$install_path = self::get_home_dir();
 		foreach ( $all_plugins as $key => $value ) {
-
-			$plugin_checksums = array();
-			// $plugin_checksums = array();
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
+				self::flog( 'Plugin: ' . dirname( $key ) );
 				$nonce = wp_create_nonce( 'mss_update_checksums' );
 				$args  = array(
 					'blocking' => false,
@@ -631,32 +610,25 @@ final class mss_utils {
 						'plugin_slug'    => dirname( $key ),
 						'plugin_version' => $value['Version'],
 						'install_path'   => $install_path,
-						'mss_update_checksums_plugin_nonce'          => $nonce, // Pass the generated nonce
+						'mss_update_checksums_plugin_nonce' => $nonce, // Pass the generated nonce
 					),
 				);
 				wp_remote_post(
 					admin_url( 'admin-ajax.php' ),
 					$args
 				);
-				
 			}
 		}
 	}
 
 	function update_checksums_plugin() {
-		self::flog( $_REQUEST );
-		//self::flog( wp_verify_nonce( $_REQUEST['nonce'], 'mss_update_checksums' ) );
-		check_ajax_referer( 'mss_update_checksums', 'mss_update_checksums_plugin_nonce' ); 
-		self::flog( 'mss_update_checksums' );
-
+		self::flog( 'update_checksums_plugin' );
+		check_ajax_referer( 'mss_update_checksums', 'mss_update_checksums_plugin_nonce' );
 		if ( ! empty( $_REQUEST['plugin_slug'] ) && ! empty( $_REQUEST['plugin_version'] ) ) {
-
 			$install_path = $_REQUEST['install_path'];
-			$t1           = microtime( 1 );
-
+			$st           = microtime( 1 );
 			$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . $_REQUEST['plugin_slug'] . '/' . $_REQUEST['plugin_version'] . '.json';
 			self::flog( $checksum_url );
-
 			$checksum = wp_safe_remote_get( $checksum_url );
 			if ( is_wp_error( $checksum ) ) {
 				return;
@@ -666,31 +638,42 @@ final class mss_utils {
 			}
 			$checksum = wp_remote_retrieve_body( $checksum );
 			$checksum = json_decode( $checksum, true );
-
 			if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
 				$checksum = $checksum['files'];
-				$k        = trailingslashit( $install_path . $_REQUEST['plugin_slug'] );
-				$t0e      = microtime( 1 );
-				self::flog( "Plugin\t" . $plugin_file . PHP_EOL );
-				self::flog( "fetched web\t" . ( $t0e - $t1 ) . PHP_EOL );
 				foreach ( $checksum as $file => $checksums ) {
 					if ( is_array( $checksums['sha256'] ) ) {
 						$checksums['sha256'] = $checksums['sha256'][0];
 					}
-					$plugin_checksums[ $k . $file ] = $checksums['sha256'];
+					$plugin_checksums[ WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $_REQUEST['plugin_slug'] . DIRECTORY_SEPARATOR . $file ] = $checksums['sha256'];
 				}
 			}
+			self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $_REQUEST['plugin_version'] );
+		}
+	}
 
-			$t2s = microtime( 1 );
-			self::flog( "Built array\t" . ( $t2s - $t0e ) . PHP_EOL );
-			self::flog( 'Updating checksums for: ' . trailingslashit( $install_path . dirname( $plugin_file ) ) );
-			self::flog( $plugin_checksums );
-			self::flog( $_REQUEST['plugin_version'] );
+	static function insertChecksumIntoDatabase( $arrChecksums, $type, $version ) {
+		global $wpdb;
+		$tableName = $wpdb->prefix . 'mss_checksums';
 
-			// self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
-			$t2 = microtime( 1 );
-			self::flog( "Updated db\t" . ( microtime( 1 ) - $t2 ) . PHP_EOL );
-			self::flog( PHP_EOL );
+		$query = "INSERT INTO $tableName (path, checksum, type, ver) VALUES ";
+
+		$valuePlaceholders = array();
+		$params            = array();
+
+		foreach ( $arrChecksums as $key => $value ) {
+			$valuePlaceholders[] = '(%s, %s, %s, %s)';
+			$params[]            = $key;
+			$params[]            = $value;
+			$params[]            = $type;
+			$params[]            = $version;
+		}
+
+		if ( ! empty( $valuePlaceholders ) ) {
+			$query .= implode( ', ', $valuePlaceholders );
+			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
+
+			$preparedQuery = $wpdb->prepare( $query, $params );
+			$wpdb->query( $preparedQuery );
 		}
 	}
 
