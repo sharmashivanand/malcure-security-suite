@@ -5,11 +5,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	class MSS_CLI {
 		function dump( $args, $assoc_args ) {
+			global $wpdb;
+			$table  = $wpdb->prefix . 'mss_checksums';
+			$delete = $wpdb->query( "TRUNCATE TABLE $table" );
+
 			$starttime = new DateTime( 'now' );
-			$opt       = mss_utils::update_checksums_web();
+			//$opt       = mss_utils::update_checksums_web();
+			$opt       = mss_utils::update_checksums_plugins();
 			// krsort( $opt );
 			WP_CLI::log( print_r( $opt, 1 ) );
-			$endtime         = new DateTime( 'now' );
+			$endtime        = new DateTime( 'now' );
 			$interval       = $endtime->diff( $starttime );
 			$elapsedHours   = $interval->h; // Elapsed hours
 			$elapsedMinutes = $interval->i; // Elapsed minutes

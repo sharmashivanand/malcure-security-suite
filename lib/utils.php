@@ -10,17 +10,7 @@ final class mss_utils {
 	static $cap      = 'activate_plugins';
 
 	function __construct() {
-		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
-	}
 
-	/**
-	 * Updates the color scheme of the UI
-	 *
-	 * @param [type] $scheme
-	 * @return void
-	 */
-	static function set_color_scheme( $scheme ) {
-		return self::update_setting( 'color_scheme', $scheme );
 	}
 
 	/**
@@ -44,6 +34,19 @@ final class mss_utils {
 	 */
 	function init() {
 		add_filter( 'mss_checksums', array( $this, 'generated_checksums' ) );
+
+		add_action( 'wp_ajax_mss_update_checksums_plugin', array( $this, 'update_checksums_plugin' ) );
+		add_action( 'wp_ajax_nopriv_mss_update_checksums_plugin', array( $this, 'update_checksums_plugin' ) );
+	}
+
+	/**
+	 * Updates the color scheme of the UI
+	 *
+	 * @param [type] $scheme
+	 * @return void
+	 */
+	static function set_color_scheme( $scheme ) {
+		return self::update_setting( 'color_scheme', $scheme );
 	}
 
 	/**
@@ -496,7 +499,6 @@ final class mss_utils {
 		return $checksums;
 	}
 
-
 	static function update_checksums_web() {
 		global $wp_version;
 		$checksums = self::update_checksums_core( $wp_version, get_locale() );
@@ -568,7 +570,7 @@ final class mss_utils {
 		$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path) VALUES (%s)", $filePath ) );
 	}
 
-	static function insertChecksumIntoDatabase( $arrChecksums, $type, $version ) {
+	static function insertChecksumIntoDatabase_old( $arrChecksums, $type, $version ) {
 		global $wpdb;
 		$tableName = $wpdb->prefix . 'mss_checksums';
 		foreach ( $arrChecksums as $key => $value ) {
@@ -585,55 +587,110 @@ final class mss_utils {
 		}
 	}
 
+	static function insertChecksumIntoDatabase( $arrChecksums, $type, $version ) {
+		global $wpdb;
+		$tableName = $wpdb->prefix . 'mss_checksums';
+
+		$query             = "INSERT INTO $tableName (path, checksum, type, ver) VALUES ";
+		$valuePlaceholders = array();
+
+		foreach ( $arrChecksums as $key => $value ) {
+			$valuePlaceholders[] = $wpdb->prepare( '(%s, %s, %s, %s)', $key, $value, $type, $version );
+		}
+
+		if ( ! empty( $valuePlaceholders ) ) {
+			$query .= implode( ', ', $valuePlaceholders );
+			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
+			self::flog( $query );
+			self::flog( PHP_EOL );
+			$wpdb->query( $query );
+		}
+	}
+
+
 	/**
 	 * Fetches checksums for premium plugins from the API server
 	 *
 	 * @return void
 	 */
 	static function update_checksums_plugins() {
-		$missing          = array();
-		$all_plugins      = get_plugins();
-		$install_path     = self::get_home_dir();
-		$plugin_checksums = array();
+		$missing      = array();
+		$all_plugins  = get_plugins();
+		$install_path = self::get_home_dir();
 		foreach ( $all_plugins as $key => $value ) {
+
+			$plugin_checksums = array();
+			// $plugin_checksums = array();
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
-				$plugin_file  = str_replace( $install_path, '', $plugin_file );
-				$t1           = time();
-				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
-				$checksum     = wp_safe_remote_get( $checksum_url );
-				if ( is_wp_error( $checksum ) ) {
-					continue;
-				}
-				if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
-					if ( '404' == wp_remote_retrieve_response_code( $checksum ) ) {
-						$missing[ $key ] = array( 'Version' => $value['Version'] );
-					}
-					continue;
-				}
-				$checksum = wp_remote_retrieve_body( $checksum );
-				$checksum = json_decode( $checksum, true );
-
-				if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
-					$checksum = $checksum['files'];
-					$k        = trailingslashit( $install_path . dirname( $plugin_file ) );
-					$t0e      = time();
-					echo "fetched web\t" . ( $t0e - $t1 ) . PHP_EOL;
-					foreach ( $checksum as $file => $checksums ) {
-						if ( is_array( $checksums['sha256'] ) ) {
-							$checksums['sha256'] = $checksums['sha256'][0];
-						}
-						$plugin_checksums[ $k . $file ] = $checksums['sha256'];
-					}
-				}
-
-				$t2s = time();
-				echo "Built array\t" . ( $t2s - $t0e ) . PHP_EOL;
-				self::flog( 'Updating checksums for: ' . trailingslashit( $install_path . dirname( $plugin_file ) ) );
-				self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
-				$t2 = time();
-				echo "Updated db\t" . ( time() - $t2 ) . PHP_EOL;
+				$nonce = wp_create_nonce( 'mss_update_checksums' );
+				$args  = array(
+					'blocking' => false,
+					'timeout'  => 0.01,
+					'body'     => array(
+						'action'         => 'mss_update_checksums_plugin',
+						'plugin_slug'    => dirname( $key ),
+						'plugin_version' => $value['Version'],
+						'install_path'   => $install_path,
+						'mss_update_checksums_plugin_nonce'          => $nonce, // Pass the generated nonce
+					),
+				);
+				wp_remote_post(
+					admin_url( 'admin-ajax.php' ),
+					$args
+				);
+				
 			}
+		}
+	}
+
+	function update_checksums_plugin() {
+		self::flog( $_REQUEST );
+		//self::flog( wp_verify_nonce( $_REQUEST['nonce'], 'mss_update_checksums' ) );
+		check_ajax_referer( 'mss_update_checksums', 'mss_update_checksums_plugin_nonce' ); 
+		self::flog( 'mss_update_checksums' );
+
+		if ( ! empty( $_REQUEST['plugin_slug'] ) && ! empty( $_REQUEST['plugin_version'] ) ) {
+
+			$install_path = $_REQUEST['install_path'];
+			$t1           = microtime( 1 );
+
+			$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . $_REQUEST['plugin_slug'] . '/' . $_REQUEST['plugin_version'] . '.json';
+			self::flog( $checksum_url );
+
+			$checksum = wp_safe_remote_get( $checksum_url );
+			if ( is_wp_error( $checksum ) ) {
+				return;
+			}
+			if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
+				return;
+			}
+			$checksum = wp_remote_retrieve_body( $checksum );
+			$checksum = json_decode( $checksum, true );
+
+			if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
+				$checksum = $checksum['files'];
+				$k        = trailingslashit( $install_path . $_REQUEST['plugin_slug'] );
+				$t0e      = microtime( 1 );
+				self::flog( "Plugin\t" . $plugin_file . PHP_EOL );
+				self::flog( "fetched web\t" . ( $t0e - $t1 ) . PHP_EOL );
+				foreach ( $checksum as $file => $checksums ) {
+					if ( is_array( $checksums['sha256'] ) ) {
+						$checksums['sha256'] = $checksums['sha256'][0];
+					}
+					$plugin_checksums[ $k . $file ] = $checksums['sha256'];
+				}
+			}
+
+			$t2s = microtime( 1 );
+			self::flog( "Built array\t" . ( $t2s - $t0e ) . PHP_EOL );
+			self::flog( 'Updating checksums for: ' . trailingslashit( $install_path . dirname( $plugin_file ) ) );
+			self::flog( $plugin_checksums );
+			self::flog( $_REQUEST['plugin_version'] );
+
+			// self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
+			$t2 = microtime( 1 );
+			self::flog( "Updated db\t" . ( microtime( 1 ) - $t2 ) . PHP_EOL );
+			self::flog( PHP_EOL );
 		}
 	}
 
@@ -1027,5 +1084,5 @@ final class mss_utils {
 		return delete_option( self::$opt_name . '_' . $option );
 	}
 }
-// mss_utils::get_instance();
-$mss_utils = new mss_utils();
+mss_utils::get_instance();
+// $mss_utils = new mss_utils();
