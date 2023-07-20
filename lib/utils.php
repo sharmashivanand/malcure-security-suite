@@ -1,5 +1,5 @@
 <?php
-require_once 'scanner_base.php';
+// require_once 'scanner_base.php';
 require_once 'cli.php';
 
 /**
@@ -245,7 +245,6 @@ final class mss_utils {
 		}
 		$path     = untrailingslashit( $path );
 		$children = @scandir( $path );
-		// self::flog($children);
 		if ( is_array( $children ) ) {
 			$children = array_diff( $children, array( '..', '.' ) );
 			$dirs     = array();
@@ -270,11 +269,7 @@ final class mss_utils {
 			}
 			return $files;
 		}
-
 	}
-
-
-
 
 	/**
 	 * Returns all files at the specified path
@@ -399,6 +394,9 @@ final class mss_utils {
 	 * Builds full URL to API Endpoint for the requested action
 	 */
 	static function build_api_url( $data ) {
+		if ( empty( $data['action'] ) ) {
+			return;
+		}
 		if ( ! is_array( $data ) ) {
 			$data = array();
 		}
@@ -648,6 +646,43 @@ final class mss_utils {
 				}
 			}
 			self::insertChecksumIntoDatabase( $plugin_checksums, 'plugin', $_REQUEST['plugin_version'] );
+		}
+	}
+
+	static function update_checksums_themes() {
+		$all_themes      = wp_get_themes();
+		$install_path    = ABSPATH;
+		$theme_checksums = array();
+		$theme_root      = get_theme_root();
+		$state           = self::get_setting( 'user' );
+		$state           = self::encode( $state );
+		foreach ( $all_themes as $key => $value ) {
+
+			$theme_file = trailingslashit( $theme_root ) . $key;
+			WP_CLI::log( $key );
+			WP_CLI::log( $theme_file );
+
+		}
+		// return $theme_checksums;
+	}
+
+	function update_checksums_theme() {
+		$theme_file       = str_replace( $install_path, '', $theme_file );
+			$checksum_url = WPMR_SERVER . '?wpmr_action=wpmr_checksum&slug=' . $key . '&version=' . $value['Version'] . '&type=theme&state=' . $state;
+			$checksum     = wp_safe_remote_get( $checksum_url );
+		if ( is_wp_error( $checksum ) ) {
+			return;
+		}
+		if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
+			return;
+		}
+			$checksum = wp_remote_retrieve_body( $checksum );
+			$checksum = json_decode( $checksum, true );
+		if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
+			$checksum = $checksum['files'];
+			foreach ( $checksum as $file => $checksums ) {
+				$theme_checksums[ trailingslashit( dirname( $theme_file ) ) . $file ] = $checksums['sha256'];
+			}
 		}
 	}
 

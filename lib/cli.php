@@ -10,7 +10,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			$delete = $wpdb->query( "TRUNCATE TABLE $table" );
 
 			$starttime = new DateTime( 'now' );
-			$opt       = mss_utils::update_checksums_web();
+			$opt       = mss_utils::update_checksums_themes();
 			// $opt = mss_utils::update_checksums_plugins();
 			// krsort( $opt );
 			WP_CLI::log( print_r( $opt, 1 ) );
