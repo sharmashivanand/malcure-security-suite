@@ -1,6 +1,6 @@
 <?php
 // Extensible class that handles malware scan processing
-class MI_Scanner {
+class Malcure_Scanner {
 
 	public $filemaxsize = 1111111;
 

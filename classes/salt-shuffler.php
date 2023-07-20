@@ -1,5 +1,5 @@
 <?php
-class MI_Salt_Shuffler {
+class Malcure_Salt_Shuffler {
 	static function get_instance() {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
@@ -16,11 +16,11 @@ class MI_Salt_Shuffler {
 		add_action( 'wp_ajax_mss_shuffle_salts', array( $this, 'shuffle_salts' ) );
 		add_action( 'wp_ajax_nopriv_mss_shuffle_salts', '__return_false' );
 		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
-		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		add_action( 'Malcure_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
 
 	function add_meta_boxes() {
-		add_meta_box( 'mss_salt_shuffler', 'Salt Shuffler', array( $this, 'salt_shuffler_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'mss_salt_shuffler', 'Salt Shuffler', array( $this, 'salt_shuffler_ui' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
 	}
 
 	function salt_shuffler_ui(){ ?>
@@ -177,4 +177,4 @@ class MI_Salt_Shuffler {
 		}
 	}
 }
-MI_Salt_Shuffler::get_instance();
+Malcure_Salt_Shuffler::get_instance();

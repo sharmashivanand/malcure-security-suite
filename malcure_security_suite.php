@@ -35,7 +35,7 @@ define( 'MSS_ID', 134 );
 
 // tar cvjf mss.tar.bz2 --exclude ".git/*" --exclude ".git" malcure-security-suite
 
-final class MI_security_suite {
+final class Malcure_security_suite {
 	public $dir;
 	public $url;
 	static function get_instance() {
@@ -64,7 +64,8 @@ final class MI_security_suite {
 		include_once $this->dir . 'classes/general_features.php';
 		if ( mss_utils::is_registered() ) {
 			include_once $this->dir . 'classes/integrity.php';
-			include_once $this->dir . 'classes/malware_scanner.php';
+			//include_once $this->dir . 'classes/malware_scanner.php';
+			include_once $this->dir . 'classes/malcure_malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
 		register_activation_hook( __FILE__, array( $this, 'mss_plugin_activation' ) );
@@ -106,7 +107,7 @@ final class MI_security_suite {
 		$table_mss_checksums      = $wpdb->prefix . 'mss_checksums';
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$mss_files = "CREATE TABLE $table_mss_files (
+		$mss_files = "CREATE TABLE IF NOT EXISTS $table_mss_files (
 			file_id INT(11) NOT NULL AUTO_INCREMENT,
 			path LONGTEXT NOT NULL UNIQUE,
 			checksum LONGTEXT NOT NULL,
@@ -116,7 +117,7 @@ final class MI_security_suite {
 			attrib LONGBLOB,
 			PRIMARY KEY (file_id)
 		) $charset_collate;";
-		$mss_checksums = "CREATE TABLE $table_mss_checksums (
+		$mss_checksums = "CREATE TABLE IF NOT EXISTS $table_mss_checksums (
 			file_id INT(11) NOT NULL AUTO_INCREMENT,
 			path LONGTEXT NOT NULL UNIQUE,
 			checksum LONGTEXT NOT NULL,
@@ -951,8 +952,8 @@ final class MI_security_suite {
 	}
 }
 
-function MI_security_suite() {
-	return MI_security_suite::get_instance();
+function Malcure_security_suite() {
+	return Malcure_security_suite::get_instance();
 }
 
-MI_security_suite();
+Malcure_security_suite();

@@ -1,5 +1,5 @@
 <?php
-class MI_Integrity {
+class Malcure_Integrity {
 	static function get_instance() {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
@@ -17,14 +17,14 @@ class MI_Integrity {
 		add_action( 'wp_ajax_mss_verify_integrity', array( $this, 'verify_integrity' ) );
 		add_action( 'wp_ajax_nopriv_mss_verify_integrity', '__return_false' );
 		add_action( 'upgrader_process_complete', array( $this, 'delete_checksums' ), 9999, 2 );
-		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		add_action( 'Malcure_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 	}
 
 	function add_meta_boxes() {
 		global $mss_integrity_results;
-		add_meta_box( 'integrity_missing', 'Integrity: Missing Files', array( $this, 'meta_box_missing_files' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
-		add_meta_box( 'integrity_failed', 'Integrity: Failed Checksums', array( $this, 'meta_box_failed_checksums' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
-		add_meta_box( 'integrity_extra', 'Integrity: Missing Checksums', array( $this, 'meta_box_extra_files' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'integrity_missing', 'Integrity: Missing Files', array( $this, 'meta_box_missing_files' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'integrity_failed', 'Integrity: Failed Checksums', array( $this, 'meta_box_failed_checksums' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
+		add_meta_box( 'integrity_extra', 'Integrity: Missing Checksums', array( $this, 'meta_box_extra_files' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
 	}
 
 	function meta_box_missing_files() {
@@ -346,4 +346,4 @@ class MI_Integrity {
 		}
 	}
 }
-MI_Integrity::get_instance();
+Malcure_Integrity::get_instance();

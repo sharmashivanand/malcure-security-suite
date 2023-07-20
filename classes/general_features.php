@@ -11,8 +11,8 @@ final class mss_gen_features {
 	}
 
 	function init() {
-		add_action( 'MI_security_suite_plugin_res', array( $this, 'resources' ) );
-		add_action( 'MI_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		add_action( 'Malcure_security_suite_plugin_res', array( $this, 'resources' ) );
+		add_action( 'Malcure_security_suite_add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_action( 'mss_admin_scripts', array( $this, 'footer_scripts' ) );
 		add_action( 'wp_ajax_mss_api_register', array( $this, 'api_register_handler' ) );
 		add_action( 'wp_ajax_nopriv_mss_api_register', '__return_false' );
@@ -44,14 +44,14 @@ final class mss_gen_features {
 	}
 
 	function add_meta_boxes() {
-		add_meta_box( 'mss_config', 'Configuration', array( $this, 'configuration' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
+		add_meta_box( 'mss_config', 'Configuration', array( $this, 'configuration' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'side' );
 		if ( mss_utils::is_registered() ) {
-			add_meta_box( 'mss_connection_details', 'Connection Details', array( $this, 'registration_details' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
-			add_meta_box( 'mss_site_status', 'Site Status', array( $this, 'system_status' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
-			add_meta_box( 'mss_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
-			add_meta_box( 'mss_logs', 'Logs &amp; Disgnostics', array( $this, 'diags' ), $GLOBALS['MI_security_suite']['pagehook'], 'side' );
+			add_meta_box( 'mss_connection_details', 'Connection Details', array( $this, 'registration_details' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'side' );
+			add_meta_box( 'mss_site_status', 'Site Status', array( $this, 'system_status' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
+			add_meta_box( 'mss_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
+			add_meta_box( 'mss_logs', 'Logs &amp; Disgnostics', array( $this, 'diags' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'side' );
 		} else {
-			add_meta_box( 'mss_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['MI_security_suite']['pagehook'], 'main' );
+			add_meta_box( 'mss_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
 		}
 	}
 
