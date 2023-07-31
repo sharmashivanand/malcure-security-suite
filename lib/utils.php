@@ -116,12 +116,26 @@ final class mss_utils {
 			} else {
 				$file = MSS_DIR . 'log.log';
 			}
-			if ( $timestamp ) {
+			if ( $timestamp && ! $this->is_cli() ) {
 				file_put_contents( $file, $date . PHP_EOL, FILE_APPEND | LOCK_EX );
+
 			}
 			$str = print_r( $str, true );
-			file_put_contents( $file, $str . PHP_EOL, FILE_APPEND | LOCK_EX );
+			if ( ! $this->is_cli() ) {
+				file_put_contents( $file, $str . PHP_EOL, FILE_APPEND | LOCK_EX );
+			} else {
+				WP_CLI::log( $str . PHP_EOL );
+			}
 		}
+	}
+
+	/**
+	 * Returns trus if running in CLI mode
+	 *
+	 * @return boolean
+	 */
+	function is_cli() {
+		return defined( 'WP_CLI' ) && WP_CLI;
 	}
 
 	/**
