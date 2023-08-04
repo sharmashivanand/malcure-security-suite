@@ -51,12 +51,12 @@ final class Malcure_security_suite {
 	}
 
 	function init() {
-		//if ( defined( 'WP_CLI' ) && WP_CLI ) {
-//
-		//} else {
-		//	@ini_set( 'max_execution_time', 90 ); // Don't kill if using WP CLI
-		//	@set_time_limit(0);
-		//}
+		// if ( defined( 'WP_CLI' ) && WP_CLI ) {
+		//
+		// } else {
+		// @ini_set( 'max_execution_time', 90 ); // Don't kill if using WP CLI
+		// @set_time_limit(0);
+		// }
 		$GLOBALS[ get_class( $this ) ] = array();
 		$this->dir                     = trailingslashit( plugin_dir_path( __FILE__ ) );
 		$this->url                     = trailingslashit( plugin_dir_url( __FILE__ ) );
@@ -64,7 +64,7 @@ final class Malcure_security_suite {
 		include_once $this->dir . 'classes/general_features.php';
 		if ( mss_utils::is_registered() ) {
 			include_once $this->dir . 'classes/integrity.php';
-			//include_once $this->dir . 'classes/malware_scanner.php';
+			// include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/malcure_malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
@@ -84,52 +84,11 @@ final class Malcure_security_suite {
 
 		add_action( 'wp_ajax_mss_ajax', array( $this, 'mss_ajax' ) );
 		add_action( 'wp_ajax_nopriv_mss_ajax', '__return_false' );
-		add_action( 'plugins_loaded', array( $this, 'upgrade_tables' ) );
 
 	}
 
 	function mss_plugin_activation() {
-		$this->db_install();
-	}
-
-	function upgrade_tables() {
-		// $this->db_install();
-		$db_version = mss_utils::get_setting( 'db_version' );
-		
-		if ( ! $db_version || version_compare( $db_version, '1.0', '<' ) ) {
-			$this->db_install();
-		}
-	}
-
-	function db_install() {
-		global $wpdb;
-		$table_mss_files      = $wpdb->prefix . 'mss_files';
-		$table_mss_checksums      = $wpdb->prefix . 'mss_checksums';
-		$charset_collate = $wpdb->get_charset_collate();
-
-		$mss_files = "CREATE TABLE IF NOT EXISTS $table_mss_files (
-			file_id INT(11) NOT NULL AUTO_INCREMENT,
-			path LONGTEXT NOT NULL UNIQUE,
-			checksum LONGTEXT NOT NULL,
-			status LONGTEXT NOT NULL,
-			type LONGTEXT NOT NULL,
-			sver LONGTEXT NOT NULL,
-			attrib LONGBLOB,
-			PRIMARY KEY (file_id)
-		) $charset_collate;";
-		$mss_checksums = "CREATE TABLE IF NOT EXISTS $table_mss_checksums (
-			file_id INT(11) NOT NULL AUTO_INCREMENT,
-			path LONGTEXT NOT NULL UNIQUE,
-			checksum LONGTEXT NOT NULL,
-			type LONGTEXT NOT NULL,
-			ver LONGTEXT NOT NULL,
-			PRIMARY KEY (file_id)
-		) $charset_collate;";
-
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		dbDelta( $mss_checksums );
-		dbDelta( $mss_files );
-		mss_utils::update_setting( 'db_version', '1.0' );
+		do_action( 'mss_plugin_activation' );
 	}
 
 	function hook_meta_boxes() {
