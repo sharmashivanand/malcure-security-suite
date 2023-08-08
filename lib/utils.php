@@ -108,6 +108,15 @@ final class mss_utils {
 	 * Log message to file
 	 */
 	static function flog( $str, $file = '', $timestamp = false ) {
+
+		 // $fl = debug_backtrace()[1]['file'] ;
+		 // $fn = debug_backtrace()[1]['function'] ;
+		 // $line = debug_backtrace()[1]['line'] ;
+
+		$fl   = '';
+		$fn   = '';
+		$line = '';
+
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
 			$date = $date . '-' . microtime( true );
@@ -116,13 +125,13 @@ final class mss_utils {
 			} else {
 				$file = MSS_DIR . 'log.log';
 			}
-			if ( $timestamp && ! $this->is_cli() ) {
+			if ( $timestamp && ! self::is_cli() ) {
 				file_put_contents( $file, $date . PHP_EOL, FILE_APPEND | LOCK_EX );
 
 			}
 			$str = print_r( $str, true );
-			if ( ! $this->is_cli() ) {
-				file_put_contents( $file, $str . PHP_EOL, FILE_APPEND | LOCK_EX );
+			if ( ! self::is_cli() ) {
+				file_put_contents( $file, $str . ' ' . $fl . $fn . $line . PHP_EOL, FILE_APPEND | LOCK_EX );
 			} else {
 				WP_CLI::log( $str . PHP_EOL );
 			}
@@ -134,7 +143,7 @@ final class mss_utils {
 	 *
 	 * @return boolean
 	 */
-	function is_cli() {
+	static function is_cli() {
 		return defined( 'WP_CLI' ) && WP_CLI;
 	}
 
@@ -328,7 +337,7 @@ final class mss_utils {
 	}
 
 	static function realpath( $path ) {
-		self::flog( $path );
+		// self::flog( $path );
 		$realpath = realpath( $path );
 		if ( $realpath ) {
 			return $realpath;
