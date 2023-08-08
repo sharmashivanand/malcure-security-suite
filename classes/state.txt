@@ -1,1 +1,0 @@
-a:5:{s:13:"indexed_files";a:0:{}s:5:"stack";a:1:{s:41:"/var/www/html/dev/plugindev/wp/wp-content";a:1:{s:7:"counter";i:0;}}s:17:"current_directory";s:41:"/var/www/html/dev/plugindev/wp/wp-content";s:18:"previous_directory";a:0:{}s:10:"identifier";s:27:"mss_64d1f8c1c73d48.80557671";}
