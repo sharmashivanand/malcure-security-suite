@@ -38,7 +38,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 
 			$starttime = new DateTime( 'now' );
 			$opt       = Malcure_Malware_Scanner::get_instance();
-			$opt->index_files_recursively( ABSPATH );
+			$opt->start_scanning( ABSPATH );
 			$opt->get_unserialized_data();
 			// $opt->get_unserialized_data();
 			// $opt       = mss_utils::update_checksums_themes();
