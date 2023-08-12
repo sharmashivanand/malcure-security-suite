@@ -10,7 +10,6 @@ final class mss_utils {
 	static $cap      = 'activate_plugins';
 
 	function __construct() {
-
 	}
 
 	/**
@@ -136,6 +135,10 @@ final class mss_utils {
 				WP_CLI::log( $str . PHP_EOL );
 			}
 		}
+	}
+
+	static function clear_log() {
+		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
 
 	/**
@@ -407,17 +410,11 @@ final class mss_utils {
 	}
 
 	/**
-	 * Returns full URL to API Endpoint for the requested action
-	 */
-	static function get_api_url( $data ) {
-		return self::build_api_url( $data );
-	}
-
-	/**
 	 * Builds full URL to API Endpoint for the requested action
 	 */
 	static function build_api_url( $data ) {
 		if ( empty( $data['action'] ) ) {
+			self::flog( 'No action specified' );
 			return;
 		}
 		if ( ! is_array( $data ) ) {
@@ -429,6 +426,7 @@ final class mss_utils {
 		$compatibility = self::get_plugin_data();
 		$state         = self::get_setting( 'api-credentials' );
 		$lic           = self::get_setting( 'license_key' );
+		$defver        = self::get_definition_version();
 		if ( $state ) {
 			$state = array_merge( $state, $compatibility );
 		} else {
@@ -437,63 +435,12 @@ final class mss_utils {
 		if ( $lic ) {
 			$state['lic'] = $lic;
 		}
-		$data['state'] = self::encode( $state );
+		if ( ! $defver ) {
+			$defver = '1.0.0';
+		}
+		$state['defver'] = $defver;
+		$data['state']   = self::encode( $state );
 		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $data ) );
-	}
-
-	/**
-	 * Check for definition updates
-	 *
-	 * @return array of new and current defition versions | WP_Error
-	 */
-	static function definition_updates_available() {
-		$current = self::get_definition_version();
-		$new     = self::get_setting( 'update-version' );
-		return $new;
-		if ( empty( $new ) ) {
-			$new = self::check_definition_updates();
-			if ( is_wp_error( $new ) ) {
-				return $new;
-			}
-		}
-		if ( $current != $new ) {
-			return array(
-				'new'     => $new,
-				'current' => $current,
-			);
-		}
-		return false;
-	}
-
-	/**
-	 * Meant to be run daily or on-demand. Checks for definition update from API server.
-	 *
-	 * @return void
-	 */
-	static function check_definition_updates() {
-		$response    = wp_safe_remote_request( self::get_api_url( 'check-definitions' ) );
-		$headers     = wp_remote_retrieve_headers( $response );
-		$status_code = wp_remote_retrieve_response_code( $response );
-		if ( 200 != $status_code ) {
-			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while checking definition updates.' );
-		}
-		if ( is_wp_error( $response ) ) {
-			return $response;
-		}
-		$body    = wp_remote_retrieve_body( $response );
-		$version = json_decode( $body, true );
-		if ( is_null( $version ) ) {
-			return new WP_Error( 'broke', 'Unparsable response during definition update-check.' );
-		}
-		if ( $version['success'] != true ) {
-			return new WP_Error( 'broke', sanitize_text_field( $version['data'] ) );
-		}
-		if ( ! empty( $version['success'] ) && $version['success'] == true ) {
-			$version = $version['data'];
-			$time    = date( 'U' );
-			self::update_setting( 'update-version', $version );
-			return $version;
-		}
 	}
 
 	/**
@@ -553,7 +500,7 @@ final class mss_utils {
 		if ( ! $ver ) {
 			$ver = $wp_version;
 		}
-		$checksum_url = self::get_api_url(
+		$checksum_url = self::build_api_url(
 			array(
 				'action'  => 'wpmr_checksum',
 				'slug'    => 'wordpress',
@@ -750,7 +697,14 @@ final class mss_utils {
 		foreach ( $all_themes as $key => $value ) {
 			$theme_file   = trailingslashit( $theme_root ) . $key;
 			$theme_file   = str_replace( $install_path, '', $theme_file );
-			$checksum_url = self::get_api_url( 'wpmr_checksum' ) . '&slug=' . $key . '&version=' . $value['Version'] . '&type=theme';
+			$checksum_url = self::build_api_url(
+				array(
+					'action'  => 'wpmr_checksum',
+					'slug'    => $key,
+					'version' => $value['Version'],
+					'type'    => 'theme',
+				)
+			);
 			$checksum     = wp_safe_remote_get( $checksum_url );
 			if ( is_wp_error( $checksum ) ) {
 				continue;
@@ -796,10 +750,7 @@ final class mss_utils {
 	 * Gets checksums of premium versions from API server
 	 */
 	static function get_pro_checksums( $missing ) {
-		if ( empty( $missing ) ) {
-			return;
-		}
-		if ( ! self::is_registered() ) {
+		if ( empty( $missing ) || ! self::is_registered() ) {
 			return;
 		}
 		$state            = self::get_setting( 'user' );
@@ -811,14 +762,13 @@ final class mss_utils {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
 				$plugin_file  = trailingslashit( dirname( MSS_DIR ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
-				$checksum_url = self::get_api_url( 'wpmr_checksum' );
-				$checksum_url = add_query_arg(
+				$checksum_url = self::build_api_url(
 					array(
+						'action'  => 'wpmr_checksum',
 						'slug'    => dirname( $key ),
 						'version' => $value['Version'],
 						'type'    => 'plugin',
-					),
-					'http://example.com'
+					)
 				);
 				$checksum     = wp_safe_remote_get( $checksum_url );
 				if ( is_wp_error( $checksum ) ) {
@@ -842,9 +792,77 @@ final class mss_utils {
 	}
 
 	/**
+	 * Check for definition updates
+	 *
+	 * @return array of new and current defition versions | WP_Error
+	 */
+	static function definition_updates_available() {
+		$current = self::get_definition_version();
+		self::check_definition_updates();
+		$new = self::get_setting( 'update-version' );
+		return $new;
+		if ( empty( $new ) ) {
+			$new = self::check_definition_updates();
+			if ( is_wp_error( $new ) ) {
+				return $new;
+			}
+		}
+		if ( $current != $new ) {
+			return array(
+				'new'     => $new,
+				'current' => $current,
+			);
+		}
+		return false;
+	}
+
+	/**
+	 * Meant to be run daily or on-demand. Checks for definition update from API server.
+	 *
+	 * @return void
+	 */
+	static function check_definition_updates() {
+		$url = self::build_api_url(
+			array(
+				'action' => 'check-definitions',
+				'defvar' => self::get_definition_version(),
+			)
+		);
+		$response    = wp_safe_remote_request(
+			$url
+		);
+		$headers     = wp_remote_retrieve_headers( $response );
+		$status_code = wp_remote_retrieve_response_code( $response );
+		if ( 200 != $status_code ) {
+			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while checking definition updates.' );
+		}
+		if ( is_wp_error( $response ) ) {
+			self::flog( $response );
+			return $response;
+		}
+		$body    = wp_remote_retrieve_body( $response );
+		$version = json_decode( $body, true );
+		if ( is_null( $version ) ) {
+			return new WP_Error( 'broke', 'Unparsable response during definition update-check.' );
+		}
+		if ( $version['success'] != true ) {
+			return new WP_Error( 'broke', sanitize_text_field( $version['data'] ) );
+		}
+		if ( ! empty( $version['success'] ) && $version['success'] == true ) {
+			$version = $version['data'];
+			$time    = date( 'U' );
+			self::update_setting( 'update-version', $version );
+			return $version;
+		}
+	}
+
+	/**
 	 * Update definitions from API server
 	 */
 	static function update_definitions() {
+		if ( ! self::is_registered() ) {
+			return; // return new WP_Error( 'broke', 'Not registered' );
+		}
 		$definitions = self::fetch_definitions();
 		if ( is_wp_error( $definitions ) ) {
 			return $definitions;
@@ -860,24 +878,12 @@ final class mss_utils {
 	}
 
 	/**
-	 * Returns the version of the definitions
-	 *
-	 * @return void
-	 */
-	static function get_definition_version() {
-		$definitions = self::get_option( 'definitions' );
-		if ( $definitions && ! empty( $definitions['v'] ) ) {
-			return $definitions['v'];
-		}
-	}
-
-	/**
 	 * Fetch definitions from the api endpoint
 	 *
 	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
-		$response    = wp_safe_remote_request( self::get_api_url( 'update-definitions' ) );
+		$response    = wp_safe_remote_request( self::build_api_url( array( 'action' => 'update-definitions' ) ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
@@ -901,23 +907,103 @@ final class mss_utils {
 	}
 
 	/**
-	 * Update core checksums
+	 * Returns the version of the definitions
 	 *
-	 * @param [type] $checksums
 	 * @return void
 	 */
-	static function update_option_checksums_core( $checksums ) {
-		return self::update_option( 'checksums_core', $checksums );
+	static function get_definition_version() {
+		$definitions = self::get_option_definitions();
+		if ( $definitions && ! empty( $definitions['v'] ) ) {
+			return $definitions['v'];
+		}
 	}
 
+	static function get_default_definitions() {
+		return '{
+        "definitions": {
+            "files": {
+                "qLPAE": {
+                    "severity": "suspicious",
+                    "signature": "IlwvW15hLXpcXFwvJ1wiXWV2YWxcXChbXlxcKV0rWydcIlxcc1xcKTtdK1wvaSI,",
+                    "class": "scripting"
+                },
+                "Y9N1H": {
+                    "severity": "suspicious",
+                    "signature": "IlwvXFwkYXV0aF9wYXNzXFxzKj0uKztcL2ki",
+                    "class": "scripting"
+                },
+                "2F58G": {
+                    "severity": "suspicious",
+                    "signature": "IlwvcHJlZ19yZXBsYWNlXFxzKlxcKC4rW1xcXC9cXCNcXHxdW2ldKmVbaV0qWydcIl0uK1xcKVwvaSI,",
+                    "class": "scripting"
+                },
+                "wCM8D": {
+                    "severity": "suspicious",
+                    "signature": "IlwvXFxcL1xcKiBUaGlzIGZpbGUgaXMgcHJvdGVjdGVkIGJ5IGNvcHlyaWdodCBsYXcgYW5kIHByb3ZpZGVkIHVuZGVyIGxpY2Vuc2UuIFJldmVyc2UgZW5naW5lZXJpbmcgb2YgdGhpcyBmaWxlIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIFxcKlxcXC9cLyI,",
+                    "class": "scripting"
+                },
+                "GML4E": {
+                    "severity": "suspicious",
+                    "signature": "IlwvXFwjKFxcdyspXFwjLis_XFwjXFxcL1xcMVxcI1wvaXMi",
+                    "class": "scripting"
+                },
+                "CD69I": {
+                    "severity": "severe",
+                    "signature": "IlwvKFxccyooXFwkWzAtOV9hLXpdKylcXHMqPVxccyooW1wiJ10pKFthLXpcXFwvX1xcLTAtOVxcLl0qXFxcXHhbYS1mMC05XXsyfSkrW15cXDNdKj9cXDM7fFxccyooXFxcL1xcKihbXipdKlxcKig_IVxcXC8pKSpbXipdKlxcKlxcXC8pKSpbXFxAXFxzXSooaW5jbHVkZXxyZXF1aXJlKShfb25jZSk_W1xcc1xcKF0qKFxcXC9cXCpbXlxcKl0qKFxcKlteXFwqXFxcL10qKStcXFwvXFxzKikqW1xcKFxcc10qKChbXCInXSkoW2EtelxcXC9fXFwtMC05XFwuXSpcXFxcKHhbYS1mMC05XXsyfXxbMC05XXsyLDN9KSkrW15cXDEyXSo_XFwxMnxcXDJ8XFwkXyg_IVJFUVVFU1RcXFsndGFyZ2V0J1xcXTspKFBPU3xSRVFVRVN8R0UpVFxccyooXFxbW15cXF1dK1xcXVxccyp8XFx7W15cXH1dK1xcfVxccyopKylbXFxzXFwpXSo7KFxccypcXDUpKlwvaSI,",
+                    "class": "scripting"
+                },
+                "xCQBJ": {
+                    "severity": "severe",
+                    "signature": "IlwvPFxcP1twaFxcc10rKFxcXC9cXFwvW15cXG5dKlxccyt8KGlmW1xcc1xcKF0raXNzZXRcXCh8ZnVuY3Rpb25cXHMrW2Etel8wLTldK1xcKFteXFx7XStbXFx7XFxzXSsuK3JldHVybilbXjtdKztbXFxzXFx9XSspKigoKFxcXC9cXCooW14qXSpcXCooPyFcXFwvKSkqW14qXSpcXCpcXFwvXFxzKnxpZlxccyopK1xcKGlzc2V0W1xcc1xcKF0rW1xcJFxceydcIl9dK1teXFx7XStbXFx7XFxzXSopPygoXFxcL1xcKihbXipdKlxcKig_IVxcXC8pKSpbXipdKlxcKlxcXC9cXHMqfFxcJFthLXpfMC05XSsoXFxzKlxcW1teXFxdXSpcXF0pKlxccyopKz1bXjtdKjtcXHMqfGZvcihlYWNoKT9cXHMqXFwoW15cXHtdK1xce1teXFx9XStcXH1cXHMqKSspKygoZnVuY3Rpb25cXHMrW2Etel8wLTldK1xcKFteXFx7XStbXFx7XFxzXSsuKj8pP1xcJFtcXCRcXHtdKlthLXpfMC05XStbXFx9XFxzXSooXFxcL1xcKihbXipdKlxcKig_IVxcXC8pKSpbXipdKlxcKlxcXC9cXHMqfFxcW1teXFxdXStcXF1cXHMqKSpcXCguKjtbXFx9XFxzXSopKygkfFxcPz4pXC9pIg,,",
+                    "class": "scripting"
+                },
+                "v411F": {
+                    "severity": "suspicious",
+                    "signature": "IlwvanNvbjJcXC5taW5cXC5qc1wvaSI,",
+                    "class": "scripting"
+                }
+            },
+            "db": {
+                "J53Gh": {
+                    "severity": "severe",
+                    "query": "IiU8c2NyaXB0JSI,",
+                    "signature": "IlwvPHNjcmlwdC4rP2Zyb21DaGFyQ29kZS4rP2xvY2F0aW9uLis_bG9jYXRpb24uKz9sb2NhdGlvbi4rPzxcXFwvc2NyaXB0PlwvaXMi",
+                    "class": "database"
+                },
+                "cHTCI": {
+                    "severity": "severe",
+                    "query": "IiU8YSAldmlhZ3JhJSI,",
+                    "signature": "IlwvPGFbXj5dKj5bXjxdKihwdXJjaGFzZXxvcmRlcnxidXl8Y2hlYXB8dmlhZ3JhfGxpc2lub3ByaWx8amFudXZpYXxmbHVveGV0aW5lfHBpbGxzfGNhc2htZXJlW1xcc19cXC1dKnNjYXJmfG9ubGluZXxvdXRsZXQpW148XSo8XFxcL2E",
+                    "class": "database"
+                },
+                "OCQ5J": {
+                    "severity": "severe",
+                    "query": "IiVldmFsKFN0cmluZy5mcm9tQ2hhckNvZGUoJSI,",
+                    "signature": "IlwvZXZhbFxcKFtcXHNhLXpfMC05XFwuXFwoXSpmcm9tQ2hhckNvZGVcXChbMC05LFxcc10rW1xcKVxcc10rO1xccypcL2ki",
+                    "class": "database"
+                },
+                "n711J": {
+                    "severity": "severe",
+                    "query": "IiU8YSAlY2lhbGlzJSI,",
+                    "signature": "IlwvPGFbXj5dKig-fD5bXjxdKltcXHNfXFwtXFwuXSspY2lhbGlzKFtcXHNfXFwtXFwuXStbXjxdKjx8PClcXFwvYT5cL2lzIg,,",
+                    "class": "database"
+                }
+            }
+        },
+        "v": "G764J"
+    }';
+	}
 	/**
-	 * Update locally generate checksums
+	 * Return definitions
 	 *
-	 * @param [type] $checksums
 	 * @return void
 	 */
-	static function update_option_checksums_generated( $checksums ) {
-		return self::update_option( 'checksums_generated', $checksums );
+	static function get_option_definitions() {
+		$defs = self::get_option( 'definitions' );
+		if ( ! $defs ) {
+			self::update_option_definitions( self::get_default_definitions() );
+			return self::get_option( 'definitions' );
+		}
 	}
 
 	/**
@@ -928,6 +1014,15 @@ final class mss_utils {
 	 */
 	static function update_option_definitions( $definitions ) {
 		return self::update_option( 'definitions', $definitions );
+	}
+
+	/**
+	 * Delete definitions
+	 *
+	 * @return void
+	 */
+	static function delete_option_definitions() {
+		return self::delete_option( 'definitions' );
 	}
 
 	/**
@@ -951,12 +1046,23 @@ final class mss_utils {
 	}
 
 	/**
-	 * Return definitions
+	 * Update core checksums
 	 *
+	 * @param [type] $checksums
 	 * @return void
 	 */
-	static function get_option_definitions() {
-		return self::get_option( 'definitions' );
+	static function update_option_checksums_core( $checksums ) {
+		return self::update_option( 'checksums_core', $checksums );
+	}
+
+	/**
+	 * Update locally generate checksums
+	 *
+	 * @param [type] $checksums
+	 * @return void
+	 */
+	static function update_option_checksums_generated( $checksums ) {
+		return self::update_option( 'checksums_generated', $checksums );
 	}
 
 	/**
@@ -975,15 +1081,6 @@ final class mss_utils {
 	 */
 	static function delete_option_checksums_generated() {
 		return self::delete_option( 'checksums_generated' );
-	}
-
-	/**
-	 * Delete definitions
-	 *
-	 * @return void
-	 */
-	static function delete_option_definitions() {
-		return self::delete_option( 'definitions' );
 	}
 
 	/**
@@ -1125,5 +1222,6 @@ final class mss_utils {
 		return delete_option( self::$opt_name . '_' . $option );
 	}
 }
+
 mss_utils::get_instance();
 // $mss_utils = new mss_utils();
