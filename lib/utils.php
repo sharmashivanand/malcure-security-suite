@@ -898,7 +898,8 @@ final class mss_utils {
 		$current = self::get_definition_version();
 		self::check_definition_updates();
 		$new = self::get_setting( 'update-version' );
-
+		// self::flog( 'new ' . $new );
+		// self::flog( 'current ' . $current );
 		return $current != $new;
 
 		return $new;
@@ -929,6 +930,7 @@ final class mss_utils {
 				'defvar' => self::get_definition_version(),
 			)
 		);
+        // self::flog($url);
 		$response    = wp_safe_remote_request(
 			$url
 		);
@@ -962,10 +964,13 @@ final class mss_utils {
 	 */
 	static function update_definitions() {
 		if ( ! self::is_registered() ) {
+			self::flog( 'No API credentials.' );
 			return; // return new WP_Error( 'broke', 'Not registered' );
 		}
 		$definitions = self::fetch_definitions();
+		
 		if ( is_wp_error( $definitions ) ) {
+			$this->flog( $definitions );
 			return $definitions;
 		} else {
 			if ( $definitions['v'] != self::get_definition_version() ) {
@@ -984,7 +989,9 @@ final class mss_utils {
 	 * @return array definitions or wp error
 	 */
 	static function fetch_definitions() {
-		$response    = wp_safe_remote_request( self::build_api_url( array( 'action' => 'update-definitions' ) ) );
+		$url = self::build_api_url( array( 'action' => 'update-definitions' ) );
+		// self::flog( $url );
+		$response    = wp_safe_remote_request( $url );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
@@ -1111,7 +1118,7 @@ final class mss_utils {
 	}
 
 	/**
-	 * Return definitions
+	 * Return definitions. Attempts up update tp default definitions if they are not present.
 	 *
 	 * @return void
 	 */
@@ -1121,6 +1128,7 @@ final class mss_utils {
 			self::update_option_definitions( self::get_default_definitions() );
 			return self::get_option( 'definitions' );
 		}
+		return $defs;
 	}
 
 	/**
@@ -1255,16 +1263,16 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function delete_setting( $setting ) {
-		self::flog( 'deleting setting: ' . $setting );
+		//self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
-		self::flog( 'deleting setting before: ' );
-		self::flog( $settings );
+		//self::flog( 'deleting setting before: ' );
+		//self::flog( $settings );
 		unset( $settings[ $setting ] );
-		self::flog( 'deleting setting after: ' );
-		self::flog( $settings );
+		//self::flog( 'deleting setting after: ' );
+		//self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
 
@@ -1315,7 +1323,11 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function get_option( $option ) {
-		return get_option( self::$opt_name . '_' . $option );
+		// self::flog( 'getting option: ' . self::$opt_name . '_' . $option );
+		$result = get_option( self::$opt_name . '_' . $option );
+		// self::flog( 'option value: ' );
+		// self::flog( $result );
+		return $result;
 	}
 
 	/**
@@ -1326,6 +1338,7 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function update_option( $option, $value ) {
+		// self::flog( 'updating option: ' . self::$opt_name . '_' . $option );
 		return update_option( self::$opt_name . '_' . $option, $value );
 	}
 
