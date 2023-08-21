@@ -1134,16 +1134,7 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function update_option_definitions( $definitions ) {
-		uasort( $definitions['definitions']['files'], array( __CLASS__, 'sort_definitions_by_severity' ) );
-		// uksort( $definitions['definitions']['db'], array( __CLASS__, 'sort_definitions_by_severity' ) );
 		return self::update_option( 'definitions', $definitions );
-	}
-
-	static function sort_definitions_by_severity( $a, $b ) {
-		$severity_sequence = array( 'severe', 'high', 'suspicious' );
-
-		return array_search( $a['severity'], $severity_sequence ) - array_search( $b['severity'], $severity_sequence );
-
 	}
 
 	/**
