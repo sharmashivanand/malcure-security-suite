@@ -252,9 +252,7 @@ final class mss_utils {
 		return $plugin_checksums;
 	}
 
-
 	/** DATABASE MANAGEMENT ENDS */
-
 
 	/**
 	 * Updates the color scheme of the UI
@@ -687,10 +685,6 @@ final class mss_utils {
 		return $checksums;
 	}
 
-
-
-
-
 	static function insertFileIntoDatabase( $filePath ) {
 		global $wpdb;
 		$tableName = $wpdb->prefix . 'mss_files';
@@ -924,13 +918,13 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function check_definition_updates() {
-		$url         = self::build_api_url(
+		$url = self::build_api_url(
 			array(
 				'action' => 'check-definitions',
 				'defvar' => self::get_definition_version(),
 			)
 		);
-        // self::flog($url);
+		// self::flog($url);
 		$response    = wp_safe_remote_request(
 			$url
 		);
@@ -968,7 +962,7 @@ final class mss_utils {
 			return; // return new WP_Error( 'broke', 'Not registered' );
 		}
 		$definitions = self::fetch_definitions();
-		
+
 		if ( is_wp_error( $definitions ) ) {
 			$this->flog( $definitions );
 			return $definitions;
@@ -1117,6 +1111,8 @@ final class mss_utils {
 		);
 	}
 
+
+
 	/**
 	 * Return definitions. Attempts up update tp default definitions if they are not present.
 	 *
@@ -1138,7 +1134,16 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function update_option_definitions( $definitions ) {
+		uasort( $definitions['definitions']['files'], array( __CLASS__, 'sort_definitions_by_severity' ) );
+		// uksort( $definitions['definitions']['db'], array( __CLASS__, 'sort_definitions_by_severity' ) );
 		return self::update_option( 'definitions', $definitions );
+	}
+
+	static function sort_definitions_by_severity( $a, $b ) {
+		$severity_sequence = array( 'severe', 'high', 'suspicious' );
+
+		return array_search( $a['severity'], $severity_sequence ) - array_search( $b['severity'], $severity_sequence );
+
 	}
 
 	/**
@@ -1263,16 +1268,16 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function delete_setting( $setting ) {
-		//self::flog( 'deleting setting: ' . $setting );
+		// self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
-		//self::flog( 'deleting setting before: ' );
-		//self::flog( $settings );
+		// self::flog( 'deleting setting before: ' );
+		// self::flog( $settings );
 		unset( $settings[ $setting ] );
-		//self::flog( 'deleting setting after: ' );
-		//self::flog( $settings );
+		// self::flog( 'deleting setting after: ' );
+		// self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
 
