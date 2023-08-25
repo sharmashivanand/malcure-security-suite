@@ -31,6 +31,7 @@ define( 'MSS_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'MSS_FILE', __FILE__ );
 define( 'MSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'MSS_API_EP', 'https://wp-malware-removal.com/' );
+define( 'MSS_WEB_EP', 'https://malcure.com/' );
 define( 'MSS_ID', 134 );
 
 // tar cvjf mss.tar.bz2 --exclude ".git/*" --exclude ".git" malcure-security-suite
