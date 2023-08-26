@@ -104,7 +104,7 @@ body {
             }
         }
 
-        #scan_results {
+        #mss_scan_results {
             .result {
                 margin-bottom: 1em;
             }
@@ -354,12 +354,15 @@ body.mss_darko {
             }
         }
 
-        #scan_results {
+        #mss_scan_results {
             .result {
                 color: aqua;
             }
 
             .sig {
+                text-transform: uppercase;
+                text-decoration: none;
+
                 &.severe {
                     background: hsla(350, 67%, 48%, 0.5) padding-box;
                     border: 1px solid transparent;
