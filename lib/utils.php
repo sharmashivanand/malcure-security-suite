@@ -47,7 +47,7 @@ final class mss_utils {
 	 */
 	static function update_checksums_web() {
 		global $wp_version;
-        
+
 		$checksums = self::update_checksums_core( $wp_version, get_locale() );
 		if ( ! $checksums ) { // get_core_checksums failed
 			$checksums = self::update_checksums_core( $wp_version, 'en_US' ); // try en_US locale
@@ -55,14 +55,13 @@ final class mss_utils {
 
 		self::update_checksums_plugins();
 		// if ( $plugin_checksums ) {
-		// 	$checksums = array_merge( $checksums, $plugin_checksums );
+		// $checksums = array_merge( $checksums, $plugin_checksums );
 		// }
 
 		self::update_checksums_themes();
 		// if ( $theme_checksums ) {
-		// 	$checksums = array_merge( $checksums, $theme_checksums );
+		// $checksums = array_merge( $checksums, $theme_checksums );
 		// }
-
 	}
 
 	static function update_checksums_core( $ver = false, $locale = 'en_US' ) {
@@ -98,7 +97,7 @@ final class mss_utils {
 				$core_checksums[ self::realpath( ABSPATH . $file ) ] = $checksums['sha256'];
 			}
 			self::insertChecksumsIntoDatabase( $core_checksums, 'core', $ver );
-            return $core_checksums;
+			return $core_checksums;
 		}
 	}
 
@@ -709,11 +708,11 @@ final class mss_utils {
 
 	}
 
-    /**
-     * Largely redundant. Not called anywhere
-     *
-     * @return void
-     */
+	/**
+	 * Largely redundant. Not called anywhere
+	 *
+	 * @return void
+	 */
 	static function get_checksums_db() {
 		global $wpdb;
 		$query     = "SELECT * FROM {$wpdb->prefix}mss_checksums";
