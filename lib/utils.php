@@ -47,23 +47,21 @@ final class mss_utils {
 	 */
 	static function update_checksums_web() {
 		global $wp_version;
+        
 		$checksums = self::update_checksums_core( $wp_version, get_locale() );
 		if ( ! $checksums ) { // get_core_checksums failed
 			$checksums = self::update_checksums_core( $wp_version, 'en_US' ); // try en_US locale
-			if ( ! $checksums ) {
-				$checksums = array(); // fallback to empty array
-			}
 		}
 
-		$plugin_checksums = self::update_checksums_plugins();
-		if ( $plugin_checksums ) {
-			$checksums = array_merge( $checksums, $plugin_checksums );
-		}
+		self::update_checksums_plugins();
+		// if ( $plugin_checksums ) {
+		// 	$checksums = array_merge( $checksums, $plugin_checksums );
+		// }
 
-		$theme_checksums = self::update_checksums_themes();
-		if ( $theme_checksums ) {
-			$checksums = array_merge( $checksums, $theme_checksums );
-		}
+		self::update_checksums_themes();
+		// if ( $theme_checksums ) {
+		// 	$checksums = array_merge( $checksums, $theme_checksums );
+		// }
 
 	}
 
@@ -100,6 +98,7 @@ final class mss_utils {
 				$core_checksums[ self::realpath( ABSPATH . $file ) ] = $checksums['sha256'];
 			}
 			self::insertChecksumsIntoDatabase( $core_checksums, 'core', $ver );
+            return $core_checksums;
 		}
 	}
 
@@ -108,9 +107,13 @@ final class mss_utils {
 	 *
 	 * @return void
 	 */
-	static function update_checksums_plugins() {
-		$missing      = array();
-		$all_plugins  = get_plugins();
+	static function update_checksums_plugins( $plugins = array() ) {
+		$missing = array();
+		if ( ! $plugins ) {
+			$all_plugins = get_plugins();
+		} else {
+			$all_plugins = $plugins;
+		}
 		$install_path = self::get_home_dir();
 		$plugin_dir   = trailingslashit( WP_PLUGIN_DIR );
 		foreach ( $all_plugins as $key => $value ) {
@@ -142,6 +145,8 @@ final class mss_utils {
 						}
 						$plugin_checksums[ self::realpath( $plugin_dir . trailingslashit( dirname( $plugin_file ) ) . $file ) ] = $checksums['sha256'];
 					}
+					// self::flog( '$plugin_checksums' );
+					// self::flog( $plugin_checksums );
 					self::insertChecksumsIntoDatabase( $plugin_checksums, 'plugin', $value['Version'] );
 				}
 			}
@@ -208,18 +213,51 @@ final class mss_utils {
 		if ( ! empty( $valuePlaceholders ) ) {
 			$query .= implode( ', ', $valuePlaceholders );
 			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
-
+			// self::flog( '$query' );
+			// self::flog( $query );
 			$preparedQuery = $wpdb->prepare( $query, $params );
 			$wpdb->query( $preparedQuery );
 		}
 	}
 
-	function update_checksums_plugin() {
-		$missing          = array();
-		$all_plugins      = get_plugins();
+	static function uXpdate_checksums_plugin( $plugins = array() ) {
+		$missing = array();
+		if ( ! $plugins ) {
+			$all_plugins = get_plugins();
+		} else {
+			$all_plugins = $plugins;
+		}
 		$install_path     = ABSPATH;
 		$plugin_checksums = array();
+		self::flog( '$all_plugins' );
+		self::flog( $all_plugins );
+		// return;
 		foreach ( $all_plugins as $key => $value ) {
+			self::flog( '$key' );
+			self::flog( $key );
+			self::flog( '$value' );
+			self::flog( $value );
+			// $key
+			// advanced-wp-reset/advanced-wp-reset.php
+			// $value
+			// Array
+			// (
+			// [Name] => Advanced WordPress Reset
+			// [PluginURI] => http://sigmaplugin.com/downloads/advanced-wordpress-reset
+			// [Version] => 1.7
+			// [Description] => Reset your WordPress database to its first original status, just like if you make a fresh installation.
+			// [Author] => Younes JFR.
+			// [AuthorURI] => http://www.sigmaplugin.com
+			// [TextDomain] => advanced-wp-reset
+			// [DomainPath] => /languages/
+			// [Network] =>
+			// [RequiresWP] =>
+			// [RequiresPHP] =>
+			// [UpdateURI] =>
+			// [Title] => Advanced WordPress Reset
+			// [AuthorName] => Younes JFR.
+			// )
+			// continue;
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
 				$plugin_file  = trailingslashit( dirname( $this->dir ) ) . $key;
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
@@ -245,7 +283,7 @@ final class mss_utils {
 			} else {
 			}
 		}
-		$extras = $this->get_pro_checksums( $missing );
+		$extras = self::get_pro_checksums( $missing );
 		if ( $extras ) {
 			$plugin_checksums = array_merge( $plugin_checksums, $extras );
 		}
@@ -671,6 +709,11 @@ final class mss_utils {
 
 	}
 
+    /**
+     * Largely redundant. Not called anywhere
+     *
+     * @return void
+     */
 	static function get_checksums_db() {
 		global $wpdb;
 		$query     = "SELECT * FROM {$wpdb->prefix}mss_checksums";
