@@ -39,6 +39,9 @@ define( 'MSS_ID', 134 );
 final class Malcure_security_suite {
 	public $dir;
 	public $url;
+
+	private $pagehook;
+	
 	static function get_instance() {
 		static $instance = null;
 		if ( is_null( $instance ) ) {
