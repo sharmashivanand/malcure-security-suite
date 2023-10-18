@@ -194,9 +194,9 @@ final class mss_utils {
 
 	static function insertChecksumsIntoDatabase( $arrChecksums, $type, $version ) {
 		global $wpdb;
-		$tableName = $wpdb->prefix . MSS_CHECKSUMTABLE;
+		$tableName = $wpdb->prefix . MSS_ORIGIN_CS;
 
-		$query = "INSERT INTO $tableName (path, checksum, type, ver) VALUES ";
+		$query = "INSERT INTO $tableName (path, checksum, type, sver) VALUES ";
 
 		$valuePlaceholders = array();
 		$params            = array();
@@ -211,7 +211,7 @@ final class mss_utils {
 
 		if ( ! empty( $valuePlaceholders ) ) {
 			$query .= implode( ', ', $valuePlaceholders );
-			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
+			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), sver = VALUES(sver)';
 			// self::flog( '$query' );
 			// self::flog( $query );
 			$preparedQuery = $wpdb->prepare( $query, $params );
@@ -219,75 +219,6 @@ final class mss_utils {
 		}
 	}
 
-	static function uXpdate_checksums_plugin( $plugins = array() ) {
-		$missing = array();
-		if ( ! $plugins ) {
-			$all_plugins = get_plugins();
-		} else {
-			$all_plugins = $plugins;
-		}
-		$install_path     = ABSPATH;
-		$plugin_checksums = array();
-		self::flog( '$all_plugins' );
-		self::flog( $all_plugins );
-		// return;
-		foreach ( $all_plugins as $key => $value ) {
-			self::flog( '$key' );
-			self::flog( $key );
-			self::flog( '$value' );
-			self::flog( $value );
-			// $key
-			// advanced-wp-reset/advanced-wp-reset.php
-			// $value
-			// Array
-			// (
-			// [Name] => Advanced WordPress Reset
-			// [PluginURI] => http://sigmaplugin.com/downloads/advanced-wordpress-reset
-			// [Version] => 1.7
-			// [Description] => Reset your WordPress database to its first original status, just like if you make a fresh installation.
-			// [Author] => Younes JFR.
-			// [AuthorURI] => http://www.sigmaplugin.com
-			// [TextDomain] => advanced-wp-reset
-			// [DomainPath] => /languages/
-			// [Network] =>
-			// [RequiresWP] =>
-			// [RequiresPHP] =>
-			// [UpdateURI] =>
-			// [Title] => Advanced WordPress Reset
-			// [AuthorName] => Younes JFR.
-			// )
-			// continue;
-			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				$plugin_file  = trailingslashit( dirname( $this->dir ) ) . $key;
-				$plugin_file  = str_replace( $install_path, '', $plugin_file );
-				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
-				$checksum     = wp_safe_remote_get( $checksum_url );
-				if ( is_wp_error( $checksum ) ) {
-					continue;
-				}
-				if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
-					if ( '404' == wp_remote_retrieve_response_code( $checksum ) ) {
-						$missing[ $key ] = array( 'Version' => $value['Version'] );
-					}
-					continue;
-				}
-				$checksum = wp_remote_retrieve_body( $checksum );
-				$checksum = json_decode( $checksum, true );
-				if ( ! is_null( $checksum ) && ! empty( $checksum['files'] ) ) {
-					$checksum = $checksum['files'];
-					foreach ( $checksum as $file => $checksums ) {
-						$plugin_checksums[ trailingslashit( dirname( $plugin_file ) ) . $file ] = $checksums['sha256'];
-					}
-				}
-			} else {
-			}
-		}
-		$extras = self::get_pro_checksums( $missing );
-		if ( $extras ) {
-			$plugin_checksums = array_merge( $plugin_checksums, $extras );
-		}
-		return $plugin_checksums;
-	}
 
 	/** DATABASE MANAGEMENT ENDS */
 
@@ -361,9 +292,9 @@ final class mss_utils {
 	 */
 	static function flog( $str, $file = '', $timestamp = false ) {
 
-		 // $fl = debug_backtrace()[1]['file'] ;
-		 // $fn = debug_backtrace()[1]['function'] ;
-		 // $line = debug_backtrace()[1]['line'] ;
+		// $fl = debug_backtrace()[1]['file'] ;
+		// $fn = debug_backtrace()[1]['function'] ;
+		// $line = debug_backtrace()[1]['line'] ;
 
 		$fl   = '';
 		$fn   = '';
@@ -427,7 +358,7 @@ final class mss_utils {
 				$output = stream_get_contents( $process );
 				preg_match( '/hw.ncpu: (\d+)/', $output, $matches );
 				if ( $matches ) {
-					  $numCpus = intval( $matches[1][0] );
+						$numCpus = intval( $matches[1][0] );
 				}
 				pclose( $process );
 			}
@@ -705,7 +636,6 @@ final class mss_utils {
 		$checksums = self::get_option_checksums_core();
 
 		return apply_filters( 'mss_checksums', $checksums );
-
 	}
 
 	/**
@@ -715,7 +645,7 @@ final class mss_utils {
 	 */
 	static function get_checksums_db() {
 		global $wpdb;
-		$query     = "SELECT * FROM {$wpdb->prefix}mss_checksums";
+		$query     = "SELECT * FROM {$wpdb->prefix}" . MSS_ORIGIN_CS;
 		$checksums = $wpdb->get_results( $query, ARRAY_A );
 		if ( empty( $checksums ) ) {
 			self::update_checksums_web();
@@ -729,28 +659,11 @@ final class mss_utils {
 
 	static function insertFileIntoDatabase( $filePath ) {
 		global $wpdb;
-		$tableName = $wpdb->prefix . 'mss_files';
+		$tableName = $wpdb->prefix . MSS_GEN_CS;
 		self::flog( $filePath );
 
 		// $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName, $data ) );
 		$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path) VALUES (%s)", $filePath ) );
-	}
-
-	static function insertChecksumI1ntoDatabase_old( $arrChecksums, $type, $version ) {
-		global $wpdb;
-		$tableName = $wpdb->prefix . 'mss_checksums';
-		foreach ( $arrChecksums as $key => $value ) {
-			$wpdb->query(
-				$wpdb->prepare(
-					"INSERT INTO $tableName (path, checksum, type, ver) VALUES (%s, %s, %s, %s) 
-        			ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)",
-					$key,
-					$value,
-					$type,
-					$version
-				)
-			);
-		}
 	}
 
 	static function update_checkasdfsums_themes() {
@@ -790,31 +703,6 @@ final class mss_utils {
 		}
 	}
 
-	static function insertChecfksumIntoDatabase( $arrChecksums, $type, $version ) {
-		global $wpdb;
-		$tableName = $wpdb->prefix . 'mss_checksums';
-
-		$query = "INSERT INTO $tableName (path, checksum, type, ver) VALUES ";
-
-		$valuePlaceholders = array();
-		$params            = array();
-
-		foreach ( $arrChecksums as $key => $value ) {
-			$valuePlaceholders[] = '(%s, %s, %s, %s)';
-			$params[]            = $key;
-			$params[]            = $value;
-			$params[]            = $type;
-			$params[]            = $version;
-		}
-
-		if ( ! empty( $valuePlaceholders ) ) {
-			$query .= implode( ', ', $valuePlaceholders );
-			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
-
-			$preparedQuery = $wpdb->prepare( $query, $params );
-			$wpdb->query( $preparedQuery );
-		}
-	}
 
 	/**
 	 * Gets checksums for themes from the API server
