@@ -894,7 +894,7 @@ final class mss_utils {
 		$definitions = self::fetch_definitions();
 
 		if ( is_wp_error( $definitions ) ) {
-			$this->flog( $definitions );
+			self::flog( $definitions );
 			return $definitions;
 		} else {
 			if ( $definitions['v'] != self::get_definition_version() ) {
