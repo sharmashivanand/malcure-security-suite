@@ -46,6 +46,7 @@ final class mss_utils {
 	 * @return null
 	 */
 	static function update_checksums_web() {
+		self::flog( 'MSS WARNING!!! COSTLY OPERATION' . __FUNCTION__ );
 		global $wp_version;
 
 		$checksums = self::update_checksums_core( $wp_version, get_locale() );
@@ -196,7 +197,7 @@ final class mss_utils {
 		global $wpdb;
 		$tableName = $wpdb->prefix . MSS_ORIGIN_CS;
 
-		$query = "INSERT INTO $tableName (path, checksum, type, sver) VALUES ";
+		$query = "INSERT INTO $tableName (path, checksum, type, ver) VALUES ";
 
 		$valuePlaceholders = array();
 		$params            = array();
@@ -211,7 +212,7 @@ final class mss_utils {
 
 		if ( ! empty( $valuePlaceholders ) ) {
 			$query .= implode( ', ', $valuePlaceholders );
-			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), sver = VALUES(sver)';
+			$query .= ' ON DUPLICATE KEY UPDATE checksum = VALUES(checksum), type = VALUES(type), ver = VALUES(ver)';
 			// self::flog( '$query' );
 			// self::flog( $query );
 			$preparedQuery = $wpdb->prepare( $query, $params );
