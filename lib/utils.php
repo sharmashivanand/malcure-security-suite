@@ -326,6 +326,46 @@ final class mss_utils {
 		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
 
+	static function human_readable_bytes($bytes, $decimals = 2) {
+		$size = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+		$factor = floor((strlen($bytes) - 1) / 3);
+		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+	}
+
+	static function human_readable_time_diff($start_timestamp, $end_timestamp) {
+		$diff = abs($end_timestamp - $start_timestamp);
+	
+		$units = array(
+			'year'   => 31556926,
+			'month'  => 2629744,
+			'week'   => 604800,
+			'day'    => 86400,
+			'hour'   => 3600,
+			'minute' => 60,
+			'second' => 1,
+		);
+	
+		$parts = array();
+	
+		foreach ($units as $name => $divisor) {
+			if ($diff < $divisor) continue;
+	
+			$time = floor($diff / $divisor);
+			$diff %= $divisor;
+	
+			$parts[] = $time . ' ' . $name . ($time > 1 ? 's' : '');
+		}
+	
+		$last = array_pop($parts);
+	
+		if (empty($parts)) {
+			return $last;
+		} else {
+			return join(', ', $parts) . ' and ' . $last;
+		}
+	}
+	
+
 	/**
 	 * Returns trus if running in CLI mode
 	 *
