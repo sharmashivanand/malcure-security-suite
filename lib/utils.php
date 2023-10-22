@@ -311,7 +311,6 @@ final class mss_utils {
 			}
 			if ( $timestamp && ! self::is_cli() ) {
 				file_put_contents( $file, $date . PHP_EOL, FILE_APPEND | LOCK_EX );
-
 			}
 			$str = print_r( $str, true );
 			if ( ! self::is_cli() ) {
@@ -1230,16 +1229,16 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function delete_setting( $setting ) {
-		// self::flog( 'deleting setting: ' . $setting );
+		self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
-		// self::flog( 'deleting setting before: ' );
-		// self::flog( $settings );
+		self::flog( 'deleting setting before: ' );
+		self::flog( $settings );
 		unset( $settings[ $setting ] );
-		// self::flog( 'deleting setting after: ' );
-		// self::flog( $settings );
+		self::flog( 'deleting setting after: ' );
+		self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
 
