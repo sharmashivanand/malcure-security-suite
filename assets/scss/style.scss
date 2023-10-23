@@ -1,8 +1,27 @@
 // sassc
 $bg-color: hsla(210, 48%, 17%, 1);
 
+$bright-red: hsla(350, 100%, 45%, 1);
+$dark-red: hsla(350, 65%, 45%, 1);
+
 body {
-    input[type="text"], input[type="password"], input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], input[type="week"], select, textarea {
+
+    input[type="text"],
+    input[type="password"],
+    input[type="color"],
+    input[type="date"],
+    input[type="datetime"],
+    input[type="datetime-local"],
+    input[type="email"],
+    input[type="month"],
+    input[type="number"],
+    input[type="search"],
+    input[type="tel"],
+    input[type="time"],
+    input[type="url"],
+    input[type="week"],
+    select,
+    textarea {
         border-radius: 0;
     }
 
@@ -15,6 +34,7 @@ body {
         }
 
         .mss_action {
+            // button
             transition: all .1s linear;
             background: hsl(210, 50%, 33%) padding-box;
             color: white;
@@ -74,7 +94,107 @@ body {
         max-width: 25%;
     }
 
-    #mss_scanner {
+    #mss_scan_hud {
+        font-family: monospace;
+        width: 100%;
+        border: 1px solid rgba(aqua, .5);
+        box-shadow: 0px 0px 500px inset rgba(aqua, 0.15);
+        margin-bottom: 1em;
+
+        td{
+            //border: 1px solid red;
+            padding: 0.38196601125em;
+            td {
+                padding: 0;
+            }
+        }
+
+        #top-row .left-col {
+            text-align: left;
+            vertical-align: top;
+        }
+        #top-row .middle-col {
+            text-align: center;
+            vertical-align: top;
+        }
+        #top-row .right-col {
+            text-align: right;
+            vertical-align: top;
+        }
+
+        #middle-row .left-col {
+            text-align: left;
+            vertical-align: middle;
+        }
+        #middle-row .middle-col {
+            text-align: center;
+            vertical-align: middle;
+        }
+        #middle-row .right-col {
+            text-align: right;
+            vertical-align: middle;
+        }
+
+        #bottom-row .left-col {
+            text-align: left;
+            vertical-align: bottom;
+        }
+        #bottom-row .middle-col {
+            text-align: center;
+            vertical-align: bottom;
+        }
+        #bottom-row .right-col {
+            text-align: right;
+            vertical-align: bottom;
+        }
+
+        #mss-top-right {
+            float: right;
+        }
+    }
+
+    #mss_scan_results {
+        display: table;
+
+        a.mss_scan_issue {
+            padding: 0.38196601125em 0.61803398875em;
+            margin-bottom: 0.38196601125em;
+
+            &:first-letter {
+                text-transform: uppercase;
+            }
+
+            text-decoration: none;
+            font-weight: bolder;
+            color: white;
+            display: block;
+
+            &.severe {
+                background: rgba($dark-red, 0.75);
+            }
+
+            &.high {
+                //  background: hsla(20, 65%, 45%, 1);
+                background: hsla(30, 100%, 50%, .75);
+            }
+
+            &.suspicious {
+                background: #ffeea8;
+                background: hsla(48, 100%, 83%, .75);
+
+
+                color: hsla(45, 100%, 40%, 1);
+
+            }
+
+            &.skipped {
+                background: hsla(0, 50%, 50%, .5);
+            }
+        }
+    }
+
+    // #mss_scan_results 
+    #mmss_scanner {
         #scan_status {
             transition: all 1s linear;
             text-align: center;
@@ -177,7 +297,7 @@ body {
     }
 
     /* System Status Table */
-    #system_status {
+    #ssystem_status {
         th {
             text-align: left;
             white-space: nowrap;
@@ -347,7 +467,7 @@ body.mss_darko {
         }
     }
 
-    #mss_scanner {
+    #mmss_scanner {
         #scan_status {
             &.inprogress {
                 border: 1px solid hsla(175, 100%, 75%, 0.75);
@@ -401,7 +521,7 @@ body.mss_darko {
     }
 
     /* System Status Table */
-    #system_status {
+    #ssystem_status {
         .mss_bricks {
             background: hsla(210, 50%, 15%, 0.85);
         }
