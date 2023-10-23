@@ -325,15 +325,15 @@ final class mss_utils {
 		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
 
-	static function human_readable_bytes($bytes, $decimals = 2) {
-		$size = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-		$factor = floor((strlen($bytes) - 1) / 3);
-		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+	static function human_readable_bytes( $bytes, $decimals = 2 ) {
+		$size   = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' );
+		$factor = floor( ( strlen( $bytes ) - 1 ) / 3 );
+		return sprintf( "%.{$decimals}f", $bytes / pow( 1024, $factor ) ) . @$size[ $factor ];
 	}
 
-	static function human_readable_time_diff($start_timestamp, $end_timestamp) {
-		$diff = abs($end_timestamp - $start_timestamp);
-	
+	static function human_readable_time_diff( $start_timestamp, $end_timestamp ) {
+		$diff = abs( $end_timestamp - $start_timestamp );
+
 		$units = array(
 			'year'   => 31556926,
 			'month'  => 2629744,
@@ -343,27 +343,29 @@ final class mss_utils {
 			'minute' => 60,
 			'second' => 1,
 		);
-	
+
 		$parts = array();
-	
-		foreach ($units as $name => $divisor) {
-			if ($diff < $divisor) continue;
-	
-			$time = floor($diff / $divisor);
+
+		foreach ( $units as $name => $divisor ) {
+			if ( $diff < $divisor ) {
+				continue;
+			}
+
+			$time  = floor( $diff / $divisor );
 			$diff %= $divisor;
-	
-			$parts[] = $time . ' ' . $name . ($time > 1 ? 's' : '');
+
+			$parts[] = $time . ' ' . $name . ( $time > 1 ? 's' : '' );
 		}
-	
-		$last = array_pop($parts);
-	
-		if (empty($parts)) {
+
+		$last = array_pop( $parts );
+
+		if ( empty( $parts ) ) {
 			return $last;
 		} else {
-			return join(', ', $parts) . ' and ' . $last;
+			return join( ', ', $parts ) . ' and ' . $last;
 		}
 	}
-	
+
 
 	/**
 	 * Returns trus if running in CLI mode
@@ -937,6 +939,7 @@ final class mss_utils {
 			self::flog( $definitions );
 			return $definitions;
 		} else {
+			self::flog( '$definitions update successful' );
 			if ( $definitions['v'] != self::get_definition_version() ) {
 				self::delete_option( 'checksums_generated' );
 			}
@@ -959,7 +962,7 @@ final class mss_utils {
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
-			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while fetching Update.' );
+			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while fetching Update.' . print_r( $response, 1 ) );
 		}
 		if ( is_wp_error( $response ) ) {
 			return $response;
