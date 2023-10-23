@@ -103,6 +103,9 @@ body {
         box-shadow: 0px 0px 500px inset rgba(aqua, 0.15);
         margin-bottom: 1em;
 
+        background-image: linear-gradient(0deg, transparent 45%,  rgba(aqua ,.075)  45%, rgba(aqua ,.075)  55%, transparent 55%);
+        background-size: 100% 5px;
+
         td {
             //border: 1px solid red;
             padding: 0.38196601125em;
@@ -118,43 +121,45 @@ body {
         }
 
         #top-row .middle-col {
-            text-align: center;
+            text-align: left;
             vertical-align: top;
+            
         }
 
         #top-row .right-col {
-            text-align: right;
+            text-align: left;
             vertical-align: top;
         }
 
         #middle-row .left-col {
             text-align: left;
-            vertical-align: middle;
+            vertical-align: top;
         }
 
         #middle-row .middle-col {
-            text-align: center;
-            vertical-align: middle;
+            text-align: left;
+            vertical-align: top;
+            // position: relative;
         }
 
         #middle-row .right-col {
-            text-align: right;
-            vertical-align: middle;
+            text-align: left;
+            vertical-align: top;
         }
 
         #bottom-row .left-col {
             text-align: left;
-            vertical-align: bottom;
+            vertical-align: top;
         }
 
         #bottom-row .middle-col {
-            text-align: center;
-            vertical-align: bottom;
+            text-align: left;
+            vertical-align: top;
         }
 
         #bottom-row .right-col {
-            text-align: right;
-            vertical-align: bottom;
+            text-align: left;
+            vertical-align: top;
         }
 
         #mss-top-right {
@@ -162,9 +167,14 @@ body {
         }
 
         #mss_progress_wrap {
+            border: 2px inset rgba(aqua,.5);
             width: 100%;
-            margin: auto;
-            height: 2em;
+            max-width: 60%;
+            //margin: auto;
+            padding: 0em 1.618em;
+            padding: 0.38196601125em 0.61803398875em;
+            // height: 2em;
+            // height: 3vh;
             // border: 1px solid;
             overflow: hidden;
             // background-color: black;
@@ -173,20 +183,22 @@ body {
             // color: white;
             text-align: left;
             text-wrap: nowrap;
-            padding: 0em 1.618em;
-            line-height: 200%;
+            //line-height: 200%;
 
-            background-image: linear-gradient(0deg, transparent 49%, rgba(aqua ,.33) 45%, rgba(aqua, .33) 55%, transparent 51%);
-            background-size: 100px 20%;
+            background-image: linear-gradient(0deg, transparent 45%, rgba(aqua ,.33) 45%, rgba(aqua, .33) 55%, transparent 55%);
+            background-size: 100px 25%;
+            background-image: linear-gradient(0deg, transparent 45%, rgba(aqua ,.15) 45%, rgba(aqua, .15) 55%, transparent 55%);
+            background-size: 100px 2%;
             /* Double the width to animate */
             animation: progressBar 10s linear infinite;
             /* Adjust the speed of the progress bar as needed */
+            // position: absolute;
 
 
             #mss_progress {
                 position: relative;
-                animation: scrollCredits 10s linear infinite;
-                padding-bottom: 2em;
+                // animation: scrollCredits 10s linear infinite;
+                // padding-bottom: 2em;
                 /* Same as the container height to ensure smooth looping */
 
             }
@@ -498,11 +510,12 @@ body.mss_darko {
         .mss_action {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
             background: hsla(180, 50%, 50%, 0.15) padding-box;
+            background: hsla(180, 50%, 50%, 0.25) padding-box;
 
             // color: hsl(200, 15%, 50%);
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
-            outline: 1px solid hsla(180, 100%, 50%, 0.5);
+            outline: 1px solid rgba(aqua,.5);
 
             // mix-blend-mode: screen;
 
