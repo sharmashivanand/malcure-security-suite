@@ -322,7 +322,28 @@ final class mss_utils {
 		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
 
+	static function test_local_url() {
+		// Use wp_remote_get to fetch the file
+		$response = wp_remote_get( MSS_URL . 'assets/style.css' );
+
+		self::flog( $response );;
+		// Check for errors
+		if ( is_wp_error( $response ) ) {
+			self::update_setting( 'supports_localhost', false );
+		}
+
+		// Check for valid response
+		$http_code = wp_remote_retrieve_response_code( $response );
+		if ( $http_code != 200 ) {
+			self::update_setting( 'supports_localhost', false );
+		}
+	}
+
 	static function get_local_url( $url ) {
+
+		if ( ! self::get_setting( 'supports_localhost' ) ) {
+			return $url;
+		}
 		$url = str_replace( parse_url( $url, PHP_URL_HOST ), 'localhost', $url );
 		return $url;
 	}
@@ -335,7 +356,7 @@ final class mss_utils {
 
 	static function human_readable_time_diff( $start_timestamp, $end_timestamp ) {
 		$diff = abs( $end_timestamp - $start_timestamp );
-		
+
 		$units = array(
 			'year'   => 31556926,
 			'month'  => 2629744,
@@ -632,7 +653,7 @@ final class mss_utils {
 	static function insert_custom_file_checksum_db( $file ) {
 		global $wpdb;
 		$tableName = $wpdb->prefix . MSS_GEN_CS;
-		$checksum = @hash_file( 'sha256', $file );
+		$checksum  = @hash_file( 'sha256', $file );
 		if ( ! $checksum ) {
 			$checksum = '';
 		}
@@ -642,7 +663,6 @@ final class mss_utils {
 			$file,
 			$checksum
 		);
-
 	}
 
 	function update_checksums_theme() {
@@ -1152,15 +1172,15 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function delete_setting( $setting ) {
-		//self::flog( 'deleting setting: ' . $setting );
+		// self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
-		//self::flog( 'deleting setting before: ' );
-		//self::flog( $settings );
+		// self::flog( 'deleting setting before: ' );
+		// self::flog( $settings );
 		unset( $settings[ $setting ] );
-		//self::flog( 'deleting setting after: ' );
+		// self::flog( 'deleting setting after: ' );
 		self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
