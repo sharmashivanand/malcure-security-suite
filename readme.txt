@@ -1,10 +1,11 @@
 === Malcure Security Suite ===
 Contributors: malwareintercept,malcure
-Tags: security, anti-malware, hardening
+Tags: security, anti-malware, hardening, antivirus, firewall, threat, hacked, malicious, infection
+Donate link: https://www.converticacommerce.com?item_name=Donation%20for%20malCure%20Malware%20Scanner&cmd=_xclick&currency_code=USD&business=shivanand@converticacommerce.com
 Requires at least: 3.7.4
-Tested up to: 6.2.2
+Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 0.7
+Stable tag: 1.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Malcure Security Suite helps you lock down and secure your WordPress site.
@@ -14,11 +15,14 @@ Malcure Security Suite helps you lock down and secure your WordPress site.
 
 Features:
 * Reset WordPress Salts.
-* Verify WordPress integrity.
 * Manage WordPress user-sessions.
 * WordPress malware scan.
 
 == Upgrade Notice ==
+
+= 1.1 =
+* Major revamp.
+* Server-side scanner built from scratch.
 
 = 0.6 =
 * Tested for compatibility with WordPress 6.0.1
@@ -40,6 +44,10 @@ Features:
 * Submitted for review.
 
 == Changelog ==
+
+= 1.1 =
+* Major revamp.
+* Server-side scanner built from scratch.
 
 = 0.6 =
 * Tested for compatibility with WordPress 6.0.1
