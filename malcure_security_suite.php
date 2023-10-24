@@ -33,6 +33,7 @@ define( 'MSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'MSS_API_EP', 'https://wp-malware-removal.com/' );
 define( 'MSS_WEB_EP', 'https://malcure.com/' );
 define( 'MSS_ID', 134 );
+define( 'MSS_SLUG', '_mss' );
 
 // tar cvjf mss.tar.bz2 --exclude ".git/*" --exclude ".git" malcure-security-suite
 
@@ -128,7 +129,7 @@ final class Malcure_security_suite {
 			'Malcure Security Suite', // page_title
 			'Malcure Security Suite', // menu_title
 			MSS_GOD,   // capability
-			'_mss',  // menu_slug
+			MSS_SLUG,  // menu_slug
 			array( $this, 'settings_page' ), // function
 			$this->url . 'assets/icon-dark-trans.svg', // icon_url
 			79
@@ -201,7 +202,7 @@ final class Malcure_security_suite {
 
 	function debug_menu() {
 		add_submenu_page(
-			'_mss',  // parent_slug
+			MSS_SLUG,  // parent_slug
 			'Malcure Debug', // page_title
 			'Malcure Debug', // menu_title
 			MSS_GOD, // capability
