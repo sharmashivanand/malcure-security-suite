@@ -52,7 +52,7 @@ final class mss_gen_features {
 			add_meta_box( 'mss_connection_details', 'Connection Details', array( $this, 'registration_details' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'side' );
 			add_meta_box( 'mss_site_status', 'Site Status', array( $this, 'system_status' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
 			add_meta_box( 'mss_session_management', 'Session Management', array( $this, 'session_management' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
-			add_meta_box( 'mss_logs', 'Logs &amp; Disgnostics', array( $this, 'diags' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'side' );
+			// add_meta_box( 'mss_logs', 'Logs &amp; Disgnostics', array( $this, 'diags' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'side' );
 		} else {
 			add_meta_box( 'mss_connection_ui', 'Setup', array( $this, 'connection_ui' ), $GLOBALS['Malcure_security_suite']['pagehook'], 'main' );
 		}
