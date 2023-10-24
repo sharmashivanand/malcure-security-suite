@@ -67,8 +67,6 @@ final class Malcure_security_suite {
 		include_once $this->dir . 'lib/utils.php';
 		include_once $this->dir . 'classes/general_features.php';
 		if ( mss_utils::is_registered() ) {
-			include_once $this->dir . 'classes/integrity.php';
-			// include_once $this->dir . 'classes/malware_scanner.php';
 			include_once $this->dir . 'classes/malcure_malware_scanner.php';
 			include_once $this->dir . 'classes/salt-shuffler.php';
 		}
