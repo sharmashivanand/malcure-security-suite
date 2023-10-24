@@ -210,6 +210,50 @@ body {
             }
         }
 
+        #mss_scan_btn[value="stop"] {
+            cursor: progress;
+            animation: borderMove 2s infinite;
+        }
+
+        #mss_scan_btn:disabled {
+            cursor: progress;
+            animation: fadeInOut 2s infinite;
+        }
+
+        @keyframes borderMove {
+            0% {
+                border-color: aqua transparent transparent transparent;
+            }
+
+            25% {
+                border-color: transparent aqua transparent transparent;
+            }
+
+            50% {
+                border-color: transparent transparent aqua transparent;
+            }
+
+            75% {
+                border-color: transparent transparent transparent aqua;
+            }
+
+            100% {
+                border-color: aqua transparent transparent transparent;
+            }
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
         @keyframes progressBar {
 
             0%,
