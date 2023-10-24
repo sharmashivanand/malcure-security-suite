@@ -335,7 +335,7 @@ final class mss_utils {
 
 	static function human_readable_time_diff( $start_timestamp, $end_timestamp ) {
 		$diff = abs( $end_timestamp - $start_timestamp );
-		self::flog($diff);
+		
 		$units = array(
 			'year'   => 31556926,
 			'month'  => 2629744,
@@ -1152,15 +1152,15 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function delete_setting( $setting ) {
-		self::flog( 'deleting setting: ' . $setting );
+		//self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
 			$settings = array();
 		}
-		self::flog( 'deleting setting before: ' );
-		self::flog( $settings );
+		//self::flog( 'deleting setting before: ' );
+		//self::flog( $settings );
 		unset( $settings[ $setting ] );
-		self::flog( 'deleting setting after: ' );
+		//self::flog( 'deleting setting after: ' );
 		self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
