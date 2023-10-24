@@ -324,9 +324,24 @@ final class mss_utils {
 
 	static function test_local_url() {
 		// Use wp_remote_get to fetch the file
-		$response = wp_remote_get( MSS_URL . 'assets/style.css' );
 
-		// self::flog( $response );;
+		$url = MSS_URL . 'assets/style.css';
+
+		$local_url = str_replace( parse_url( $url, PHP_URL_HOST ), 'localhost', $url );
+
+		// self::flog( __FUNCTION__ . ' ' . print_r( $local_url, 1 ) );
+		$response = wp_remote_get(
+			$local_url,
+			array(
+				'sslverify' => false,
+				'headers'   => array(
+					'mss_test' => '1',
+					'Host'     => parse_url( site_url(), PHP_URL_HOST ),
+				),
+			)
+		);
+
+		// self::flog( __FUNCTION__ . ' ' . print_r( $response, 1 ) );
 		// Check for errors
 		if ( is_wp_error( $response ) ) {
 			self::update_setting( 'supports_localhost', false );
@@ -337,10 +352,10 @@ final class mss_utils {
 		if ( $http_code != 200 ) {
 			self::update_setting( 'supports_localhost', false );
 		}
+		self::update_setting( 'supports_localhost', true );
 	}
 
-	static function get_local_url( $url ) {
-
+	static function get_self_url( $url ) {
 		if ( ! self::get_setting( 'supports_localhost' ) ) {
 			return $url;
 		}
@@ -1232,10 +1247,10 @@ final class mss_utils {
 	 * @return void
 	 */
 	static function get_option( $option ) {
-		// self::flog( 'getting option: ' . self::$opt_name . '_' . $option );
 		$result = get_option( self::$opt_name . '_' . $option );
-		// self::flog( 'option value: ' );
-		// self::flog( $result );
+		// if ( $option == 'scanner_state' ) {
+		// 	self::flog( __FUNCTION__ . ' ' . $option . 'value: ' . print_r( $result, 1 ) );
+		// }
 		return $result;
 	}
 
