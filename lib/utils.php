@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 // require_once 'scanner_base.php';
 require_once 'cli.php';
 
@@ -49,20 +52,14 @@ final class mss_utils {
 		self::flog( 'MSS WARNING!!! COSTLY OPERATION' . __FUNCTION__ );
 		global $wp_version;
 
-		$checksums = self::update_checksums_core( $wp_version, get_locale() );
-		if ( ! $checksums ) { // get_core_checksums failed
+		$checksums = self::update_checksums_core( $wp_version, get_locale() ); // first attempt
+		if ( ! $checksums ) { // get_core_checksums failed, attempt en_US
 			$checksums = self::update_checksums_core( $wp_version, 'en_US' ); // try en_US locale
 		}
 
 		self::update_checksums_plugins();
-		// if ( $plugin_checksums ) {
-		// $checksums = array_merge( $checksums, $plugin_checksums );
-		// }
 
 		self::update_checksums_themes();
-		// if ( $theme_checksums ) {
-		// $checksums = array_merge( $checksums, $theme_checksums );
-		// }
 	}
 
 	static function update_checksums_core( $ver = false, $locale = 'en_US' ) {
@@ -325,6 +322,11 @@ final class mss_utils {
 		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
 
+	static function get_local_url( $url ) {
+		$url = str_replace( parse_url( $url, PHP_URL_HOST ), 'localhost', $url );
+		return $url;
+	}
+
 	static function human_readable_bytes( $bytes, $decimals = 2 ) {
 		$size   = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' );
 		$factor = floor( ( strlen( $bytes ) - 1 ) / 3 );
@@ -333,7 +335,7 @@ final class mss_utils {
 
 	static function human_readable_time_diff( $start_timestamp, $end_timestamp ) {
 		$diff = abs( $end_timestamp - $start_timestamp );
-
+		self::flog($diff);
 		$units = array(
 			'year'   => 31556926,
 			'month'  => 2629744,
@@ -475,7 +477,7 @@ final class mss_utils {
 		@ini_set( 'max_execution_time', max( (int) @ini_get( 'max_execution_time' ), 90 ) );
 	}
 
-	static function get_files( $path = false ) {
+	static function get_all_files( $path = false ) {
 		self::raise_limits_conditionally();
 		// self::flog( debug_backtrace()[1] );
 		// die();
@@ -504,69 +506,27 @@ final class mss_utils {
 			foreach ( $children as $child ) {
 				$target = untrailingslashit( $path ) . DIRECTORY_SEPARATOR . $child;
 				if ( is_dir( $target ) && ! is_link( $target ) ) {
-					$elements = self::get_files( $target );
+					$elements = self::get_all_files( $target );
 					if ( $elements ) {
 						foreach ( $elements as $element ) {
 							if ( is_file( $element ) && ! is_link( $element ) ) {
 								// $files[] = self::realpath( $element );
-								self::insertFileIntoDatabase( self::realpath( $element ) );
+								self::insert_custom_file_checksum_db( self::realpath( $element ) );
 							}
 						}
 					}
 				}
 				if ( is_file( $target ) ) {
 					// $files[] = self::realpath( $target );
-					self::insertFileIntoDatabase( self::realpath( $target ) );
+					self::insert_custom_file_checksum_db( self::realpath( $target ) );
 				}
 			}
 			return $files;
 		}
 	}
 
-	/**
-	 * Returns all files at the specified path
-	 *
-	 * @param boolean $path
-	 * @return array, file-paths and file-count
-	 */
-	static function get_all_files_o( $directory = false ) {
-
-		if ( ! $directory ) {
-			$directory = ABSPATH;
-		}
-		$files = array();
-
-		if ( is_readable( $directory ) ) {
-			$iterator = new RecursiveIteratorIterator(
-				new RecursiveDirectoryIterator( $directory, RecursiveDirectoryIterator::SKIP_DOTS ),
-				RecursiveIteratorIterator::LEAVES_ONLY,
-				RecursiveIteratorIterator::CATCH_GET_CHILD // Catch exceptions for unreadable directories/files
-			);
-
-			foreach ( $iterator as $file ) {
-				try {
-					if ( $file->isFile() ) {
-						$files[] = $file->getPathname();
-					}
-				} catch ( UnexpectedValueException $e ) {
-					// Handle exception for unreadable files/directories
-					continue;
-				}
-			}
-		}
-
-		sort( $files );
-		if ( $directory == ABSPATH ) {
-			// self::flog( $files );
-		}
-		return array(
-			'total_files' => count( $files ),
-			'files'       => $files,
-		);
-	}
 
 	static function realpath( $path ) {
-		// self::flog( $path );
 		$realpath = realpath( $path );
 		if ( $realpath ) {
 			return $realpath;
@@ -640,7 +600,7 @@ final class mss_utils {
 	 */
 	static function build_api_url( $data ) {
 		if ( empty( $data['action'] ) ) {
-			self::flog( 'No action specified' );
+			self::flog( 'WARNING No action specified' );
 			return;
 		}
 		if ( ! is_array( $data ) ) {
@@ -669,60 +629,20 @@ final class mss_utils {
 		return trailingslashit( MSS_API_EP ) . '?' . urldecode( http_build_query( $data ) );
 	}
 
-	/**
-	 * Gets WordPress Core and plugin checksums
-	 *
-	 * @return array
-	 */
-	static function fetch_checksums() {
-		$checksums = self::get_option_checksums_core();
-
-		return apply_filters( 'mss_checksums', $checksums );
-	}
-
-	/**
-	 * Largely redundant. Not called anywhere
-	 *
-	 * @return void
-	 */
-	static function get_checksums_db() {
-		global $wpdb;
-		$query     = "SELECT * FROM {$wpdb->prefix}" . MSS_ORIGIN_CS;
-		$checksums = $wpdb->get_results( $query, ARRAY_A );
-		if ( empty( $checksums ) ) {
-			self::update_checksums_web();
-			$checksums = self::get_checksums_db();
-			if ( empty( $checksums ) ) {
-				return array();
-			}
-		}
-		return $checksums;
-	}
-
-	static function insertFileIntoDatabase( $filePath ) {
+	static function insert_custom_file_checksum_db( $file ) {
 		global $wpdb;
 		$tableName = $wpdb->prefix . MSS_GEN_CS;
-		self::flog( $filePath );
-
-		// $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName, $data ) );
-		$wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO $tableName (path) VALUES (%s)", $filePath ) );
-	}
-
-	static function update_checkasdfsums_themes() {
-		$all_themes      = wp_get_themes();
-		$install_path    = ABSPATH;
-		$theme_checksums = array();
-		$theme_root      = get_theme_root();
-		$state           = self::get_setting( 'user' );
-		$state           = self::encode( $state );
-		foreach ( $all_themes as $key => $value ) {
-
-			$theme_file = trailingslashit( $theme_root ) . $key;
-			WP_CLI::log( $key );
-			WP_CLI::log( $theme_file );
-
+		$checksum = @hash_file( 'sha256', $file );
+		if ( ! $checksum ) {
+			$checksum = '';
 		}
-		// return $theme_checksums;
+		$query = $wpdb->prepare( // Prepare the query
+			"INSERT INTO $table_name ( path, checksum) VALUES (%s, %s) 
+            ON DUPLICATE KEY UPDATE checksum = VALUES(checksum)",
+			$file,
+			$checksum
+		);
+
 	}
 
 	function update_checksums_theme() {

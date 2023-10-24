@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 final class mss_gen_features {
 	private function __construct(){}
 	static function get_instance() {

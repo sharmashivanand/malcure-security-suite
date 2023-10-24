@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class Malcure_Salt_Shuffler {
 	static function get_instance() {
 		static $instance = null;

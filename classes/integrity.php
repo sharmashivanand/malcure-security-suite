@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 class Malcure_Integrity {
 	static function get_instance() {
 		static $instance = null;
@@ -192,25 +195,6 @@ class Malcure_Integrity {
 
 	function get_checksums( $cached = true ) {
 		return mss_utils::fetch_checksums();
-		// $checksums = $cached ? get_transient( 'mss_repo_checksums' ) : false;
-		// if ( ! $checksums ) {
-		// global $wp_version;
-		// $checksums = get_core_checksums( $wp_version, get_locale() );
-		// if ( ! $checksums ) { // get_core_checksums failed
-		// $checksums = array();
-		// }
-		// $plugin_checksums = $this->get_plugin_checksums();
-		// if ( $plugin_checksums ) {
-		// $checksums = array_merge( $checksums, $plugin_checksums );
-		// }
-		// if ( $checksums ) {
-		// set_transient( 'mss_repo_checksums', $checksums, 7 * DAY_IN_SECONDS );
-		// return $checksums;
-		// }
-		// return array();
-		// } else {
-		// return $checksums;
-		// }
 	}
 
 	function get_plugin_checksums() {
@@ -312,38 +296,9 @@ class Malcure_Integrity {
 	}
 	
 	function get_all_files( $path = false ) {
-		$files = mss_utils::get_files();
+		$files = mss_utils::get_all_files();
 		return $files['files'];
-		if ( ! $path ) {
-			$path = get_home_path();
-			if ( empty( $path ) ) {
-				return array();
-			}
-			$path = untrailingslashit( $path );
-		}
-		if ( is_dir( $path ) ) {
-			$children = @scandir( $path );
-			if ( is_array( $children ) ) {
-				$children = array_diff( $children, array( '..', '.' ) );
-				$dirs     = array();
-				$files    = array();
-				foreach ( $children  as $child ) {
-					$target = untrailingslashit( $path ) . DIRECTORY_SEPARATOR . $child;
-					if ( is_dir( $target ) ) {
-						$elements = $this->get_all_files( $target );
-						if ( $elements ) { // check for read/write errors
-							foreach ( $elements as $element ) {
-								$files[] = $element;
-							}
-						}
-					}
-					if ( is_file( $target ) ) {
-						$files[] = $target;
-					}
-				}
-				return $files;
-			}
-		}
+		
 	}
 }
 Malcure_Integrity::get_instance();
