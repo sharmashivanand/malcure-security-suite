@@ -326,7 +326,7 @@ final class mss_utils {
 		// Use wp_remote_get to fetch the file
 		$response = wp_remote_get( MSS_URL . 'assets/style.css' );
 
-		self::flog( $response );;
+		// self::flog( $response );;
 		// Check for errors
 		if ( is_wp_error( $response ) ) {
 			self::update_setting( 'supports_localhost', false );

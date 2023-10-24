@@ -97,13 +97,19 @@ body {
     }
 
     #mss_scan_hud {
+
+        &,
+        & * {
+            transition: all 1s;
+        }
+
         font-family: monospace;
         width: 100%;
         border: 1px solid rgba(aqua, .5);
         box-shadow: 0px 0px 500px inset rgba(aqua, 0.15);
         margin-bottom: 1em;
 
-        background-image: linear-gradient(0deg, transparent 45%,  rgba(aqua ,.075)  45%, rgba(aqua ,.075)  55%, transparent 55%);
+        background-image: linear-gradient(0deg, transparent 45%, rgba(aqua, .075) 45%, rgba(aqua, .075) 55%, transparent 55%);
         background-size: 100% 5px;
 
         td {
@@ -123,7 +129,7 @@ body {
         #top-row .middle-col {
             text-align: left;
             vertical-align: top;
-            
+
         }
 
         #top-row .right-col {
@@ -167,7 +173,7 @@ body {
         }
 
         #mss_progress_wrap {
-            border: 2px inset rgba(aqua,.5);
+            border: 2px inset rgba(aqua, .5);
             width: 100%;
             max-width: 60%;
             //margin: auto;
@@ -185,9 +191,9 @@ body {
             text-wrap: nowrap;
             //line-height: 200%;
 
-            background-image: linear-gradient(0deg, transparent 45%, rgba(aqua ,.33) 45%, rgba(aqua, .33) 55%, transparent 55%);
+            background-image: linear-gradient(0deg, transparent 45%, rgba(aqua, .33) 45%, rgba(aqua, .33) 55%, transparent 55%);
             background-size: 100px 25%;
-            background-image: linear-gradient(0deg, transparent 45%, rgba(aqua ,.15) 45%, rgba(aqua, .15) 55%, transparent 55%);
+            background-image: linear-gradient(0deg, transparent 45%, rgba(aqua, .15) 45%, rgba(aqua, .15) 55%, transparent 55%);
             background-size: 100px 2%;
             /* Double the width to animate */
             animation: progressBar 10s linear infinite;
@@ -206,7 +212,8 @@ body {
 
         @keyframes progressBar {
 
-            0%,100% {
+            0%,
+            100% {
                 background-position: 0 -100%;
             }
 
@@ -515,7 +522,7 @@ body.mss_darko {
             // color: hsl(200, 15%, 50%);
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
-            outline: 1px solid rgba(aqua,.5);
+            outline: 1px solid rgba(aqua, .5);
 
             // mix-blend-mode: screen;
 

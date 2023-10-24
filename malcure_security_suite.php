@@ -166,7 +166,6 @@ final class Malcure_security_suite {
 		check_ajax_referer( 'mss_ajax', 'mss_ajax_nonce' );
 		if ( ! empty( $_REQUEST['payload'] ) && ! empty( $_REQUEST['payload']['request'] ) && method_exists( 'mss_utils', $_REQUEST['payload']['request'] ) ) {
 			if ( ! empty( $_REQUEST['payload']['data'] ) ) {
-				// $result = mss_utils::$_REQUEST['payload']['request']($_REQUEST['payload']['data']);
 				$result = forward_static_call( array( 'mss_utils', $_REQUEST['payload']['request'] ), $_REQUEST['payload']['data'] );
 			} else {
 				$result = forward_static_call( array( 'mss_utils', $_REQUEST['payload']['request'] ) );
