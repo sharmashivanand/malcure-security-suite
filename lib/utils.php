@@ -356,6 +356,7 @@ final class mss_utils {
 	}
 
 	static function get_self_url( $url ) {
+		return $url;
 		if ( ! self::get_setting( 'supports_localhost' ) ) {
 			return $url;
 		}
