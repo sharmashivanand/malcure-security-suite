@@ -369,8 +369,14 @@ final class mss_utils {
 		return sprintf( "%.{$decimals}f", $bytes / pow( 1024, $factor ) ) . @$size[ $factor ];
 	}
 
-	static function human_readable_time_diff( $start_timestamp, $end_timestamp ) {
-		$diff = abs( $end_timestamp - $start_timestamp );
+	static function human_readable_time_diff( $timestamp, $another_timestamp = '' ) {
+
+		if( empty( $another_timestamp ) ){
+			$diff = $timestamp;
+		}
+		else {
+			$diff = abs( $another_timestamp - $timestamp );
+		}
 
 		$units = array(
 			'year'   => 31556926,
