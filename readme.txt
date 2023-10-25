@@ -20,6 +20,9 @@ Features:
 
 == Upgrade Notice ==
 
+= 1.2 =
+* Bugfix: Scan would break on certain hosts.
+
 = 1.1 =
 * Major revamp.
 * Server-side scanner built from scratch.
@@ -44,6 +47,9 @@ Features:
 * Submitted for review.
 
 == Changelog ==
+
+= 1.2 =
+* Bugfix: Scan would break on certain hosts.
 
 = 1.1 =
 * Major revamp.
