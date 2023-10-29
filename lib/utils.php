@@ -327,7 +327,12 @@ final class mss_utils {
 
 		$url = MSS_URL . 'assets/style.css';
 
-		$local_url = str_replace( parse_url( $url, PHP_URL_HOST ), 'localhost', $url );
+		$host = gethostname();
+		if ( ! $host || $host == 'localhost' ) {
+			self::update_setting( 'supports_localhost', false );
+			return;
+		}
+		$local_url = str_replace( parse_url( $url, PHP_URL_HOST ), $host, $url );
 
 		// self::flog( __FUNCTION__ . ' ' . print_r( $local_url, 1 ) );
 		$response = wp_remote_get(
@@ -352,6 +357,7 @@ final class mss_utils {
 		if ( $http_code != 200 ) {
 			self::update_setting( 'supports_localhost', false );
 		}
+		self::flog( __FUNCTION__ . ' supports_localhost' );
 		self::update_setting( 'supports_localhost', true );
 	}
 
@@ -372,10 +378,9 @@ final class mss_utils {
 
 	static function human_readable_time_diff( $timestamp, $another_timestamp = '' ) {
 
-		if( empty( $another_timestamp ) ){
-			$diff = $timestamp;
-		}
-		else {
+		if ( empty( $another_timestamp ) ) {
+			$diff = abs( $timestamp );
+		} else {
 			$diff = abs( $another_timestamp - $timestamp );
 		}
 
@@ -860,7 +865,8 @@ final class mss_utils {
 		);
 		// self::flog($url);
 		$response    = wp_safe_remote_request(
-			$url
+			$url,
+			array( 'timeout' => 10 )
 		);
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
@@ -920,11 +926,11 @@ final class mss_utils {
 	static function fetch_definitions() {
 		$url = self::build_api_url( array( 'action' => 'update-definitions' ) );
 		// self::flog( $url );
-		$response    = wp_safe_remote_request( $url );
+		$response    = wp_safe_remote_request( $url, array( 'timeout' => 10 ) );
 		$headers     = wp_remote_retrieve_headers( $response );
 		$status_code = wp_remote_retrieve_response_code( $response );
 		if ( 200 != $status_code ) {
-			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while fetching Update.' . print_r( $response, 1 ) );
+			return new WP_Error( 'broke', 'Got HTTP error ' . $status_code . ' while fetching definition-updates: ' . print_r( $response, 1 ) );
 		}
 		if ( is_wp_error( $response ) ) {
 			return $response;
@@ -1256,7 +1262,7 @@ final class mss_utils {
 	static function get_option( $option ) {
 		$result = get_option( self::$opt_name . '_' . $option );
 		// if ( $option == 'scanner_state' ) {
-		// 	self::flog( __FUNCTION__ . ' ' . $option . 'value: ' . print_r( $result, 1 ) );
+		// self::flog( __FUNCTION__ . ' ' . $option . 'value: ' . print_r( $result, 1 ) );
 		// }
 		return $result;
 	}
