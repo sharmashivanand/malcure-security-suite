@@ -220,10 +220,49 @@ body {
 
             }
 
-            .scan_updates {
-                background: linear-gradient(0deg, transparent 0%, transparent 50%, #00ffffff 50%, #00ffff00);
-                animation: scanupdate 1s linear infinite;
-                background-position: -100% center;
+            .scan_update {
+                background: linear-gradient(to bottom, transparent, #00ffff88 25%, transparent 25%, transparent);
+                /* Single gradient */
+                background-size: 100% 200%;
+                /* Adjusted to stretch vertically */
+                animation: scanupdate 5s infinite;
+            }
+
+            @keyframes scanupdate {
+
+                //0% {
+                //    background-position: 0 100%;
+                //    /* Start above the element */
+                //}
+                //
+                //50% {
+                //    background-position: 0 -100%;
+                //    /* End below the element */
+                //}
+                0% {
+                    background: linear-gradient(to bottom, transparent, aqua 50%, transparent 50%, transparent);
+                    background-position: 0 100%;
+                    /* Start above the element */
+                }
+    
+                50% {
+                    background: linear-gradient(to bottom, transparent, aqua 50%, transparent 50%, transparent);
+                    background-position: 0 -100%;
+                    /* Midpoint: End below the element */
+                }
+    
+                51% {
+                    background: linear-gradient(to bottom, transparent, transparent 50%, aqua 50%, transparent);
+                    background-position: 0 -100%;
+                    /* Midpoint: End below the element */
+                }
+    
+                100% {
+                    background: linear-gradient(to bottom, transparent, transparent 50%, aqua 50%, transparent);
+                    //background: linear-gradient(to top, transparent, aqua 50%, transparent 50%, transparent);
+                    background-position: 0 100%;
+                    /* Start above the element */
+                }
             }
 
         }
@@ -294,36 +333,26 @@ body {
         }
 
         @keyframes scanupdate {
+
+           
             0% {
-                background: linear-gradient(0deg, transparent 0%, transparent 50%, #00ffffff 50%, #00ffff00);
-                background-position: -100% center;
+                background-position: 0 100%;
             }
-
-            50% {
-                background: linear-gradient(0deg, transparent 0%, transparent 50%, #00ffffff 50%, #00ffff00);
-                background-position: 100% center;
-            }
-
-            51% {
-                background: linear-gradient(0deg, #00ffffff 50%, #00ffff00, transparent 0%, transparent 50%, );
-                background-position: 100% center;
-            }
-
-            100% {
-                background: linear-gradient(0deg, #00ffffff 50%, #00ffff00, transparent 0%, transparent 50%, );
-                background-position: 100% center;
-            }
-        }
-
-        @keyframes progressBar {
-
-            0%,
             100% {
                 background-position: 0 -100%;
             }
+        }
 
-            50% {
-                background-position: 0 0;
+
+
+        @keyframes progressBar {
+
+            0% {
+                background-position: 0 0%;
+            }
+
+            100% {
+                background-position: 0 100%;
             }
         }
 
