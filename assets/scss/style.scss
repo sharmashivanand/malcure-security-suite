@@ -1,10 +1,8 @@
 // sassc
+@import url("fonts/orbitron.css") all;
 $bg-color: hsla(210, 48%, 17%, 1);
-
 $bright-red: hsla(350, 100%, 45%, 1);
 $dark-red: hsla(350, 65%, 45%, 1);
-
-
 
 body {
 
@@ -30,6 +28,11 @@ body {
     #poststuff {
         font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
+        .hndle {
+            font-family: Orbitron, Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            font-weight: 900;
+        }
+
         .postbox .inside {
             overflow: auto;
             padding-top: 1px;
@@ -45,6 +48,8 @@ body {
             font-weight: bold;
             line-height: 1;
             text-decoration: none;
+            font-family: Orbitron, Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            font-weight: 900;
 
             &:hover {
                 background-color: hsl(210, 66%, 25%);
@@ -100,20 +105,24 @@ body {
 
         &,
         & * {
-            transition: all 1s;
+            transition: all 1s ease-in-out;
         }
 
-        font-family: monospace;
+        font-family: 'Space Mono',
+        Orbitron,
+        monospace;
+        font-weight: 500;
+        color: aqua;
         width: 100%;
         border: 1px solid rgba(aqua, .5);
-        box-shadow: 0px 0px 500px inset rgba(aqua, 0.15);
+        box-shadow: 0px 0px 0px 3px inset #00ffff88,
+        0px 0px 0px 10px inset #172b40;
         margin-bottom: 1em;
-
-        background-image: linear-gradient(0deg, transparent 45%, rgba(aqua, .075) 45%, rgba(aqua, .075) 55%, transparent 55%);
-        background-size: 100% 5px;
+        background-image: repeating-linear-gradient(0deg, rgba(#00ffff, .05), rgba(#00ffff, .05) 1px, transparent 1px, transparent 4px);
+        padding: 1em;
+        font-size:.85em;
 
         td {
-            //border: 1px solid red;
             padding: 0.38196601125em;
 
             td {
@@ -129,7 +138,8 @@ body {
         #top-row .middle-col {
             text-align: left;
             vertical-align: top;
-
+            font-weight: 900;
+            font-size: 1.17647059em;
         }
 
         #top-row .right-col {
@@ -145,7 +155,6 @@ body {
         #middle-row .middle-col {
             text-align: left;
             vertical-align: top;
-            // position: relative;
         }
 
         #middle-row .right-col {
@@ -173,41 +182,61 @@ body {
         }
 
         #mss_progress_wrap {
-            border: 2px inset rgba(aqua, .5);
+
+            &,
+            & * {
+                transition: none;
+            }
+
+            // border: 2px inset rgba(aqua, .5);
+            box-shadow:0px 0px 0px 2px inset #00ffff88,
+            0px 0px 0px 6px inset #172b40;
             width: 100%;
             max-width: 60%;
-            //margin: auto;
             padding: 0em 1.618em;
-            padding: 0.38196601125em 0.61803398875em;
-            // height: 2em;
-            // height: 3vh;
-            // border: 1px solid;
             overflow: hidden;
-            // background-color: black;
-            //font-family: 'Arial', sans-serif;
-            // font-size: 1em;
-            // color: white;
+            // padding: 0.38196601125em 0.61803398875em;
+            padding: 6px 12px;
+            overflow: hidden;
             text-align: left;
             text-wrap: nowrap;
-            //line-height: 200%;
-
             background-image: linear-gradient(0deg, transparent 45%, rgba(aqua, .33) 45%, rgba(aqua, .33) 55%, transparent 55%);
-            background-size: 100px 25%;
+            // background-size: 100px 25%;
             background-image: linear-gradient(0deg, transparent 45%, rgba(aqua, .15) 45%, rgba(aqua, .15) 55%, transparent 55%);
-            background-size: 100px 2%;
+            // background-size: 100px 2%;
             /* Double the width to animate */
-            animation: progressBar 10s linear infinite;
+            animation: progressBar 2s linear infinite;
+            background: repeating-linear-gradient(0deg,
+                #00ffff40,
+                #00ffff40 1px,
+                transparent 1px,
+                transparent 2px);
+            animation: scanlines .25s linear infinite;
+
             /* Adjust the speed of the progress bar as needed */
-            // position: absolute;
-
-
             #mss_progress {
-                position: relative;
-                // animation: scrollCredits 10s linear infinite;
-                // padding-bottom: 2em;
-                /* Same as the container height to ensure smooth looping */
+                //position: relative;
+                overflow: hidden;
 
             }
+
+            .scan_updates {
+                background: linear-gradient(0deg, transparent 0%, transparent 50%, #00ffffff 50%, #00ffff00);
+                animation: scanupdate 1s linear infinite;
+                background-position: -100% center;
+            }
+
+        }
+
+        #mss_scan_btn {
+            background: #00ffff;
+            color: black;
+            font-weight: 900;
+            border: 1px solid aqua;
+        }
+
+        #mss_scan_btn:hover {
+            border: 1px solid transparent;
         }
 
         #mss_scan_btn[value="stop"] {
@@ -254,6 +283,38 @@ body {
             }
         }
 
+        @keyframes scanlines {
+            0% {
+                background-position: 0 0px;
+            }
+
+            100% {
+                background-position: 0 -2px;
+            }
+        }
+
+        @keyframes scanupdate {
+            0% {
+                background: linear-gradient(0deg, transparent 0%, transparent 50%, #00ffffff 50%, #00ffff00);
+                background-position: -100% center;
+            }
+
+            50% {
+                background: linear-gradient(0deg, transparent 0%, transparent 50%, #00ffffff 50%, #00ffff00);
+                background-position: 100% center;
+            }
+
+            51% {
+                background: linear-gradient(0deg, #00ffffff 50%, #00ffff00, transparent 0%, transparent 50%, );
+                background-position: 100% center;
+            }
+
+            100% {
+                background: linear-gradient(0deg, #00ffffff 50%, #00ffff00, transparent 0%, transparent 50%, );
+                background-position: 100% center;
+            }
+        }
+
         @keyframes progressBar {
 
             0%,
@@ -267,20 +328,12 @@ body {
         }
 
         @keyframes scrollCredits {
-
-            /*0% {
-                transform: translateY(100%);
-            }
-            100% {
-                transform: translateY(-100%);
-            }*/
             0% {
                 top: 0;
             }
 
             50% {
                 top: -100%;
-
             }
 
             100% {
@@ -290,7 +343,14 @@ body {
     }
 
     #mss_scan_results {
+
+        &,
+        & * {
+            transition: all .2s linear;
+        }
+
         display: table;
+        margin: auto;
 
         a.mss_scan_issue {
             padding: 0.38196601125em 0.61803398875em;
@@ -306,107 +366,55 @@ body {
             display: block;
 
             &.severe {
-                background: rgba($dark-red, 0.75);
+                background: rgba($dark-red, 0.25);
+                background: linear-gradient(90deg, rgba($dark-red, 0.25), transparent);
+                background-repeat: no-repeat;
+                border: 1px solid transparent;
+
+                &:hover {
+                    border: 1px solid rgba($dark-red, 0.75);
+
+                }
             }
 
             &.high {
-                //  background: hsla(20, 65%, 45%, 1);
-                background: hsla(30, 100%, 50%, .75);
+                background: hsla(30, 100%, 50%, .25);
+                background: linear-gradient(90deg, hsla(30, 100%, 50%, .25), transparent);
+
+                background-repeat: no-repeat;
+                border: 1px solid transparent;
+
+                &:hover {
+                    border: 1px solid hsla(30, 100%, 50%, .75);
+                }
             }
 
             &.suspicious {
                 background: #ffeea8;
-                background: hsla(48, 100%, 83%, .75);
-
-
+                background: hsla(48, 100%, 83%, .25);
+                background: linear-gradient(90deg, hsla(48, 100%, 83%, .25), transparent);
                 color: hsla(45, 100%, 40%, 1);
+                background-repeat: no-repeat;
+                border: 1px solid transparent;
 
-            }
-
-            &.skipped {
-                background: hsla(0, 50%, 50%, .5);
+                &:hover {
+                    color: white;
+                    background: linear-gradient(90deg, transparent, hsla(48, 100%, 83%, .5));
+                    border: 1px solid hsla(48, 100%, 83%, .75);
+                }
             }
         }
     }
 
     // #mss_scan_results 
-    #mmss_scanner {
-        #scan_status {
-            transition: all 1s linear;
-            text-align: center;
-            color: hsla(175, 100%, 75%, 1);
-            font-weight: bold;
-            font-family: monospace;
-            line-height: 1em;
-            padding: 1px;
-            display: flex;
-
-            #scan_completion {
-                width: 100%;
-                display: flex;
-
-                #text_percentage {
-                    display: inline-block;
-                    margin: auto;
-                    background: hsla(200, 40%, 35%, 1);
-                    padding: 0 .309em;
-                }
-            }
-
-            &.inprogress {
-                height: 1.618em;
-                margin: 1em auto;
-                border: 1px solid hsl(200, 40%, 35%);
-            }
-        }
-
+    #mss_scanner {
         #mss_scan_results {
-            .result {
-                margin-bottom: 1em;
-            }
 
-            .sig {
-                &.severe {
-                    background: hsla(350, 67%, 48%, 1) padding-box;
-                    color: white;
-                }
-
-                &.high {
-                    background: hsla(30, 100%, 50%, 1) padding-box;
-                    border: 1px solid transparent;
-                    color: white;
-                }
-
-                &.suspicious,
-                &.unknown,
-                &.mismatch {
-                    background: hsla(48, 100%, 83%, 1) padding-box;
-                    border: 1px solid transparent;
-                    color: hsla(45, 100%, 40%, 1);
-                }
-
-                &.failure,
-                &.unreadable {
-                    background: hsla(0, 0%, 50%, 1) padding-box;
-                    border: 1px solid transparent;
-                    color: white;
-                }
-            }
-
-            .sig {
-                display: inline-block;
-                font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-                padding: .618em 1em;
-                margin-right: 1em;
-                width: 50px;
-                font-weight: bold;
-                text-align: center;
-                line-height: 1;
-            }
-
-            .file {
-                font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-                font-weight: bold;
+            a:active,
+            a:focus {
+                outline: none;
+                border: none;
+                box-shadow: none;
             }
         }
     }
@@ -562,15 +570,9 @@ body.mss_darko {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
             background: hsla(180, 50%, 50%, 0.15) padding-box;
             background: hsla(180, 50%, 50%, 0.25) padding-box;
-
-            // color: hsl(200, 15%, 50%);
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
             outline: 1px solid rgba(aqua, .5);
-
-            // mix-blend-mode: screen;
-
-            // background: linear-gradient(90deg, hsla(180, 50%, 50%, .15), hsla(0, 100%, 50%, 1) 50%, hsla(180, 50%, 50%, .15) 50%) padding-box;
 
             &.loading {
                 animation: btnloading 5s ease 0s infinite normal none running;
@@ -584,9 +586,6 @@ body.mss_darko {
 
             &:active {
                 color: white;
-
-                // background: radial-gradient(hsla(350, 33%, 27%, 1), hsla(210, 33%, 27%, 1));
-                // background: hsla(180, 100%, 50%, 0.75);
                 background: hsla(180, 50%, 50%, 0.5) padding-box;
                 box-shadow: 0px 0px 10px hsla(180, 100%, 50%, 0.75);
             }
@@ -657,7 +656,6 @@ body.mss_darko {
         }
     }
 
-    /* System Status Table */
     #ssystem_status {
         .mss_bricks {
             background: hsla(210, 50%, 15%, 0.85);
