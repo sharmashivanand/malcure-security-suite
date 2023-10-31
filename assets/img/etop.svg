@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780.44 32.38">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #29abe2;
+      }
+    </style>
+  </defs>
+  <g id="hud">
+    <polygon class="cls-1" points="0 0 32.38 32.38 395.65 32.38 414.44 13.59 1675.32 13.59 1693.07 32.38 1780.44 32.38 1780.44 0 0 0"/>
+  </g>
+</svg>
