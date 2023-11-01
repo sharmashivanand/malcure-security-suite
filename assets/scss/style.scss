@@ -185,6 +185,7 @@ body {
                         transition: none;
                     }
 
+                    position:relative;
                     width: 100%;
                     max-width: 60%;
                     overflow: hidden;
@@ -193,19 +194,21 @@ body {
                     text-wrap: nowrap;
                     border: 2px inset #e6e6e680;
 
-                    #mss_scanlines {
-                        background: repeating-linear-gradient(0deg, #00000026, #00000026 1px, transparent 1px, transparent 2px);
-                    }
-
                     #mss_progress {
                         overflow: hidden;
-                        padding: 1em 1.618em;
+                        // padding: 1em 1.618em;
+                        border-top: 1em solid transparent;
+                        border-right: 1.618em solid transparent;
+                        border-bottom: 1em solid transparent;
+                        border-left: 1.618em solid transparent;
                         font-weight: bolder;
 
-                        &.scan_update {
+                        &.scan_update, &.scan_updates_ {
                             background: linear-gradient(to bottom, transparent, #00ffff88 25%, transparent 25%, transparent);
+                            background: linear-gradient(to bottom, transparent, #00ffff44 10%, #00ffffff 12.5%, transparent 12.5%, transparent);
+                            background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.266667) 10%, cyan 12.5%, white 13.5%, transparent 13.5%, transparent 12.5%, transparent);
                             background-size: 100% 200%;
-                            animation: updaterefresh 5s infinite;
+                            animation: updaterefresh 1s linear infinite;
                         }
                     }
 
@@ -217,23 +220,37 @@ body {
                             background: $dark-red;
                             height: 1.618em;
                             width: 1em;
-                            animation: blink 1s infinite;
+                            animation: blink 1s linear infinite;
                         }
+                    }
 
-                        #mss_scanlines {
-                            animation: scanlines .25s linear infinite;
-                        }
+                    &:after {
+                        content: '';
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        /* Changed from auto to 100% */
+                        position: absolute;
+                        z-index: 9999;
+                        top: 0;
+                        /* Ensure it starts at the top-left corner */
+                        left: 0;
+                        background: repeating-linear-gradient(0deg, #00000026, #00000026 1px, transparent 1px, transparent 2px);
+                    }
+
+                    &.mss_status_stop:after {
+                        animation: scanlines .25s linear infinite;
                     }
                 }
 
                 #mss_scan_btn[value="stop"] {
                     cursor: progress;
-                    animation: borderMove 2s infinite;
+                    animation: borderMove 2s linear infinite;
                 }
 
                 #mss_scan_btn:disabled {
                     cursor: progress;
-                    animation: fadeInOut 2s infinite;
+                    animation: fadeInOut 2s linear infinite;
                 }
             }
 
@@ -502,8 +519,6 @@ body.mss_darko {
         // .postbox
         #mss_scanner {
             #mss_scan_hud {
-
-
                 font-family: Oxanium,
                     'Space Mono',
                     monospace;
@@ -520,26 +535,9 @@ body.mss_darko {
                 }
 
                 #mss_screen {
-
                     box-shadow: 0px 0px 0px 2px #00ffff40,
                         0px 0px 0px 6px #172b4080;
-
-                    // animation: progressBar 2s linear infinite;
-
-                    // animation: scanlines .25s linear infinite;
                     border-color: transparent;
-
-                    #mss_scanlines {
-                        //background: repeating-linear-gradient(0deg,#00ffff40,#00ffff40 1px, transparent 1px, transparent 2px);
-                        //background: repeating-linear-gradient(0deg, #00000026, #00000026 1px, transparent 1px, transparent 2px);
-                        background: #00ffff80 repeating-linear-gradient(0deg, #00000026, #00000026 1px, transparent 1px, transparent 2px);
-                    }
-
-                    #mss_progress {
-                        color: black;
-
-                    }
-
                 }
 
                 #mss_scan_btn {
@@ -556,7 +554,6 @@ body.mss_darko {
 
             #mss_scan_results {
                 a.mss_scan_issue {
-
                     &.severe {
                         background: linear-gradient(90deg, rgba($dark-red, 0.25), transparent);
                         background-repeat: no-repeat;
@@ -579,7 +576,6 @@ body.mss_darko {
                         color: hsla(45, 100%, 40%, 1);
                         background: linear-gradient(90deg, hsla(48, 100%, 83%, .25), transparent);
                         background-repeat: no-repeat;
-
 
                         &:hover {
                             color: white;
