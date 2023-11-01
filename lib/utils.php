@@ -362,7 +362,7 @@ final class mss_utils {
 	}
 
 	static function get_self_url( $url ) {
-		
+
 		if ( ! self::get_setting( 'supports_localhost' ) ) {
 			return $url;
 		}
@@ -1203,13 +1203,14 @@ final class mss_utils {
 		// self::flog( 'deleting setting: ' . $setting );
 		$settings = get_option( self::$opt_name );
 		if ( ! $settings ) {
+			// THIS CAN POTENTIALLY SAVE EMPTY SETTINGS TO THE DATABASE.
 			$settings = array();
 		}
 		// self::flog( 'deleting setting before: ' );
 		// self::flog( $settings );
 		unset( $settings[ $setting ] );
 		// self::flog( 'deleting setting after: ' );
-		self::flog( $settings );
+		// self::flog( $settings );
 		update_option( self::$opt_name, $settings );
 	}
 
