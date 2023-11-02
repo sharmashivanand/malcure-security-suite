@@ -206,9 +206,9 @@ body {
                         &.scan_update, &.scan_updates_ {
                             background: linear-gradient(to bottom, transparent, #00ffff88 25%, transparent 25%, transparent);
                             background: linear-gradient(to bottom, transparent, #00ffff44 10%, #00ffffff 12.5%, transparent 12.5%, transparent);
-                            background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.266667) 10%, cyan 12.5%, white 13.5%, transparent 13.5%, transparent 12.5%, transparent);
+                            background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.1) 10%, cyan 12.5%, white 13.5%, transparent 13.5%, transparent 13.5%, transparent);
                             background-size: 100% 200%;
-                            animation: updaterefresh 1s linear infinite;
+                            animation: updaterefresh 2s linear infinite;
                         }
                     }
 
@@ -591,11 +591,11 @@ body.mss_darko {
 
 @keyframes updaterefresh {
     0% {
-        background-position: 0 100%;
+        background-position: 0 50%;
     }
 
     100% {
-        background-position: 0 -100%;
+        background-position: 0 -150%;
     }
 }
 
