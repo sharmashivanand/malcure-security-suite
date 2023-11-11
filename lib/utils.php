@@ -334,7 +334,6 @@ final class mss_utils {
 		}
 		$local_url = str_replace( parse_url( $url, PHP_URL_HOST ), $host, $url );
 
-		// self::flog( __FUNCTION__ . ' ' . print_r( $local_url, 1 ) );
 		$response = wp_remote_get(
 			$local_url,
 			array(
@@ -346,7 +345,6 @@ final class mss_utils {
 			)
 		);
 
-		// self::flog( __FUNCTION__ . ' ' . print_r( $response, 1 ) );
 		// Check for errors
 		if ( is_wp_error( $response ) ) {
 			self::update_setting( 'supports_localhost', false );
@@ -357,7 +355,6 @@ final class mss_utils {
 		if ( $http_code != 200 ) {
 			self::update_setting( 'supports_localhost', false );
 		}
-		self::flog( __FUNCTION__ . ' supports_localhost' );
 		self::update_setting( 'supports_localhost', true );
 	}
 
