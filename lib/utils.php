@@ -322,16 +322,42 @@ final class mss_utils {
 		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
 
+	static function get_host() {
+
+		// Check if SERVER_ADDR is available and is a valid IP
+		if ( ! empty( $_SERVER['SERVER_ADDR'] ) && filter_var( $_SERVER['SERVER_ADDR'], FILTER_VALIDATE_IP ) ) {
+			self::flog( 'SERVER_ADDR returning ' . $_SERVER['SERVER_ADDR'] );
+			return $_SERVER['SERVER_ADDR'];
+		}
+
+		// Try to resolve the hostname to an IP address
+		$hostname = gethostname();
+		self::flog( 'hostname got ' . $hostname );
+		$ip = gethostbyname( $hostname );
+		self::flog( 'gethostbyname got ' . $ip );
+
+		// Check if the resolved IP is valid
+		if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
+			self::flog( 'valid ip got ' . $ip );
+			return $ip;
+		}
+		self::flog( 'returning fallback ' . $ip );
+
+		// As a fallback, return the hostname
+		return $hostname;
+	}
+
 	static function test_local_url() {
 		// Use wp_remote_get to fetch the file
 
 		$url = MSS_URL . 'assets/style.css';
 
-		$host = gethostname();
+		$host = self::get_host();
 		if ( ! $host || $host == 'localhost' ) {
 			self::update_setting( 'supports_localhost', false );
 			return;
 		}
+
 		$local_url = str_replace( parse_url( $url, PHP_URL_HOST ), $host, $url );
 
 		$response = wp_remote_get(
@@ -361,9 +387,10 @@ final class mss_utils {
 	static function get_self_url( $url ) {
 
 		if ( ! self::get_setting( 'supports_localhost' ) ) {
+			self::flog( 'returning ' . $url );
 			return $url;
 		}
-		$url = str_replace( parse_url( $url, PHP_URL_HOST ), $_SERVER['SERVER_NAME'], $url );
+		$url = str_replace( parse_url( $url, PHP_URL_HOST ), self::get_host() . ':' . $_SERVER['SERVER_PORT'], $url );
 		return $url;
 	}
 
