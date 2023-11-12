@@ -1214,7 +1214,7 @@ final class mss_utils {
 			$settings = array();
 		}
 		$settings[ $setting ] = $value;
-		update_option( self::$opt_name, $settings );
+		return update_option( self::$opt_name, $settings );
 	}
 
 	/**
