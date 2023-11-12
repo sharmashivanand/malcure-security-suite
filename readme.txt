@@ -5,7 +5,7 @@ Donate link: https://www.converticacommerce.com?item_name=Donation%20for%20malCu
 Requires at least: 3.7.4
 Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.2
+Stable tag: 1.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Malcure Security Suite helps you lock down and secure your WordPress site.
@@ -19,6 +19,9 @@ Features:
 * WordPress malware scan.
 
 == Upgrade Notice ==
+
+= 1.3 =
+* Bugfix: Scan would break on certain hosts.
 
 = 1.2 =
 * Bugfix: Scan would break on certain hosts.
@@ -47,6 +50,9 @@ Features:
 * Submitted for review.
 
 == Changelog ==
+
+= 1.3 =
+* Bugfix: Scan would break on certain hosts.
 
 = 1.2 =
 * Bugfix: Scan would break on certain hosts.
