@@ -49,7 +49,7 @@ final class mss_utils {
 	 * @return null
 	 */
 	static function update_checksums_web() {
-		self::flog( 'MSS WARNING!!! COSTLY OPERATION' . __FUNCTION__ );
+		self::flog( 'MSS WARNING!!! COSTLY OPERATION ' . __FUNCTION__ );
 		global $wp_version;
 
 		$checksums = self::update_checksums_core( $wp_version, get_locale() ); // first attempt
@@ -326,22 +326,22 @@ final class mss_utils {
 
 		// Check if SERVER_ADDR is available and is a valid IP
 		if ( ! empty( $_SERVER['SERVER_ADDR'] ) && filter_var( $_SERVER['SERVER_ADDR'], FILTER_VALIDATE_IP ) ) {
-			self::flog( 'SERVER_ADDR returning ' . $_SERVER['SERVER_ADDR'] );
+			// self::flog( 'SERVER_ADDR returning ' . $_SERVER['SERVER_ADDR'] );
 			return $_SERVER['SERVER_ADDR'];
 		}
 
 		// Try to resolve the hostname to an IP address
 		$hostname = gethostname();
-		self::flog( 'hostname got ' . $hostname );
+		// self::flog( 'hostname got ' . $hostname );
 		$ip = gethostbyname( $hostname );
-		self::flog( 'gethostbyname got ' . $ip );
+		// self::flog( 'gethostbyname got ' . $ip );
 
 		// Check if the resolved IP is valid
 		if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
-			self::flog( 'valid ip got ' . $ip );
+			// self::flog( 'valid ip got ' . $ip );
 			return $ip;
 		}
-		self::flog( 'returning fallback ' . $ip );
+		// self::flog( 'returning fallback ' . $ip );
 
 		// As a fallback, return the hostname
 		return $hostname;
