@@ -21,7 +21,11 @@ Features:
 == Upgrade Notice ==
 
 = 1.3 =
-* Bugfix: Scan would break on certain hosts.
+* Feature: UI Update.
+* Bugfix: database scan sometimes kills the entire scan.
+* Bugfix: database scan sometimes exits midway.
+* Bugfix: Limited database scan by size.
+* Several other minor bugfixes.
 
 = 1.2 =
 * Bugfix: Scan would break on certain hosts.
@@ -52,7 +56,11 @@ Features:
 == Changelog ==
 
 = 1.3 =
-* Bugfix: Scan would break on certain hosts.
+* Feature: UI Update.
+* Bugfix: database scan sometimes kills the entire scan.
+* Bugfix: database scan sometimes exits midway.
+* Bugfix: Limited database scan by size.
+* Several other minor bugfixes.
 
 = 1.2 =
 * Bugfix: Scan would break on certain hosts.
