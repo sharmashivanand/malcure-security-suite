@@ -387,7 +387,7 @@ final class mss_utils {
 	static function get_self_url( $url ) {
 
 		if ( ! self::get_setting( 'supports_localhost' ) ) {
-			self::flog( 'returning ' . $url );
+			// self::flog( 'returning ' . $url );
 			return $url;
 		}
 		$url = str_replace( parse_url( $url, PHP_URL_HOST ), self::get_host() . ':' . $_SERVER['SERVER_PORT'], $url );
