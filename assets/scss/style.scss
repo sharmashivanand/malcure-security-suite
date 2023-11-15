@@ -202,10 +202,11 @@ body {
                         border-left: 1.618em solid transparent;
                         font-weight: bolder;
 
-                        &.scan_update, &.scan_updates_ {
+                        &.scan_update,
+                        &.scan_updates_ {
                             background: linear-gradient(to bottom, transparent, #00ffff88 25%, transparent 25%, transparent);
                             background: linear-gradient(to bottom, transparent, #00ffff44 10%, #00ffffff 12.5%, transparent 12.5%, transparent);
-                            background: linear-gradient(to bottom, transparent, rgba(0,255,255,0.1) 10%, cyan 12.5%, white 13.5%, transparent 13.5%, transparent 13.5%, transparent);
+                            background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.1) 10%, cyan 12.5%, white 13.5%, transparent 13.5%, transparent 13.5%, transparent);
                             background-size: 100% 200%;
                             animation: updaterefresh 2s linear infinite;
                         }

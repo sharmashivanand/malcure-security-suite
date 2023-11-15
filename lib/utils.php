@@ -115,7 +115,7 @@ final class mss_utils {
 		$plugin_dir   = trailingslashit( WP_PLUGIN_DIR );
 		foreach ( $all_plugins as $key => $value ) {
 			if ( false !== strpos( $key, '/' ) ) { // plugin has to be inside a directory. currently drop in plugins are not supported
-				// self::flog( 'Plugin: ' . dirname( $key ) );
+				self::flog( 'Plugin: ' . dirname( $key ) );
 				$plugin_file  = trailingslashit( $key );
 				$plugin_file  = str_replace( $install_path, '', $plugin_file );
 				$checksum_url = 'https://downloads.wordpress.org/plugin-checksums/' . dirname( $key ) . '/' . $value['Version'] . '.json';
@@ -126,6 +126,7 @@ final class mss_utils {
 				}
 				if ( '200' != wp_remote_retrieve_response_code( $checksum ) ) {
 					if ( '404' == wp_remote_retrieve_response_code( $checksum ) ) {
+						self::flog( 'Plugin: ' . dirname( $key ) . ' got 404 fetching checksums' );
 						$missing[ $key ] = array( 'Version' => $value['Version'] );
 					}
 					continue;
