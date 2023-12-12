@@ -319,6 +319,43 @@ final class mss_utils {
 		}
 	}
 
+	static function fdump( $str, $file = '', $timestamp = false ) {
+
+		// $fl = debug_backtrace()[1]['file'] ;
+		// $fn = debug_backtrace()[1]['function'] ;
+		// $line = debug_backtrace()[1]['line'] ;
+
+		$fl   = '';
+		$fn   = '';
+		$line = '';
+
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$date = date( 'Ymd-G:i:s' ); // 20171231-23:59:59
+			$date = $date . '-' . microtime( true );
+			if ( $file ) {
+				$file = MSS_DIR . $file;
+			} else {
+				$file = MSS_DIR . 'log.log';
+			}
+			if ( $timestamp && ! self::is_cli() ) {
+				file_put_contents( $file, $date . PHP_EOL, FILE_APPEND | LOCK_EX );
+			}
+			$str = self::get_dump( $str );
+			if ( ! self::is_cli() ) {
+				file_put_contents( $file, $str . ' ' . $fl . $fn . $line . PHP_EOL, FILE_APPEND | LOCK_EX );
+			} else {
+				WP_CLI::log( $str . PHP_EOL );
+			}
+		}
+	}
+
+	static function get_dump( $str ){
+		ob_start();
+        var_dump( $str) ; // Use var_dump here
+        $str = ob_get_clean();
+		return $str;
+	}
+
 	static function clear_log() {
 		file_put_contents( MSS_DIR . 'log.log', '', LOCK_EX );
 	}
