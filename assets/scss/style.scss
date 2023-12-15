@@ -1,8 +1,13 @@
-// sassc
+// watch 'sassc -t compressed assets/scss/style.scss assets/style.css'
 @import url("fonts/oxanium.css") all;
 $bg-color: hsla(210, 48%, 17%, 1);
+$bg-color: hsla(230, 7.5, 17.5%, 1);
+
+$bg-color: hsla(210, 5%, 15%, 1); // #222426;
+$bg-color: hsla(210, 15%, 20%, 1); // #222426;
+
 $bright-red: hsla(350, 100%, 45%, 1);
-$dark-red: hsla(350, 65%, 45%, 1);
+$dark-red: hsla(350, 65%, 50%, 1);
 $btn-bg: hsla(210, 50%, 33%, 1);
 
 body {
@@ -94,18 +99,18 @@ body {
 
                 &,
                 & * {
-                    transition: all 1s ease-in-out;
+                    // transition: all 1s ease-in-out;
                 }
 
                 width: 100%;
                 margin-bottom: 1em;
                 padding: 30px 45px 40px 0;
-                font-size:.85em;
-                background-image: linear-gradient(165deg, transparent, transparent),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780.44 32.38" preserveAspectRatio="none"><defs><style>.cls-1{fill:%2300000018;}</style></defs><polygon class="cls-1" points="0 32.38 32.38 0 395.65 0 414.44 18.79 1675.32 18.79 1693.07 1.04 1780.44 1.04 1780.44 32.38 0 32.38"/></svg>'),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749.13 26.96" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %2300000018;}</style></defs><path class="cls-1" d="m1749.13,22.79v4h-1018.18l-22.79-22.79H0V0h1018.18l22.79,22.79h708.16ZM627.67,10l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm346.05,6.96l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Z"/></svg>'),
-                none,
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %2300000018;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
+                // font-size:.85em;
+                // background-image: linear-gradient(165deg, transparent, transparent),
+                // url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780.44 32.38" preserveAspectRatio="none"><defs><style>.cls-1{fill:%2300000018;}</style></defs><polygon class="cls-1" points="0 32.38 32.38 0 395.65 0 414.44 18.79 1675.32 18.79 1693.07 1.04 1780.44 1.04 1780.44 32.38 0 32.38"/></svg>'),
+                // url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749.13 26.96" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %2300000018;}</style></defs><path class="cls-1" d="m1749.13,22.79v4h-1018.18l-22.79-22.79H0V0h1018.18l22.79,22.79h708.16ZM627.67,10l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm346.05,6.96l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Z"/></svg>'),
+                // none,
+                // url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %2300000018;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
                 background-repeat: no-repeat;
                 background-position: center center,
                 top center,
@@ -181,7 +186,7 @@ body {
 
                     &,
                     & * {
-                        transition: none;
+                        // transition: none;
                     }
 
                     position:relative;
@@ -269,7 +274,7 @@ body {
 
                 &,
                 & * {
-                    transition: all .2s linear;
+                    // transition: all .2s linear;
                 }
 
                 display: table;
@@ -285,34 +290,30 @@ body {
 
                     text-decoration: none;
                     font-weight: bolder;
-                    color: white;
+                    color: black;
                     display: block;
 
-                    &.severe {
-                        background: $dark-red;
-                        border: 1px solid transparent;
-
-                        &:hover {
-                            border: 1px solid $dark-red;
-                        }
-                    }
-
+                    &.severe,
                     &.high {
-                        background: hsla(30, 100%, 50%, 1);
-                        border: 1px solid transparent;
+                        // background: $dark-red;
+                        border-left: 3px solid $dark-red;
 
                         &:hover {
-                            border: 1px solid hsla(30, 100%, 50%, 1);
+                            // border: 1px solid $dark-red;
+                            background-color: $dark-red;
+                            color: white;
                         }
                     }
+
+
 
                     &.suspicious {
-                        background: hsla(48, 100%, 83%, 1);
-                        color: hsla(45, 100%, 40%, 1);
-                        border: 1px solid transparent;
+                        border-left: 3px solid hsla(48, 100%, 83%, 1);
+
 
                         &:hover {
-                            border: 1px solid hsla(48, 100%, 83%, 1);
+                            background-color: hsla(48, 100%, 83%, 1);
+                            color: black;
                         }
                     }
                 }
@@ -335,6 +336,7 @@ body {
                     padding: 4px 6px;
                     margin: 2px 4px 4px 0px;
                     background: hsla(210, 10%, 15%, 0.15);
+                    background: $bg-color;
                     font-weight: bold;
                 }
 
@@ -427,23 +429,28 @@ For now only used by salt-shuffler ajax response.
 
 body.mss_darko {
     color: hsl(200, 20%, 50%);
+    color: opacify(lighten(adjust-hue($bg-color, -25deg), 33%), .85);
+    background: $bg-color;
 
     .notice,
     div.updated,
     div.error {
-        background: hsla(210, 33%, 27%, 0.5);
-        border-top-color: hsla(210, 50%, 27%, 0.85);
-        border-bottom-color: hsla(210, 50%, 27%, 0.85);
-        border-right-color: hsla(210, 50%, 27%, 0.85);
+        background: lighten( $bg-color , 2.25%); //  hsla(210, 33%, 27%, 0.5);
+        border-top-color: lighten( $bg-color , 5%); // hsla(210, 50%, 27%, 0.85);
+        border-bottom-color: lighten( $bg-color , 5%);
+        border-right-color: lighten( $bg-color , 5%);
     }
+
 
     #adminmenuback,
     #adminmenuwrap,
     #adminmenu,
     #adminmenu .wp-submenu {
-        background: $bg-color;
+        background: opacify(lighten(adjust-hue($bg-color, 15deg), 5%), .75); //$bg-color;
+        background: lighten( $bg-color , 2.25%); //$bg-color;
         border-right: 1px solid transparent;
-        outline: 1px solid hsla(190, 50%, 50%, 0.15);
+        // outline: 1px solid hsla(190, 50%, 50%, 0.15);
+        outline: 1px solid lighten( $bg-color , 5%) // hsla(190, 50%, 50%, 0.15);
     }
 
     select,
@@ -463,6 +470,7 @@ body.mss_darko {
         h2,
         h3 {
             color: hsl(200, 15%, 50%);
+            color: opacify(lighten(adjust-hue($bg-color, -25deg), 33%), 1); // hsla(190, 50%, 50%, 0.15);;
         }
 
         .postbox-header {
@@ -472,9 +480,18 @@ body.mss_darko {
 
     .postbox {
         border: 1px solid transparent;
-        background: hsla(190, 50%, 50%, 0.15) padding-box;
         outline: 1px solid hsla(190, 50%, 50%, 0.66);
         outline: 1px solid hsla(190, 50%, 50%, 0.15);
+        outline: 1px solid opacify(lighten(adjust-hue($bg-color, -15deg), 5%), .85); // hsla(190, 50%, 50%, 0.15);;
+
+
+
+
+        background: lighten( $bg-color , 5%) padding-box;
+
+        .postbox-header {
+            background: lighten( $bg-color , 2.25%);
+        }
     }
 
     .postbox.closed {
@@ -519,16 +536,14 @@ body.mss_darko {
         // .postbox
         #mss_scanner {
             #mss_scan_hud {
-                font-family: Oxanium,
-                    'Space Mono',
-                    monospace;
-                font-weight: 600;
-                color: aqua;
-                background-image: linear-gradient(177.5deg, transparent, transparent, transparent, transparent, #ffffff11),
-                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780.44 32.38" preserveAspectRatio="none"><defs><style>.cls-1{fill:%23ffffff18;}</style></defs><polygon class="cls-1" points="0 32.38 32.38 0 395.65 0 414.44 18.79 1675.32 18.79 1693.07 1.04 1780.44 1.04 1780.44 32.38 0 32.38"/></svg>'),
-                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749.13 26.96" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m1749.13,22.79v4h-1018.18l-22.79-22.79H0V0h1018.18l22.79,22.79h708.16ZM627.67,10l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm346.05,6.96l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Z"/></svg>'),
-                    none,
-                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
+                // font-family: Oxanium,                    'Space Mono',                     monospace;
+                // font-weight: 600;
+                // color: aqua;
+                // background-image: linear-gradient(177.5deg, transparent, transparent, transparent, transparent, #ffffff11),
+                //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780.44 32.38" preserveAspectRatio="none"><defs><style>.cls-1{fill:%23ffffff18;}</style></defs><polygon class="cls-1" points="0 32.38 32.38 0 395.65 0 414.44 18.79 1675.32 18.79 1693.07 1.04 1780.44 1.04 1780.44 32.38 0 32.38"/></svg>'),
+                //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749.13 26.96" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m1749.13,22.79v4h-1018.18l-22.79-22.79H0V0h1018.18l22.79,22.79h708.16ZM627.67,10l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm346.05,6.96l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Z"/></svg>'),
+                //     none,
+                //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
 
                 #top-row .middle-col {
                     font-weight: 700;
@@ -545,6 +560,7 @@ body.mss_darko {
                     color: black;
                     font-weight: 900;
                     border: 1px solid aqua;
+                    filter: grayscale(1);
                 }
 
                 #mss_scan_btn:hover {
@@ -554,35 +570,10 @@ body.mss_darko {
 
             #mss_scan_results {
                 a.mss_scan_issue {
-                    &.severe {
-                        background: linear-gradient(90deg, rgba($dark-red, 0.25), transparent);
-                        background-repeat: no-repeat;
-
-                        &:hover {
-                            border: 1px solid rgba($dark-red, 0.75);
-                        }
-                    }
-
-                    &.high {
-                        background: linear-gradient(90deg, hsla(30, 100%, 50%, .25), transparent);
-                        background-repeat: no-repeat;
-
-                        &:hover {
-                            border: 1px solid hsla(30, 100%, 50%, .75);
-                        }
-                    }
-
-                    &.suspicious {
-                        color: hsla(45, 100%, 40%, 1);
-                        background: linear-gradient(90deg, hsla(48, 100%, 83%, .25), transparent);
-                        background-repeat: no-repeat;
-
-                        &:hover {
-                            color: white;
-                            background: linear-gradient(90deg, transparent, hsla(48, 100%, 83%, .5));
-                            border: 1px solid hsla(48, 100%, 83%, .75);
-                        }
-                    }
+                    background-color: rgba(34, 38, 42, 0.15); //transparent; //hsla(190, 50%, 50%, 0.15);
+                    color: #689; // hsla(190, 100%, 50%, .5) // hsl(190, 50%, 50%); // hsla(190, 50%, 50%, 0.15);
+                    color: inherit;
+                    background-color: $bg-color ; //transparent; //hsla(190, 50%, 50%, 0.15);
                 }
             }
         }

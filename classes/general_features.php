@@ -246,6 +246,10 @@ final class mss_gen_features {
 			<th>Server Port</th>
 			<td><?php echo $_SERVER['SERVER_PORT']; ?></td>
 		</tr>
+		<tr>
+			<th>Definition Version</th>
+			<td><?php echo mss_utils::get_option_definitions()['v']; ?></td>
+		</tr>
 		
 		</table>
 		<?php
