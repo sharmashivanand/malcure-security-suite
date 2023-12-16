@@ -175,11 +175,7 @@ body {
         // .postbox
         #mss_scanner {
             #mss_scan_hud {
-
-                &,
-                & * {
-                    // transition: all 1s ease-in-out;
-                }
+                table-layout: fixed;
 
                 width: 100%;
                 margin-bottom: 1em;
@@ -192,21 +188,26 @@ body {
                 // url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %2300000018;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
                 background-repeat: no-repeat;
                 background-position: center center,
-                top center,
-                bottom center,
-                left center,
-                right center;
+                    top center,
+                    bottom center,
+                    left center,
+                    right center;
                 background-size: cover,
-                100% 20px,
-                100% 20px,
-                20px 80%,
-                20px 80%;
+                    100% 20px,
+                    100% 20px,
+                    20px 80%,
+                    20px 80%;
 
                 td {
                     padding: 0.38196601125em;
 
+                    table {
+                        border-collapse: collapse;
+                    }
+
                     td {
-                        padding: 0;
+                        padding: 5px;
+                        border: 1px solid #eee;
                     }
                 }
 
@@ -351,11 +352,6 @@ body {
                     box-shadow: none;
                 }
 
-                &,
-                & * {
-                    // transition: all .2s linear;
-                }
-
                 display: table;
                 margin: auto;
 
@@ -415,7 +411,7 @@ body {
                     padding: 4px 6px;
                     margin: 2px 4px 4px 0px;
                     background: hsla(210, 10%, 15%, 0.15);
-                    background: $base-color;
+                    background: transparentize($body-bg , .75);
                     font-weight: bold;
                 }
 
@@ -536,12 +532,35 @@ body.mss_darko {
 
     select,
     select:focus {
-        background: hsla(180, 100%, 15%, 0.5) padding-box;
-        color: hsl(200, 15%, 50%);
+        appearance: none;
+        -webkit-appearance: none;
+        background: $button-bg;
+        background-clip: padding-box;
+
+        color: $button-clr;
         border: 1px solid transparent;
-        outline: 1px solid hsla(180, 100%, 50%, 0.5);
+        outline: 1px solid transparent;
         -webkit-appearance: auto;
         appearance: auto;
+
+        ooption {
+            background-color: $button-bg;
+            color: $button-clr;
+            padding: 1em;
+
+            &:hover,
+            &:checked {
+                background-color: $button-bg-h;
+                color: $button-clr-h;
+            }
+        }
+
+        &:hover {
+            background: $button-bg-h;
+            color: $button-clr-h;
+            outline: 1px solid hsla(180, 100%, 50%, 0.75);
+
+        }
     }
 
     &,
@@ -563,12 +582,8 @@ body.mss_darko {
 
     .postbox {
         border: 1px solid transparent;
-        outline: 1px solid hsla(190, 50%, 50%, 0.66);
-        outline: 1px solid hsla(190, 50%, 50%, 0.15);
-        outline: 1px solid opacify(lighten(adjust-hue($base-color, -15deg), 5%), .85); // hsla(190, 50%, 50%, 0.15);;
-
+        outline: 1px solid $postbox-header-bg; // hsla(190, 50%, 50%, 0.15);;
         background: $postbox-bg;
-
         background-clip: padding-box;
 
         .postbox-header {
@@ -604,6 +619,7 @@ body.mss_darko {
                 box-shadow: 0px 0px 10px hsl(180, 33%, 27%);
                 background: $button-bg-h padding-box;
                 color: $button-clr-h;
+                outline: 1px solid #00ffff88;
             }
 
             &:active {
@@ -629,6 +645,13 @@ body.mss_darko {
                 //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749.13 26.96" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m1749.13,22.79v4h-1018.18l-22.79-22.79H0V0h1018.18l22.79,22.79h708.16ZM627.67,10l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm346.05,6.96l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Z"/></svg>'),
                 //     none,
                 //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
+
+
+                td {
+                    td {
+                        border: 1px solid hsl(205, 25%, 22%);
+                    }
+                }
 
                 #top-row .middle-col {
                     font-weight: 700;
@@ -659,6 +682,15 @@ body.mss_darko {
                     background-color: $postbox-header-bg; //transparent; //hsla(190, 50%, 50%, 0.15);
                 }
             }
+        }
+
+        #mss_site_status {
+            #system_status {
+                .mss_bricks {
+                    background: $body-bg;
+                }
+            }
+
         }
     }
 }
