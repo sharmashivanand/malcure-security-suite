@@ -113,6 +113,7 @@ body {
     .mss_branding {
         margin: 1em 0;
         max-width: 25%;
+        filter: hue-rotate(5deg) grayscale(0.8);
     }
 
     #poststuff {
@@ -358,6 +359,12 @@ body {
                 a.mss_scan_issue {
                     padding: 0.38196601125em 0.61803398875em;
                     margin-bottom: 0.38196601125em;
+                    transition: all 0.125s;
+                    position: relative;
+                    left: 0em;
+                    &:hover {
+                        left: 1em;
+                    }
 
                     &:first-letter {
                         text-transform: uppercase;
