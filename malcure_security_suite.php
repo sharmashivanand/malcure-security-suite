@@ -131,7 +131,7 @@ final class Malcure_security_suite {
 			MSS_GOD,   // capability
 			MSS_SLUG,  // menu_slug
 			array( $this, 'settings_page' ), // function
-			$this->url . 'assets/icon-dark-trans.svg', // icon_url
+			$this->url . 'assets/img/icon-dark-trans.svg', // icon_url
 			79
 		);
 		$GLOBALS[ get_class( $this ) ]['pagehook'] = $this->pagehook;
@@ -212,7 +212,7 @@ final class Malcure_security_suite {
 	}
 
 	function render_branding() {
-		return '<img src="' . MSS_URL . 'assets/logo-mi-dark.svg" />';
+		return '<img src="' . MSS_URL . 'assets/img/logo-mi-dark.svg" />';
 	}
 
 	function footer_scripts() {

@@ -4,11 +4,90 @@ $bg-color: hsla(210, 48%, 17%, 1);
 $bg-color: hsla(230, 7.5, 17.5%, 1);
 
 $bg-color: hsla(210, 5%, 15%, 1); // #222426;
-$bg-color: hsla(210, 15%, 20%, 1); // #222426;
+$bg-color: hsla(210, 15%, 15%, 1); // #222426;
+
 
 $bright-red: hsla(350, 100%, 45%, 1);
 $dark-red: hsla(350, 65%, 50%, 1);
+$dark-red: hsla(350, 100%, 45%, 1);
 $btn-bg: hsla(210, 50%, 33%, 1);
+
+$base-color: hsla(210, 15%, 15%, 1); // #222426;
+
+
+$body-bg: adjust-color(adjust-hue($base-color, 0deg), $saturation: -5%, $lightness: -5%);
+
+$body-bg: #111216;
+$menu-bg: #1e1f22;
+$postbox-header-bg: #23292f;
+$postbox-bg: #282b2f;
+$button-bg: #5a5b5e;
+
+$body-bg: hsl(210.4, 6.9%, 7.4%);
+$menu-bg: hsl(209.9, 8.2%, 13.3%);
+$postbox-header-bg: hsl(209.3, 11.1%, 17.9%);
+$postbox-bg: hsl(208.8, 12.5%, 18.8%);
+$button-bg: hsl(207.2, 5.2%, 36.9%);
+//--------------
+$body-clr: hsl(195, 15%, 50%);
+$heading-clr: hsl(195, 35%, 40%);
+$body-bg: hsl(210, 15%, 15%);
+$menu-bg: hsl(215, 15%, 12.5%); //hsl(190, 15%, 12.5%);
+$postbox-header-bg: hsl(205, 20%, 20%);
+$postbox-bg: hsl(207.5, 15%, 17.5%); // hsl(213.6deg, 14.3%, 18.0%);
+$button-bg: hsl(220, 2.5%, 30%); // padding-box
+$button-bg-h: hsl(210, 45%, 40%);
+$button-clr: hsl(180, 0%, 75%);
+$button-clr-h: hsl(180, 100%, 75%);
+//---------------
+$body-clr: hsl(195, 15%, 50%);
+$heading-clr: hsl(195, 35%, 40%);
+$body-bg: hsl(220, 15%, 15%);
+$menu-bg: hsl(230, 10%, 15%); //hsl(190, 15%, 12.5%);
+$postbox-header-bg: hsl(205, 20%, 20%);
+$postbox-bg: hsl(207.5, 15%, 17.5%); // hsl(213.6deg, 14.3%, 18.0%);
+$button-bg: hsl(220, 2.5%, 30%); // padding-box
+$button-bg-h: hsl(210, 45%, 40%);
+$button-clr: hsl(180, 0%, 75%);
+$button-clr-h: hsl(180, 100%, 75%);
+//----
+
+$body-bg: #12191f;
+$menu-bg: #12191f; //hsl(190, 15%, 12.5%);
+$postbox-header-bg: #192026;
+$postbox-bg: #192026; // hsl(213.6deg, 14.3%, 18.0%);
+$button-bg: #5a6167; // padding-box
+$button-bg-h: hsl(210, 45%, 40%);
+
+$body-clr: #b3bac0;
+$heading-clr: #b3bac0;
+$button-clr: #767d83;
+$button-clr-h: hsl(180, 100%, 75%);
+//--- HSLA
+$body-bg: hsl(207.69, 26.53%, 9.61%);
+$menu-bg: hsl(207.69, 26.53%, 9.61%);
+$postbox-header-bg: hsl(207.69, 20.63%, 12.35%);
+$postbox-bg: hsl(207.69, 20.63%, 12.35%);
+$button-bg: #5a6167;
+$button-bg-h: hsl(210, 45%, 40%);
+
+$body-clr: #b3bac0;
+$heading-clr: #b3bac0;
+$button-clr: #767d83;
+$button-clr-h: hsl(180, 100%, 75%);
+
+//--- HSLA rounded
+$body-bg: hsl(207.5, 25%, 10%);
+$menu-bg: hsl(207.5, 25%, 10%);
+$postbox-header-bg: hsl(210, 20%, 15%);
+$postbox-bg: hsl(207.5, 20%, 12.5%);
+$button-bg: hsl(207.5, 15%, 25%);
+$button-bg-h: hsla(180, 100%, 50%, .25);
+
+$body-clr: hsl(207.5, 10%, 50%);
+$heading-clr: hsl(207.5, 20%, 33%);
+$button-clr: hsl(207.5, 5%, 75%);
+$button-clr-h: hsl(180, 100%, 75%);
 
 body {
 
@@ -336,7 +415,7 @@ body {
                     padding: 4px 6px;
                     margin: 2px 4px 4px 0px;
                     background: hsla(210, 10%, 15%, 0.15);
-                    background: $bg-color;
+                    background: $base-color;
                     font-weight: bold;
                 }
 
@@ -428,17 +507,18 @@ For now only used by salt-shuffler ajax response.
 }
 
 body.mss_darko {
-    color: hsl(200, 20%, 50%);
-    color: opacify(lighten(adjust-hue($bg-color, -25deg), 33%), .85);
-    background: $bg-color;
+    // color: hsl(200, 20%, 50%);
+    // color: opacify(lighten(adjust-hue($base-color, -25deg), 33%), .85);
+    // background: darken(adjust-hue($base-color, 10deg), 5%);
+    // color: lighten(desaturate(adjust-hue($base-color, 10deg), 10%), 25%);
 
     .notice,
     div.updated,
     div.error {
-        background: lighten( $bg-color , 2.25%); //  hsla(210, 33%, 27%, 0.5);
-        border-top-color: lighten( $bg-color , 5%); // hsla(210, 50%, 27%, 0.85);
-        border-bottom-color: lighten( $bg-color , 5%);
-        border-right-color: lighten( $bg-color , 5%);
+        background: $postbox-header-bg; //  hsla(210, 33%, 27%, 0.5);
+        border-top-color: lighten($base-color , 5%); // hsla(210, 50%, 27%, 0.85);
+        border-bottom-color: lighten($base-color , 5%);
+        border-right-color: lighten($base-color , 5%);
     }
 
 
@@ -446,11 +526,12 @@ body.mss_darko {
     #adminmenuwrap,
     #adminmenu,
     #adminmenu .wp-submenu {
-        background: opacify(lighten(adjust-hue($bg-color, 15deg), 5%), .75); //$bg-color;
-        background: lighten( $bg-color , 2.25%); //$bg-color;
+        // background: opacify(lighten(adjust-hue($base-color, 15deg), 5%), .75); //$base-color;
+        // background: lighten($base-color , 2.25%); //$base-color;
+        background: $menu-bg;
         border-right: 1px solid transparent;
         // outline: 1px solid hsla(190, 50%, 50%, 0.15);
-        outline: 1px solid lighten( $bg-color , 5%) // hsla(190, 50%, 50%, 0.15);
+        outline: 1px solid lighten($base-color , 5%) // hsla(190, 50%, 50%, 0.15);
     }
 
     select,
@@ -463,14 +544,16 @@ body.mss_darko {
         appearance: auto;
     }
 
+    &,
     #wpcontent {
-        background: $bg-color;
+        background: $body-bg;
+        color: $body-clr;
 
         h1,
         h2,
         h3 {
             color: hsl(200, 15%, 50%);
-            color: opacify(lighten(adjust-hue($bg-color, -25deg), 33%), 1); // hsla(190, 50%, 50%, 0.15);;
+            color: $heading-clr; // hsla(190, 50%, 50%, 0.15);;
         }
 
         .postbox-header {
@@ -482,15 +565,14 @@ body.mss_darko {
         border: 1px solid transparent;
         outline: 1px solid hsla(190, 50%, 50%, 0.66);
         outline: 1px solid hsla(190, 50%, 50%, 0.15);
-        outline: 1px solid opacify(lighten(adjust-hue($bg-color, -15deg), 5%), .85); // hsla(190, 50%, 50%, 0.15);;
+        outline: 1px solid opacify(lighten(adjust-hue($base-color, -15deg), 5%), .85); // hsla(190, 50%, 50%, 0.15);;
 
+        background: $postbox-bg;
 
-
-
-        background: lighten( $bg-color , 5%) padding-box;
+        background-clip: padding-box;
 
         .postbox-header {
-            background: lighten( $bg-color , 2.25%);
+            background: $postbox-header-bg;
         }
     }
 
@@ -506,24 +588,27 @@ body.mss_darko {
         .mss_action {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
             background: hsla(180, 50%, 50%, 0.15) padding-box;
-            background: hsla(180, 50%, 50%, 0.25) padding-box;
+            background: $button-bg padding-box;
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
-            outline: 1px solid rgba(aqua, .5);
+
+            color: $button-clr;
+            outline: 1px solid opacify($button-bg, .5);
 
             &.loading {
                 animation: btnloading 5s ease 0s infinite normal none running;
             }
 
             &:hover {
-                background: hsla(210, 33%, 27%, 1) padding-box;
-                background: hsla(180, 50%, 50%, 0.25) padding-box;
+                // background: hsla(210, 33%, 27%, 1) padding-box;
                 box-shadow: 0px 0px 10px hsl(180, 33%, 27%);
+                background: $button-bg-h padding-box;
+                color: $button-clr-h;
             }
 
             &:active {
                 color: white;
-                background: hsla(180, 50%, 50%, 0.5) padding-box;
+                background: $button-bg-h padding-box;
                 box-shadow: 0px 0px 10px hsla(180, 100%, 50%, 0.75);
             }
 
@@ -555,7 +640,7 @@ body.mss_darko {
                     border-color: transparent;
                 }
 
-                #mss_scan_btn {
+                #_mss_scan_btn {
                     background: #00ffff;
                     color: black;
                     font-weight: 900;
@@ -570,10 +655,8 @@ body.mss_darko {
 
             #mss_scan_results {
                 a.mss_scan_issue {
-                    background-color: rgba(34, 38, 42, 0.15); //transparent; //hsla(190, 50%, 50%, 0.15);
-                    color: #689; // hsla(190, 100%, 50%, .5) // hsl(190, 50%, 50%); // hsla(190, 50%, 50%, 0.15);
                     color: inherit;
-                    background-color: $bg-color ; //transparent; //hsla(190, 50%, 50%, 0.15);
+                    background-color: $postbox-header-bg; //transparent; //hsla(190, 50%, 50%, 0.15);
                 }
             }
         }
