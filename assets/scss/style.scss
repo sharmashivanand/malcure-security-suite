@@ -113,7 +113,8 @@ body {
     .mss_branding {
         margin: 1em 0;
         max-width: 25%;
-        filter: hue-rotate(5deg) grayscale(0.8);
+        // filter: hue-rotate(5deg) grayscale(0.8);
+        filter: contrast(1) brightness(0.5) saturate(0.5) hue-rotate(0deg);
     }
 
     #poststuff {

@@ -212,7 +212,7 @@ final class Malcure_security_suite {
 	}
 
 	function render_branding() {
-		return '<img src="' . MSS_URL . 'assets/img/logo-mi-dark.svg" />';
+		return '<img src="' . MSS_URL . 'assets/img/logo-mss.svg" />';
 	}
 
 	function footer_scripts() {
