@@ -40,14 +40,22 @@
                 fill: var(--m-blue)
             }
 
-            .dial-inner-rings-fill,
+            .dial-inner-rings-fill {
+                opacity: .25;
+                fill: white;
+                filter: url(#strongGlow);
+            }
             .dial-inner-rings-strokes {
                 fill: var(--m-blue);
-                opacity: 0;
+                stroke: var(--m-blue);
+                filter: url(#subtleGlow);
             }
 
             .shield {
                 fill: white;
+                filter: url(#strongGlow);
+                stroke: var(--m-blue-highlight);
+                stroke-width: 7.5px;
             }
 
             .check {
@@ -57,7 +65,7 @@
             }
 
             .line {
-                fill: aqua;
+                fill: #00ffff11;
                 aanimation: moveline 1s ease infinite;
             }
 
@@ -74,15 +82,22 @@
             .vertical-bricks,
             .horizontal-bricks,
             .dial-middle {
-                animation: mspin 10s linear infinite;
+                animation: mspin 120s linear infinite;
                 transform-origin: 387.81px 316.2px;
-
+                filter: url(#subtleGlow);
             }
 
             .dial-outer-solid {
-                animation: mspin 10s linear infinite reverse;
+                animation: mspin 120s linear infinite reverse;
                 transform-origin: 387.81px 316.2px;
-
+                filter: url(#subtleGlow);
+            }
+            
+            .dial-inner-rings-fill,
+            .dial-inner-rings-strokes {
+                animation: mspin 2s linear infinite;
+                transform-origin: 387.81px 316.2px;
+                filter: url(#subtleGlow);
             }
 
             @keyframes mspin {
@@ -109,11 +124,11 @@
         <!-- subtleGlow: Tiny subtle soft glow -->
         <filter id="subtleGlow" height="200%" width="200%" x="-50%" y="-50%">
             <!-- Thicken out the original shape -->
-            <feMorphology operator="dilate" radius="1" in="SourceAlpha" result="thicken" />
+            <feMorphology operator="dilate" radius="0" in="SourceAlpha" result="thicken" />
             <!-- Use a gaussian blur to create the soft blurriness of the glow -->
             <feGaussianBlur in="thicken" stdDeviation="1" result="blurred" />
             <!-- Change the colour -->
-            <feFlood flood-color="hsla(190, 100%, 45%,.25)" result="glowColor" />
+            <feFlood flood-color="hsla(190, 100%, 50%, .25)" result="glowColor" />
             <!-- Color in the glows -->
             <feComposite in="glowColor" in2="blurred" operator="in" result="techGlow_colored" />
             <!--	Layer the effects together -->
@@ -123,23 +138,34 @@
             </feMerge>
         </filter>
 
-        <!-- strongGlow: Strongest large soft glow -->
-        <filter id="strongGlow" height="200%" width="200%" x="-50%" y="-50%">
-            <!-- radius: controls the size. Thicken out the original shape -->
-            <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken" />
-            <!-- stdDeviation: lower number, less the blur, stronger the effect. Use a gaussian blur
-            to create the soft blurriness of the glow -->
-            <feGaussianBlur in="thicken" stdDeviation="4" result="blurred1" />
-            <!-- Change the colour <animate attributeName="flood-color" from="hsla(190, 100%,
-            45%,1)" to="transparent" dur="4s" repeatCount="indefinite"/> -->
-            <feFlood flood-color="hsla(190, 100%, 45%,1)" id="flood" result="glowColor1">
+        <filter id="strongGlow" height="800%" width="800%" x="-200%" y="-200%">
+            <!-- The feMorphology filter is used to expand the alpha channel of the input image.
+                 'dilate' increases the dimensions of all elements. Here, it's used to thicken the edges of the source graphic by a given radius.
+                Shiv: Essentially it scales the input without blurring.
+                -->
+            <feMorphology operator="dilate" radius="10" in="SourceGraphic" result="thicken" />
 
+            <!-- The feGaussianBlur filter blurs the image. It's applied to the thickened edges, creating a blurred effect with a standard deviation of stdDeviation. -->
+            <feGaussianBlur in="thicken" stdDeviation="80" result="blurred1" />
+
+            <!-- The feFlood filter floods the filter subregion with the specified color (hsla(190, 100%, 45%,1)).
+                 This creates a colored overlay over the entire filter area. -->
+            <feFlood flood-color="hsla(180, 100%, 100%, 1)" id="flood" result="glowColor1">
+                <!-- This animate element is used to animate the flood-color attribute of the feFlood element below.
+                 The color transitions from a solid hsla color to transparent over 4 seconds, repeating indefinitely. -->
+                <animate attributeName="flood-color" values="white;aqua;white" dur="5s" repeatCount="indefinite"
+                    calcMode="paced" />
             </feFlood>
-            <!-- Color in the glows -->
+
+            <!-- The feComposite filter performs pixel-wise combination of two input images.
+                 Here, it combines the blurred image with the flood color, using the 'in' operator to intersect them. -->
             <feComposite in="glowColor1" in2="blurred1" operator="in" result="softGlow_colored1" />
-            <!--	Layer the effects together -->
+            <!-- Use feBlend to blend the glow with the source graphic -->
+            <feBlend mode="screen" in="softGlow_colored1" in2="SourceGraphic" result="blendedGlow" />
+            <!-- The feMerge filter layers images on top of each other.
+                 In this case, it layers the colored glow on top of the original source graphic. -->
             <feMerge>
-                <feMergeNode in="softGlow_colored1" />
+                <feMergeNode in="blendedGlow" />
                 <feMergeNode in="SourceGraphic" />
             </feMerge>
         </filter>
@@ -202,13 +228,8 @@
             </g>
         </g>
         <g id="Mono">
-            <circle class="circle-center" class="cls-3" cx="387.81" cy="316.2" r="258" />
-            <g id="shield-check" data-name="shield check">
-                <path id="shield" class="shield"
-                    d="M452.23,273.1l-6.75-3.16c-19-8.87-37-17.25-56.59-33.83l-.63-.53-.63.54c-17.78,15.32-31.47,21.72-56.33,33.35l-7.92,3.71-.57.27v.63c.52,25.6,5.72,48.76,15.46,68.83a126,126,0,0,0,48.88,53.6l.52.31.51-.33c22.49-14.62,38.59-32.49,49.21-54.64,9.1-19,14.13-41.14,15.38-67.83l0-.65Z" />
-                <polygon id="check" class="check"
-                    points="382.47 338.44 357.86 313.6 362.29 312.23 382.47 320.79 411.67 293.96 417.86 293.96 382.47 338.44 382.47 338.44" />
-            </g>
+            <circle class="circle-center" cx="387.81" cy="316.2" r="258" />
+
             <g id="dial-inner">
                 <g id="dial-inner-rings">
                     <path class="dial-inner-rings-fill"
@@ -448,6 +469,12 @@
             <g>
                 <path class="wings2"
                     d="M82.79,272.25,122.09,352l38.78,26.54a232.81,232.81,0,0,1-8.36-61.72L82.78,272.26Zm37.42-85.61-79-43.36L80.85,223.6l75.84,48.48a233.34,233.34,0,0,1,20.65-60.9l-42-17.65-15.18-6.88ZM162.69,70.25l-8.18,5.41L113.32,58,79.08,43.48,0,0,40,95.09,187.4,182.41h6.77a236,236,0,0,1,67.14-64.72L162.69,70v.22ZM598.1,211a233.75,233.75,0,0,1,20.65,61l75.55-48.37,39.78-80.49-79.26,43.54L598.1,211ZM696.19,43.65l-75.08,32-8.18-5.41h0l-98.56,47.42a237.87,237.87,0,0,1,67.25,64.72h6.77l147.1-87.61L775.68,0,696.19,43.66ZM300.08,534.55l15.18,99.38H460.48l15.12-99.38a235.34,235.34,0,0,1-175.58,0ZM614.81,378.62l38.3-26.24,39.6-80.08L623,316.78a234.88,234.88,0,0,1-8.3,61.84h.07Z" />
+            </g>
+            <g id="shield-check" data-name="shield check">
+                <path id="shield" class="shield"
+                    d="M452.23,273.1l-6.75-3.16c-19-8.87-37-17.25-56.59-33.83l-.63-.53-.63.54c-17.78,15.32-31.47,21.72-56.33,33.35l-7.92,3.71-.57.27v.63c.52,25.6,5.72,48.76,15.46,68.83a126,126,0,0,0,48.88,53.6l.52.31.51-.33c22.49-14.62,38.59-32.49,49.21-54.64,9.1-19,14.13-41.14,15.38-67.83l0-.65Z" />
+                <polygon id="check" class="check"
+                    points="382.47 338.44 357.86 313.6 362.29 312.23 382.47 320.79 411.67 293.96 417.86 293.96 382.47 338.44 382.47 338.44" />
             </g>
         </g>
     </g>
