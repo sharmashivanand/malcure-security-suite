@@ -15,79 +15,117 @@ $btn-bg: hsla(210, 50%, 33%, 1);
 $base-color: hsla(210, 15%, 15%, 1); // #222426;
 
 
-$body-bg: adjust-color(adjust-hue($base-color, 0deg), $saturation: -5%, $lightness: -5%);
-
-$body-bg: #111216;
-$menu-bg: #1e1f22;
-$postbox-header-bg: #23292f;
-$postbox-bg: #282b2f;
-$button-bg: #5a5b5e;
-
-$body-bg: hsl(210.4, 6.9%, 7.4%);
-$menu-bg: hsl(209.9, 8.2%, 13.3%);
-$postbox-header-bg: hsl(209.3, 11.1%, 17.9%);
-$postbox-bg: hsl(208.8, 12.5%, 18.8%);
-$button-bg: hsl(207.2, 5.2%, 36.9%);
-//--------------
-$body-clr: hsl(195, 15%, 50%);
-$heading-clr: hsl(195, 35%, 40%);
-$body-bg: hsl(210, 15%, 15%);
-$menu-bg: hsl(215, 15%, 12.5%); //hsl(190, 15%, 12.5%);
-$postbox-header-bg: hsl(205, 20%, 20%);
-$postbox-bg: hsl(207.5, 15%, 17.5%); // hsl(213.6deg, 14.3%, 18.0%);
-$button-bg: hsl(220, 2.5%, 30%); // padding-box
-$button-bg-h: hsl(210, 45%, 40%);
-$button-clr: hsl(180, 0%, 75%);
-$button-clr-h: hsl(180, 100%, 75%);
-//---------------
-$body-clr: hsl(195, 15%, 50%);
-$heading-clr: hsl(195, 35%, 40%);
-$body-bg: hsl(220, 15%, 15%);
-$menu-bg: hsl(230, 10%, 15%); //hsl(190, 15%, 12.5%);
-$postbox-header-bg: hsl(205, 20%, 20%);
-$postbox-bg: hsl(207.5, 15%, 17.5%); // hsl(213.6deg, 14.3%, 18.0%);
-$button-bg: hsl(220, 2.5%, 30%); // padding-box
-$button-bg-h: hsl(210, 45%, 40%);
-$button-clr: hsl(180, 0%, 75%);
-$button-clr-h: hsl(180, 100%, 75%);
-//----
-
-$body-bg: #12191f;
-$menu-bg: #12191f; //hsl(190, 15%, 12.5%);
-$postbox-header-bg: #192026;
-$postbox-bg: #192026; // hsl(213.6deg, 14.3%, 18.0%);
-$button-bg: #5a6167; // padding-box
-$button-bg-h: hsl(210, 45%, 40%);
-
-$body-clr: #b3bac0;
-$heading-clr: #b3bac0;
-$button-clr: #767d83;
-$button-clr-h: hsl(180, 100%, 75%);
-//--- HSLA
-$body-bg: hsl(207.69, 26.53%, 9.61%);
-$menu-bg: hsl(207.69, 26.53%, 9.61%);
-$postbox-header-bg: hsl(207.69, 20.63%, 12.35%);
-$postbox-bg: hsl(207.69, 20.63%, 12.35%);
-$button-bg: #5a6167;
-$button-bg-h: hsl(210, 45%, 40%);
-
-$body-clr: #b3bac0;
-$heading-clr: #b3bac0;
-$button-clr: #767d83;
-$button-clr-h: hsl(180, 100%, 75%);
+//$body-bg: adjust-color(adjust-hue($base-color, 0deg), $saturation: -5%, $lightness: -5%);
+//
+//$body-bg: #111216;
+//$menu-bg: #1e1f22;
+//$postbox-header-bg: #23292f;
+//$postbox-bg: #282b2f;
+//$button-bg: #5a5b5e;
+//
+//$body-bg: hsl(210.4, 6.9%, 7.4%);
+//$menu-bg: hsl(209.9, 8.2%, 13.3%);
+//$postbox-header-bg: hsl(209.3, 11.1%, 17.9%);
+//$postbox-bg: hsl(208.8, 12.5%, 18.8%);
+//$button-bg: hsl(207.2, 5.2%, 36.9%);
+////--------------
+//$body-clr: hsl(195, 15%, 50%);
+//$heading-clr: hsl(195, 35%, 40%);
+//$body-bg: hsl(210, 15%, 15%);
+//$menu-bg: hsl(215, 15%, 12.5%); //hsl(190, 15%, 12.5%);
+//$postbox-header-bg: hsl(205, 20%, 20%);
+//$postbox-bg: hsl(207.5, 15%, 17.5%); // hsl(213.6deg, 14.3%, 18.0%);
+//$button-bg: hsl(220, 2.5%, 30%); // padding-box
+//$button-bg-h: hsl(210, 45%, 40%);
+//$button-clr: hsl(180, 0%, 75%);
+//$button-clr-h: hsl(180, 100%, 75%);
+////---------------
+//$body-clr: hsl(195, 15%, 50%);
+//$heading-clr: hsl(195, 35%, 40%);
+//$body-bg: hsl(220, 15%, 15%);
+//$menu-bg: hsl(230, 10%, 15%); //hsl(190, 15%, 12.5%);
+//$postbox-header-bg: hsl(205, 20%, 20%);
+//$postbox-bg: hsl(207.5, 15%, 17.5%); // hsl(213.6deg, 14.3%, 18.0%);
+//$button-bg: hsl(220, 2.5%, 30%); // padding-box
+//$button-bg-h: hsl(210, 45%, 40%);
+//$button-clr: hsl(180, 0%, 75%);
+//$button-clr-h: hsl(180, 100%, 75%);
+////----
+//
+//$body-bg: #12191f;
+//$menu-bg: #12191f; //hsl(190, 15%, 12.5%);
+//$postbox-header-bg: #192026;
+//$postbox-bg: #192026; // hsl(213.6deg, 14.3%, 18.0%);
+//$button-bg: #5a6167; // padding-box
+//$button-bg-h: hsl(210, 45%, 40%);
+//
+//$body-clr: #b3bac0;
+//$heading-clr: #b3bac0;
+//$button-clr: #767d83;
+//$button-clr-h: hsl(180, 100%, 75%);
+////--- HSLA
+//$body-bg: hsl(207.69, 26.53%, 9.61%);
+//$menu-bg: hsl(207.69, 26.53%, 9.61%);
+//$postbox-header-bg: hsl(207.69, 20.63%, 12.35%);
+//$postbox-bg: hsl(207.69, 20.63%, 12.35%);
+//$button-bg: #5a6167;
+//$button-bg-h: hsl(210, 45%, 40%);
+//
+//$body-clr: #b3bac0;
+//$heading-clr: #b3bac0;
+//$button-clr: #767d83;
+//$button-clr-h: hsl(180, 100%, 75%);
 
 //--- HSLA rounded
-$body-bg: hsl(207.5, 25%, 10%);
-$menu-bg: hsl(207.5, 25%, 10%);
-$postbox-header-bg: hsl(210, 20%, 15%);
-$postbox-bg: hsl(207.5, 20%, 12.5%);
-$button-bg: hsl(207.5, 15%, 25%);
+$body-bg: hsla(207.5, 25%, 10%, 1);
+$menu-bg: hsla(207.5, 25%, 10%, 1);
+$postbox-header-bg: hsla(210, 20%, 15%, 1);
+$postbox-bg: hsla(207.5, 20%, 12.5%, 1);
+$button-bg: hsla(207.5, 15%, 25%, 1);
 $button-bg-h: hsla(180, 100%, 50%, .25);
 
-$body-clr: hsl(207.5, 10%, 50%);
-$heading-clr: hsl(207.5, 20%, 33%);
-$button-clr: hsl(207.5, 5%, 75%);
-$button-clr-h: hsl(180, 100%, 75%);
+$body-clr: hsla(207.5, 10%, 50%, 1);
+$heading-clr: hsla(207.5, 20%, 33%, 1);
+$button-clr: hsla(207.5, 5%, 75%, 1);
+$button-clr-h: hsla(180, 100%, 75%, 1);
+
+$hbg-prop: (
+    h:210,
+    s:20%,
+    l:15%,
+    a:1
+);
+
+@function chsl($color-map) {
+    // @debug map-get($color-map, h);
+    $hue: map-get($color-map, h);
+    $sat: map-get($color-map, s);
+    $lum: map-get($color-map, l);
+    $alpha: map-get($color-map, a);
+
+    @return hhsl($hue, $sat, $lum);
+
+    @if $alpha ==1 {
+        @return hhsl($hue, $sat, $lum);
+    }
+
+    @else {
+        @return hhsla($hue, $sat, $lum, $alpha);
+    }
+}
+
+@function hhsl($h, $s, $l) {
+    @return unquote('hsl(#{$h}, #{$s}, #{$l})');
+}
+
+@function hhsla($h, $s, $l, $a) {
+    @return unquote('hsla(#{$h}, #{$s}, #{$l}, #{$a})');
+}
+
+
+element {
+    color: chsl($hbg-prop);
+}
 
 body {
 
@@ -114,7 +152,7 @@ body {
         margin: 1em 0;
         max-width: 25%;
         // filter: hue-rotate(5deg) grayscale(0.8);
-        filter: contrast(1) brightness(0.5) saturate(0.5) hue-rotate(0deg);
+        // filter: contrast(1) brightness(0.5) saturate(0.5) hue-rotate(0deg);
     }
 
     #poststuff {
@@ -266,10 +304,6 @@ body {
 
                 #mss_screen {
 
-                    &,
-                    & * {
-                        // transition: none;
-                    }
 
                     position:relative;
                     width: 100%;
@@ -363,6 +397,7 @@ body {
                     transition: all 0.125s;
                     position: relative;
                     left: 0em;
+
                     &:hover {
                         left: 1em;
                     }
@@ -419,8 +454,12 @@ body {
                     padding: 4px 6px;
                     margin: 2px 4px 4px 0px;
                     background: hsla(210, 10%, 15%, 0.15);
-                    background: transparentize($body-bg , .75);
+                    // @debug chsl($body-bg);
                     font-weight: bold;
+                    // background: color-change(#000000, $alpha: .75);
+                    //background: adjust-color(adjust-hue(chsl($body-bg), 0deg), $saturation: -5%, $lightness: -5%);
+                    background: transparentize($body-bg , .75);
+                    ;
                 }
 
                 #hidden_files,
@@ -573,7 +612,7 @@ body.mss_darko {
 
     &,
     #wpcontent {
-        background: $body-bg;
+        background: $body-bg ;
         color: $body-clr;
 
         h1,
@@ -593,6 +632,7 @@ body.mss_darko {
         outline: 1px solid $postbox-header-bg; // hsla(190, 50%, 50%, 0.15);;
         background: $postbox-bg;
         background-clip: padding-box;
+        // clip-path: polygon( 0 0, calc(100% - 1em) 0, 100%  1em , 100% 100%, 0 100%);
 
         .postbox-header {
             background: $postbox-header-bg;
@@ -614,6 +654,7 @@ body.mss_darko {
             background: $button-bg padding-box;
             color: hsl(180, 100%, 50%);
             border: 1px solid transparent;
+            // clip-path: polygon( 0 0, calc(100% - 1em) 0, 100%  1em , 100% 100%, 0 100%);
 
             color: $button-clr;
             outline: 1px solid opacify($button-bg, .5);
@@ -695,7 +736,7 @@ body.mss_darko {
         #mss_site_status {
             #system_status {
                 .mss_bricks {
-                    background: $body-bg;
+                    background: $body-bg ;
                 }
             }
 
