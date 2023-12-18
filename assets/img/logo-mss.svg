@@ -45,6 +45,7 @@
                 fill: white;
                 filter: url(#strongGlow);
             }
+
             .dial-inner-rings-strokes {
                 fill: var(--m-blue);
                 stroke: var(--m-blue);
@@ -64,15 +65,16 @@
                 stroke-width: .5%;
             }
 
-            .line {
+            .filled {
                 fill: #00ffff11;
-                aanimation: moveline 1s ease infinite;
+                \ 
             }
 
-            .space {
+            .blanked {
                 fill: gray;
                 opacity: .5;
-                aanimation: movespace 1s ease infinite;
+                _fill: #000000;
+                _opacity: 0;
             }
 
             .wings2 {
@@ -82,17 +84,17 @@
             .vertical-bricks,
             .horizontal-bricks,
             .dial-middle {
-                animation: mspin 120s linear infinite;
+                animation: mspin 60s linear infinite;
                 transform-origin: 387.81px 316.2px;
                 filter: url(#subtleGlow);
             }
 
             .dial-outer-solid {
-                animation: mspin 120s linear infinite reverse;
+                animation: mspin 60s linear infinite reverse;
                 transform-origin: 387.81px 316.2px;
                 filter: url(#subtleGlow);
             }
-            
+
             .dial-inner-rings-fill,
             .dial-inner-rings-strokes {
                 animation: mspin 2s linear infinite;
@@ -110,11 +112,11 @@
                 }
             }
         </style>
-        <pattern id="scanlines" patternUnits="userSpaceOnUse" width="1" height="4">
-            <rect class="line" width="1" height="2" />
-            <rect class="space" y="2" width="1" height="2" />
-            <animateTransform attributeType="xml" attributeName="patternTransform" type="translate" from="0,0" to="0,-4"
-                dur="1" begin="0" repeatCount="indefinite" />
+        <pattern id="scanlines" patternUnits="userSpaceOnUse" width="1" height="15">
+            <rect class="filled" width="1" height="10" />
+            <rect class="blanked" y="10" width="1" height="5" />
+            <animateTransform attributeType="xml" attributeName="patternTransform" type="translate" from="0,0"
+                to="0,-15" dur="2" begin="0" repeatCount="indefinite" />
         </pattern>
         <radialGradient id="bg-gradient" r=".5">
             <stop offset="0" stop-color="hsl(215, 50%, 20%)" />
