@@ -20,6 +20,16 @@
                 fill: url(#brand-gradient2);
                 fill: url(#brand-gradient);
                 _fill: var(--m-red);
+                _fill: url(#scanlines-brand);
+
+            }
+
+            #scanlines-brand .filled {
+                fill: url(#brand-gradient);
+            }
+            #scanlines-brand .blanked {
+                fill: url(#brand-gradient);
+                fill:black;
             }
 
             .product {
@@ -65,12 +75,11 @@
                 stroke-width: .5%;
             }
 
-            .filled {
+            #scanlines .filled {
                 fill: #00ffff11;
-                \ 
             }
 
-            .blanked {
+            #scanlines .blanked {
                 fill: gray;
                 opacity: .5;
                 _fill: #000000;
@@ -112,11 +121,18 @@
                 }
             }
         </style>
-        <pattern id="scanlines" patternUnits="userSpaceOnUse" width="1" height="15">
-            <rect class="filled" width="1" height="10" />
-            <rect class="blanked" y="10" width="1" height="5" />
-            <animateTransform attributeType="xml" attributeName="patternTransform" type="translate" from="0,0"
-                to="0,-15" dur="2" begin="0" repeatCount="indefinite" />
+        <pattern id="scanlines-brand" patternUnits="userSpaceOnUse" width="1" height="8">
+            <rect class="filled" width="1" height="4" />
+            <rect class="blanked" y="4" width="1" height="4" />
+            <aanimateTransform attributeType="xml" attributeName="patternTransform" type="translate" from="0,0" to="0,-4"
+                dur="2" begin="0" repeatCount="indefinite" />
+        </pattern>
+
+        <pattern id="scanlines" patternUnits="userSpaceOnUse" width="1" height="4">
+            <rect class="filled" width="1" height="2" />
+            <rect class="blanked" y="2" width="1" height="2" />
+            <animateTransform attributeType="xml" attributeName="patternTransform" type="translate" from="0,0" to="0,-4"
+                dur="2" begin="0" repeatCount="indefinite" />
         </pattern>
         <radialGradient id="bg-gradient" r=".5">
             <stop offset="0" stop-color="hsl(215, 50%, 20%)" />
