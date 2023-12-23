@@ -1,5 +1,7 @@
 // watch 'sassc -t compressed assets/scss/style.scss assets/style.css'
 @import url("fonts/oxanium.css") all;
+@import url("fonts/spacemono.css") all;
+@import url("fonts/orbitron.css") all;
 $bg-color: hsla(210, 48%, 17%, 1);
 $bg-color: hsla(230, 7.5, 17.5%, 1);
 
@@ -256,6 +258,10 @@ body {
 
                     table {
                         border-collapse: collapse;
+
+                        td {
+                            white-space: nowrap;
+                        }
                     }
 
                     td {
