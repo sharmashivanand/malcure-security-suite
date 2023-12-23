@@ -89,6 +89,19 @@ $heading-clr: hsla(207.5, 20%, 33%, 1);
 $button-clr: hsla(207.5, 5%, 75%, 1);
 $button-clr-h: hsla(180, 100%, 75%, 1);
 
+//--------------- Grayscale
+$body-bg: hsla(207.5, 0%, 10%, 1);
+$menu-bg: hsla(207.5, 0%, 10%, 1);
+$postbox-header-bg: hsla(210, 0%, 15%, 1);
+$postbox-bg: hsla(207.5, 0%, 12.5%, 1);
+$button-bg: hsla(207.5, 0%, 25%, 1);
+$button-bg-h: hsla(180, 100%, 50%, .25);
+
+$body-clr: hsla(207.5, 0%, 50%, 1);
+$heading-clr: hsla(207.5, 0%, 33%, 1);
+$button-clr: hsla(207.5, 0%, 75%, 1);
+$button-clr-h: hsla(180, 100%, 75%, 1);
+
 $hbg-prop: (
     h:210,
     s:20%,
@@ -215,9 +228,9 @@ body {
         // .postbox
         #mss_scanner {
             #mss_scan_hud {
-                table-layout: fixed;
+                // table-layout: fixed;
 
-                width: 100%;
+                // width: 100%;
                 margin-bottom: 1em;
                 padding: 30px 45px 40px 0;
                 // font-size:.85em;
@@ -238,7 +251,7 @@ body {
                     20px 80%,
                     20px 80%;
 
-                td {
+                    > tbody > tr > td {
                     padding: 0.38196601125em;
 
                     table {
@@ -248,6 +261,10 @@ body {
                     td {
                         padding: 5px;
                         border: 1px solid #eee;
+                    }
+
+                    &:last-child {
+                        width: 100%;
                     }
                 }
 
@@ -303,6 +320,14 @@ body {
                 }
 
                 #mss_screen {
+                    height: 1em;
+                    background: linear-gradient(to right, #00ffff88, #00ffff88 25%, transparent 25%, transparent);
+                    border: 2px solid transparent;
+                    outline: 1px solid aqua;
+                    background-clip: content-box;
+                }
+
+                #_mss_screen {
 
 
                     position:relative;
@@ -373,6 +398,10 @@ body {
                     cursor: progress;
                     animation: fadeInOut 2s linear infinite;
                 }
+
+                #scan_statistics {
+                    padding: .618em 1em .618em 0;
+                }
             }
 
             // #mss_scanner.postbox
@@ -389,7 +418,7 @@ body {
                 }
 
                 display: table;
-                margin: auto;
+                // margin: auto;
 
                 a.mss_scan_issue {
                     padding: 0.38196601125em 0.61803398875em;
@@ -696,17 +725,20 @@ body.mss_darko {
                 //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
 
 
-                td {
+                > tbody > tr > td {
+                    border: 1px solid hsl(205, 25%, 22%);
                     td {
                         border: 1px solid hsl(205, 25%, 22%);
                     }
+
+                    
                 }
 
                 #top-row .middle-col {
                     font-weight: 700;
                 }
 
-                #mss_screen {
+                #_mss_screen {
                     box-shadow: 0px 0px 0px 2px #00ffff40,
                         0px 0px 0px 6px #172b4080;
                     border-color: transparent;
