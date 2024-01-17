@@ -109,7 +109,7 @@ $menu-bg: hsla(0, 0%, 18.82%, 1);
 $postbox-header-bg: hsla(0, 0%, 28.82%, 1);
 $postbox-bg: hsla(0, 0%, 38.82%, 1);
 $button-bg: hsla(207.5, 0%, 25%, 1);
-$button-bg-h: hsla(180, 100%, 50%, .25);
+$button-bg-h: hsla(180, 100%, 50%, 1);
 
 $body-clr: hsla(0, 0%, 100%, 1);
 $heading-clr: hsla(0, 0%, 50%, 1);
@@ -154,7 +154,9 @@ element {
     color: chsl($hbg-prop);
 }
 
-body {
+body._mss {
+
+    font-family: Roboto, Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
     input[type="text"],
     input[type="password"],
@@ -171,7 +173,10 @@ body {
     input[type="url"],
     input[type="week"],
     select,
-    textarea {
+    textarea,
+    .button,
+    .button-primary,
+    .button-secondary {
         border-radius: 0;
     }
 
@@ -351,6 +356,7 @@ body {
                     outline: 1px solid #80808080;
                     background-clip: content-box;
                     transition: all 1s;
+
                     &.mss_status_stop {
                         outline: 1px solid aqua;
                     }
@@ -362,8 +368,6 @@ body {
                 }
 
                 #_mss_screen {
-
-
                     position: relative;
                     width: 100%;
                     max-width: 60%;
@@ -459,6 +463,7 @@ body {
                     margin-bottom: 0.38196601125em;
                     transition: all 0.125s;
                     white-space: nowrap;
+                    background: #80808020;
                     // position: relative;
                     // left: 0em;
 

@@ -13,6 +13,47 @@ body.mss_darko {
         border-right-color: lighten($base-color , 5%);
     }
 
+    #wpadminbar,
+    #show-settings-link,
+    #wpadminbar .menupop .ab-sub-wrapper {
+        background: lighten($body-bg, 5%);
+    }
+
+    #wpadminbar .ab-item,
+    #wpadminbar a.ab-item,
+    #wpadminbar>#wp-toolbar span.ab-label,
+    #wpadminbar>#wp-toolbar span.noticon {
+        color: #808080;
+    }
+
+    #wpadminbar:not(.mobile) .ab-top-menu>li:hover>.ab-item,
+    #wpadminbar:not(.mobile) .ab-top-menu>li>.ab-item:focus,
+    #wpadminbar.nojq .quicklinks .ab-top-menu>li>.ab-item:focus,
+    #wpadminbar.nojs .ab-top-menu>li.menupop:hover>.ab-item,
+    #wpadminbar .ab-top-menu>li.menupop.hover>.ab-item {
+        background: transparent;
+    }
+
+    #show-settings-link {
+        border-color: transparent;
+        border-radius: 0;
+
+        &:hover {
+            color: lighten($body-bg, 10%);
+        }
+    }
+
+    #screen-meta {
+        background: transparent;
+        border-color: lighten($body-bg, 10%);
+        color: #808080;
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            background: transparent;
+            border-radius: 0;
+        }
+    }
 
     #adminmenuback,
     #adminmenuwrap,
@@ -23,7 +64,25 @@ body.mss_darko {
         background: $menu-bg;
         border-right: 1px solid transparent;
         // outline: 1px solid hsla(190, 50%, 50%, 0.15);
-        outline: 1px solid lighten($base-color , 5%) // hsla(190, 50%, 50%, 0.15);
+        outline: 1px solid lighten($base-color , 5%); // hsla(190, 50%, 50%, 0.15);
+    }
+
+    #adminmenu .wp-submenu {
+        background: lighten($menu-bg, 5%);
+    }
+
+    ul#adminmenu a.wp-has-current-submenu:after,
+    ul#adminmenu>li.current>a.current:after {
+        border-right-color: $body-bg;
+    }
+
+    #adminmenu li.wp-has-submenu.wp-not-current-submenu.opensub:hover:after,
+    #adminmenu li.wp-has-submenu.wp-not-current-submenu:focus-within:after {
+        border-right-color: lighten($menu-bg, 5%);
+    }
+
+    #adminmenu a {
+        color: #808080;
     }
 
     select,
@@ -114,10 +173,10 @@ body.mss_darko {
 
             &:hover {
                 // background: hsla(210, 33%, 27%, 1) padding-box;
-                box-shadow: 0px 0px 10px hsl(180, 33%, 27%);
+                box-shadow: 0px 0px 10px $button-clr-h;
                 background: $button-bg-h padding-box;
-                color: $button-clr-h;
-                outline: 1px solid #00ffff88;
+                color: black;
+                outline: 1px solid $button-clr-h;
             }
 
             &:active {

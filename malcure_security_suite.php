@@ -121,6 +121,7 @@ final class Malcure_security_suite {
 		if ( ! empty( $color_scheme ) ) {
 			$classes .= ' ' . 'mss_' . $color_scheme;
 		}
+		$classes .= ' _mss';
 		return $classes;
 	}
 
