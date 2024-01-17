@@ -1,0 +1,198 @@
+body.mss_darko {
+    // color: hsl(200, 20%, 50%);
+    // color: opacify(lighten(adjust-hue($base-color, -25deg), 33%), .85);
+    // background: darken(adjust-hue($base-color, 10deg), 5%);
+    // color: lighten(desaturate(adjust-hue($base-color, 10deg), 10%), 25%);
+
+    .notice,
+    div.updated,
+    div.error {
+        background: $postbox-header-bg; //  hsla(210, 33%, 27%, 0.5);
+        border-top-color: lighten($base-color , 5%); // hsla(210, 50%, 27%, 0.85);
+        border-bottom-color: lighten($base-color , 5%);
+        border-right-color: lighten($base-color , 5%);
+    }
+
+
+    #adminmenuback,
+    #adminmenuwrap,
+    #adminmenu,
+    #adminmenu .wp-submenu {
+        // background: opacify(lighten(adjust-hue($base-color, 15deg), 5%), .75); //$base-color;
+        // background: lighten($base-color , 2.25%); //$base-color;
+        background: $menu-bg;
+        border-right: 1px solid transparent;
+        // outline: 1px solid hsla(190, 50%, 50%, 0.15);
+        outline: 1px solid lighten($base-color , 5%) // hsla(190, 50%, 50%, 0.15);
+    }
+
+    select,
+    select:focus {
+        appearance: none;
+        -webkit-appearance: none;
+        background: $button-bg;
+        background-clip: padding-box;
+
+        color: $button-clr;
+        border: 1px solid transparent;
+        outline: 1px solid transparent;
+        -webkit-appearance: auto;
+        appearance: auto;
+
+        ooption {
+            background-color: $button-bg;
+            color: $button-clr;
+            padding: 1em;
+
+            &:hover,
+            &:checked {
+                background-color: $button-bg-h;
+                color: $button-clr-h;
+            }
+        }
+
+        &:hover {
+            background: $button-bg-h;
+            color: $button-clr-h;
+            outline: 1px solid hsla(180, 100%, 50%, 0.75);
+
+        }
+    }
+
+    &,
+    #wpcontent {
+        background: $body-bg ;
+        color: $body-clr;
+
+        h1,
+        h2,
+        h3 {
+            color: hsl(200, 15%, 50%);
+            color: $heading-clr; // hsla(190, 50%, 50%, 0.15);;
+        }
+
+        .postbox-header {
+            border-bottom-color: hsla(210, 50%, 10%, 0.85);
+        }
+    }
+
+    .postbox {
+        border: 1px solid transparent;
+        outline: 1px solid $postbox-header-bg; // hsla(190, 50%, 50%, 0.15);;
+        outline: 1px solid lighten($postbox-header-bg, 7.5%); // hsla(190, 50%, 50%, 0.15);;
+        background: $postbox-bg;
+        background-clip: padding-box;
+        // clip-path: polygon( 0 0, calc(100% - 1em) 0, 100%  1em , 100% 100%, 0 100%);
+
+        .postbox-header {
+            background: $postbox-header-bg;
+        }
+    }
+
+    .postbox.closed {
+        .postbox-header {
+            border-bottom: 0;
+        }
+    }
+
+    #poststuff {
+
+        .mss_action {
+            background: hsla(180, 100%, 15%, 0.5) padding-box;
+            background: hsla(180, 50%, 50%, 0.15) padding-box;
+            background: $button-bg padding-box;
+            color: hsl(180, 100%, 50%);
+            border: 1px solid transparent;
+            // clip-path: polygon( 0 0, calc(100% - 1em) 0, 100%  1em , 100% 100%, 0 100%);
+
+            color: $button-clr;
+            outline: 1px solid opacify($button-bg, .5);
+
+            &.loading {
+                animation: btnloading 5s ease 0s infinite normal none running;
+            }
+
+            &:hover {
+                // background: hsla(210, 33%, 27%, 1) padding-box;
+                box-shadow: 0px 0px 10px hsl(180, 33%, 27%);
+                background: $button-bg-h padding-box;
+                color: $button-clr-h;
+                outline: 1px solid #00ffff88;
+            }
+
+            &:active {
+                color: white;
+                background: $button-bg-h padding-box;
+                box-shadow: 0px 0px 10px hsla(180, 100%, 50%, 0.75);
+            }
+
+            &[disabled] {
+                background: hsla(180, 50%, 50%, 0.15) padding-box;
+                box-shadow: none;
+            }
+        }
+
+        // .postbox
+        #mss_scanner {
+            #mss_scan_hud {
+                // font-family: Oxanium,                    'Space Mono',                     monospace;
+                // font-weight: 600;
+                // color: aqua;
+                // background-image: linear-gradient(177.5deg, transparent, transparent, transparent, transparent, #ffffff11),
+                //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780.44 32.38" preserveAspectRatio="none"><defs><style>.cls-1{fill:%23ffffff18;}</style></defs><polygon class="cls-1" points="0 32.38 32.38 0 395.65 0 414.44 18.79 1675.32 18.79 1693.07 1.04 1780.44 1.04 1780.44 32.38 0 32.38"/></svg>'),
+                //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1749.13 26.96" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m1749.13,22.79v4h-1018.18l-22.79-22.79H0V0h1018.18l22.79,22.79h708.16ZM627.67,10l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm7.39,0l16.96,16.96h2.95l-16.96-16.96h-2.95Zm346.05,6.96l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Zm7.39,0l-16.96-16.96h-2.95l16.96,16.96h2.95Z"/></svg>'),
+                //     none,
+                //     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.86 1781.07" preserveAspectRatio="none"><defs><style>.cls-1 {fill: %23ffffff18;}</style></defs><path class="cls-1" d="m0,.63h14.36v359.33l-14.36,14.36V.63Zm28.86-.63v1781.07H0V396.28l24.41-24.41V0h4.45Zm-6.55,1744.82H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Zm0-46.48H6.55v28.71h15.75v-28.71Z"/></svg>');
+
+
+                >tbody>tr>td {
+                    // border: 1px solid hsl(205, 25%, 22%);
+
+                    td {
+                        border: 1px solid hsl(205, 25%, 22%);
+                    }
+
+
+                }
+
+                #top-row .middle-col {
+                    font-weight: 700;
+                }
+
+                #_mss_screen {
+                    box-shadow: 0px 0px 0px 2px #00ffff40,
+                        0px 0px 0px 6px #172b4080;
+                    border-color: transparent;
+                }
+
+                #_mss_scan_btn {
+                    background: #00ffff;
+                    color: black;
+                    font-weight: 900;
+                    border: 1px solid aqua;
+                    filter: grayscale(1);
+                }
+
+                #mss_scan_btn:hover {
+                    border: 1px solid transparent;
+                }
+            }
+
+            #mss_scan_results {
+                a.mss_scan_issue {
+                    color: inherit;
+                    background-color: $postbox-header-bg; //transparent; //hsla(190, 50%, 50%, 0.15);
+                }
+            }
+        }
+
+        #mss_site_status {
+            #system_status {
+                .mss_bricks {
+                    background: $body-bg ;
+                }
+            }
+
+        }
+    }
+}
