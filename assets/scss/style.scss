@@ -108,13 +108,15 @@ $body-bg: hsla(0, 0%, 18.82%, 1);
 $menu-bg: hsla(0, 0%, 18.82%, 1);
 $postbox-header-bg: hsla(0, 0%, 28.82%, 1);
 $postbox-bg: hsla(0, 0%, 38.82%, 1);
+
 $button-bg: hsla(207.5, 0%, 25%, 1);
 $button-bg-h: hsla(180, 100%, 50%, 1);
+$button-clr: aqua; //hsla(207.5, 0%, 75%, 1);
+$button-clr-h: black;
 
 $body-clr: hsla(0, 0%, 100%, 1);
 $heading-clr: hsla(0, 0%, 50%, 1);
-$button-clr: hsla(207.5, 0%, 75%, 1);
-$button-clr-h: hsla(180, 100%, 75%, 1);
+
 
 $hbg-prop: (
     h:210,
@@ -360,71 +362,15 @@ body._mss {
                     &.mss_status_stop {
                         outline: 1px solid aqua;
                     }
+
+                    #mss_progress {
+                        height: 100%;
+                    }
                 }
 
 
                 .scan_update {
                     animation: flash 2s ease infinite;
-                }
-
-                #_mss_screen {
-                    position: relative;
-                    width: 100%;
-                    max-width: 60%;
-                    overflow: hidden;
-                    overflow: hidden;
-                    text-align: left;
-                    text-wrap: nowrap;
-                    border: 2px inset #e6e6e680;
-
-                    #mss_progress {
-                        overflow: hidden;
-                        // padding: 1em 1.618em;
-                        border-top: 1em solid transparent;
-                        border-right: 1.618em solid transparent;
-                        border-bottom: 1em solid transparent;
-                        border-left: 1.618em solid transparent;
-                        font-weight: bolder;
-
-                        &.scan_update,
-                        &.scan_updates_ {
-                            background: linear-gradient(to bottom, transparent, #00ffff88 25%, transparent 25%, transparent);
-                            background: linear-gradient(to bottom, transparent, #00ffff44 10%, #00ffffff 12.5%, transparent 12.5%, transparent);
-                            background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.1) 10%, cyan 12.5%, white 13.5%, transparent 13.5%, transparent 13.5%, transparent);
-                            background-size: 100% 200%;
-                            animation: updaterefresh 2s linear infinite;
-                        }
-                    }
-
-                    // scanner is running
-                    &.mss_status_stop {
-                        #mss_progress:after {
-                            content: '';
-                            display: inline-block;
-                            background: $dark-red;
-                            height: 1.618em;
-                            width: 1em;
-                            animation: blink 1s linear infinite;
-                        }
-                    }
-
-                    &:after {
-                        content: '';
-                        display: block;
-                        width: 100%;
-                        height: 100%;
-                        /* Changed from auto to 100% */
-                        position: absolute;
-                        z-index: 9999;
-                        top: 0;
-                        /* Ensure it starts at the top-left corner */
-                        left: 0;
-                        background: repeating-linear-gradient(0deg, #00000026, #00000026 1px, transparent 1px, transparent 2px);
-                    }
-
-                    &.mss_status_stop:after {
-                        animation: scanlines .25s linear infinite;
-                    }
                 }
 
                 #mss_scan_btn[value="stop"] {
@@ -591,7 +537,7 @@ For now only used by salt-shuffler ajax response.
     }
 
     .mss_success {
-        border-left: 4px solid hsla(180, 100%, 50%, 0.5);
+        border-left: 4px solid hsla(180, 100%, 50%, 1);
         display: table;
         padding: 0.618em 1em;
     }

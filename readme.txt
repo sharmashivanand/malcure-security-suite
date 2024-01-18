@@ -20,6 +20,10 @@ Features:
 
 == Upgrade Notice ==
 
+= 1.4 =
+* Feature: UI Update.
+* Several stability improvements.
+
 = 1.3 =
 * Feature: UI Update.
 * Bugfix: database scan sometimes kills the entire scan.
@@ -54,6 +58,10 @@ Features:
 * Submitted for review.
 
 == Changelog ==
+
+= 1.4 =
+* Feature: UI Update.
+* Several stability improvements.
 
 = 1.3 =
 * Feature: UI Update.

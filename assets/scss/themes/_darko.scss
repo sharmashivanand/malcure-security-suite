@@ -159,13 +159,16 @@ body.mss_darko {
         .mss_action {
             background: hsla(180, 100%, 15%, 0.5) padding-box;
             background: hsla(180, 50%, 50%, 0.15) padding-box;
-            background: $button-bg padding-box;
-            color: hsl(180, 100%, 50%);
-            border: 1px solid transparent;
+            // color: hsl(180, 100%, 50%);
             // clip-path: polygon( 0 0, calc(100% - 1em) 0, 100%  1em , 100% 100%, 0 100%);
 
+            background-clip: padding-box;
+            background-color: $button-bg;
+            box-shadow: 0px 0px 25px transparentize($button-bg-h, .5);
             color: $button-clr;
-            outline: 1px solid opacify($button-bg, .5);
+            border: 1px solid transparentize($button-bg-h, .5);
+            outline: 1px solid $button-bg ;
+            text-shadow: 0px 0px 5px transparentize($button-clr, .5);
 
             &.loading {
                 animation: btnloading 5s ease 0s infinite normal none running;
@@ -173,10 +176,14 @@ body.mss_darko {
 
             &:hover {
                 // background: hsla(210, 33%, 27%, 1) padding-box;
-                box-shadow: 0px 0px 10px $button-clr-h;
-                background: $button-bg-h padding-box;
+                background-color: $button-bg-h;
+                box-shadow: 0px 0px 25px $button-bg-h ;
                 color: black;
-                outline: 1px solid $button-clr-h;
+                border: 1px solid $button-bg;
+                outline: 1px solid $button-clr;
+                //border: 1px solid $button-bg-h;
+
+                // outline: 1px solid $button-bg-h;
             }
 
             &:active {
@@ -232,9 +239,7 @@ body.mss_darko {
                     filter: grayscale(1);
                 }
 
-                #mss_scan_btn:hover {
-                    border: 1px solid transparent;
-                }
+
             }
 
             #mss_scan_results {
