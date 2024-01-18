@@ -5,7 +5,7 @@ Donate link: https://www.converticacommerce.com?item_name=Donation%20for%20malCu
 Requires at least: 3.7.4
 Tested up to: 6.3
 Requires PHP: 5.6
-Stable tag: 1.4
+Stable tag: 1.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Malcure Security Suite helps you lock down and secure your WordPress site.
