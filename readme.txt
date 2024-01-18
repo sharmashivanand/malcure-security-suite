@@ -1,22 +1,24 @@
 === Malcure Security Suite ===
 Contributors: malwareintercept,malcure
-Tags: security, anti-malware, hardening, antivirus, firewall, threat, hacked, malicious, infection
+Tags: security, anti-malware, hardening, antivirus, firewall, threat, hacked, malicious, infection, malware-scanner, site-hardening, firewall, site-security, malware-removal, website-protection, security-audit, hacking-prevention
 Donate link: https://www.converticacommerce.com?item_name=Donation%20for%20malCure%20Malware%20Scanner&cmd=_xclick&currency_code=USD&business=shivanand@converticacommerce.com
 Requires at least: 3.7.4
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.6
 Stable tag: 1.5
 License: MIT
 License URI: https://opensource.org/licenses/MIT
-Malcure Security Suite helps you lock down and secure your WordPress site.
+Malcure Security Suite: Comprehensive Protection for Your WordPress Site
 
 == Description ==
-Malcure Security Suite helps you lock down and secure your WordPress site.
+Malcure Security Suite is a robust WordPress security plugin designed to safeguard your website from a wide range of online threats. With its advanced features and user-friendly interface, it's the perfect tool for website owners looking to enhance their site's security with minimal effort.
 
-Features:
-* Reset WordPress Salts.
-* Manage WordPress user-sessions.
-* WordPress malware scan.
+=== Features:=== 
+* **Easy-to-Use Interface:** Designed with simplicity in mind, our plugin offers an intuitive interface that makes website security management straightforward, even for beginners.
+* **Advanced Malware Scanner:** Our server-side scanner delves deep into your WordPress files, identifying and isolating any malicious code. It operates seamlessly in the background, allowing you to continue managing your site without interruption.
+* **WordPress Salts Reset:** Enhance your site's security by regularly resetting the WordPress security keys and salts. This feature helps in safeguarding your website against brute-force attacks and ensures that your user sessions remain secure.
+* **User-Session Management:** Gain complete control over user sessions. View active sessions and manage them effectively to prevent unauthorized access.
+
 
 == Upgrade Notice ==
 
@@ -101,7 +103,4 @@ Upload the plugin to your blog. Activate it. Create a support thread in case of 
 
 == Frequently Asked Questions ==
 = Does Malcure Security Suite protect my website? =
-Malcure Security Suite is intended to help you harden and secure your WordPress install. You'll need to review and implement security best-practices with the help of plugin's output.
-
-== Screenshots ==
-1. screenshot-1.png
+While Malcure Security Suite significantly enhances your site's security, it's important to combine its use with general best practices in web security. Regular updates, strong passwords, and cautious management of user permissions go a long way in protecting your site.

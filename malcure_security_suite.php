@@ -4,7 +4,7 @@
  *
  * @package     Malcure Security Suite
  * @author      Malware Intercept
- * @copyright   2023 malcure.com
+ * @copyright   2024 malcure.com
  * @license     MIT
  *
  * @wordpress-plugin
