@@ -5,7 +5,7 @@ Donate link: https://www.converticacommerce.com?item_name=Donation%20for%20malCu
 Requires at least: 3.7.4
 Tested up to: 6.4
 Requires PHP: 5.6
-Stable tag: 1.5
+Stable tag: 1.6
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Malcure Security Suite: Comprehensive Protection for Your WordPress Site
@@ -21,6 +21,10 @@ Malcure Security Suite is a robust WordPress security plugin designed to safegua
 
 
 == Upgrade Notice ==
+
+= 1.5 =
+* Updated Readme
+* Updated Compatibility
 
 = 1.4 =
 * Feature: UI Update.
@@ -60,6 +64,10 @@ Malcure Security Suite is a robust WordPress security plugin designed to safegua
 * Submitted for review.
 
 == Changelog ==
+
+= 1.5 =
+* Updated Readme
+* Updated Compatibility
 
 = 1.4 =
 * Feature: UI Update.
